@@ -1,39 +1,22 @@
 'use client'
 
 import { Dialog, DialogPanel } from '@headlessui/react'
-import { ArrowTrendingUpIcon, Bars3Icon, HomeIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import HuddleLogo from './huddle-logo'
 import { useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import clsx from 'clsx';
+import NavLinks from './nav-links'
 
-const navigation = [
-  { 
-    name: 'Home',
-    href: '/dashboard',
-    icon: HomeIcon
- },
- { 
-    name: 'Teammates',
-    href: '/teammates',
-    icon: UserCircleIcon
- },
- { 
-    name: 'History',
-    href: '/history',
-    icon: ArrowTrendingUpIcon
- },
-]
+
+
 
 export default function NavBar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const pathname = usePathname();
 
     return (
     <header className="absolute inset-x-0 top-0 z-50">
-        <nav aria-label="Global" className="flex rounded-xl items-center justify-between p-6 lg:px-8 bg-indigo-500">
+        <nav aria-label="Global" className="flex rounded-lg items-center justify-between p-6 lg:px-8 bg-indigo-500">
           <div className="flex lg:flex-1">
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
@@ -65,27 +48,7 @@ export default function NavBar() {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => {
-                    const ItemIcon = item.icon;
-                    return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className={clsx(
-                        "-m-2.5 rounded-md p-2.5",
-                        {
-                            'text-black': pathname === item.href,
-                            'text-white': pathname !== item.href,
-                        },
-                    )}
-                    >
-                    <div className='flex item-center gap-2'>
-                        <ItemIcon className='w-6' />
-                        <p className='hidden md:block'>{item.name}</p>
-                    </div>
-                    </Link>
-                    );
-                  })}
+            <NavLinks />
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="#" className="text-sm/6 font-semibold text-gray-900 dark:text-white">
@@ -132,11 +95,7 @@ export default function NavBar() {
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10 dark:divide-white/10">
                 <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
-                    <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-900 dark:text-white">
-                        {item.name}
-                    </a>
-                ))}
+                  <NavLinks />
                 </div>
                 <div className="py-6">
                   <a
