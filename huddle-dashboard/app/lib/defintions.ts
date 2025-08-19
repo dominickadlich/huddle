@@ -5,6 +5,10 @@ export type User = {
   password: string;
 };
 
+export type CensusData = {
+    census: number;
+}
+
 
 export type HuddleData = {
     id: string;
