@@ -7,11 +7,11 @@ export const formatDateToLocal = (
     const date = new Date(dateStr);
     const options: Intl.DateTimeFormatOptions = {
         day: 'numeric',
-        month: 'short',
-        year: 'numeric',
+        month: 'numeric',
+        // year: 'numeric',
     };
-    const formatter = new Intl.DateTimeFormat(locale, options);
-    return formatter.format(date);
+    return new Intl.DateTimeFormat(locale, options).format(date);
+    
 }
 
 export const generateYAxis = (censusData: CensusData[]) => {

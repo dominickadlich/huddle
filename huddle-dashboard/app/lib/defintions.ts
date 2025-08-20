@@ -7,6 +7,14 @@ export type User = {
 
 export type CensusData = {
     census: number;
+    date: string;
+}
+
+export type OpportunityData = {
+    date: string;
+    title: string;
+    body: string;
+    priority: string;
 }
 
 

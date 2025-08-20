@@ -1,0 +1,71 @@
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
+import { inter } from "../fonts";
+import { fetchLatestOpportunities } from "@/app/lib/data";
+import { OpportunityData } from "@/app/lib/defintions";
+import { formatDateToLocal } from "@/app/lib/utils";
+
+export default async function LatestOpportunities() {
+    const latestOpportunity = (await fetchLatestOpportunities()).slice(0, 7);
+
+    const opportunityData = latestOpportunity.map(item => ({
+        date: formatDateToLocal(item.date, 'en-US'),
+        title: item.title,
+        body: item.body,
+        priority: item.priority,
+    }))
+
+    return (
+        <div className="flex w-full flex-col md:col-span-4">
+            <h2 className={`${inter.className} mb-4 text-xl md:text-2xl`}>
+                Latest Opportunites
+            </h2>
+            <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
+
+                <div className="bg-white px-6">
+                    {opportunityData.map((opportunity, i) => {
+                        return (
+                            <div
+                                key={opportunity.date}
+                                className={clsx(
+                                    'flex flex-row items-center justify-between py-4',
+                                    {
+                                        'border-t': i !== 0,
+                                    },
+                                )}
+                            >
+                                <div>
+                                    <p className={`${inter.className} truncate text-sm font-medium md:text-base`}>
+                                    {opportunity.date}
+                                    </p>
+                                    <div className="min-w-0">
+                                        <p className="truncate text-sm font-semibold md:text-base">
+                                            {opportunity.title}
+                                        </p>
+                                        <p className="hidden text-sm text-gray-500 sm:block">
+                                            {opportunity.body}
+                                        </p>
+                                    </div>
+                                </div>
+                                <p className={clsx(
+                                    'truncate text-sm font-medium md:text-base',
+                                    {
+                                        'text-red-500': opportunity.priority === 'high',
+                                        'text-orange-500':  opportunity.priority === 'medium',
+                                        'text-blue-500': opportunity.priority === 'low',
+                                    }
+                                )}>
+                                    {opportunity.priority}
+                                </p>
+                            </div>
+                        )
+                    })}
+                    <div className="flex items-center pb-2 pt-6">
+                        <ArrowPathIcon className="h-5 w-5 text-gray-500" />
+                        <h3 className="ml-2 text-sm text-gray-500 ">Updated just now</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}

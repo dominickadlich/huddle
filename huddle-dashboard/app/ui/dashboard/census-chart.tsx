@@ -3,14 +3,22 @@ import { CalendarIcon } from "@heroicons/react/24/outline";
 import { inter } from "../fonts";
 import { CensusData } from "@/app/lib/defintions";
 import { fetchAllCensusData } from "@/app/lib/data";
+import { formatDateToLocal } from "@/app/lib/utils";
 
 export default async function CensusChart() {
-    const census = await fetchAllCensusData();
+    const censusData = await fetchAllCensusData();
+
+    const recentData = censusData.slice(0, 7);
+
+    const chartData = recentData.map(item => ({
+        date: formatDateToLocal(item.date, 'en-US'),
+        census: item.census
+    }))
 
     const chartHeight = 350;
-    const { yAxisLabels, topLabel } = generateYAxis(census);
+    const { yAxisLabels, topLabel } = generateYAxis(censusData);
 
-    if (!census || census.length === 0) {
+    if (!recentData || recentData.length === 0) {
         return <p className="mt-4 text-gray-400">No data available.</p>
     }
 
@@ -31,23 +39,23 @@ export default async function CensusChart() {
                         ))}
                     </div>
 
-                    {census.map((month) => (
-                        <div key={month.month} className="flex flex-col items-center gap-2">
+                    {chartData.map((item) => (
+                        <div key={item.date} className="flex flex-col items-center gap-2">
                             <div
                                 className="w-full rounded-md bg-indigo-300"
                                 style={{
-                                    height: `${(chartHeight / topLabel) * month.census}px`,
+                                    height: `${(chartHeight / topLabel) * item.census}px`,
                                 }}
                             ></div>
                             <p className="-rotate-90 text-sm text-gray-400 sm:rotate-0">
-                                {month.month}
+                                {item.date}
                             </p>
                         </div>
                     ))}
                 </div>
                 <div className="flex items-center pb-2 pt-6">
                     <CalendarIcon className="h-5 w-5 text-gray-500" />
-                    <h3 className="ml-2 text-sm text-gray-500">Last 12 months</h3>
+                    <h3 className="ml-2 text-sm text-gray-500">Last 7 days</h3>
                 </div>
             </div>
         </div>

@@ -3,7 +3,7 @@ import { User, HuddleData } from "./defintions"
 
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_ANON_KEY!
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
 export async function fetchHuddleData() {
@@ -34,7 +34,7 @@ export async function fetchLatestHuddleData() {
         return data
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Failed to fetch huddle data.')
+        throw new Error('Failed to fetch latest huddle data.')
     }
 }
 
@@ -42,7 +42,7 @@ export async function fetchAllCensusData() {
     try {
         const { data, error } = await supabase
         .from('huddle_data')
-        .select('census')
+        .select('census, date')
         .order('date', { ascending: false })
 
         if (error) throw error
@@ -50,5 +50,20 @@ export async function fetchAllCensusData() {
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch census data.')
+    }
+}
+
+export async function fetchLatestOpportunities() {
+    try {
+        const { data, error } = await supabase
+        .from('huddle_data')
+        .select('*')
+        .order('date', { ascending: false })
+
+        if (error) throw error
+        return data?.flatMap(row => row.opportunities || []) || []
+    } catch (error) {
+        console.log('Database Error:', error);
+        throw new Error('Failed to fetch opportunity data')
     }
 }
