@@ -21,22 +21,47 @@ export async function fetchHuddleData() {
     }
 }
 
+import postgres from "postgres";
+
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+
 export async function fetchLatestHuddleData() {
     try {
-        const { data, error } = await supabase
-        .from('huddle_data')
-        .select('*')
-        .order('date', { ascending: false })
-        .limit(1)
-        .single()
+        const data = await sql`
+            SELECT * FROM huddle_data
+            ORDER BY date DESC
+            LIMIT 1
+        `;
 
-        if (error) throw error
-        return data
+        console.log('Data found:', data);
+        return data[0];
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Failed to fetch latest huddle data.')
+        throw new Error('Failed to fetch latest huddle data.');
     }
 }
+
+// export async function fetchLatestHuddleData() {
+//     try {
+//         console.log('Attempting to fetch data...')
+
+//         const { data, error } = await supabase
+//         .from('huddle_data')
+//         .select('*')
+//         .order('date', { ascending: false })
+//         .limit(1)
+//         .single()
+        
+//         console.log('Raw data from Supabase:', data)
+//         console.log('Any error:', error)
+
+//         if (error) throw error
+//         return data
+//     } catch (error) {
+//         console.error('Database Error:', error);
+//         throw new Error('Failed to fetch latest huddle data.')
+//     }
+// }
 
 export async function fetchAllCensusData() {
     try {
