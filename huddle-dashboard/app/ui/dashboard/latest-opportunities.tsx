@@ -20,9 +20,8 @@ export default async function LatestOpportunities() {
             <h2 className={`${inter.className} mb-4 text-xl md:text-2xl`}>
                 Latest Opportunites
             </h2>
-            <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
-
-                <div className="bg-white px-6">
+            <div className="flex grow flex-col justify-between rounded-xl bg-indigo-500 p-2">
+                <div className="bg-gray-100 px-6 rounded-md">
                     {opportunityData.map((opportunity, i) => {
                         return (
                             <div
@@ -35,11 +34,11 @@ export default async function LatestOpportunities() {
                                 )}
                             >
                                 <div>
-                                    <p className={`${inter.className} truncate text-sm font-medium md:text-base`}>
+                                    <p className={`${inter.className} truncate text-sm font-medium text-indigo-500 md:text-base`}>
                                     {opportunity.date}
                                     </p>
                                     <div className="min-w-0">
-                                        <p className="truncate text-sm font-semibold md:text-base">
+                                        <p className="truncate text-sm font-semibold text-black md:text-base">
                                             {opportunity.title}
                                         </p>
                                         <p className="hidden text-sm text-gray-500 sm:block">
@@ -60,10 +59,10 @@ export default async function LatestOpportunities() {
                             </div>
                         )
                     })}
-                    <div className="flex items-center pb-2 pt-6">
+                    {/* <div className="flex items-center pb-4 pt-6">
                         <ArrowPathIcon className="h-5 w-5 text-gray-500" />
                         <h3 className="ml-2 text-sm text-gray-500 ">Updated just now</h3>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
