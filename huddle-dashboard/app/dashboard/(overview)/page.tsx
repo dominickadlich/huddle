@@ -1,12 +1,12 @@
-import CardWrapper from "../ui/dashboard/cards";
-import CensusChart from "../ui/dashboard/census-chart";
-import LatestOpportunities from "../ui/dashboard/latest-opportunities";
+import CardWrapper from "../../ui/dashboard/cards";
+import CensusChart from "../../ui/dashboard/census-chart";
+import LatestOpportunities from "../../ui/dashboard/latest-opportunities";
 import { Suspense } from "react";
 import { 
     CensusChartSkeleton,
     LatestOpportunitiesSkeleton,
     CardSkeleton
- } from "../ui/skeletons";
+ } from "../../ui/skeletons";
 
 
 export default async function Page() {

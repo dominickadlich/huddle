@@ -1,9 +1,9 @@
 'use client'
 
 import { 
-    ArrowTrendingUpIcon,
-    HomeIcon,
-    UserCircleIcon
+    PresentationChartBarIcon,
+    PhoneIcon,
+    CalendarIcon
 } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx';
@@ -11,19 +11,19 @@ import Link from 'next/link';
 
 const navigation = [
   { 
-    name: 'Home',
+    name: 'Dashboard',
     href: '/dashboard',
-    icon: HomeIcon
+    icon: PresentationChartBarIcon
  },
  { 
-    name: 'Teammates',
-    href: '/teammates',
-    icon: UserCircleIcon
+    name: 'Directory',
+    href: '/directory',
+    icon: PhoneIcon
  },
  { 
-    name: 'History',
-    href: '/history',
-    icon: ArrowTrendingUpIcon
+    name: 'Schedule',
+    href: '/schedule',
+    icon: CalendarIcon
  },
 ]
 

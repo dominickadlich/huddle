@@ -1,4 +1,4 @@
-import { UserGroupIcon } from "@heroicons/react/24/outline";
+import { EyeDropperIcon } from "@heroicons/react/24/outline";
 import { inter } from "./fonts";
 import Image from "next/image";
 
@@ -14,8 +14,8 @@ export default function HuddleLogo() {
                 className='hidden md:block'
                 alt='Huddle whiteboard logo'
             /> */}
-            <UserGroupIcon className="h-8 w-12" />
-            <p className="text-[22px]">Huddle</p>
+            <EyeDropperIcon className="h-8 w-12" />
+            <p className="text-[22px]">Central Pharmacy</p>
         </div>
     )
 }
