@@ -76,3 +76,5 @@ export async function fetchLatestOpportunities() {
         throw new Error('Failed to fetch opportunity data')
     }
 }
+
+

@@ -1,6 +1,6 @@
 'use server'
 
-const d_day = "I'm having a baby"
+// const d_day = "I'm having a baby" // Baby Violet's first commit.
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -16,15 +16,8 @@ const supabase = createClient(
 
 const FormSchema = z.object({
     id: z.string(),
-    customerId: z.string({
-        // required_error: 'Please select a contact.',
-    }).min(1, 'Please select a contact.'),
-    extension: z.coerce
-        .number({
-            // required_error: 'Please enter an extension.',
-            // invalid_type_error: 'Extension must be a number.',
-        })
-        .gt(0, { message: 'Please enter a valid extension.' }),
+    name: z.string().min(1, 'Please select a name.'),
+    extension: z.coerce.number().gt(0, 'Please enter an extension.'),
     date: z.string(),
 });
 
@@ -33,7 +26,7 @@ const UpdateExtension = FormSchema.omit({ id: true, date: true });
 
 export type State = {
     errors?: {
-        customerId?: string[];
+        name?: string[];
         extension?: string[];
     };
     message?: string | null;
@@ -42,7 +35,7 @@ export type State = {
 
 export async function createExtension(prevState: State, formData: FormData) {
     const validatedFields = CreateExtension.safeParse({
-        customerId: formData.get('customerId'),
+        name: formData.get('name'),
         extension: formData.get('extension'),
     });
 
@@ -55,19 +48,20 @@ export async function createExtension(prevState: State, formData: FormData) {
     }
 
     // Prepare data for insertion into the database
-    const { customerId, extension } = validatedFields.data;
+    const { name, extension } = validatedFields.data;
     const date = new Date().toISOString().split('T')[0];
 
     try {
         const { data, error } = await supabase
         .from('central_directory')
         .insert([{
-            customer_id: customerId,
+            name: name,
             extension: extension,
             date: date
         }])
 
         if (error) throw error
+        revalidatePath('/dashboard/directory')
         return { message: 'Extension created successfully!' }
     } catch (error) {
         console.error('Database Error:', error);
@@ -81,7 +75,7 @@ export async function updateExtension(
     formData: FormData
 ) {
     const validatedFields = UpdateExtension.safeParse({
-        customer_id: formData.get('customerId'),
+        name: formData.get('name'),
         extension: formData.get('extension'),
     });
 
@@ -92,22 +86,23 @@ export async function updateExtension(
         };
     }
 
-    const { customerId, extension } = validatedFields.data;
+    const { name, extension } = validatedFields.data;
 
     try {
         const { data, error } = await supabase
         .from('central_directory')
         .update({
-            customer_id: customerId,
+            name: name,
             extension: extension,
         })
         .eq('id', id)
 
         if (error) throw error
+        revalidatePath('/dashboard/directory')
         return { message: 'Successfully updated contact!' }
     } catch (error) {
         console.error('Database Error:', error);
-        return { message: 'Failed to updated extension' };
+        return { message: 'Failed to update extension' };
     }
 }
 
@@ -124,10 +119,11 @@ export async function deleteExtension(id: string) {
         if (error) throw error
 
         revalidatePath('/dashboard/directory')
-        return { message: 'Extension deleted successfully!' }
+        // return { message: 'Extension deleted successfully!' }
     } catch (error) {
         console.error('Database Error:', error)
-        return { message: 'Database Error: Failed to delete extension' };
+        // return { message: 'Database Error: Failed to delete extension' };
+        throw new Error('Failed to delete extension')
     }
 }
 
