@@ -89,10 +89,33 @@ export async function fetchFilteredExtensions(
         const { data, error } = await supabase
         .from('central_directory')
         .select('*')
+        .ilike('name', `%${query}%`)
         .order('name')
-        .limit(ITEMS_PER_PAGE)
+        .range(offset, offset + ITEMS_PER_PAGE - 1)
+
+        if (error) throw error
+        return data || []
     } catch (error) {
         console.error('Extension database error:', error);
         throw new Error('Failed to fetch extension data')
     }
+}
+
+
+export async function fetchExtensionsPages(query: string) {
+    try {
+        const { count, error } = await supabase
+        .from('central_directory')
+        .select('*', { count: 'exact', head: true })
+        .or(`name.ilike.%${query}%,extension.ilike.%${query}%`)
+
+        if (error) throw error
+
+        const totalPages = Math.ceil((count || 0) / ITEMS_PER_PAGE);
+        return totalPages;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch total number of extensions')
+    }
+
 }
