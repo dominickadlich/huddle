@@ -1,6 +1,6 @@
 import Pagination from "../ui/directory/pagination"
 import Search from "../ui/search"
-import ExtensionsTable from "../ui/directory/table"
+import Table from "../ui/directory/table"
 import { CreateExtension } from "../ui/directory/buttons"
 import { ExtensionsTableSkeleton } from "../ui/skeletons"
 import { fetchExtensionsPages } from "../lib/data"
@@ -32,7 +32,7 @@ export default async function Page(props: {
                 <CreateExtension />
             </div>
             <Suspense key={ query + currentPage} fallback={<ExtensionsTableSkeleton />}>
-                <ExtensionsTable 
+                <Table 
                     query={query}
                     currentPage={currentPage}
                 />
