@@ -32,3 +32,8 @@ export type HuddleData = {
         priority: 'low' | 'medium' | 'high'
     }[];
 }
+
+export type ExtensionField = {
+    name: string;
+    extension: string;
+};
