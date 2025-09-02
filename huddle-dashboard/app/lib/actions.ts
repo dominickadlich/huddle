@@ -18,11 +18,11 @@ const FormSchema = z.object({
     id: z.string(),
     name: z.string().min(1, 'Please select a name.'),
     extension: z.coerce.number().gt(0, 'Please enter an extension.'),
-    date: z.string(),
+    created_at: z.string(),
 });
 
-const CreateExtension = FormSchema.omit({ id: true, date: true });
-const UpdateExtension = FormSchema.omit({ id: true, date: true });
+const CreateExtension = FormSchema.omit({ id: true, created_at: true });
+const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
 
 export type State = {
     errors?: {
@@ -49,7 +49,7 @@ export async function createExtension(prevState: State, formData: FormData) {
 
     // Prepare data for insertion into the database
     const { name, extension } = validatedFields.data;
-    const date = new Date().toISOString().split('T')[0];
+    const created_at = new Date().toISOString().split('T')[0];
 
     try {
         const { data, error } = await supabase
@@ -57,12 +57,13 @@ export async function createExtension(prevState: State, formData: FormData) {
         .insert([{
             name: name,
             extension: extension,
-            date: date
+            created_at: created_at
         }])
 
         if (error) throw error
-        revalidatePath('/dashboard/directory')
-        return { message: 'Extension created successfully!' }
+        
+        revalidatePath('/directory');
+        redirect('/directory');
     } catch (error) {
         console.error('Database Error:', error);
         return { message: 'Database Error: Failed to create extension.' };
