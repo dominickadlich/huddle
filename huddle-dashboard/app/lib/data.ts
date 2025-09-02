@@ -119,3 +119,19 @@ export async function fetchExtensionsPages(query: string) {
     }
 
 }
+
+export async function fetchExtensionById(id: string) {
+    try {
+        const { data, error } = await supabase
+        .from('central_directory')
+        .select('*')
+        .eq('id', id)
+        .single()
+
+        if (error) throw  error
+        return data
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error(`Failed to fetch extension with id: ${id}`)
+    }
+}

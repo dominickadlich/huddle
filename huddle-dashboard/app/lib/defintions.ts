@@ -37,3 +37,9 @@ export type ExtensionField = {
     name: string;
     extension: string;
 };
+
+export type ExtensionForm = {
+    id: string;
+    name: string;
+    extension: string;
+}

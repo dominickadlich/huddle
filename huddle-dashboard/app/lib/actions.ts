@@ -17,10 +17,12 @@ const supabase = createClient(
 const FormSchema = z.object({
     id: z.string(),
     name: z.string().min(1, 'Please select a name.'),
-    extension: z.coerce.number().gt(0, 'Please enter an extension.'),
+    extension: z.string().min(0, 'Please enter an extension.'),
     created_at: z.string(),
 });
 
+const CreateExtension = FormSchema.omit({ id: true, created_at: true });
+const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
 const CreateExtension = FormSchema.omit({ id: true, created_at: true });
 const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
 
@@ -50,6 +52,7 @@ export async function createExtension(prevState: State, formData: FormData) {
     // Prepare data for insertion into the database
     const { name, extension } = validatedFields.data;
     const created_at = new Date().toISOString().split('T')[0];
+    const created_at = new Date().toISOString().split('T')[0];
 
     try {
         const { data, error } = await supabase
@@ -58,16 +61,18 @@ export async function createExtension(prevState: State, formData: FormData) {
             name: name,
             extension: extension,
             created_at: created_at
+            created_at: created_at
         }])
 
         if (error) throw error
-        
-        revalidatePath('/directory');
-        redirect('/directory');
+
     } catch (error) {
         console.error('Database Error:', error);
         return { message: 'Database Error: Failed to create extension.' };
     }
+
+    revalidatePath('/directory');
+    redirect('/directory');
 }
 
 export async function updateExtension(
@@ -99,12 +104,14 @@ export async function updateExtension(
         .eq('id', id)
 
         if (error) throw error
-        revalidatePath('/dashboard/directory')
-        return { message: 'Successfully updated contact!' }
+
     } catch (error) {
         console.error('Database Error:', error);
         return { message: 'Failed to update extension' };
     }
+
+    revalidatePath('/directory');
+    redirect('/directory');
 }
 
 
