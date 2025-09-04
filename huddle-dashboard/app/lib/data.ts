@@ -128,7 +128,12 @@ export async function fetchExtensionById(id: string) {
         .eq('id', id)
         .single()
 
-        if (error) throw  error
+        if (error) {
+            if (error.code === 'PGRST116') { // No rows found
+                return null;
+            }
+            throw  error
+        }
         return data
     } catch (error) {
         console.error('Database Error:', error);

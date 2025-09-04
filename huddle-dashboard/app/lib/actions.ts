@@ -23,8 +23,6 @@ const FormSchema = z.object({
 
 const CreateExtension = FormSchema.omit({ id: true, created_at: true });
 const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
-const CreateExtension = FormSchema.omit({ id: true, created_at: true });
-const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
 
 export type State = {
     errors?: {
@@ -52,7 +50,6 @@ export async function createExtension(prevState: State, formData: FormData) {
     // Prepare data for insertion into the database
     const { name, extension } = validatedFields.data;
     const created_at = new Date().toISOString().split('T')[0];
-    const created_at = new Date().toISOString().split('T')[0];
 
     try {
         const { data, error } = await supabase
@@ -60,7 +57,6 @@ export async function createExtension(prevState: State, formData: FormData) {
         .insert([{
             name: name,
             extension: extension,
-            created_at: created_at
             created_at: created_at
         }])
 
@@ -116,7 +112,7 @@ export async function updateExtension(
 
 
 export async function deleteExtension(id: string) {
-    // Throw new Error('Failed to Delete Extension')
+    // throw new Error('Failed to Delete Extension')
 
     try {
         const { data, error } = await supabase

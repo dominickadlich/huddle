@@ -19,7 +19,7 @@ export function CreateExtension() {
 export function UpdateExtension({ id }: { id: string }) {
     return (
         <Link
-            href={`/dashboard/directory/${id}/edit`}
+            href={`/directory/${id}/edit`}
             className="rounded-md border p-2 hover:bg-gray-100"
         >
             <PencilIcon className="w-5" />
