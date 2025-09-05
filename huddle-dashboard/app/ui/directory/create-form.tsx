@@ -35,7 +35,7 @@ export default function Form() {
                 <div id="name-error" aria-live="polite" aria-atomic='true'>
                 {state.errors?.name &&
                     state.errors.name.map((error: string) => (
-                        <p className="mt-2 text-sm text-red-500">
+                        <p className="mt-2 text-sm text-red-500" key={error}>
                             {error}
                         </p>
                     ))}
@@ -62,7 +62,7 @@ export default function Form() {
             <div id="number-error" aria-live="polite" aria-atomic='true'>
             {state.errors?.extension &&
                 state.errors.extension.map((error: string) => (
-                    <p className="mt-2 text-sm text-red-500">
+                    <p className="mt-2 text-sm text-red-500" key={error}>
                         {error}
                     </p>
                 ))}

@@ -17,7 +17,7 @@ const supabase = createClient(
 const FormSchema = z.object({
     id: z.string(),
     name: z.string().min(1, 'Please select a name.'),
-    extension: z.string().min(0, 'Please enter an extension.'),
+    extension: z.string().min(1, 'Please enter an extension.'),
     created_at: z.string(),
 });
 

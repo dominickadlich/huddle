@@ -5,6 +5,11 @@ import { CreateExtension } from "../ui/directory/buttons"
 import { ExtensionsTableSkeleton } from "../ui/skeletons"
 import { fetchExtensionsPages } from "../lib/data"
 import { Suspense } from "react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: 'Directory'
+}
 
 
 
