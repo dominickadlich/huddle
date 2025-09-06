@@ -22,18 +22,11 @@ export default function NavBar() {
               <span className="sr-only">Your Company</span>
               <HuddleLogo />
               {/* <Image
-                src="/logo.png"
+                src="/icon.png"
                 width={50}
                 height={25}
                 className='hidden md:block'
-                alt='Huddle whiteboard logo'
-              />
-              <Image
-                src="/logo.png"
-                width={50}
-                height={25}
-                className='hidden md:block'
-                alt='Huddle whiteboard logo'
+                alt='Syringe outline'
               /> */}
             </Link>
           </div>

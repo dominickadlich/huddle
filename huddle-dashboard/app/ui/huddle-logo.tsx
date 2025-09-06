@@ -7,15 +7,15 @@ export default function HuddleLogo() {
         <div
             className={`${inter.className} flex flex-row items-center leading-none text-white`}
         >
-            {/* <Image 
-                src="/logo.png"
-                width={50}
-                height={100}
+            <Image 
+                src="/icon.png"
+                width={25}
+                height={50}
                 className='hidden md:block'
-                alt='Huddle whiteboard logo'
-            /> */}
-            <EyeDropperIcon className="h-8 w-12" />
-            <p className="text-[22px]">Central Pharmacy</p>
+                alt='Syringe Outline'
+            />
+            {/* <EyeDropperIcon className="h-8 w-12" /> */}
+            <p className="text-[22px] pl-2">Central Pharmacy</p>
         </div>
     )
 }

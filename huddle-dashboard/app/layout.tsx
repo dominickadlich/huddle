@@ -7,7 +7,7 @@ import { inter, lusitana } from "./ui/fonts";
 export const metadata: Metadata = {
   title: {
     template: 'Command Center | %s',
-    default: 'Command Center Dashboar'
+    default: 'Pharmacy Command Center'
   },
   description: 'The official dashboard for central pharmacies',
   metadataBase: new URL('https://huddle-lime-gamma.vercel.app/'),
