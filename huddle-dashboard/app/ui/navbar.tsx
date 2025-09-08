@@ -7,12 +7,15 @@ import HuddleLogo from './huddle-logo'
 import { useState } from 'react'
 import Link from 'next/link'
 import NavLinks from './nav-links'
+import { signOut } from '@/auth'
+import { auth } from '@/auth'
 
 
 
 
-export default function NavBar() {
+export default async function NavBar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const session = await auth();
 
     return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -21,13 +24,6 @@ export default function NavBar() {
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <HuddleLogo />
-              {/* <Image
-                src="/icon.png"
-                width={50}
-                height={25}
-                className='hidden md:block'
-                alt='Syringe outline'
-              /> */}
             </Link>
           </div>
           <div className="flex lg:hidden">
@@ -43,10 +39,24 @@ export default function NavBar() {
           <div className="hidden lg:flex lg:gap-x-12">
             <NavLinks />
           </div>
+
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm/6 font-semibold text-gray-900 dark:text-white">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            {session?.user ? (
+              <form
+                // action={async () => {
+                //   'use server';
+                //   await signOut({ redirectTo: '/' });
+                // }}
+              >
+                <button className="text-sm/6 font-semibold text-gray-900 dark:text-white">
+                  Sign out <span aria-hidden="true">→</span>
+                </button>
+              </form>
+            ) : (
+               <Link href="/login" className="text-sm/6 font-semibold text-gray-900 dark:text-white">
+                  Log in <span aria-hidden="true">→</span>
+              </Link>
+            )}
           </div>
         </nav>
 

@@ -3,7 +3,7 @@ import { authConfig } from "./app/auth.config";
 import Credentials from "next-auth/providers/credentials";
 import { email, z } from "zod";
 import { User } from "./app/lib/defintions";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -11,19 +11,23 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-export async function getUser(email: string): Promise<User | undefined> {
+async function getUser(email: string): Promise<User | undefined> {
     try {
+        console.log('Looking for user with email:', email);
+
         const { data, error } = await supabase
-        .from('user')
+        .from('users')
         .select('*')
         .eq('email', email)
 
+        console.log('Query result:', { data, error });
+
         if (error) throw error
 
-        return data[0]
+        return data && data.length > 0 ? data[0] : undefined
     } catch (error) {
         console.log('Database Error:', error)
-        return { message: 'Database Error: Failed to fetch User'}
+        return undefined
     }
 }
 
@@ -33,7 +37,7 @@ export const { auth, signIn, signOut } = NextAuth({
         Credentials({
             async authorize(credentials) {
                 const parsedCredentials = z
-                    .object({ email: z.string().email, password: z.string().min(6) })
+                    .object({ email: z.string().email(), password: z.string().min(6) })
                     .safeParse(credentials);
 
                 if (parsedCredentials.success) {
@@ -48,6 +52,6 @@ export const { auth, signIn, signOut } = NextAuth({
                 console.log('Invalid credentials');
                 return null;
             },
-        });
+        }),
     ],
 });

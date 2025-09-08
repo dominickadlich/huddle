@@ -6,7 +6,8 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
-// import { AuthError } from 'next-auth'
+import { signIn } from "@/auth";
+import { AuthError } from 'next-auth'
 
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -136,12 +137,16 @@ export async function authenticate(
     prevState: string | undefined,
     formData: FormData,
 ) {
+    // 'use server'; 
+    
+    // console.log('Authenticate function called'); 
+
     try {
         await signIn('credentials', formData);
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
-                case 'CredentialSignin':
+                case 'CredentialsSignin':
                     return 'Invalid credentials';
                 default:
                     return 'Something went wrong.';
