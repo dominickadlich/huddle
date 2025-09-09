@@ -1,7 +1,7 @@
 import { generateYAxis } from "@/app/lib/utils";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { inter } from "../fonts";
-import { CensusData } from "@/app/lib/defintions";
+import { CensusData } from "@/app/lib/definitions";
 import { fetchAllCensusData } from "@/app/lib/data";
 import { formatDateToLocal } from "@/app/lib/utils";
 

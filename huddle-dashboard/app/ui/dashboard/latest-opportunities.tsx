@@ -2,7 +2,7 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { inter } from "../fonts";
 import { fetchLatestOpportunities } from "@/app/lib/data";
-import { OpportunityData } from "@/app/lib/defintions";
+import { OpportunityData } from "@/app/lib/definitions";
 import { formatDateToLocal } from "@/app/lib/utils";
 
 export default async function LatestOpportunities() {

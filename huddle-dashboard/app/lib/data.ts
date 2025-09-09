@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { User, HuddleData } from "./defintions"
+import { User, HuddleData } from "./definitions"
 
 
 const supabase = createClient(

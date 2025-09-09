@@ -7,15 +7,17 @@ import HuddleLogo from './huddle-logo'
 import { useState } from 'react'
 import Link from 'next/link'
 import NavLinks from './nav-links'
-import { signOut } from '@/auth'
-import { auth } from '@/auth'
+import { signOut, useSession } from 'next-auth/react' 
 
-
-
-
-export default async function NavBar() {
+export default function NavBar({  }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const session = await auth();
+
+    const { data: session, status } = useSession()
+    const isAuthenticated = !!session?.user
+
+    const handleSignOut = async () => {
+      await signOut({ callbackUrl: '/' })
+    }
 
     return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -41,17 +43,14 @@ export default async function NavBar() {
           </div>
 
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {session?.user ? (
-              <form
-                // action={async () => {
-                //   'use server';
-                //   await signOut({ redirectTo: '/' });
-                // }}
-              >
-                <button className="text-sm/6 font-semibold text-gray-900 dark:text-white">
+            {status === 'loading' ? (
+              <span className="text-sm/6 font-semibold text-gray-900 dark:text-white">Loading...</span>
+            ) : isAuthenticated ? (
+                <button 
+                  onClick={handleSignOut}
+                  className="text-sm/6 font-semibold text-gray-900 dark:text-white">
                   Sign out <span aria-hidden="true">→</span>
                 </button>
-              </form>
             ) : (
                <Link href="/login" className="text-sm/6 font-semibold text-gray-900 dark:text-white">
                   Log in <span aria-hidden="true">→</span>

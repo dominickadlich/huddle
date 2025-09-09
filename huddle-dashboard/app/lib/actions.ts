@@ -137,9 +137,8 @@ export async function authenticate(
     prevState: string | undefined,
     formData: FormData,
 ) {
-    // 'use server'; 
     
-    // console.log('Authenticate function called'); 
+    console.log('Authenticate function called'); 
 
     try {
         await signIn('credentials', formData);

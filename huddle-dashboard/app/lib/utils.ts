@@ -1,4 +1,4 @@
-import { CensusData } from "./defintions";
+import { CensusData } from "./definitions";
 
 export const formatDateToLocal = (
     dateStr: string,

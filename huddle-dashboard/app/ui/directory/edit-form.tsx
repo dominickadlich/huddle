@@ -5,7 +5,7 @@ import { BuildingOfficeIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import { Button } from "../button";
 import { updateExtension, State } from "@/app/lib/actions";
 import { useActionState } from "react";
-import { ExtensionForm } from "@/app/lib/defintions";
+import { ExtensionForm } from "@/app/lib/definitions";
 
 export default function EditExtensionForm({
     extension,
