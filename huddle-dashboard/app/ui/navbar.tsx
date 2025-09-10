@@ -7,11 +7,12 @@ import HuddleLogo from './huddle-logo'
 import { useState } from 'react'
 import Link from 'next/link'
 import NavLinks from './nav-links'
-import { signOut, useSession } from 'next-auth/react' 
+import { signOut, useSession } from 'next-auth/react' // Add useSession
 
 export default function NavBar({  }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
+    
+    // Use NextAuth session instead of local state
     const { data: session, status } = useSession()
     const isAuthenticated = !!session?.user
 
@@ -59,10 +60,6 @@ export default function NavBar({  }) {
           </div>
         </nav>
 
-
-
-
-
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
           <div className="fixed inset-0 z-50" />
           <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10">
@@ -70,20 +67,7 @@ export default function NavBar({  }) {
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
                 <HuddleLogo />
-                <Image
-                  src="/public/inset.filled.rectangle.and.person.filled.png"
-                  width={50}
-                  height={25}
-                  className='hidden md: block'
-                  alt='Huddle whiteboard logo'
-                />
-                <Image
-                  src="/public/inset.filled.rectangle.and.person.filled.png"
-                  width={50}
-                  height={25}
-                  className='hidden md: block'
-                  alt='Huddle whiteboard logo'
-                />
+                {/* Note: Remove duplicate images or fix the paths */}
               </a>
               <button
                 type="button"
@@ -100,12 +84,20 @@ export default function NavBar({  }) {
                   <NavLinks />
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                  >
-                    Log in
-                  </a>
+                  {isAuthenticated ? (
+                    <button 
+                      onClick={handleSignOut}
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5">
+                      Sign out
+                    </button>
+                  ) : (
+                    <Link
+                      href="/login"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
+                    >
+                      Log in
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

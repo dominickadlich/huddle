@@ -7,7 +7,9 @@ import {
     LatestOpportunitiesSkeleton,
     CardSkeleton
  } from "../../ui/skeletons";
- import { Metadata } from "next"
+import { Metadata } from "next"
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
     title: 'Dashboard'
@@ -15,6 +17,11 @@ export const metadata: Metadata = {
 
 
 export default async function Page() {
+    const session = await auth()
+  
+    if (!session?.user) {
+        redirect('/login')
+    }
 
     return (
         <main>

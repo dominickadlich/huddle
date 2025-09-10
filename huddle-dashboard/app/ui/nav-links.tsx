@@ -3,7 +3,7 @@
 import { 
     PresentationChartBarIcon,
     PhoneIcon,
-    CalendarIcon
+    NewspaperIcon
 } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx';
@@ -21,9 +21,9 @@ const navigation = [
     icon: PhoneIcon
  },
  { 
-    name: 'Schedule',
-    href: '/schedule',
-    icon: CalendarIcon
+    name: 'Documents',
+    href: '/docs',
+    icon: NewspaperIcon
  },
 ]
 

@@ -6,12 +6,12 @@ import { ExtensionsTableSkeleton } from "../ui/skeletons"
 import { fetchExtensionsPages } from "../lib/data"
 import { Suspense } from "react"
 import { Metadata } from "next"
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
     title: 'Directory'
 }
-
-
 
 export default async function Page(props: {
     searchParams?: Promise<{
@@ -23,6 +23,11 @@ export default async function Page(props: {
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
     const totalPages = await fetchExtensionsPages(query);
+    const session = await auth()
+
+    if (!session?.user) {
+        redirect('/login')
+    }
 
     return (
         <>
