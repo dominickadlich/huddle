@@ -134,9 +134,50 @@ export async function fetchExtensionById(id: string) {
             }
             throw  error
         }
+
         return data
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error(`Failed to fetch extension with id: ${id}`)
+    }
+}
+
+export async function fetchSections(query?: string) {
+    try {
+        let supabaseQuery = supabase
+        .from('sections')
+        .select('*')
+        .order('category', { ascending: true });
+
+        if (query) {
+            supabaseQuery = supabaseQuery.or(`title.ilike.%${query}%,description.ilike.%${query}%,category.ilike.%${query}%`);
+        }
+
+        const { data, error } = await supabaseQuery;
+
+        if (error) throw error
+
+        return data || [];
+    } catch (error) {
+        console.error('Error fetching sections:', error);
+        throw new Error('Failed to fetch section data')
+    }
+}
+
+
+export async function fetchSectionBySlug(slug: string) {
+    try{
+        const { data, error } = await supabase
+        .from('sections')
+        .select('*')
+        .eq('slug', slug)
+        .single()
+    
+        if (error) throw error
+
+        return data;
+    } catch (error) {
+        console.error('Error fetching section by slug:', error)
+        throw new Error('Failed to fetch section with slug')
     }
 }
