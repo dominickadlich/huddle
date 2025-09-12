@@ -143,6 +143,8 @@ export async function fetchExtensionById(id: string) {
 }
 
 export async function fetchSections(query?: string) {
+    console.log("Fetching sections...")
+
     try {
         let supabaseQuery = supabase
         .from('sections')
@@ -155,8 +157,11 @@ export async function fetchSections(query?: string) {
 
         const { data, error } = await supabaseQuery;
 
+        console.log("Supabase response:", { data, error });
+
         if (error) throw error
 
+         console.log("Returning data:", data);
         return data || [];
     } catch (error) {
         console.error('Error fetching sections:', error);

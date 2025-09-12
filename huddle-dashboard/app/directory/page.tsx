@@ -41,7 +41,7 @@ export default async function Page(props: {
                 <Search placeholder="Search Extensions..." />
                 <CreateExtension />
             </div>
-            <Suspense key={ query + currentPage} fallback={<ExtensionsTableSkeleton />}>
+            <Suspense key={ query + currentPage } fallback={<ExtensionsTableSkeleton />}>
                 <Table 
                     query={query}
                     currentPage={currentPage}

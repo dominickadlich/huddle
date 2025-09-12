@@ -1,6 +1,13 @@
 import Search from "../ui/search";
-import Card from "../ui/docs/cards";
-import { fetchSections } from "../lib/data";
+import CardsGrid from "../ui/docs/cards-grid";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Docs Home'
+}
 
 export default async function Page(props: {
     searchParams?: Promise<{
@@ -10,25 +17,22 @@ export default async function Page(props: {
     const searchParams = await props.searchParams;
     const query = searchParams?.query || '';
 
-    const sections = await fetchSections(query);
+    const session = await auth()
+    if (!session?.user) {
+        redirect('/login')
+    }
 
     return (
         <div className="w-full">
-            <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-                <Search placeholder="Search documentation..." />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sections.map((section) => (
-                <Card
-                  key={section.id}
-                  header={section.title}
-                  body={section.content}
-                  icon={section.icon}
-                  category={section.category}
-                  href={section.slug}
-                />
-              ))}
-            </div>
+          <div className="flex w-full items-center justify-between">
+            <h1 className="text-2xl font-semibold">Documentation</h1>
+          </div>
+          <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+            <Search placeholder="Search documentation..." />
+          </div>
+          <Suspense key={query} fallback={<div>Loading...</div>}>
+            <CardsGrid query={query}/>
+          </Suspense>
         </div>
     );
 }
