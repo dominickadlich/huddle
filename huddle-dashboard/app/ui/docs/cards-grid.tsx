@@ -24,7 +24,7 @@ export default async function CardsGrid({ query }: CardsGridProps) {
             
             {sections.length === 0 && query && (
                 <div className="col-span-full text-center py-12">
-                    <p className="text-gray-500">No documentation found for "{query}"</p>
+                    <p className="text-gray-500">No documentation found for {query}</p>
                 </div>
             )}
         </div>
