@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 const navigation = [
   { 
-    name: 'Dashboard',
+    name: 'Huddle',
     href: '/dashboard',
     icon: PresentationChartBarIcon
  },

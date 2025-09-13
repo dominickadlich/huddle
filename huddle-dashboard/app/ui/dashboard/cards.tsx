@@ -3,11 +3,13 @@ import {
     CakeIcon,
     ExclamationTriangleIcon,
     EyeDropperIcon,
-    ChatBubbleLeftEllipsisIcon
+    ChatBubbleLeftEllipsisIcon,
+    ArchiveBoxArrowDownIcon,
+    LockClosedIcon,
+    UserGroupIcon,
+    BeakerIcon
  } from '@heroicons/react/24/outline'
-import { inter } from '../fonts'
 import { fetchLatestHuddleData } from '../../lib/data';
-import { title } from 'process';
 
  const iconMap = {
     census: ChartBarIcon,
@@ -15,6 +17,10 @@ import { title } from 'process';
     haz_count: ExclamationTriangleIcon,
     non_sterile_count: EyeDropperIcon,
     opportunities: ChatBubbleLeftEllipsisIcon,
+    restock: ArchiveBoxArrowDownIcon,
+    cs_queue: LockClosedIcon,
+    staffing: UserGroupIcon,
+    complex_preps_count: BeakerIcon,
  };
 
  export default async function CardWrapper() {
@@ -24,6 +30,10 @@ import { title } from 'process';
         haz_count,
         non_sterile_count,
         opportunities,
+        restock,
+        cs_queue,
+        staffing,
+        complex_preps_count,
     } = await fetchLatestHuddleData();
 
     return (
@@ -32,7 +42,11 @@ import { title } from 'process';
         <Card title='TPN Count' value={tpn_count} type='tpn_count' />
         <Card title='Hazardous Count' value={haz_count} type='haz_count' />
         <Card title='Non-Sterile Count' value={non_sterile_count} type='non_sterile_count' />
-        <Card title='Opportunities' value={opportunities?.length || 0} type='opportunities' />
+        {/* <Card title='Opportunities' value={opportunities?.length || 0} type='opportunities' /> */}
+        <Card title='Restock' value={restock} type='restock' />
+        <Card title='CS Queue' value={cs_queue} type='cs_queue' />
+        <Card title='Staffing' value={staffing} type='staffing' />
+        <Card title='Complex Preps' value={complex_preps_count} type='complex_preps_count' />
       </>
     );
  }
@@ -44,22 +58,39 @@ import { title } from 'process';
  }: {
     title: string,
     value: number | string,
-    type: 'census' | 'tpn_count' | 'haz_count' | 'non_sterile_count' | 'opportunities';
+    type: 
+      'census' | 
+      'tpn_count' | 
+      'haz_count' | 
+      'non_sterile_count' | 
+      'opportunities' | 
+      'restock' |
+      'cs_queue' |
+      'staffing' |
+      'complex_preps_count'
  }) {
     const Icon = iconMap[type];
 
+    const isBooleanCard = type === 'restock' || type === 'cs_queue';
+
     return (
-    <div className="rounded-xl bg-indigo-500 p-2 shadow-sm">
-         <div className="flex p-4">
-            {Icon ? <Icon className="h-5 w-5 text-white" /> : null}
-            <h3 className="ml-2 text-sm font-medium">{title}</h3>
+    <div className="rounded-xl bg-indigo-500 p-1">
+      <div className='rounded-xl bg-gray-100 text-black p-2 text-center text-lg'>
+         <div className="flex justify-center border-b-2">
+            {Icon ? <Icon className="h-6 w-6 text-black" /> : null}
+            <h3 className="ml-2 text-lg font-medium">{title}</h3>
          </div>
-      <p
-        className={`${inter.className}
-          truncate rounded-xl bg-gray-100 text-black px-4 py-8 text-center text-2xl`}
-      >
-        {value}
-      </p>
+         {isBooleanCard ? (
+            <div className="flex justify-center items-center h-8 mt-2">
+               <div 
+                  className={`w-6 h-6 rounded-full ${
+                  value ? 'bg-red-400' : 'bg-green-400'
+                  }`}
+               />
+               </div>) : (
+                  <p className="text-2xl mt-2">{value}</p>
+                )}
+         </div>
     </div>
     )
  };

@@ -1,12 +1,16 @@
+import Image from "next/image";
 import { UpdateExtension, DeleteExtension } from "./buttons";
-import { fetchExtensions } from "@/app/lib/data";
+import { formatDateToLocal } from "@/app/lib/utils";
+import { fetchFilteredExtensions } from "@/app/lib/data";
 
-export default async function ExtensionsTable({
+export default async function PaginationTable({
     query,
+    currentPage,
 }: {
     query: string;
+    currentPage: number;
 }) {
-    const extensions = await fetchExtensions(query);
+    const extensions = await fetchFilteredExtensions(query, currentPage);
 
     return (
        <div className="mt-6 flow-root">

@@ -120,6 +120,24 @@ export async function fetchExtensionsPages(query: string) {
 
 }
 
+export async function fetchExtensions(query: string) {
+    try {
+        const { data, error } = await supabase
+        .from('central_directory')
+        .select('*')
+        .order('name')
+        .or(`name.ilike.%${query}%,extension.ilike.%${query}%`)
+
+        if (error) throw error
+
+        return data;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch extensions')
+    }
+
+}
+
 export async function fetchExtensionById(id: string) {
     try {
         const { data, error } = await supabase
