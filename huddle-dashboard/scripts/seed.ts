@@ -23,13 +23,13 @@ const lorem = new LoremIpsum({
     }
 });
 
-const opportunityTypes = [
-    "Workflow improvement",
-    "Staff development", 
-    "Technology upgrade",
-    "Process optimization",
-    "Safety enhancement"
-];
+// const opportunityTypes = [
+//     "Workflow improvement",
+//     "Staff development", 
+//     "Technology upgrade",
+//     "Process optimization",
+//     "Safety enhancement"
+// ];
 
 const users = [
     {
@@ -49,12 +49,18 @@ const generateHuddleData = async (days = 7) => {
             tpn_count: Math.floor(Math.random() * 20) + 15, // 15-34 tpns
             haz_count: Math.floor(Math.random() * 15) + 8, // 8-23 haz compounds
             non_sterile_count: Math.floor(Math.random() * 5) + 3, // 3-7 non-sterile compounds
-            opportunities: [{ 
-                title: opportunityTypes[Math.floor(Math.random() * opportunityTypes.length)], 
-                body: lorem.generateSentences(2),
-                date: new Date(Date.now() - (i * 24 * 60 * 60 * 1000)).toISOString(),
-                priority: ['low', 'medium', 'high'][Math.floor(Math.random() * 3)]
-            }]
+            restock: Math.random() > 0.7, // 30% chance of needing restock
+            cs_queue: Math.random() > 0.8, // 20% chance of queue backup
+            staffing: ['Full', 'Short', 'Critical'][Math.floor(Math.random() * 3)],
+            complex_preps_count: Math.floor(Math.random() * 5) + 3,
+            safety: lorem.generateSentences(2),
+            go_lives: lorem.generateSentences(2),
+            pass_off: lorem.generateSentences(2),
+            opportunities: lorem.generateSentences(2),
+            inventory: lorem.generateSentences(2),
+            barriers: lorem.generateSentences(2),
+            unresolved_issues: lorem.generateSentences(2),
+            shout_outs: lorem.generateSentences(2)
         });
     }
     

@@ -27,8 +27,8 @@ export default async function Page(props: {
 
     return (
         <main className="px-6">
-            <div className="flex justify-between items-center mt-10">
-                <div className="flex w-full items-center jusify-between">
+            <div className="flex mt-10">
+                <div className="flex justify-between items-center w-full items-center">
                     <h1 className="text-2xl font-bold"> Extensions </h1>
                     <div className="flex gap-2">
                         <CreateExtension />

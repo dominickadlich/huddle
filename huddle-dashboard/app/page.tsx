@@ -6,7 +6,7 @@ export default function Example() {
   return (
     <>
     <NavBar />
-    <div className="bg-white dark:bg-black">
+    <div className="bg-gray-800">
       <div className="relative isolate px-6 pt-14 lg:px-8"></div>
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
@@ -19,7 +19,7 @@ export default function Example() {
             </div>
           </div>
           <div className="text-center">
-            <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl dark:text-white">
+            <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl dark:text-gray-200">
               Optimize Your Command Center
             </h1>
             <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8 dark:text-gray-400">

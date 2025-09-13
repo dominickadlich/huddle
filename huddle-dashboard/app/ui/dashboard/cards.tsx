@@ -75,7 +75,7 @@ import { fetchLatestHuddleData } from '../../lib/data';
 
     return (
     <div className="rounded-xl bg-indigo-500 p-1">
-      <div className='rounded-xl bg-gray-100 text-black p-2 text-center text-lg'>
+      <div className='rounded-xl bg-gray-200 text-black p-2 text-center text-lg'>
          <div className="flex justify-center border-b-2">
             {Icon ? <Icon className="h-6 w-6 text-black" /> : null}
             <h3 className="ml-2 text-lg font-medium">{title}</h3>
