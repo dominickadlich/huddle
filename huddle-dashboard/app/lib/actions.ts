@@ -2,7 +2,7 @@
 
 // const d_day = "I'm having a baby" // Baby Violet's first commit.
 
-import { z } from "zod";
+import { number, string, z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
@@ -22,8 +22,32 @@ const FormSchema = z.object({
     created_at: z.string(),
 });
 
+
+const HuddleFormSchema = z.object({
+    id: z.string(),
+    created_at: z.string(),
+    census: z.number().min(1, "Please enter the census count."),
+    tpn_count: z.number().min(1, "Please enter a TPN count."),
+    haz_count: z.number().min(1, "Please enter the hazardous count."),
+    non_sterile_count: z.number().min(1, "Please enter a non-sterile count."),
+    restock: z.boolean(),
+    cs_queue: z.boolean(),
+    staffing: z.string().min(1, "Please select a staffing status."),
+    complex_preps_count: z.number().min(1, "Please enter the number of complex preps."),
+    safety: z.string(),
+    inventory: z.string(),
+    go_lives: z.string(),
+    barriers: z.string(),
+    pass_off: z.string(),
+    unresolved_issues: z.string(),
+    opportunities: z.string(),
+    shout_outs: z.string(),
+})
+
 const CreateExtension = FormSchema.omit({ id: true, created_at: true });
 const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
+
+const CreateHuddleReport = HuddleFormSchema.omit({ id: true, created_at: true});
 
 export type State = {
     errors?: {
@@ -31,6 +55,108 @@ export type State = {
         extension?: string[];
     };
     message?: string | null;
+}
+
+export type HuddleState = {
+    errors?: {
+        census?: string[],
+        tpn_count?: number,
+        haz_count?: number,
+        non_sterile_count?: number,
+        restock?: boolean,
+        cs_queue?: boolean,
+        staffing?: string[],
+        complex_preps_count?: number,
+        safety?: string[],
+        inventory?: string[],
+        go_lives?: string[],
+        barriers?: string[],
+        pass_off?: string[],
+        unresolved_issues?: string[],
+        opportunities?: string[],
+        shout_outs?: string[],
+    };
+    message?: string | null;
+}
+
+export async function createHuddleReport(prevState: HuddleState, formData: FormData) {
+    const validatedFields = CreateHuddleReport.safeParse({
+        census: formData.get('census'),
+        tpn_count: formData.get('tpn_count'),
+        haz_count: formData.get('haz_count'),
+        non_sterile_count: formData.get('non_sterile_count'),
+        restock: formData.get('restock'),
+        cs_queue: formData.get('cs_queue'),
+        staffing: formData.get('staffing'),
+        complex_preps_count: formData.get('complex_preps_count'),
+        safety: formData.get('safety'),
+        inventory: formData.get('inventory'),
+        go_lives: formData.get('go_lives'),
+        barriers: formData.get('barriers'),
+        pass_off: formData.get('pass_off'),
+        unresolved_issues: formData.get('unresolved_issues'),
+        opportunities: formData.get('opportunities'),
+        shout_outs: formData.get('shout_outs'),
+    });
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: "Missing Fields. Failed to create Huddle Report."
+        };
+    }
+
+    // Prepare data for insertion into the database
+    const {
+        census,
+        tpn_count,
+        haz_count,
+        non_sterile_count,
+        restock,
+        cs_queue,
+        staffing,
+        complex_preps_count,
+        safety,
+        inventory,
+        go_lives,
+        barriers,
+        pass_off,
+        unresolved_issues,
+        opportunities,
+        shout_outs,
+     } = validatedFields.data;
+     const created_at = new Date().toISOString().split('T')[0];
+
+     try {
+        const { data, error } = await supabase
+        .from('huddle_data')
+        .insert([{
+            census: census,
+            tpn_count: tpn_count,
+            haz_count: haz_count,
+            non_sterile_count: non_sterile_count,
+            restock: restock,
+            cs_queue: cs_queue,
+            staffing: staffing,
+            complex_preps_count: complex_preps_count,
+            safety: safety,
+            inventory: inventory,
+            go_lives: go_lives,
+            barriers: barriers,
+            pass_off: pass_off,
+            unresolved_issues: unresolved_issues,
+            opportunities: opportunities,
+            shout_outs: shout_outs,
+        }])
+
+        if (error) throw error
+     } catch (error) {
+        console.log('Database Error:', error)
+        return { message: "Missing Fields. Failed to create a huddle report."}
+     }
+
+     revalidatePath('/dashboard')
+     redirect('/dashboard')
 }
 
 
