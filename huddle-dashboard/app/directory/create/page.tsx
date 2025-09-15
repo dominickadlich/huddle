@@ -3,13 +3,13 @@ import Breadcrumbs from "@/app/ui/directory/breadcrumbs";
 
 export default async function Page() {
     return (
-        <main>
+        <main className="px-6">
             <Breadcrumbs 
                 breadcrumbs={[
-                    { label: 'Extensions', href: '/dashboard/directory' },
+                    { label: 'Directory', href: '/directory' },
                     {
                         label: 'Create Extension',
-                        href: '/dashboard/directory/create',
+                        href: '/directory/create',
                         active: true,
                     },
                 ]}

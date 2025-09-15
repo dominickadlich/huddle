@@ -6,7 +6,7 @@ export default async function Page() {
         <main>
             <Breadcrumbs 
                 breadcrumbs={[
-                    { label: 'Huddle Report', href: '/dashboard' },
+                    { label: 'Huddle Dashboard', href: '/dashboard' },
                     {
                         label: 'Create Huddle Report',
                         href: '/dashboard/create',
@@ -14,7 +14,9 @@ export default async function Page() {
                     },
                 ]}
             />
-            <Form />
+            <div className="flex justify-center">
+                <Form />
+            </div>
         </main>
     )
 }

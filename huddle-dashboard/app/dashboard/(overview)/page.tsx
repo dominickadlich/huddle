@@ -11,6 +11,7 @@ import { Metadata } from "next"
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import TextWrapper from "@/app/ui/dashboard/text-box";
+import { CreateExtension } from "@/app/ui/dashboard/buttons";
 
 export const metadata: Metadata = {
     title: 'Dashboard'
@@ -29,9 +30,9 @@ export default async function Page() {
             <div className="flex justify-between items-center mt-10">
                 <h1 className="text-2xl font-bold">Huddle Dashboard</h1>
                 <div className="flex gap-2">
-                    <button className="px-4 py-2 bg-indigo-500 text-white rounded-lg">
-                        Create Entry
-                    </button>
+                    <div className="flex gap-2">
+                        <CreateExtension />
+                    </div>
                     <button className="px-4 py-2 bg-gray-600 text-white rounded-lg">
                         Update Current
                     </button>

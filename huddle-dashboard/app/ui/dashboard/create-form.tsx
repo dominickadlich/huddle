@@ -53,12 +53,13 @@ export default function Form() {
 
     return (
         <form action={formAction}>
-            <div className="rounded-md bg-gray-50 p-4 md:p-6">
+            <div className="grid grid-cols-2">
                 {inputConfigs.map((config) => (
                     <FormField key={config.name} config={config} state={state} />
                 ))}
                 
                 {/* Special cases like checkboxes and select */}
+                <div>
                 <div className="mb-4">
                     <label className="flex items-center">
                     <input 
@@ -77,6 +78,7 @@ export default function Form() {
                         className="mr-2" />
                         CS Queue Help Needed
                     </label>
+                </div>
                 </div>
             
                 {/* Submit button */}

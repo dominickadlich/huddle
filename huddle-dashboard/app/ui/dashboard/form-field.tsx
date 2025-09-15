@@ -16,45 +16,54 @@ export default function FormField({ config, state }: { config: InputConfig, stat
   
   if (type === 'textarea') {
     return (
-      <div className="mb-4">
-        <label htmlFor={name} className="mb-2 block text-sm font-medium text-black">
-          {label}
-        </label>
-        <div className="relative">
-          <textarea
-            id={name}
-            name={name}
-            placeholder={placeholder}
-            rows={3}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm text-black outline-2 placeholder:text-gray-500"
-          />
-          <Icon className="pointer-events-none absolute left-3 top-3 h-[18px] w-[18px] text-gray-500" />
-        </div>
-        {state.errors?.[name] && (
-          <div className="mt-2">
-            {state.errors[name].map((error: string) => (
-              <p className="text-sm text-red-500" key={error}>{error}</p>
-            ))}
+      <div className=' mt-10 '>
+      <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div className="sm:col-span-8">
+            <label htmlFor={name} className="text-sm/6 font-medium text-gray-900 dark:text-white">
+            <Icon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
+              {label}
+            </label>
+            <div className="mt-2">
+                <textarea
+                  id={name}
+                  name={name}
+                  placeholder={placeholder}
+                  rows={3}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+                />
+              </div>
           </div>
-        )}
+          {state.errors?.[name] && (
+            <div className="mt-2">
+              {state.errors[name].map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>{error}</p>
+            ))}
+            </div>
+          )}
+      </div>
       </div>
     );
   }
 
   return (
-    <div className="mb-4">
-      <label htmlFor={name} className="mb-2 block text-sm font-medium text-black">
+    <div className='flex justify-center items-center mt-10 border-2'>
+    <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <div className="sm:col-span-2">
+      <label htmlFor={name} className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white">
+        <Icon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
         {label}
       </label>
-      <div className="relative">
+      <div className="mt-2">
+        {/* <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500"> */}
         <input
           id={name}
           name={name}
           type={type}
           placeholder={placeholder}
-          className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm text-black outline-2 placeholder:text-gray-500"
+          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
         />
-        <Icon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+      {/* </div> */}
+      </div>
       </div>
       {state.errors?.[name] && (
         <div className="mt-2">
@@ -63,6 +72,7 @@ export default function FormField({ config, state }: { config: InputConfig, stat
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 }
