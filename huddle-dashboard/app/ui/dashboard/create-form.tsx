@@ -136,11 +136,11 @@ export default function Form() {
   return (
     <form action={formAction}>
       <div className="">
-        <div className="grid grid-cols-4 border">
+        <div className="grid grid-cols-4">
           {numericInputConfigs.map((config) => (
             <FormField key={config.name} config={config} state={state} />
           ))}
-          <div className="mt-10 border">
+          <div className="mt-10">
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
                 <label
@@ -170,7 +170,7 @@ export default function Form() {
           </div>
           <div className="mt-10">
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-2">
+              <div className="sm:col-span-4">
                 <label
                   htmlFor="restock"
                   className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -184,23 +184,25 @@ export default function Form() {
                       id="restock"
                       name="restock"
                       type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      className="h-6 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
                     <span className="ml-3 text-sm text-gray-700 dark:text-white">
                       Help Needed
                     </span>
                   </div>
-                  </div>
-                </div>
                 </div>
               </div>
-              <div className="mt-10 sm:col-span-2">
+            </div>
+          </div>
+          <div className="mt-10">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div className="sm:col-span-4">
                 <label
                   htmlFor="restock"
                   className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
                 >
                   <ArchiveBoxArrowDownIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
-                  CS Queue
+                  Restock
                 </label>
                 <div className="mt-2">
                   <div className="flex items-center rounded-md bg-white px-3 py-1.5 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500">
@@ -208,7 +210,7 @@ export default function Form() {
                       id="cs_queue"
                       name="cs_queue"
                       type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      className="h-6 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
                     <span className="ml-3 text-sm text-gray-700 dark:text-white">
                       Help Needed
@@ -216,6 +218,8 @@ export default function Form() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-2">

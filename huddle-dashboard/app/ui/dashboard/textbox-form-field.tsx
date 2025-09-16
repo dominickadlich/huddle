@@ -26,7 +26,7 @@ export default function TextBoxFormField({
           <div className="sm:col-span-5">
             <label
               htmlFor={name}
-              className="text-sm/6 font-medium text-gray-900 dark:text-white"
+              className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
             >
               <Icon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
               {label}

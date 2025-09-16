@@ -20,7 +20,7 @@ export default function FormField({
   const { name, label, type, icon: Icon, placeholder } = config;
 
   return (
-    <div className="mt-10 border">
+    <div className="mt-10">
       <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div className="sm:col-span-4">
           <label

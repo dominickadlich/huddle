@@ -47,14 +47,10 @@ export default async function CardWrapper() {
         type="non_sterile_count"
       />
       {/* <Card title='Opportunities' value={opportunities?.length || 0} type='opportunities' /> */}
+      <Card title="Complex Preps" value={complex_preps_count} type="complex_preps_count" />
+      <Card title="Staffing" value={staffing} type="staffing" />
       <Card title="Restock" value={restock} type="restock" />
       <Card title="CS Queue" value={cs_queue} type="cs_queue" />
-      <Card title="Staffing" value={staffing} type="staffing" />
-      <Card
-        title="Complex Preps"
-        value={complex_preps_count}
-        type="complex_preps_count"
-      />
     </>
   );
 }
