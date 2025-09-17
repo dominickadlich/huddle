@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import './ui/global.css'
+import "./ui/global.css";
 import { inter, lusitana } from "./ui/fonts";
 import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: {
-    template: 'Command Center | %s',
-    default: 'Pharmacy Command Center'
+    template: "Command Center | %s",
+    default: "Pharmacy Command Center",
   },
-  description: 'The official dashboard for central pharmacies',
-  metadataBase: new URL('https://huddle-lime-gamma.vercel.app/'),
-}
+  description: "The official dashboard for central pharmacies",
+  metadataBase: new URL("https://huddle-lime-gamma.vercel.app/"),
+};
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +23,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,12 +30,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} antialiased`}
-      >
-        <SessionProvider>
-          {children}
-        </SessionProvider>
+      <body className={`${inter.className} antialiased`}>
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

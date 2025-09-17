@@ -1,39 +1,43 @@
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
-import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
+import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
+  { name: "Dashboard", href: "#", current: true },
   {
-    name: 'Teams',
+    name: "Teams",
     current: false,
     children: [
-      { name: 'Engineering', href: '#', current: false },
-      { name: 'Human Resources', href: '#', current: false },
-      { name: 'Customer Success', href: '#', current: false },
+      { name: "Engineering", href: "#", current: false },
+      { name: "Human Resources", href: "#", current: false },
+      { name: "Customer Success", href: "#", current: false },
     ],
   },
   {
-    name: 'Projects',
+    name: "Projects",
     current: false,
     children: [
-      { name: 'GraphQL API', href: '#', current: false },
-      { name: 'iOS App', href: '#', current: false },
-      { name: 'Android App', href: '#', current: false },
-      { name: 'New Customer Portal', href: '#', current: false },
+      { name: "GraphQL API", href: "#", current: false },
+      { name: "iOS App", href: "#", current: false },
+      { name: "Android App", href: "#", current: false },
+      { name: "New Customer Portal", href: "#", current: false },
     ],
   },
-  { name: 'Calendar', href: '#', current: false },
-  { name: 'Documents', href: '#', current: false },
-  { name: 'Reports', href: '#', current: false },
-]
+  { name: "Calendar", href: "#", current: false },
+  { name: "Documents", href: "#", current: false },
+  { name: "Reports", href: "#", current: false },
+];
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function SideNav() {
   return (
-     <div className="h-full flex flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pt-6 dark:border-white/10 dark:bg-gray-900">
+    <div className="h-full flex flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pt-6 dark:border-white/10 dark:bg-gray-900">
       <nav className="relative flex flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
@@ -44,8 +48,10 @@ export default function SideNav() {
                     <a
                       href={item.href}
                       className={classNames(
-                        item.current ? 'bg-gray-50 dark:bg-white/5' : 'hover:bg-gray-50 dark:hover:bg-white/5',
-                        'block rounded-md py-2 pr-2 pl-10 text-sm/6 font-semibold text-gray-700 dark:text-gray-400',
+                        item.current
+                          ? "bg-gray-50 dark:bg-white/5"
+                          : "hover:bg-gray-50 dark:hover:bg-white/5",
+                        "block rounded-md py-2 pr-2 pl-10 text-sm/6 font-semibold text-gray-700 dark:text-gray-400",
                       )}
                     >
                       {item.name}
@@ -54,8 +60,10 @@ export default function SideNav() {
                     <Disclosure as="div">
                       <DisclosureButton
                         className={classNames(
-                          item.current ? 'bg-gray-50 dark:bg-white/5' : 'hover:bg-gray-50 dark:hover:bg-white/5',
-                          'group flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm/6 font-semibold text-gray-700 dark:text-gray-400',
+                          item.current
+                            ? "bg-gray-50 dark:bg-white/5"
+                            : "hover:bg-gray-50 dark:hover:bg-white/5",
+                          "group flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm/6 font-semibold text-gray-700 dark:text-gray-400",
                         )}
                       >
                         <ChevronRightIcon
@@ -72,9 +80,9 @@ export default function SideNav() {
                               href={subItem.href}
                               className={classNames(
                                 subItem.current
-                                  ? 'bg-gray-50 dark:bg-white/5'
-                                  : 'hover:bg-gray-50 dark:hover:bg-white/5',
-                                'block rounded-md py-2 pr-2 pl-9 text-sm/6 text-gray-700 dark:text-gray-400',
+                                  ? "bg-gray-50 dark:bg-white/5"
+                                  : "hover:bg-gray-50 dark:hover:bg-white/5",
+                                "block rounded-md py-2 pr-2 pl-9 text-sm/6 text-gray-700 dark:text-gray-400",
                               )}
                             >
                               {subItem.name}
@@ -92,11 +100,10 @@ export default function SideNav() {
             <a
               href="#"
               className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-            >
-            </a>
+            ></a>
           </li>
         </ul>
       </nav>
     </div>
-  )
+  );
 }

@@ -6,58 +6,58 @@ import { fetchAllCensusData } from "@/app/lib/data";
 import { formatDateToLocal } from "@/app/lib/utils";
 
 export default async function CensusChart() {
-    const censusData = await fetchAllCensusData();
+  const censusData = await fetchAllCensusData();
 
-    const recentData = censusData.slice(0, 7);
+  const recentData = censusData.slice(0, 7);
 
-    const chartData = recentData.map(item => ({
-        date: formatDateToLocal(item.date, 'en-US'),
-        census: item.census
-    }))
+  const chartData = recentData.map((item) => ({
+    date: formatDateToLocal(item.date, "en-US"),
+    census: item.census,
+  }));
 
-    const chartHeight = 350;
-    const { yAxisLabels, topLabel } = generateYAxis(censusData);
+  const chartHeight = 350;
+  const { yAxisLabels, topLabel } = generateYAxis(censusData);
 
-    if (!recentData || recentData.length === 0) {
-        return <p className="mt-4 text-gray-400">No data available.</p>
-    }
+  if (!recentData || recentData.length === 0) {
+    return <p className="mt-4 text-gray-400">No data available.</p>;
+  }
 
-    return (
-        <div className="w-full md:col-span-4">
-            <h2 className={`${inter.className} mb-4 text-xl md:text-2xl`}>
-                Recent Census
-            </h2>
+  return (
+    <div className="w-full md:col-span-4">
+      <h2 className={`${inter.className} mb-4 text-xl md:text-2xl`}>
+        Recent Census
+      </h2>
 
-            <div className="rounded-xl bg-indigo-500 p-2">
-                <div className="sm:grid-cols-13 mt-0 grid grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4">
-                    <div
-                        className="mb-6 hidden flex-col justify-between text-sm text-black sm:flex"
-                        style={{ height: `${chartHeight}px` }}
-                    >
-                        {yAxisLabels.map((label) => (
-                            <p key={label}>{label}</p>
-                        ))}
-                    </div>
+      <div className="rounded-xl bg-indigo-500 p-2">
+        <div className="sm:grid-cols-13 mt-0 grid grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4">
+          <div
+            className="mb-6 hidden flex-col justify-between text-sm text-black sm:flex"
+            style={{ height: `${chartHeight}px` }}
+          >
+            {yAxisLabels.map((label) => (
+              <p key={label}>{label}</p>
+            ))}
+          </div>
 
-                    {chartData.map((item) => (
-                        <div key={item.date} className="flex flex-col items-center gap-2">
-                            <div
-                                className="w-full rounded-md bg-indigo-300"
-                                style={{
-                                    height: `${(chartHeight / topLabel) * item.census}px`,
-                                }}
-                            ></div>
-                            <p className="-rotate-90 text-sm text-black sm:rotate-0">
-                                {item.date}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-                <div className="flex items-center pb-2 pt-6">
-                    <CalendarIcon className="h-5 w-5 text-white" />
-                    <h3 className="ml-2 text-sm text-white">Last 7 days</h3>
-                </div>
+          {chartData.map((item) => (
+            <div key={item.date} className="flex flex-col items-center gap-2">
+              <div
+                className="w-full rounded-md bg-indigo-300"
+                style={{
+                  height: `${(chartHeight / topLabel) * item.census}px`,
+                }}
+              ></div>
+              <p className="-rotate-90 text-sm text-black sm:rotate-0">
+                {item.date}
+              </p>
             </div>
+          ))}
         </div>
-    );
+        <div className="flex items-center pb-2 pt-6">
+          <CalendarIcon className="h-5 w-5 text-white" />
+          <h3 className="ml-2 text-sm text-white">Last 7 days</h3>
+        </div>
+      </div>
+    </div>
+  );
 }
