@@ -14,25 +14,25 @@ export default function Form() {
 
   return (
     <form action={formAction}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+      <div className="mt-10">
         {/* Extension Name */}
-        <div className="mb-4">
+        <div className="sm:col-span-4">
           <label
             htmlFor="siteName"
-            className="mb-2 block text-sm font-medium text-black"
+            className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
           >
+            <BuildingOfficeIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
             Site Name
           </label>
-          <div className="relative">
+          <div className="mt-2">
             <input
               id="siteName"
               name="name"
               type="text"
               placeholder="Enter site name here"
-              className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm text-black outline-2 placeholder:text-gray-500"
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
               aria-describedby="name-error"
             />
-            <BuildingOfficeIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
         </div>
         <div id="name-error" aria-live="polite" aria-atomic="true">
@@ -45,23 +45,23 @@ export default function Form() {
         </div>
 
         {/* Extension Number */}
-        <div className="mb-4">
+        <div className="mt-10">
           <label
             htmlFor="siteNumber"
-            className="mb-2 block text-sm font-medium text-black"
+            className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
           >
+            <PhoneIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
             Site Number
           </label>
-          <div className="relative">
+          <div className="mt-2">
             <input
               id="siteNumber"
               name="extension"
               type="text"
               placeholder="Enter site number here"
-              className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm text-black outline-2 placeholder:text-gray-500"
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
               aria-describedby="number-error"
             />
-            <PhoneIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
         </div>
         <div id="number-error" aria-live="polite" aria-atomic="true">

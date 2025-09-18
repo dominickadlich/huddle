@@ -13,9 +13,11 @@ export type InputConfig = {
 export default function FormField({
   config,
   state,
+  // defaultValue,
 }: {
   config: InputConfig;
   state: HuddleState;
+  // defaultValue: string | '';
 }) {
   const { name, label, type, icon: Icon, placeholder } = config;
 
@@ -36,10 +38,10 @@ export default function FormField({
               name={name}
               type={type}
               placeholder={placeholder}
+              // defaultValue={defaultValue}
               className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
             />
           </div>
-        </div>
         {state.errors?.[name] && (
           <div className="mt-2">
             {state.errors[name].map((error: string) => (
@@ -49,6 +51,7 @@ export default function FormField({
             ))}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

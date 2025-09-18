@@ -2,12 +2,13 @@
 
 // const d_day = "I'm having a baby" // Baby Violet's first commit.
 
-import { number, string, z } from "zod";
+import { date, number, string, z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import { auth } from "@/auth";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -24,16 +25,17 @@ const FormSchema = z.object({
 const HuddleFormSchema = z.object({
   id: z.string(),
   created_at: z.string(),
-  census: z.number().min(1, "Please enter the census count."),
-  tpn_count: z.number().min(1, "Please enter a TPN count."),
-  haz_count: z.number().min(1, "Please enter the hazardous count."),
-  non_sterile_count: z.number().min(1, "Please enter a non-sterile count."),
+  // date: z.string(),
+  census: z.number().min(0, "Please enter the census count."),
+  tpn_count: z.number().min(0, "Please enter a TPN count."),
+  haz_count: z.number().min(0, "Please enter the hazardous count."),
+  non_sterile_count: z.number().min(0, "Please enter a non-sterile count."),
   restock: z.boolean(),
   cs_queue: z.boolean(),
-  staffing: z.string().min(1, "Please select a staffing status."),
+  staffing: z.string().min(0, "Please select a staffing status."),
   complex_preps_count: z
     .number()
-    .min(1, "Please enter the number of complex preps."),
+    .min(0, "Please enter the number of complex preps."),
   safety: z.string(),
   inventory: z.string(),
   go_lives: z.string(),
@@ -86,6 +88,15 @@ export async function createHuddleReport(
   prevState: HuddleState,
   formData: FormData,
 ) {
+
+  const session = await auth()
+
+  if (!session?.user) {
+        return { message: "Authentication required" };
+    }
+
+  console.log('Authenticated user:', session?.user);
+
   const validatedFields = CreateHuddleReport.safeParse({
     census: Number(formData.get("census")),
     tpn_count: Number(formData.get("tpn_count")),
@@ -133,11 +144,14 @@ export async function createHuddleReport(
     opportunities,
     shout_outs,
   } = validatedFields.data;
-  const created_at = new Date().toISOString().split("T")[0];
+
+  const currentDate = new Date().toISOString()
 
   try {
     const { data, error } = await supabase.from("huddle_data").insert([
       {
+        date: currentDate,
+        user_id: session?.user?.id,
         census,
         tpn_count,
         haz_count,
@@ -157,8 +171,10 @@ export async function createHuddleReport(
       },
     ]);
 
+    console.log('Date:', date)
     if (error) throw error;
   } catch (error) {
+    console.log('Date:', date)
     console.log("Database Error:", error);
     return { message: "Missing Fields. Failed to create a huddle report." };
   }
