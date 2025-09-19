@@ -42,3 +42,23 @@ export type ExtensionForm = {
   name: string;
   extension: string;
 };
+
+export type HuddleDataForm = {
+  id: string,
+  census: string;
+  tpn_count: string;
+  haz_count: string;
+  non_sterile_count: string;
+  restock: string;
+  cs_queue: string;
+  staffing: string;
+  complex_preps_count: string;
+  safety: string;
+  inventory: string;
+  go_lives: string;
+  barriers: string;
+  pass_off: string;
+  unresolved_issues: string;
+  opportunities: string;
+  shout_outs: string;
+}

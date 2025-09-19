@@ -9,6 +9,7 @@ import { createClient } from "@supabase/supabase-js";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { auth } from "@/auth";
+import { error } from "console";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -25,7 +26,6 @@ const FormSchema = z.object({
 const HuddleFormSchema = z.object({
   id: z.string(),
   created_at: z.string(),
-  // date: z.string(),
   census: z.number().min(0, "Please enter the census count."),
   tpn_count: z.number().min(0, "Please enter a TPN count."),
   haz_count: z.number().min(0, "Please enter the hazardous count."),
@@ -50,6 +50,10 @@ const CreateExtension = FormSchema.omit({ id: true, created_at: true });
 const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
 
 const CreateHuddleReport = HuddleFormSchema.omit({
+  id: true,
+  created_at: true,
+});
+const UpdateHuddleReport = HuddleFormSchema.omit({
   id: true,
   created_at: true,
 });
@@ -218,6 +222,99 @@ export async function createExtension(prevState: State, formData: FormData) {
 
   revalidatePath("/directory");
   redirect("/directory");
+}
+
+
+export async function updateHuddleReport(
+  id: string,
+  prevState: HuddleState,
+  formData: FormData,
+) {
+  const session = await auth();
+  
+  if (!session?.user) {
+    return { message: "Authentication required" };
+  }
+
+  const validatedFields = UpdateHuddleReport.safeParse({
+    census: Number(formData.get("census")),
+    tpn_count: Number(formData.get("tpn_count")),
+    haz_count: Number(formData.get("haz_count")),
+    non_sterile_count: Number(formData.get("non_sterile_count")),
+    restock:
+      formData.get("restock") === "on" || formData.get("restock") === "true",
+    cs_queue:
+      formData.get("cs_queue") === "on" || formData.get("cs_queue") === "true",
+    staffing: formData.get("staffing") || "",
+    complex_preps_count: Number(formData.get("complex_preps_count")),
+    safety: formData.get("safety") || "",
+    inventory: formData.get("inventory") || "",
+    go_lives: formData.get("go_lives") || "",
+    barriers: formData.get("barriers") || "",
+    pass_off: formData.get("pass_off") || "",
+    unresolved_issues: formData.get("unresolved_issues") || "",
+    opportunities: formData.get("opportunities") || "",
+    shout_outs: formData.get("shout_outs") || "",
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Failed to update Huddle Report due to missing fields"
+    };
+  }
+
+  const {
+    census,
+    tpn_count,
+    haz_count,
+    non_sterile_count,
+    restock,
+    cs_queue,
+    staffing,
+    complex_preps_count,
+    safety,
+    inventory,
+    go_lives,
+    barriers,
+    pass_off,
+    unresolved_issues,
+    opportunities,
+    shout_outs,
+
+  } = validatedFields.data;
+
+  try {
+    const { data, error } = await supabase
+      .from('huddle_data')
+      .update({
+        census,
+        tpn_count,
+        haz_count,
+        non_sterile_count,
+        restock,
+        cs_queue,
+        staffing,
+        complex_preps_count,
+        safety,
+        inventory,
+        go_lives,
+        barriers,
+        pass_off,
+        unresolved_issues,
+        opportunities,
+        shout_outs,
+      })
+      .eq("id", id);
+
+      if (error) throw error;
+  } catch (error) {
+    console.log("Database Error:", error)
+    return { message: "Failed to update Huddle Report"}
+  }
+
+  revalidatePath('/dashboard');
+  redirect('/dashboard');
 }
 
 export async function updateExtension(

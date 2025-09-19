@@ -138,7 +138,12 @@ export default function Form() {
       <div className="">
         <div className="grid grid-cols-4">
           {numericInputConfigs.map((config) => (
-            <FormField key={config.name} config={config} state={state} />
+            <FormField 
+                key={config.name}
+                config={config}
+                state={state}
+                defaultValue='' 
+                />
           ))}
           <div className="mt-10">
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -224,7 +229,12 @@ export default function Form() {
 
         <div className="grid grid-cols-2">
           {textInputConfigs.map((config) => (
-            <TextBoxFormField key={config.name} config={config} state={state} />
+            <TextBoxFormField 
+                key={config.name} 
+                config={config} 
+                state={state} 
+                defaultValue='' 
+                />
           ))}
         </div>
         {/* Submit button */}

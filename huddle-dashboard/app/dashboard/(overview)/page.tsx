@@ -11,13 +11,15 @@ import { Metadata } from "next";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import TextWrapper from "@/app/ui/dashboard/text-box";
-import { CreateExtension } from "@/app/ui/dashboard/buttons";
+import { CreateHuddleReport, UpdateHuddleReport } from "@/app/ui/dashboard/buttons";
+import { fetchHuddleData, fetchLatestHuddleData } from "@/app/lib/data";
 
 export const metadata: Metadata = {
   title: "Dashboard",
 };
 
 export default async function Page() {
+  const huddleData = await fetchLatestHuddleData()
   const session = await auth();
 
   if (!session?.user) {
@@ -30,11 +32,11 @@ export default async function Page() {
         <h1 className="text-2xl font-bold">Huddle Dashboard</h1>
         <div className="flex gap-2">
           <div className="flex gap-2">
-            <CreateExtension />
+            <CreateHuddleReport />
           </div>
-          <button className="px-4 py-2 bg-gray-600 text-white rounded-lg">
-            Update Current
-          </button>
+          <div className="flex gap-2">
+            <UpdateHuddleReport id={huddleData.id}/>
+          </div>
         </div>
       </div>
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

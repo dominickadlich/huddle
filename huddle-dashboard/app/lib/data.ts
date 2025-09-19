@@ -11,7 +11,6 @@ export async function fetchHuddleData() {
     const { data, error } = await supabase
       .from("huddle_data")
       .select("*")
-      .overrideTypes<HuddleData[]>();
 
     if (error) throw error;
     return data || [];
@@ -128,6 +127,29 @@ export async function fetchExtensions(query: string) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch extensions");
+  }
+}
+
+export async function fetchHuddleDataById(id: string) {
+  try {
+    const { data, error } = await supabase
+    .from('huddle_data')
+    .select('*')
+    .eq("id", id)
+    .single();
+
+    if (error) {
+      if (error.code === "PGRST116") {
+        // No rows found
+        return null;
+      }
+      throw error;
+    }
+
+    return data;
+  } catch (error) {
+    console.log("Database Error:", error)
+    return { message: "Failed to fetch huddle report with url id"}
   }
 }
 

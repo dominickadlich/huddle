@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "../button";
-import { createHuddleReport, HuddleState } from "@/app/lib/actions";
+import { HuddleState, updateHuddleReport } from "@/app/lib/actions";
 import { useActionState } from "react";
 import FormField from "./form-field";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
@@ -27,10 +27,19 @@ import {
 } from "@heroicons/react/24/outline";
 import { InputConfig } from "./form-field";
 import TextBoxFormField from "./textbox-form-field";
+import { HuddleDataForm } from "@/app/lib/definitions";
 
-export default function Form() {
-  const initialState: HuddleState = { message: null, errors: {} };
-  const [state, formAction] = useActionState(createHuddleReport, initialState);
+export default function UpdateForm({
+    huddle_data,
+}: {
+    huddle_data: HuddleDataForm
+}) {
+    const initialState: HuddleState = { message: null, errors: {} };
+    const updateReportWithId = updateHuddleReport.bind(null, huddle_data.id)
+    const [state, formAction] = useActionState(
+        updateReportWithId,
+        initialState
+    )
 
   const numericInputConfigs: InputConfig[] = [
     // Numeric inputs
@@ -138,7 +147,12 @@ export default function Form() {
       <div className="">
         <div className="grid grid-cols-4">
           {numericInputConfigs.map((config) => (
-            <FormField key={config.name} config={config} state={state} />
+            <FormField 
+                key={config.name} 
+                config={config}
+                state={state} 
+                defaultValue={huddle_data[config.name]?.toString() || ''} 
+                />
           ))}
           <div className="mt-10">
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -154,7 +168,7 @@ export default function Form() {
                   <select
                     id="staffing"
                     name="staffing"
-                    defaultValue="Full"
+                    defaultValue={huddle_data.staffing}
                     className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:*:bg-gray-800 dark:focus-visible:outline-indigo-500"
                   >
                     <option>Full</option>
@@ -184,6 +198,7 @@ export default function Form() {
                       id="restock"
                       name="restock"
                       type="checkbox"
+                      defaultValue={huddle_data.restock}
                       className="h-6 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
                     <span className="ml-3 text-sm text-gray-700 dark:text-white">
@@ -210,6 +225,7 @@ export default function Form() {
                       id="cs_queue"
                       name="cs_queue"
                       type="checkbox"
+                      defaultValue={huddle_data.cs_queue}
                       className="h-6 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
                     <span className="ml-3 text-sm text-gray-700 dark:text-white">
@@ -224,13 +240,18 @@ export default function Form() {
 
         <div className="grid grid-cols-2">
           {textInputConfigs.map((config) => (
-            <TextBoxFormField key={config.name} config={config} state={state} />
+            <TextBoxFormField 
+                key={config.name}
+                config={config}
+                state={state}
+                defaultValue={huddle_data[config.name]?.toString() || ''} 
+                />
           ))}
         </div>
         {/* Submit button */}
         <div className="flex justify-end mr-30 mt-10 gap-4">
           <Link
-            href="/directory"
+            href="/dashboard"
             className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
           >
             Cancel
