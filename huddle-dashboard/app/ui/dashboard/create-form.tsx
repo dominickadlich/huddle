@@ -24,6 +24,8 @@ import {
   BellAlertIcon,
   WrenchScrewdriverIcon,
   TrophyIcon,
+  PencilSquareIcon,
+  CheckBadgeIcon,
 } from "@heroicons/react/24/outline";
 import { InputConfig } from "./form-field";
 import TextBoxFormField from "./textbox-form-field";
@@ -68,6 +70,20 @@ export default function Form() {
       type: "number",
       icon: BeakerIcon,
       placeholder: "Enter complex preps count",
+    },
+    {
+      name: "missed_dispense_prep",
+      label: "Missed Dispense Preps",
+      type: "number",
+      icon: PencilSquareIcon,
+      placeholder: "Enter missed dispense preps",
+    },
+    {
+      name: "missed_dispense_check",
+      label: "Missed Dispense Checks",
+      type: "number",
+      icon: CheckBadgeIcon,
+      placeholder: "Enter missed dispense checks",
     },
   ];
 
@@ -134,9 +150,9 @@ export default function Form() {
   console.log("State:", state);
 
   return (
-    <form action={formAction}>
+    <form action={formAction} className="max-w-7xl mx-auto px-4 border">
       <div className="">
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-5 gap-4 mb-6 border">
           {numericInputConfigs.map((config) => (
             <FormField 
                 key={config.name}
@@ -206,8 +222,8 @@ export default function Form() {
                   htmlFor="restock"
                   className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
                 >
-                  <ArchiveBoxArrowDownIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
-                  Restock
+                  <LockClosedIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
+                  CS Queue
                 </label>
                 <div className="mt-2">
                   <div className="flex items-center rounded-md bg-white px-3 py-1.5 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500">
@@ -227,14 +243,16 @@ export default function Form() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 gap-4 justify-items-center">
           {textInputConfigs.map((config) => (
+            <div className="w-full max-w-2xl"> 
             <TextBoxFormField 
                 key={config.name} 
                 config={config} 
                 state={state} 
                 defaultValue='' 
                 />
+                </div>
           ))}
         </div>
         {/* Submit button */}

@@ -36,6 +36,8 @@ const HuddleFormSchema = z.object({
   complex_preps_count: z
     .number()
     .min(0, "Please enter the number of complex preps."),
+  missed_dispense_prep: z.string().min(0, "Please enter missed dispense preps."),
+  missed_dispense_check: z.string().min(0, "Please enter missed dispense checks."),
   safety: z.string(),
   inventory: z.string(),
   go_lives: z.string(),
@@ -76,6 +78,8 @@ export type HuddleState = {
     cs_queue?: string[];
     staffing?: string[];
     complex_preps_count?: string[];
+    missed_dispense_prep?: string[];
+    missed_dispense_check?: string[];
     safety?: string[];
     inventory?: string[];
     go_lives?: string[];
@@ -112,6 +116,8 @@ export async function createHuddleReport(
       formData.get("cs_queue") === "on" || formData.get("cs_queue") === "true",
     staffing: formData.get("staffing") || "",
     complex_preps_count: Number(formData.get("complex_preps_count")),
+    missed_dispense_prep: Number(formData.get("missed_dispense_prep")),
+    missed_dispense_check: Number(formData.get("missed_dispense_check")),
     safety: formData.get("safety") || "",
     inventory: formData.get("inventory") || "",
     go_lives: formData.get("go_lives") || "",
@@ -139,6 +145,8 @@ export async function createHuddleReport(
     cs_queue,
     staffing,
     complex_preps_count,
+    missed_dispense_check,
+    missed_dispense_prep,
     safety,
     inventory,
     go_lives,
@@ -162,6 +170,8 @@ export async function createHuddleReport(
         non_sterile_count,
         restock,
         cs_queue,
+        missed_dispense_check,
+        missed_dispense_prep,
         staffing,
         complex_preps_count,
         safety,

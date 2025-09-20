@@ -8,6 +8,8 @@ import {
   LockClosedIcon,
   UserGroupIcon,
   BeakerIcon,
+  CheckBadgeIcon,
+  PencilSquareIcon
 } from "@heroicons/react/24/outline";
 import { fetchLatestHuddleData } from "../../lib/data";
 
@@ -17,10 +19,12 @@ const iconMap = {
   haz_count: ExclamationTriangleIcon,
   non_sterile_count: EyeDropperIcon,
   opportunities: ChatBubbleLeftEllipsisIcon,
+  complex_preps_count: BeakerIcon,
+  missed_dispense_prep: PencilSquareIcon,
+  missed_dispense_check: CheckBadgeIcon,
+  staffing: UserGroupIcon,
   restock: ArchiveBoxArrowDownIcon,
   cs_queue: LockClosedIcon,
-  staffing: UserGroupIcon,
-  complex_preps_count: BeakerIcon,
 };
 
 export default async function CardWrapper() {
@@ -30,10 +34,12 @@ export default async function CardWrapper() {
     haz_count,
     non_sterile_count,
     opportunities,
+    complex_preps_count,
+    missed_dispense_prep,
+    missed_dispense_check,
+    staffing,
     restock,
     cs_queue,
-    staffing,
-    complex_preps_count,
   } = await fetchLatestHuddleData();
 
   return (
@@ -48,6 +54,8 @@ export default async function CardWrapper() {
       />
       {/* <Card title='Opportunities' value={opportunities?.length || 0} type='opportunities' /> */}
       <Card title="Complex Preps" value={complex_preps_count} type="complex_preps_count" />
+      <Card title="Missed Dispense Preps" value={missed_dispense_prep} type="missed_dispense_prep" />
+      <Card title="Missed Dispense Checks" value={missed_dispense_check} type="missed_dispense_check" />
       <Card title="Staffing" value={staffing} type="staffing" />
       <Card title="Restock" value={restock} type="restock" />
       <Card title="CS Queue" value={cs_queue} type="cs_queue" />
@@ -68,14 +76,17 @@ export function Card({
     | "haz_count"
     | "non_sterile_count"
     | "opportunities"
-    | "restock"
-    | "cs_queue"
+    | "complex_preps_count"
+    | "missed_dispense_prep"
+    | "missed_dispense_check"
     | "staffing"
-    | "complex_preps_count";
+    | "restock"
+    | "cs_queue";
 }) {
   const Icon = iconMap[type];
 
   const isBooleanCard = type === "restock" || type === "cs_queue";
+  const noValue = value === null;
 
   return (
     <div className="rounded-xl bg-indigo-500 p-1">
@@ -84,6 +95,7 @@ export function Card({
           {Icon ? <Icon className="h-6 w-6 text-black" /> : null}
           <h3 className="ml-2 text-lg font-medium">{title}</h3>
         </div>
+        {/* Handle Boolean Cards */}
         {isBooleanCard ? (
           <div className="flex justify-center items-center h-8 mt-2">
             <div
@@ -92,6 +104,10 @@ export function Card({
               }`}
             />
           </div>
+        ) : noValue ? (
+          <div className="flex justify-center items-center h-8 mt-2">
+            <p className="text-gray-400 text-lg italic">No updates</p>
+          </div> 
         ) : (
           <p className="text-2xl mt-2">{value}</p>
         )}

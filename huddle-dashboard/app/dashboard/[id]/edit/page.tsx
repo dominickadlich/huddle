@@ -26,7 +26,9 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           },
         ]}
       />
-      <UpdateForm huddle_data={report} />
+      <div className="flex justify-center">
+        <UpdateForm huddle_data={report} />
+      </div>
     </main>
   );
 }

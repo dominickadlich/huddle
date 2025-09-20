@@ -53,6 +53,8 @@ export type HuddleDataForm = {
   cs_queue: string;
   staffing: string;
   complex_preps_count: string;
+  missed_dispense_check: string,
+  missed_dispense_prep: string,
   safety: string;
   inventory: string;
   go_lives: string;
