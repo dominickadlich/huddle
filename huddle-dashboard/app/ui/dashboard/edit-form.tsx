@@ -24,6 +24,8 @@ import {
   BellAlertIcon,
   WrenchScrewdriverIcon,
   TrophyIcon,
+  PencilSquareIcon,
+  CheckBadgeIcon,
 } from "@heroicons/react/24/outline";
 import { InputConfig } from "./form-field";
 import TextBoxFormField from "./textbox-form-field";
@@ -77,6 +79,20 @@ export default function UpdateForm({
       type: "number",
       icon: BeakerIcon,
       placeholder: "Enter complex preps count",
+    },
+    {
+      name: "missed_dispense_prep",
+      label: "Missed Dispense Preps",
+      type: "number",
+      icon: PencilSquareIcon,
+      placeholder: "Enter missed dispense preps",
+    },
+    {
+      name: "missed_dispense_check",
+      label: "Missed Dispense Checks",
+      type: "number",
+      icon: CheckBadgeIcon,
+      placeholder: "Enter missed dispense checks",
     },
   ];
 
