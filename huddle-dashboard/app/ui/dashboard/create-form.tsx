@@ -244,16 +244,16 @@ export default function Form() {
         </div>
 
         <div className="grid grid-cols-2 gap-4 justify-items-center">
+          <div className="w-full max-w-2xl"> 
           {textInputConfigs.map((config) => (
-            <div className="w-full max-w-2xl"> 
             <TextBoxFormField 
                 key={config.name} 
                 config={config} 
                 state={state} 
-                defaultValue='' 
+                defaultValue=''
                 />
-                </div>
-          ))}
+              ))}
+              </div>
         </div>
         {/* Submit button */}
         <div className="flex justify-end mr-30 mt-10 gap-4">
