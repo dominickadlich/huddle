@@ -7,153 +7,25 @@ import { useActionState } from "react";
 import FormField from "./form-field";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import {
-  ChartBarIcon,
-  CakeIcon,
-  ExclamationTriangleIcon,
-  EyeDropperIcon,
-  ChatBubbleLeftEllipsisIcon,
   ArchiveBoxArrowDownIcon,
   LockClosedIcon,
   UserGroupIcon,
-  BeakerIcon,
-  ShieldCheckIcon,
-  ArchiveBoxIcon,
-  RocketLaunchIcon,
-  ShieldExclamationIcon,
-  ArrowRightStartOnRectangleIcon,
-  BellAlertIcon,
-  WrenchScrewdriverIcon,
-  TrophyIcon,
-  PencilSquareIcon,
-  CheckBadgeIcon,
 } from "@heroicons/react/24/outline";
-import { InputConfig } from "./form-field";
 import TextBoxFormField from "./textbox-form-field";
+import { NUMERIC_INPUT_CONFIGS, TEXT_INPUT_CONFIGS } from "@/app/lib/form-configs";
 
 export default function Form() {
   const initialState: HuddleState = { message: null, errors: {} };
   const [state, formAction] = useActionState(createHuddleReport, initialState);
 
-  const numericInputConfigs: InputConfig[] = [
-    // Numeric inputs
-    {
-      name: "census",
-      label: "Census",
-      type: "number",
-      icon: ChartBarIcon,
-      placeholder: "Enter census count",
-    },
-    {
-      name: "tpn_count",
-      label: "TPN Count",
-      type: "number",
-      icon: CakeIcon,
-      placeholder: "Enter TPN count",
-    },
-    {
-      name: "haz_count",
-      label: "Hazardous Count",
-      type: "number",
-      icon: ExclamationTriangleIcon,
-      placeholder: "Enter hazardous count",
-    },
-    {
-      name: "non_sterile_count",
-      label: "Non-Sterile Count",
-      type: "number",
-      icon: EyeDropperIcon,
-      placeholder: "Enter non-sterile count",
-    },
-    {
-      name: "complex_preps_count",
-      label: "Complex Preps",
-      type: "number",
-      icon: BeakerIcon,
-      placeholder: "Enter complex preps count",
-    },
-    {
-      name: "missed_dispense_prep",
-      label: "Missed Dispense Preps",
-      type: "number",
-      icon: PencilSquareIcon,
-      placeholder: "Enter missed dispense preps",
-    },
-    {
-      name: "missed_dispense_check",
-      label: "Missed Dispense Checks",
-      type: "number",
-      icon: CheckBadgeIcon,
-      placeholder: "Enter missed dispense checks",
-    },
-  ];
-
-  const textInputConfigs: InputConfig[] = [
-    // Text inputs
-    {
-      name: "safety",
-      label: "Safety",
-      type: "textarea",
-      icon: ShieldCheckIcon,
-      placeholder: "Safety updates...",
-    },
-    {
-      name: "inventory",
-      label: "Inventory",
-      type: "textarea",
-      icon: ArchiveBoxIcon,
-      placeholder: "Inventory notes...",
-    },
-    {
-      name: "go_lives",
-      label: "Go Lives",
-      type: "textarea",
-      icon: RocketLaunchIcon,
-      placeholder: "Go live updates...",
-    },
-    {
-      name: "barriers",
-      label: "Barriers",
-      type: "textarea",
-      icon: ShieldExclamationIcon,
-      placeholder: "Barriers...",
-    },
-    {
-      name: "pass_off",
-      label: "Pass Off",
-      type: "textarea",
-      icon: ArrowRightStartOnRectangleIcon,
-      placeholder: "Pass-off updates...",
-    },
-    {
-      name: "unresolved_issues",
-      label: "Unresolved Issues",
-      type: "textarea",
-      icon: BellAlertIcon,
-      placeholder: "Unresolved Issues...",
-    },
-    {
-      name: "opportunities",
-      label: "Opportunities",
-      type: "textarea",
-      icon: WrenchScrewdriverIcon,
-      placeholder: "Opportunity updates...",
-    },
-    {
-      name: "shout_outs",
-      label: "Shout Outs",
-      type: "textarea",
-      icon: TrophyIcon,
-      placeholder: "Shout Outs...",
-    },
-  ];
 
   console.log("State:", state);
 
   return (
-    <form action={formAction} className="max-w-7xl mx-auto px-4 border">
+    <form action={formAction} className="max-w-8xl mx-auto px-4 border">
       <div className="">
         <div className="grid grid-cols-5 gap-4 mb-6 border">
-          {numericInputConfigs.map((config) => (
+          {NUMERIC_INPUT_CONFIGS.map((config) => (
             <FormField 
                 key={config.name}
                 config={config}
@@ -162,7 +34,7 @@ export default function Form() {
                 />
           ))}
           <div className="mt-10">
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 ">
               <div className="sm:col-span-4">
                 <label
                   htmlFor="staffing"
@@ -245,7 +117,7 @@ export default function Form() {
 
         <div className="grid grid-cols-2 gap-4 justify-items-center">
           <div className="w-full max-w-2xl"> 
-          {textInputConfigs.map((config) => (
+          {TEXT_INPUT_CONFIGS.map((config) => (
             <TextBoxFormField 
                 key={config.name} 
                 config={config} 
