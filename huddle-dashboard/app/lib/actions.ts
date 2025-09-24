@@ -10,6 +10,7 @@ import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { auth } from "@/auth";
 import { error } from "console";
+import { parseHuddleFormData } from "./form-helpers";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -23,42 +24,10 @@ const FormSchema = z.object({
   created_at: z.string(),
 });
 
-const HuddleFormSchema = z.object({
-  id: z.string(),
-  created_at: z.string(),
-  census: z.number().min(0, "Please enter the census count."),
-  tpn_count: z.number().min(0, "Please enter a TPN count."),
-  haz_count: z.number().min(0, "Please enter the hazardous count."),
-  non_sterile_count: z.number().min(0, "Please enter a non-sterile count."),
-  restock: z.boolean(),
-  cs_queue: z.boolean(),
-  staffing: z.string().min(0, "Please select a staffing status."),
-  complex_preps_count: z
-    .number()
-    .min(0, "Please enter the number of complex preps."),
-  missed_dispense_prep: z.string().min(0, "Please enter missed dispense preps."),
-  missed_dispense_check: z.string().min(0, "Please enter missed dispense checks."),
-  safety: z.string(),
-  inventory: z.string(),
-  go_lives: z.string(),
-  barriers: z.string(),
-  pass_off: z.string(),
-  unresolved_issues: z.string(),
-  opportunities: z.string(),
-  shout_outs: z.string(),
-});
 
 const CreateExtension = FormSchema.omit({ id: true, created_at: true });
 const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
 
-const CreateHuddleReport = HuddleFormSchema.omit({
-  id: true,
-  created_at: true,
-});
-const UpdateHuddleReport = HuddleFormSchema.omit({
-  id: true,
-  created_at: true,
-});
 
 export type State = {
   errors?: {
@@ -104,6 +73,9 @@ export async function createHuddleReport(
     }
 
   console.log('Authenticated user:', session?.user);
+
+  const parsedData = parseHuddleFormData(formData);
+  
 
   const validatedFields = CreateHuddleReport.safeParse({
     census: Number(formData.get("census")),
