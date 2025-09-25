@@ -9,7 +9,7 @@ import { createClient } from "@supabase/supabase-js";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { auth } from "@/auth";
-import { handleValidationError, parseHuddleFormData } from "./form-helpers";
+import { parseHuddleFormData } from "./form-helpers";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -110,11 +110,13 @@ export async function createHuddleReport(
   const parsedData = parseHuddleFormData(formData);
   const validatedFields = CreateHuddleReportSchema.safeParse(parsedData);
 
-  const validationError = handleValidationError(
-    validatedFields,
-    "Missing Fields. Failed to create huddle report"
-  )
-  if (validationError) return validationError;
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to create huddle report",
+    };
+  }
 
   // Prepare data for insertion into the database
   const {
@@ -166,7 +168,6 @@ export async function createHuddleReport(
       },
     ]);
 
-    console.log("Date:", date);
     if (error) throw error;
   } catch (error) {
     console.log("Database Error:", error);
@@ -193,11 +194,12 @@ export async function updateHuddleReport(
   const parsedData = parseHuddleFormData(formData);
   const validatedFields = UpdateHuddleReportSchema.safeParse(parsedData);
 
-  const validationError = handleValidationError(
-    validatedFields,
-    "Failed to update Huddle Report due to missing fields."
-  )
-  if (validationError) return validationError;
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to update huddle report",
+    };
+  }
 
   const updateData = validatedFields.data
 

@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 // Reusable function to parse FormData for huddle reports
 export function parseHuddleFormData(formData: FormData) {
   return {
@@ -24,18 +22,4 @@ export function parseHuddleFormData(formData: FormData) {
     opportunities: formData.get("opportunities") || "",
     shout_outs: formData.get("shout_outs") || "",
   };
-}
-
-// Reusable validation error handler
-export function handleValidationError<T>(
-  result: z.SafeParseReturnType<T, T>,
-  errorMessage: string,
-) {
-  if (!result.success) {
-    return {
-      errors: result.error.flatten().fieldErrors,
-      message: errorMessage,
-    };
-  }
-  return null;
 }
