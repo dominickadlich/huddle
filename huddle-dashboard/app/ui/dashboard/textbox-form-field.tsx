@@ -17,7 +17,7 @@ export default function TextBoxFormField({
 }: {
   config: InputConfig;
   state: HuddleState;
-  defaultValue: string | '';
+  defaultValue: string | "";
 }) {
   const { name, label, type, icon: Icon, placeholder } = config;
 

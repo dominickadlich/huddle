@@ -12,12 +12,14 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import TextBoxFormField from "./textbox-form-field";
-import { NUMERIC_INPUT_CONFIGS, TEXT_INPUT_CONFIGS } from "@/app/lib/form-configs";
+import {
+  NUMERIC_INPUT_CONFIGS,
+  TEXT_INPUT_CONFIGS,
+} from "@/app/lib/form-configs";
 
 export default function Form() {
   const initialState: HuddleState = { message: null, errors: {} };
   const [state, formAction] = useActionState(createHuddleReport, initialState);
-
 
   console.log("State:", state);
 
@@ -26,12 +28,12 @@ export default function Form() {
       <div className="">
         <div className="grid grid-cols-5 gap-4 mb-6 border">
           {NUMERIC_INPUT_CONFIGS.map((config) => (
-            <FormField 
-                key={config.name}
-                config={config}
-                state={state}
-                defaultValue='' 
-                />
+            <FormField
+              key={config.name}
+              config={config}
+              state={state}
+              defaultValue=""
+            />
           ))}
           <div className="mt-10">
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 ">
@@ -116,16 +118,16 @@ export default function Form() {
         </div>
 
         <div className="grid grid-cols-2 gap-4 justify-items-center">
-          <div className="w-full max-w-2xl"> 
-          {TEXT_INPUT_CONFIGS.map((config) => (
-            <TextBoxFormField 
-                key={config.name} 
-                config={config} 
-                state={state} 
-                defaultValue=''
-                />
-              ))}
-              </div>
+          <div className="w-full max-w-2xl">
+            {TEXT_INPUT_CONFIGS.map((config) => (
+              <TextBoxFormField
+                key={config.name}
+                config={config}
+                state={state}
+                defaultValue=""
+              />
+            ))}
+          </div>
         </div>
         {/* Submit button */}
         <div className="flex justify-end mr-30 mt-10 gap-4">

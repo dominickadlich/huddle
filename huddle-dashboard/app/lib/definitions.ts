@@ -44,7 +44,7 @@ export type ExtensionForm = {
 };
 
 export type HuddleDataForm = {
-  id: string,
+  id: string;
   census: string;
   tpn_count: string;
   haz_count: string;
@@ -53,8 +53,8 @@ export type HuddleDataForm = {
   cs_queue: string;
   staffing: string;
   complex_preps_count: string;
-  missed_dispense_check: string,
-  missed_dispense_prep: string,
+  missed_dispense_check: string;
+  missed_dispense_prep: string;
   safety: string;
   inventory: string;
   go_lives: string;
@@ -63,4 +63,4 @@ export type HuddleDataForm = {
   unresolved_issues: string;
   opportunities: string;
   shout_outs: string;
-}
+};

@@ -6,22 +6,25 @@ import { HuddleState, updateHuddleReport } from "@/app/lib/actions";
 import { useActionState } from "react";
 import FormField from "./form-field";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
-import { ArchiveBoxArrowDownIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import {
+  ArchiveBoxArrowDownIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
 import TextBoxFormField from "./textbox-form-field";
 import { HuddleDataForm } from "@/app/lib/definitions";
-import { NUMERIC_INPUT_CONFIGS, TEXT_INPUT_CONFIGS } from "@/app/lib/form-configs";
+import {
+  NUMERIC_INPUT_CONFIGS,
+  TEXT_INPUT_CONFIGS,
+} from "@/app/lib/form-configs";
 
 export default function UpdateForm({
-    huddle_data,
+  huddle_data,
 }: {
-    huddle_data: HuddleDataForm
+  huddle_data: HuddleDataForm;
 }) {
-    const initialState: HuddleState = { message: null, errors: {} };
-    const updateReportWithId = updateHuddleReport.bind(null, huddle_data.id)
-    const [state, formAction] = useActionState(
-        updateReportWithId,
-        initialState
-    )
+  const initialState: HuddleState = { message: null, errors: {} };
+  const updateReportWithId = updateHuddleReport.bind(null, huddle_data.id);
+  const [state, formAction] = useActionState(updateReportWithId, initialState);
 
   console.log("State:", state);
 
@@ -30,12 +33,12 @@ export default function UpdateForm({
       <div className="">
         <div className="grid grid-cols-4">
           {NUMERIC_INPUT_CONFIGS.map((config) => (
-            <FormField 
-                key={config.name} 
-                config={config}
-                state={state} 
-                defaultValue={huddle_data[config.name]?.toString() || ''} 
-                />
+            <FormField
+              key={config.name}
+              config={config}
+              state={state}
+              defaultValue={huddle_data[config.name]?.toString() || ""}
+            />
           ))}
           <div className="mt-10">
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -123,12 +126,12 @@ export default function UpdateForm({
 
         <div className="grid grid-cols-2">
           {TEXT_INPUT_CONFIGS.map((config) => (
-            <TextBoxFormField 
-                key={config.name}
-                config={config}
-                state={state}
-                defaultValue={huddle_data[config.name]?.toString() || ''} 
-                />
+            <TextBoxFormField
+              key={config.name}
+              config={config}
+              state={state}
+              defaultValue={huddle_data[config.name]?.toString() || ""}
+            />
           ))}
         </div>
         {/* Submit button */}

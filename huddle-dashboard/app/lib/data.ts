@@ -8,9 +8,7 @@ const supabase = createClient(
 
 export async function fetchHuddleData() {
   try {
-    const { data, error } = await supabase
-      .from("huddle_data")
-      .select("*")
+    const { data, error } = await supabase.from("huddle_data").select("*");
 
     if (error) throw error;
     return data || [];
@@ -133,10 +131,10 @@ export async function fetchExtensions(query: string) {
 export async function fetchHuddleDataById(id: string) {
   try {
     const { data, error } = await supabase
-    .from('huddle_data')
-    .select('*')
-    .eq("id", id)
-    .single();
+      .from("huddle_data")
+      .select("*")
+      .eq("id", id)
+      .single();
 
     if (error) {
       if (error.code === "PGRST116") {
@@ -148,8 +146,8 @@ export async function fetchHuddleDataById(id: string) {
 
     return data;
   } catch (error) {
-    console.log("Database Error:", error)
-    return { message: "Failed to fetch huddle report with url id"}
+    console.log("Database Error:", error);
+    return { message: "Failed to fetch huddle report with url id" };
   }
 }
 

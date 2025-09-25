@@ -36,8 +36,12 @@ const HuddleFormSchema = z.object({
   complex_preps_count: z
     .number()
     .min(0, "Please enter the number of complex preps."),
-  missed_dispense_prep: z.string().min(0, "Please enter missed dispense preps."),
-  missed_dispense_check: z.string().min(0, "Please enter missed dispense checks."),
+  missed_dispense_prep: z
+    .string()
+    .min(0, "Please enter missed dispense preps."),
+  missed_dispense_check: z
+    .string()
+    .min(0, "Please enter missed dispense checks."),
   safety: z.string(),
   inventory: z.string(),
   go_lives: z.string(),
@@ -96,14 +100,13 @@ export async function createHuddleReport(
   prevState: HuddleState,
   formData: FormData,
 ) {
-
-  const session = await auth()
+  const session = await auth();
 
   if (!session?.user) {
-        return { message: "Authentication required" };
-    }
+    return { message: "Authentication required" };
+  }
 
-  console.log('Authenticated user:', session?.user);
+  console.log("Authenticated user:", session?.user);
 
   const validatedFields = CreateHuddleReport.safeParse({
     census: Number(formData.get("census")),
@@ -157,7 +160,7 @@ export async function createHuddleReport(
     shout_outs,
   } = validatedFields.data;
 
-  const currentDate = new Date().toISOString()
+  const currentDate = new Date().toISOString();
 
   try {
     const { data, error } = await supabase.from("huddle_data").insert([
@@ -185,10 +188,10 @@ export async function createHuddleReport(
       },
     ]);
 
-    console.log('Date:', date)
+    console.log("Date:", date);
     if (error) throw error;
   } catch (error) {
-    console.log('Date:', date)
+    console.log("Date:", date);
     console.log("Database Error:", error);
     return { message: "Missing Fields. Failed to create a huddle report." };
   }
@@ -234,18 +237,15 @@ export async function createExtension(prevState: State, formData: FormData) {
   redirect("/directory");
 }
 
-
 export async function updateHuddleReport(
-
   // TODO: Update &/or refactor validation and insert/update criteria
-  
-  
+
   id: string,
   prevState: HuddleState,
   formData: FormData,
 ) {
   const session = await auth();
-  
+
   if (!session?.user) {
     return { message: "Authentication required" };
   }
@@ -274,7 +274,7 @@ export async function updateHuddleReport(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: "Failed to update Huddle Report due to missing fields"
+      message: "Failed to update Huddle Report due to missing fields",
     };
   }
 
@@ -295,12 +295,11 @@ export async function updateHuddleReport(
     unresolved_issues,
     opportunities,
     shout_outs,
-
   } = validatedFields.data;
 
   try {
     const { data, error } = await supabase
-      .from('huddle_data')
+      .from("huddle_data")
       .update({
         census,
         tpn_count,
@@ -321,14 +320,14 @@ export async function updateHuddleReport(
       })
       .eq("id", id);
 
-      if (error) throw error;
+    if (error) throw error;
   } catch (error) {
-    console.log("Database Error:", error)
-    return { message: "Failed to update Huddle Report"}
+    console.log("Database Error:", error);
+    return { message: "Failed to update Huddle Report" };
   }
 
-  revalidatePath('/dashboard');
-  redirect('/dashboard');
+  revalidatePath("/dashboard");
+  redirect("/dashboard");
 }
 
 export async function updateExtension(
