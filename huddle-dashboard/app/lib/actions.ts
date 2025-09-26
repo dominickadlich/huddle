@@ -26,7 +26,6 @@ const FormSchema = z.object({
 const CreateExtension = FormSchema.omit({ id: true, created_at: true });
 const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
 
-
 const HuddleFormSchema = z.object({
   id: z.string(),
   created_at: z.string(),
@@ -40,8 +39,12 @@ const HuddleFormSchema = z.object({
   complex_preps_count: z
     .number()
     .min(0, "Please enter the number of complex preps."),
-  missed_dispense_prep: z.number().min(0, "Please enter missed dispense preps."),
-  missed_dispense_check: z.number().min(0, "Please enter missed dispense checks."),
+  missed_dispense_prep: z
+    .number()
+    .min(0, "Please enter missed dispense preps."),
+  missed_dispense_check: z
+    .number()
+    .min(0, "Please enter missed dispense checks."),
   safety: z.string(),
   inventory: z.string(),
   go_lives: z.string(),
@@ -61,7 +64,6 @@ const UpdateHuddleReportSchema = HuddleFormSchema.omit({
   id: true,
   created_at: true,
 });
-
 
 export type State = {
   errors?: {
@@ -105,11 +107,10 @@ export async function createHuddleReport(
     return { message: "Authentication required" };
   }
 
-  console.log('Authenticated user:', session?.user);
+  console.log("Authenticated user:", session?.user);
 
   const parsedData = parseHuddleFormData(formData);
   const validatedFields = CreateHuddleReportSchema.safeParse(parsedData);
-
 
   if (!validatedFields.success) {
     return {
@@ -178,8 +179,6 @@ export async function createHuddleReport(
   redirect("/dashboard");
 }
 
-
-
 export async function updateHuddleReport(
   id: string,
   prevState: HuddleState,
@@ -201,7 +200,7 @@ export async function updateHuddleReport(
     };
   }
 
-  const updateData = validatedFields.data
+  const updateData = validatedFields.data;
 
   try {
     const { error } = await supabase
@@ -218,7 +217,6 @@ export async function updateHuddleReport(
   revalidatePath("/dashboard");
   redirect("/dashboard");
 }
-
 
 export async function updateExtension(
   id: string,
