@@ -24,9 +24,22 @@ export default function Form() {
   console.log("State:", state);
 
   return (
-    <form action={formAction} className="max-w-8xl mx-auto px-4 border">
+    <form action={formAction} className="max-w-8xl px-10">
+
+      {/* Submit button */}
+        <div className="flex justify-end gap-4">
+          <Link
+            href="/dashboard"
+            className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          >
+            Cancel
+          </Link>
+          <Button type="submit">Create Report</Button>
+        </div>
+
+
       <div className="">
-        <div className="grid grid-cols-5 gap-4 mb-6 border">
+        <div className="grid grid-cols-5 gap-6">
           {NUMERIC_INPUT_CONFIGS.map((config) => (
             <FormField
               key={config.name}
@@ -37,7 +50,7 @@ export default function Form() {
           ))}
           <div className="mt-10">
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 ">
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-5">
                 <label
                   htmlFor="staffing"
                   className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -65,7 +78,7 @@ export default function Form() {
           </div>
           <div className="mt-10">
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-5">
                 <label
                   htmlFor="restock"
                   className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -91,7 +104,7 @@ export default function Form() {
           </div>
           <div className="mt-10">
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-5">
                 <label
                   htmlFor="restock"
                   className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -117,8 +130,7 @@ export default function Form() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 justify-items-center">
-          <div className="w-full max-w-2xl">
+        <div className="mt-10 grid grid-cols-2 gap-8">
             {TEXT_INPUT_CONFIGS.map((config) => (
               <TextBoxFormField
                 key={config.name}
@@ -127,17 +139,6 @@ export default function Form() {
                 defaultValue=""
               />
             ))}
-          </div>
-        </div>
-        {/* Submit button */}
-        <div className="flex justify-end mr-30 mt-10 gap-4">
-          <Link
-            href="/directory"
-            className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-          >
-            Cancel
-          </Link>
-          <Button type="submit">Create Report</Button>
         </div>
       </div>
     </form>

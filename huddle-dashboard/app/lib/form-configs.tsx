@@ -56,7 +56,7 @@ export const NUMERIC_INPUT_CONFIGS = [
   },
   {
     name: "missed_dispense_prep",
-    label: "Missed Dispense Preps",
+    label: "Dispense Preps",
     type: "number",
     icon: PencilSquareIcon,
     placeholder: "Enter missed dispense preps",

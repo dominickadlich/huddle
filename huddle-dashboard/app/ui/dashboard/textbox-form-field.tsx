@@ -24,7 +24,7 @@ export default function TextBoxFormField({
   if (type === "textarea") {
     return (
       <div className="mt-10">
-        <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div className="grid grid-cols-2">
           <div className="sm:col-span-5">
             <label
               htmlFor={name}
@@ -40,7 +40,7 @@ export default function TextBoxFormField({
                 placeholder={placeholder}
                 rows={3}
                 defaultValue={defaultValue}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+                className="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
               />
             </div>
           </div>
