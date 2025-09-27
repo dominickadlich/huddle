@@ -24,7 +24,7 @@ export default function FormField({
   return (
     <div className="mt-10">
       <div className="grid grid-cols-5">
-        <div className="sm:col-span-4">
+        <div className="sm:col-span-5">
           <label
             htmlFor={name}
             className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"

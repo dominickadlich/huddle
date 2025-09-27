@@ -24,7 +24,7 @@ export default function Form() {
   console.log("State:", state);
 
   return (
-    <form action={formAction} className="max-w-8xl px-10">
+    <form action={formAction} className="max-w-8xl">
 
       {/* Submit button */}
         <div className="flex justify-end gap-4">
@@ -49,7 +49,7 @@ export default function Form() {
             />
           ))}
           <div className="mt-10">
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 ">
+            <div>
               <div className="sm:col-span-5">
                 <label
                   htmlFor="staffing"
@@ -77,7 +77,7 @@ export default function Form() {
             </div>
           </div>
           <div className="mt-10">
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div>
               <div className="sm:col-span-5">
                 <label
                   htmlFor="restock"
@@ -103,7 +103,7 @@ export default function Form() {
             </div>
           </div>
           <div className="mt-10">
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div>
               <div className="sm:col-span-5">
                 <label
                   htmlFor="restock"

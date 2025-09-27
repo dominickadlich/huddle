@@ -8,6 +8,7 @@ import FormField from "./form-field";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import {
   ArchiveBoxArrowDownIcon,
+  LockClosedIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import TextBoxFormField from "./textbox-form-field";
@@ -30,8 +31,21 @@ export default function UpdateForm({
 
   return (
     <form action={formAction}>
+
+      {/* Submit button */}
+        <div className="flex justify-end gap-4">
+          <Link
+            href="/dashboard"
+            className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          >
+            Cancel
+          </Link>
+          <Button type="submit">Update Report</Button>
+        </div>
+
+
       <div className="">
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-5 gap-6">
           {NUMERIC_INPUT_CONFIGS.map((config) => (
             <FormField
               key={config.name}
@@ -41,8 +55,8 @@ export default function UpdateForm({
             />
           ))}
           <div className="mt-10">
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-4">
+            <div>
+              <div className="sm:col-span-5">
                 <label
                   htmlFor="staffing"
                   className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -69,8 +83,8 @@ export default function UpdateForm({
             </div>
           </div>
           <div className="mt-10">
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-4">
+            <div>
+              <div className="sm:col-span-5">
                 <label
                   htmlFor="restock"
                   className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -96,14 +110,14 @@ export default function UpdateForm({
             </div>
           </div>
           <div className="mt-10">
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-4">
+            <div>
+              <div className="sm:col-span-5">
                 <label
                   htmlFor="restock"
                   className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
                 >
-                  <ArchiveBoxArrowDownIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
-                  Restock
+                  <LockClosedIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
+                  CS Queue
                 </label>
                 <div className="mt-2">
                   <div className="flex items-center rounded-md bg-white px-3 py-1.5 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500">
@@ -124,7 +138,7 @@ export default function UpdateForm({
           </div>
         </div>
 
-        <div className="grid grid-cols-2">
+        <div className="mt-10 grid grid-cols-2 gap-8">
           {TEXT_INPUT_CONFIGS.map((config) => (
             <TextBoxFormField
               key={config.name}
@@ -133,16 +147,6 @@ export default function UpdateForm({
               defaultValue={huddle_data[config.name]?.toString() || ""}
             />
           ))}
-        </div>
-        {/* Submit button */}
-        <div className="flex justify-end mr-30 mt-10 gap-4">
-          <Link
-            href="/dashboard"
-            className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-          >
-            Cancel
-          </Link>
-          <Button type="submit">Update Report</Button>
         </div>
       </div>
     </form>

@@ -35,10 +35,10 @@ export default async function Page() {
         <h1 className="text-2xl font-bold">Huddle Dashboard</h1>
         <div className="flex gap-2">
           <div className="flex gap-2">
-            <CreateHuddleReport />
+            <UpdateHuddleReport id={huddleData.id} />
           </div>
           <div className="flex gap-2">
-            <UpdateHuddleReport id={huddleData.id} />
+            <CreateHuddleReport />
           </div>
         </div>
       </div>
