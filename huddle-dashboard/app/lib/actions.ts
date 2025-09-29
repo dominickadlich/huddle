@@ -2,19 +2,14 @@
 
 // const d_day = "I'm having a baby" // Baby Violet's first commit.
 
-import { date, number, string, z } from "zod";
+import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { auth } from "@/auth";
 import { parseHuddleFormData } from "./form-helpers";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-);
+import { getServiceSupabase, getCurrentUserId } from "./supabase-server";
 
 const FormSchema = z.object({
   id: z.string(),
@@ -101,14 +96,6 @@ export async function createHuddleReport(
   prevState: HuddleState,
   formData: FormData,
 ) {
-  const session = await auth();
-
-  if (!session?.user) {
-    return { message: "Authentication required" };
-  }
-
-  console.log("Authenticated user:", session?.user);
-
   const parsedData = parseHuddleFormData(formData);
   const validatedFields = CreateHuddleReportSchema.safeParse(parsedData);
 
@@ -144,40 +131,51 @@ export async function createHuddleReport(
   const currentDate = new Date().toISOString();
 
   try {
-    const { error } = await supabase.from("huddle_data").insert([
-      {
-        date: currentDate,
-        user_id: session?.user?.id,
-        census,
-        tpn_count,
-        haz_count,
-        non_sterile_count,
-        restock,
-        cs_queue,
-        missed_dispense_check,
-        missed_dispense_prep,
-        staffing,
-        complex_preps_count,
-        safety,
-        inventory,
-        go_lives,
-        barriers,
-        pass_off,
-        unresolved_issues,
-        opportunities,
-        shout_outs,
-      },
-    ]);
+    const supabase = getServiceSupabase();
+    const userId = await getCurrentUserId();
 
-    if (error) throw error;
-  } catch (error) {
-    console.log("Database Error:", error);
-    return { message: "Missing Fields. Failed to create a huddle report." };
+      const { error } = await supabase.from("huddle_data").insert([
+        {
+          date: currentDate,
+          user_id: userId,
+          census,
+          tpn_count,
+          haz_count,
+          non_sterile_count,
+          restock,
+          cs_queue,
+          missed_dispense_check,
+          missed_dispense_prep,
+          staffing,
+          complex_preps_count,
+          safety,
+          inventory,
+          go_lives,
+          barriers,
+          pass_off,
+          unresolved_issues,
+          opportunities,
+          shout_outs,
+        },
+      ]);
+    
+      if (error) throw error;
+    } catch (error) {
+      console.log("Database Error:", error);
+      if (error instanceof Error) {
+      if (error.message === "Not authenticated" || error.message === "User not found in database") {
+        return { message: "Authentication required. Please log in." };
+      }
+    }
+    
+    return { message: "Failed to create a huddle report." };
   }
+    
+    revalidatePath("/dashboard");
+    redirect("/dashboard");
+  }
+  
 
-  revalidatePath("/dashboard");
-  redirect("/dashboard");
-}
 
 export async function updateHuddleReport(
   id: string,
@@ -203,6 +201,9 @@ export async function updateHuddleReport(
   const updateData = validatedFields.data;
 
   try {
+    const supabase = getServiceSupabase();
+    await getCurrentUserId();
+
     const { error } = await supabase
       .from("huddle_data")
       .update(updateData)
@@ -211,7 +212,14 @@ export async function updateHuddleReport(
     if (error) throw error;
   } catch (error) {
     console.log("Database Error:", error);
-    return { message: "Failed to update Huddle Report" };
+    if (error instanceof Error) {
+      if (error.message === "Not authenticated" || error.message === "User not found in database") {
+        return { message: "Authentication required. Please log in." };
+      }
+    }
+    
+    return { message: "Failed to create a huddle report." };
+  
   }
 
   revalidatePath("/dashboard");
@@ -238,6 +246,8 @@ export async function updateExtension(
   const { name, extension } = validatedFields.data;
 
   try {
+    const supabase = getServiceSupabase();
+
     const { data, error } = await supabase
       .from("central_directory")
       .update({
@@ -275,6 +285,8 @@ export async function createExtension(prevState: State, formData: FormData) {
   const created_at = new Date().toISOString().split("T")[0];
 
   try {
+    const supabase = getServiceSupabase();
+
     const { data, error } = await supabase.from("central_directory").insert([
       {
         name: name,
@@ -297,6 +309,8 @@ export async function deleteExtension(id: string) {
   // throw new Error('Failed to Delete Extension')
 
   try {
+    const supabase = getServiceSupabase();
+
     const { data, error } = await supabase
       .from("central_directory")
       .delete()
