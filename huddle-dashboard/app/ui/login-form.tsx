@@ -10,6 +10,7 @@ import { Button } from "@/app/ui/button";
 import { useActionState } from "react";
 import { authenticate } from "@/app/lib/actions";
 import { useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
@@ -19,9 +20,14 @@ export default function LoginForm() {
     undefined,
   );
 
+  const handleOktaSignIn = async () => {
+    await signIn("okta", { callbackUrl });
+  };
+
   return (
-    <form action={formAction} className="space-y-3">
-      <div className="flex-1 rounded-lg px-6 pb-4 pt-8 border">
+    <div className="space-y-4 rounded-lg p-4 border">
+    <form action={formAction}>
+      <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
         <h1 className="flex justify-center items-centermb-3 text-2xl text-white mb-5">
           Please log in
         </h1>
@@ -66,16 +72,14 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-between gap-4">
           <input type="hidden" name="redirectTo" value={callbackUrl} />
+          <Button className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
+            New User
+          </Button>
           <Button className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
             Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
           </Button>
-          <div
-            className="flex h-8 items-end space-x-1"
-            aria-live="polite"
-            aria-atomic="true"
-          ></div>
           {errorMessage && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
@@ -85,5 +89,25 @@ export default function LoginForm() {
         </div>
       </div>
     </form>
+
+    {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+        </div>
+        <div className="relative flex justify-center text-sm">
+          <span className="px-2 bg-gray-900 text-gray-400">Or</span>
+        </div>
+      </div>
+
+      {/* Okta SSO button */}
+        <Button 
+        onClick={handleOktaSignIn}
+          type="submit"
+          className="w-full flex items-center justify-center"
+        >
+          Sign in with Okta
+        </Button>
+      </div>
   );
 }

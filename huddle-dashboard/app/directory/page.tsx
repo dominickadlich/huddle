@@ -3,7 +3,7 @@ import { CreateExtension } from "../ui/directory/buttons";
 import { DirectorySkeleton } from "../ui/skeletons";
 import { Suspense } from "react";
 import { Metadata } from "next";
-import { auth } from "@/auth";
+import { auth } from "../auth.config";
 import { redirect } from "next/navigation";
 import Card from "../ui/directory/card";
 

@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { auth } from "@/auth"
+import { auth } from "../auth.config";
 
 export function getServiceSupabase() {
     return createClient(
@@ -27,11 +27,21 @@ export async function getCurrentUserId() {
         throw userError;
       }
 
-    const userId = userData?.id;
+    let userId = userData?.id;
 
-      if (!userId) {
-    throw new Error("User not found in database");
-  }
+    if (!userId) {
+        const { data: newUser, error: createError } = await supabase
+        .from("users")
+        .insert({
+            email: session.user.email,
+            name: session.user.name,
+        })
+        .select("id")
+        .single()
+
+        if (createError) throw createError;
+        userId = newUser.id;
+    }
 
       return userId;
 }

@@ -8,7 +8,7 @@ import {
   CardSkeleton,
 } from "../../ui/skeletons";
 import { Metadata } from "next";
-import { auth } from "@/auth";
+import { auth } from "@/app/auth.config";
 import { redirect } from "next/navigation";
 import TextWrapper from "@/app/ui/dashboard/text-box";
 import {
