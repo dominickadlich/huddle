@@ -13,7 +13,7 @@ export default function HuddleLogo() {
         className="hidden md:block"
         alt="Syringe Outline"
       />
-      <p className="text-[22px] pl-2">Central Pharmacy</p>
+      <p className="text-[22px] pl-2">Pharmacy Huddle</p>
     </div>
   );
 }
