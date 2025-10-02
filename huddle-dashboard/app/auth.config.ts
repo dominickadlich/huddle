@@ -6,7 +6,6 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 import { getServiceSupabase } from "./lib/supabase-server";
 
-
 export const authConfig = {
   pages: {
     signIn: "/login",
@@ -27,7 +26,7 @@ export const authConfig = {
       console.log("User signed in:", user);
       return true;
     },
-     async session({ session, token }) {
+    async session({ session, token }) {
       if (token.sub) {
         session.user.id = token.sub;
       }
@@ -35,7 +34,7 @@ export const authConfig = {
     },
   },
   providers: [
-     Okta({
+    Okta({
       clientId: process.env.OKTA_CLIENT_ID!,
       clientSecret: process.env.OKTA_CLIENT_SECRET!,
       issuer: process.env.OKTA_ISSUER!,
@@ -52,10 +51,10 @@ export const authConfig = {
 
           const supabase = getServiceSupabase();
           const { data: user } = await supabase
-          .from("users")
-          .select("*")
-          .eq("email", email)
-          .single();
+            .from("users")
+            .select("*")
+            .eq("email", email)
+            .single();
 
           if (!user) return null;
 
@@ -73,7 +72,7 @@ export const authConfig = {
         return null;
       },
     }),
-  ], 
+  ],
   trustHost: true,
 } satisfies NextAuthConfig;
 

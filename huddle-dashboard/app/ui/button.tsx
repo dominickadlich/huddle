@@ -17,3 +17,31 @@ export function Button({ children, className, ...rest }: ButtonProps) {
     </button>
   );
 }
+
+export function AddNewUserButton({ children, className, ...rest }: ButtonProps) {
+  return (
+    <button
+      {...rest}
+      className={clsx(
+        "flex h-10 items-center rounded-lg bg-green-500 px-4 text-sm font-medium text-white transition-colors hover:bg-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 active:bg-green-600 aria-disabled:curso-not-allowed aria-disabled:opacity-50",
+        className,
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+export function SSOButton({ children, className, ...rest }: ButtonProps) {
+  return (
+    <button
+      {...rest}
+      className={clsx(
+        "flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 active:bg-blue-600 aria-disabled:curso-not-allowed aria-disabled:opacity-50",
+        className,
+      )}
+    >
+      {children}
+    </button>
+  );
+}

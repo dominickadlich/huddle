@@ -133,48 +133,49 @@ export async function createHuddleReport(
     const supabase = getServiceSupabase();
     const userId = await getCurrentUserId();
 
-      const { error } = await supabase.from("huddle_data").insert([
-        {
-          date: currentDate,
-          user_id: userId,
-          census,
-          tpn_count,
-          haz_count,
-          non_sterile_count,
-          restock,
-          cs_queue,
-          missed_dispense_check,
-          missed_dispense_prep,
-          staffing,
-          complex_preps_count,
-          safety,
-          inventory,
-          go_lives,
-          barriers,
-          pass_off,
-          unresolved_issues,
-          opportunities,
-          shout_outs,
-        },
-      ]);
-    
-      if (error) throw error;
-    } catch (error) {
-      console.log("Database Error:", error);
-      if (error instanceof Error) {
-      if (error.message === "Not authenticated" || error.message === "User not found in database") {
+    const { error } = await supabase.from("huddle_data").insert([
+      {
+        date: currentDate,
+        user_id: userId,
+        census,
+        tpn_count,
+        haz_count,
+        non_sterile_count,
+        restock,
+        cs_queue,
+        missed_dispense_check,
+        missed_dispense_prep,
+        staffing,
+        complex_preps_count,
+        safety,
+        inventory,
+        go_lives,
+        barriers,
+        pass_off,
+        unresolved_issues,
+        opportunities,
+        shout_outs,
+      },
+    ]);
+
+    if (error) throw error;
+  } catch (error) {
+    console.log("Database Error:", error);
+    if (error instanceof Error) {
+      if (
+        error.message === "Not authenticated" ||
+        error.message === "User not found in database"
+      ) {
         return { message: "Authentication required. Please log in." };
       }
     }
-    
+
     return { message: "Failed to create a huddle report." };
   }
-    
-    revalidatePath("/dashboard");
-    redirect("/dashboard");
-  }
-  
 
+  revalidatePath("/dashboard");
+  redirect("/dashboard");
+}
 
 export async function updateHuddleReport(
   id: string,
@@ -212,13 +213,15 @@ export async function updateHuddleReport(
   } catch (error) {
     console.log("Database Error:", error);
     if (error instanceof Error) {
-      if (error.message === "Not authenticated" || error.message === "User not found in database") {
+      if (
+        error.message === "Not authenticated" ||
+        error.message === "User not found in database"
+      ) {
         return { message: "Authentication required. Please log in." };
       }
     }
-    
+
     return { message: "Failed to create a huddle report." };
-  
   }
 
   revalidatePath("/dashboard");
