@@ -11,6 +11,7 @@ import { Metadata } from "next";
 import { auth } from "@/app/auth.config";
 import { redirect } from "next/navigation";
 import TextWrapper from "@/app/ui/dashboard/text-box";
+import TrialTextWrapper from "@/app/ui/dashboard/trial-text-box";
 import {
   CreateHuddleReport,
   UpdateHuddleReport,
@@ -49,7 +50,7 @@ export default async function Page() {
       </div>
       <div className="mt-8 grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
         <Suspense fallback={<p>Loading...</p>}>
-          <TextWrapper />
+          <TrialTextWrapper />
         </Suspense>
       </div>
     </main>

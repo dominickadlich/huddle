@@ -33,7 +33,6 @@ export default async function CardWrapper() {
     tpn_count,
     haz_count,
     non_sterile_count,
-    opportunities,
     complex_preps_count,
     missed_dispense_prep,
     missed_dispense_check,
@@ -48,7 +47,7 @@ export default async function CardWrapper() {
       <Card title="TPN Count" value={tpn_count} type="tpn_count" />
       <Card title="Hazardous Count" value={haz_count} type="haz_count" />
       <Card
-        title="Non-Sterile Count"
+        title="Non-Sterile Projects"
         value={non_sterile_count}
         type="non_sterile_count"
       />

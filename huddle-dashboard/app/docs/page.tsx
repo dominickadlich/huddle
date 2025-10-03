@@ -1,6 +1,6 @@
 import Search from "../ui/search";
 import CardsGrid from "../ui/docs/cards-grid";
-import { auth } from "@/auth";
+import { auth } from "../auth.config";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { Metadata } from "next";
