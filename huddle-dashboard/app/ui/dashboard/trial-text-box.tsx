@@ -55,6 +55,39 @@ export default async function TrialTextWrapper() {
   );
 }
 
+export function TextBoxInput({
+    title,
+    value,
+}: {
+    title: string,
+    value: number | string
+}) {
+
+
+    return (
+        <div className="">
+            <div className="flex p-2">
+                <div className="flex justify-center w-50">
+                    <h3 className="ml-2 text-lg font-medium">{title}</h3>
+                </div>
+
+                {/* Handle both empty and filled content */}
+                <div className="flex flex-1 justify-center">
+                {value ? (
+                    <p className="flex flex-1 justify-center items-center p-2 text-gray-900 text-sm text-center border-l-2">
+                    {value}
+                    </p>
+                ) : (
+                    <p className="flex flex-1 justify-center items-center p-2 text-gray-400 text-sm italic text-center border-l-2">
+                    No updates
+                    </p>
+                )}
+                </div>
+            </div>
+        </div>
+    )
+}
+
 export function TextCard({
   title,
   value,
@@ -77,72 +110,13 @@ export function TextCard({
   return (
     <div className="rounded-xl bg-indigo-500 p-1">
       <div className="rounded-xl bg-gray-200 text-black px-4 py-4 text-center text-2xl">
-        {/* <div className="p-1 w-50"> */}
           <div className="flex justify-center border-b-2 ">
             {Icon ? <Icon className="h-6 w-6 text-black" /> : null}
           <h3 className="ml-2 text-lg font-medium">{title}</h3>
           </div>
-        {/* </div> */}
-        <div className="">
-        <div className="flex flex-1 justify-center items-center p-2">
-            <div className="flex justify-center w-50">
-          <div className="flex justify-center">
-            {Icon ? <Icon className="h-6 w-6 text-black" /> : null}
-          </div>
-          <h3 className="ml-2 text-lg font-medium">{title}</h3>
-        </div>
-          {/* Handle both empty and filled content */}
-          {value ? (
-            <p className="text-sm leading-relaxed whitespace-pre-wrap">
-              {value}
-            </p>
-          ) : (
-            <p className="flex flex-1 justify-center items-center p-2 text-gray-400 text-sm italic text-center p-2 border-l-2">
-              No updates
-            </p>
-          )}
-        </div>
-        </div>
-        <div className="">
-        <div className="flex flex-1 justify-center items-center p-2">
-            <div className="flex justify-center w-50">
-          <div className="flex justify-center">
-            {Icon ? <Icon className="h-6 w-6 text-black" /> : null}
-          </div>
-          <h3 className="ml-2 text-lg font-medium">{title}</h3>
-        </div>
-          {/* Handle both empty and filled content */}
-          {value ? (
-            <p className="text-sm leading-relaxed whitespace-pre-wrap">
-              {value}
-            </p>
-          ) : (
-            <p className="flex flex-1 justify-center items-center p-2 text-gray-400 text-sm italic text-center p-2 border-l-2">
-              No updates
-            </p>
-          )}
-        </div>
-        </div>
-        <div className="">
-        <div className="flex flex-1 justify-center items-center p-2">
-            <div className="flex justify-center w-50">
-          <div className="flex justify-center">
-            {Icon ? <Icon className="h-6 w-6 text-black" /> : null}
-          </div>
-          <h3 className="ml-2 text-lg font-medium">{title}</h3>
-        </div>
-          {/* Handle both empty and filled content */}
-          {value ? (
-            <p className="text-sm leading-relaxed whitespace-pre-wrap">
-              {value}
-            </p>
-          ) : (
-            <p className="flex flex-1 justify-center items-center p-2 text-gray-400 text-sm italic text-center p-2 border-l-2">
-              No updates
-            </p>
-          )}
-        </div>
-        </div>
+          <TextBoxInput title="Morning" value={value}/>
+          <TextBoxInput title="Afternoon" value={value}/>
+          <TextBoxInput title="Evening" value={value}/>
       </div>
     </div>
   );

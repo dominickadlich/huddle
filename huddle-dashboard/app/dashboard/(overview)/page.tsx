@@ -22,9 +22,13 @@ export const metadata: Metadata = {
   title: "Dashboard",
 };
 
+
+
 export default async function Page() {
   const huddleData = await fetchLatestHuddleData();
   const session = await auth();
+  const reportDate = new Date(huddleData.date).toLocaleDateString()
+
 
   if (!session?.user) {
     redirect("/login");
@@ -33,7 +37,7 @@ export default async function Page() {
   return (
     <main className="px-6">
       <div className="flex justify-between items-center mt-10">
-        <h1 className="text-2xl font-bold">Huddle Dashboard</h1>
+        <h1 className="text-2xl font-bold">Huddle Dashboard - {reportDate}</h1>
         <div className="flex gap-2">
           <div className="flex gap-2">
             <UpdateHuddleReport id={huddleData.id} />

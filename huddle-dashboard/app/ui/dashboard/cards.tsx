@@ -58,12 +58,12 @@ export default async function CardWrapper() {
         type="complex_preps_count"
       />
       <Card
-        title="Dispense Preps"
+        title="Dispense Prep Defects"
         value={missed_dispense_prep}
         type="missed_dispense_prep"
       />
       <Card
-        title="Dispense Checks"
+        title="Dispense Check Defects"
         value={missed_dispense_check}
         type="missed_dispense_check"
       />
