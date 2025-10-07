@@ -10,6 +10,7 @@ import { AuthError } from "next-auth";
 import { parseHuddleFormData } from "./form-helpers";
 import { getServiceSupabase, getCurrentUserId } from "./supabase-server";
 
+
 const FormSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Please select a name."),

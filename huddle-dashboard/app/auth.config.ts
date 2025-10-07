@@ -5,6 +5,7 @@ import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { getServiceSupabase } from "./lib/supabase-server";
+import { error } from "console";
 
 export const authConfig = {
   pages: {
@@ -12,14 +13,17 @@ export const authConfig = {
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
-      if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL("/dashboard", nextUrl));
-      }
+      // const isLoggedIn = !!auth?.user;
+      // const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
+
+      // if (isOnDashboard) {
+      //   if (isLoggedIn) return true;
+      //   return false; // Redirect unauthenticated users to login page
+      // } else if (isLoggedIn) {
+      //   // Return true and let the redirect happen via the session callback
+      //   // or handle redirect in middleware
+      //   return true
+      // }
       return true;
     },
     async signIn({ user, account, profile }) {
@@ -32,6 +36,15 @@ export const authConfig = {
       }
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // Handle redirects after sign in
+      // Ig the url is relative, make it absolute
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      // If url is on the same origin, allow it
+      else if (new URL(url).origin === baseUrl) return url;
+      // Otherwise redirect to dashboard
+      return `${baseUrl}/dashboard`;
+    },
   },
   providers: [
     Okta({
@@ -42,21 +55,34 @@ export const authConfig = {
 
     Credentials({
       async authorize(credentials) {
+        try {
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
 
-        if (parsedCredentials.success) {
-          const { email, password } = parsedCredentials.data;
+        if (!parsedCredentials.success) {
+          console.log("Validation failed:", parsedCredentials.error);
+          return null 
+        }
 
-          const supabase = getServiceSupabase();
-          const { data: user } = await supabase
-            .from("users")
-            .select("*")
-            .eq("email", email)
-            .single();
+        const { email, password } = parsedCredentials.data;
 
-          if (!user) return null;
+        const supabase = getServiceSupabase();
+        const { data: user } = await supabase
+          .from("users")
+          .select("*")
+          .eq("email", email)
+          .single();
+
+          if (error) {
+            console.error("Database error:", error);
+            return null;
+          }
+
+          if (!user) {
+            console.log("User not found", email);
+            return null;
+          }
 
           const passwordMatch = await bcrypt.compare(password, user.password);
 
@@ -67,9 +93,13 @@ export const authConfig = {
               name: user.name,
             };
           }
-        }
 
-        return null;
+          console.log("Password mismatch for user:", email);
+          return null;
+        } catch (error) {
+          console.error("Authorization error:", error);
+          return null;
+        }
       },
     }),
   ],

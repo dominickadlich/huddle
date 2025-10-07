@@ -30,7 +30,7 @@ export default function LoginForm() {
 
     <form action={formAction} className="border rounded-lg">
       <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
-        <h1 className="flex justify-center items-centermb-3 text-2xl text-white mb-5">
+        <h1 className="flex justify-center items-center text-2xl text-white mb-5">
           Please log in
         </h1>
         <div className="w-full">
@@ -74,6 +74,14 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
+        
+        {errorMessage && (
+            <>
+              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+              <p className="text-sm text-red-500">{errorMessage}</p>
+            </>
+          )}
+
         <div className="flex justify-between gap-4">
           <input type="hidden" name="redirectTo" value={callbackUrl} />
           <AddNewUserButton className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
@@ -82,31 +90,25 @@ export default function LoginForm() {
           <Button className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
             Log in <ArrowRightIcon className="ml-1 h-5 w-5 text-gray-50" />
           </Button>
-          {errorMessage && (
-            <>
-              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
-            </>
-          )}
         </div>
         {/* Divider */}
-      <div className="mt-6 mb-6 relative">
+      {/* <div className="mt-6 mb-6 relative">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
         </div>
         <div className="relative flex justify-center text-sm">
           <span className="px-2 bg-gray-900 text-gray-400">Or</span>
         </div>
-        </div>
+        </div> */}
 
         {/* Okta SSO button */}
-        <SSOButton 
+        {/* <SSOButton 
         onClick={handleOktaSignIn}
-          type="submit"
+          type="button"
           className="mb-6 w-full flex items-center justify-center"
         >
           Sign in with SSO
-        </SSOButton>
+        </SSOButton> */}
       </div>
     </form>
 
