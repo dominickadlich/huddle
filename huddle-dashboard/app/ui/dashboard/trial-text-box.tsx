@@ -23,44 +23,107 @@ const iconMap = {
 
 export default async function TrialTextWrapper() {
   const {
-    safety,
-    inventory,
-    go_lives,
-    barriers,
-    pass_off,
-    unresolved_issues,
-    opportunities,
-    shout_outs,
+    safety_morning,
+    safety_noon,
+    safety_night,
+
+    inventory_morning,
+    inventory_noon,
+    inventory_night,
+
+    go_lives_morning,
+    go_lives_noon,
+    go_lives_night,
+
+    barriers_morning,
+    barriers_noon,
+    barriers_night,
+
+    pass_off_morning,
+    pass_off_noon,
+    pass_off_night,
+    
+    unresolved_issues_morning,
+    unresolved_issues_noon,
+    unresolved_issues_night,
+
+    opportunities_morning,
+    opportunities_noon,
+    opportunities_night,
+
+    shout_outs_morning,
+    shout_outs_noon,
+    shout_outs_night,
   } = await fetchLatestHuddleData();
 
   return (
     <>
-      <TextCard title="Safety" value={safety} type="safety" />
-      <TextCard title="Inventory" value={inventory} type="inventory" />
-      <TextCard title="Go Lives" value={go_lives} type="go_lives" />
-      <TextCard title="Barriers" value={barriers} type="barriers" />
-      <TextCard title="Pass Off" value={pass_off} type="pass_off" />
+      <TextCard 
+        title="Safety"
+        value_morning={safety_morning}
+        value_noon={safety_noon}
+        value_night={safety_night}
+        type="safety" 
+      />
+      <TextCard 
+        title="Inventory" 
+        value_morning={inventory_morning}
+        value_noon={inventory_noon}
+        value_night={inventory_night}
+        type="inventory" 
+      />
+      <TextCard 
+        title="Go Lives" 
+        value_morning={go_lives_morning}
+        value_noon={go_lives_noon}
+        value_night={go_lives_night}
+        type="go_lives" 
+      />
+      <TextCard 
+        title="Barriers" 
+        value_morning={barriers_morning}
+        value_noon={barriers_noon}
+        value_night={barriers_night}
+        type="barriers" 
+      />
+      <TextCard 
+        title="Pass Off" 
+        value_morning={pass_off_morning} 
+        value_noon={pass_off_noon} 
+        value_night={pass_off_night} 
+        type="pass_off" 
+      />
       <TextCard
         title="Unresolved Issues"
-        value={unresolved_issues}
+        value_morning={unresolved_issues_morning}
+        value_noon={unresolved_issues_noon}
+        value_night={unresolved_issues_night}
         type="unresolved_issues"
       />
       <TextCard
         title="Opportunities"
-        value={opportunities}
+        value_morning={opportunities_morning}
+        value_noon={opportunities_noon}
+        value_night={opportunities_night}
         type="opportunities"
       />
-      <TextCard title="Shout Outs" value={shout_outs} type="shout_outs" />
+      <TextCard 
+        title="Shout Outs" 
+        value_morning={shout_outs_morning} 
+        value_noon={shout_outs_noon}
+        value_night={shout_outs_night}
+        type="shout_outs" 
+      />
     </>
   );
 }
 
 export function TextBoxInput({
     title,
-    value,
-}: {
+    value, 
+  }: {
     title: string,
-    value: number | string
+    value: number | string,
 }) {
 
 
@@ -90,11 +153,15 @@ export function TextBoxInput({
 
 export function TextCard({
   title,
-  value,
+    value_morning,
+    value_noon,
+    value_night,
   type,
 }: {
   title: string;
-  value: number | string;
+  value_morning: number | string;
+  value_noon: number | string;
+  value_night: number | string;
   type:
     | "safety"
     | "inventory"
@@ -114,9 +181,9 @@ export function TextCard({
             {Icon ? <Icon className="h-6 w-6 text-black" /> : null}
           <h3 className="ml-2 text-lg font-medium">{title}</h3>
           </div>
-          <TextBoxInput title="Morning" value={value}/>
-          <TextBoxInput title="Afternoon" value={value}/>
-          <TextBoxInput title="Evening" value={value}/>
+          <TextBoxInput title="Morning" value={value_morning}/>
+          <TextBoxInput title="Afternoon" value={value_noon}/>
+          <TextBoxInput title="Evening" value={value_night}/>
       </div>
     </div>
   );
