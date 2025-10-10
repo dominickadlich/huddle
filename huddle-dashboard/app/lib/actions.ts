@@ -5,7 +5,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { signIn, auth } from "../auth.config";
+import { signIn, auth } from "@/auth";
 import { AuthError } from "next-auth";
 import { parseHuddleFormData } from "./form-helpers";
 import { getServiceSupabase, getCurrentUserId } from "./supabase-server";

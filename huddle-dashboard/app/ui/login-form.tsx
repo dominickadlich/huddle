@@ -77,15 +77,17 @@ export default function LoginForm() {
         
         {errorMessage && (
             <>
-              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
+            <div className="flex mt-2 gap-2">
+                <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+                <p className="text-sm text-red-500">{errorMessage}</p>
+              </div>
             </>
           )}
 
         <div className="flex justify-between gap-4">
           <input type="hidden" name="redirectTo" value={callbackUrl} />
           <AddNewUserButton className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
-            New User <PlusIcon className="ml-1 h-5 w-5 text-gray-50" />
+            New User 
           </AddNewUserButton>
           <Button className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
             Log in <ArrowRightIcon className="ml-1 h-5 w-5 text-gray-50" />

@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { auth } from "../auth.config";
+import { auth } from "@/auth";
 
 export function getServiceSupabase() {
   return createClient(
