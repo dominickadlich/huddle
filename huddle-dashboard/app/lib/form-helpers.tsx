@@ -13,17 +13,9 @@ export function parseHuddleFormData(formData: FormData) {
     complex_preps_count: Number(formData.get("complex_preps_count")),
     missed_dispense_prep: Number(formData.get("missed_dispense_prep")),
     missed_dispense_check: Number(formData.get("missed_dispense_check")),
-    safety: formData.get("safety") || "",
     
-    inventory: formData.get("inventory") || "",
-    go_lives: formData.get("go_lives") || "",
-    barriers: formData.get("barriers") || "",
-    pass_off: formData.get("pass_off") || "",
-    unresolved_issues: formData.get("unresolved_issues") || "",
-    opportunities: formData.get("opportunities") || "",
-    shout_outs: formData.get("shout_outs") || "",
-
     // Morning
+    safety_morning: formData.get("safety_morning") || "",
     inventory_morning: formData.get("inventory_morning") || "",
     go_lives_morning: formData.get("go_lives_morning") || "",
     barriers_morning: formData.get("barriers_morning") || "",
@@ -33,6 +25,7 @@ export function parseHuddleFormData(formData: FormData) {
     shout_outs_morning: formData.get("shout_outs_morning") || "",
 
     // Noon
+    safety_noon: formData.get("safety_noon") || "",
     inventory_noon: formData.get("inventory_noon") || "",
     go_lives_noon: formData.get("go_lives_noon") || "",
     barriers_noon: formData.get("barriers_noon") || "",
@@ -42,6 +35,7 @@ export function parseHuddleFormData(formData: FormData) {
     shout_outs_noon: formData.get("shout_outs_noon") || "",
 
     // Night
+    safety_night: formData.get("safety_night") || "",
     inventory_night: formData.get("inventory_night") || "",
     go_lives_night: formData.get("go_lives_night") || "",
     barriers_night: formData.get("barriers_night") || "",
