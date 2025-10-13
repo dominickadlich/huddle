@@ -6,8 +6,8 @@ import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: {
-    template: "Command Center | %s",
-    default: "Pharmacy Command Center",
+    template: "Pharmacy Huddle | %s",
+    default: "Pharmacy Huddle",
   },
   description: "The official dashboard for central pharmacies",
   metadataBase: new URL("https://huddle-lime-gamma.vercel.app/"),

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "../button";
 import { createHuddleReport, HuddleState } from "@/app/lib/actions";
-import { useActionState } from "react";
+import { Children, useActionState } from "react";
 import FormField from "./form-field";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import {
@@ -14,12 +14,26 @@ import {
 import TextBoxFormField from "./textbox-form-field";
 import {
   NUMERIC_INPUT_CONFIGS,
-  TEXT_INPUT_CONFIGS,
+  TEXT_INPUT_CONFIGS_MORNING,
+  TEXT_INPUT_CONFIGS_NOON,
+  TEXT_INPUT_CONFIGS_NIGHT,
+  
 } from "@/app/lib/form-configs";
+import AccordionSection from "../accordion";
+import { Metadata } from "next";
+
+import { useState } from "react";
+import clsx from "clsx";
+
+export const metadata: Metadata = {
+  title: "Create Huddle Report",
+};
+
 
 export default function Form() {
   const initialState: HuddleState = { message: null, errors: {} };
   const [state, formAction] = useActionState(createHuddleReport, initialState);
+  const [openAll, setOpenAll] = useState(false)
 
   console.log("State:", state);
 
@@ -130,8 +144,20 @@ export default function Form() {
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-2 gap-8">
-            {TEXT_INPUT_CONFIGS.map((config) => (
+          <div className="mt-10 flex justify-end gap-4">
+        <button
+        type="button"
+          onClick={() => setOpenAll(!openAll)}
+          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+        >
+          {openAll == true ? "Collapse All" : "Expand All"}
+        </button>
+        </div>
+
+        <div className="mt-10">
+          <AccordionSection title="Morning Huddle" isOpen={openAll}>
+            <div className="grid grid-cols-2 gap-8">
+            {TEXT_INPUT_CONFIGS_MORNING.map((config) => (
               <TextBoxFormField
                 key={config.name}
                 config={config}
@@ -139,6 +165,36 @@ export default function Form() {
                 defaultValue=""
               />
             ))}
+            </div>
+            </AccordionSection>
+
+            <AccordionSection title="Afternoon Huddle" isOpen={openAll}>
+              <div className="grid grid-cols-2 gap-8">
+            {TEXT_INPUT_CONFIGS_NOON.map((config) => (
+              <TextBoxFormField
+                key={config.name}
+                config={config}
+                state={state}
+                defaultValue=""
+              />
+            ))}
+            </div>
+            </AccordionSection>
+
+            <AccordionSection title="Evening Huddle" isOpen={openAll}>
+              <div className="grid grid-cols-2 gap-8">
+            {TEXT_INPUT_CONFIGS_NIGHT.map((config) => (
+              <TextBoxFormField
+                key={config.name}
+                config={config}
+                state={state}
+                defaultValue=""
+              />
+            ))}
+            </div>
+            </AccordionSection>
+
+
         </div>
       </div>
     </form>

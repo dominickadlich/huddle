@@ -70,7 +70,7 @@ export const NUMERIC_INPUT_CONFIGS = [
   },
 ] as const satisfies readonly InputConfig[];
 
-export const TEXT_INPUT_CONFIGS = [
+export const TEXT_INPUT_CONFIGS_MORNING = [
   // Text inputs
   {
     name: "safety_morning",
@@ -128,8 +128,11 @@ export const TEXT_INPUT_CONFIGS = [
     icon: TrophyIcon,
     placeholder: "Shout Outs...",
   },
+  ] as const satisfies readonly InputConfig[];
 
 
+
+  export const TEXT_INPUT_CONFIGS_NOON = [
   {
     name: "safety_noon",
     label: "Safety - Noon",
@@ -186,8 +189,10 @@ export const TEXT_INPUT_CONFIGS = [
     icon: TrophyIcon,
     placeholder: "Shout Outs...",
   },
+  ] as const satisfies readonly InputConfig[];
 
 
+    export const TEXT_INPUT_CONFIGS_NIGHT = [
   {
     name: "safety_night",
     label: "Safety  - Night",

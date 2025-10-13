@@ -6,8 +6,9 @@ import { Suspense } from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Docs Home",
+  title: "Docs",
 };
+
 
 export default async function Page(props: {
   searchParams?: Promise<{

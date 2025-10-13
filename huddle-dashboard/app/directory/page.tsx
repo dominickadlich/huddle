@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Directory",
 };
 
+
 export default async function Page(props: {
   searchParams?: Promise<{
     query?: string;

@@ -15,8 +15,12 @@ import TextBoxFormField from "./textbox-form-field";
 import { HuddleDataForm } from "@/app/lib/definitions";
 import {
   NUMERIC_INPUT_CONFIGS,
-  TEXT_INPUT_CONFIGS,
+  TEXT_INPUT_CONFIGS_MORNING,
+  TEXT_INPUT_CONFIGS_NOON,
+  TEXT_INPUT_CONFIGS_NIGHT,
+  
 } from "@/app/lib/form-configs";
+import AccordionSection from "../accordion";
 
 export default function UpdateForm({
   huddle_data,
@@ -139,7 +143,7 @@ export default function UpdateForm({
         </div>
 
         <div className="mt-10 grid grid-cols-2 gap-8">
-          {TEXT_INPUT_CONFIGS.map((config) => (
+          {TEXT_INPUT_CONFIGS_MORNING.map((config) => (
             <TextBoxFormField
               key={config.name}
               config={config}
