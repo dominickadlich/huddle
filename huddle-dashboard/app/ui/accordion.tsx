@@ -1,25 +1,20 @@
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
+
 
 interface AccordionSectionProps {
   title: string;
   children: React.ReactNode;
   isOpen?: boolean;
+  onToggle: () => void;
 }
 
-export default function AccordionSection({ title, children, isOpen }: AccordionSectionProps) {
-  const [internalOpen, setInternalOpen] = useState(false);
-
-  // Use external isOpen if provided, otherwise use internal state
-  const open = isOpen !== undefined ? isOpen : internalOpen;
-  const setOpen = isOpen !== undefined ? () => {} : setInternalOpen;
-
+export default function AccordionSection({ title, children, isOpen, onToggle }: AccordionSectionProps) {
   return (
     <div className="border border-gray-700 rounded-lg mb-4">
       <button
         type="button"
-        onClick={() => setOpen(!open)}
+        onClick={onToggle}
         className="w-full flex justify-between items-center p-4 text-left hover:bg-gray-700/50 transition-colors"
       >
         <span className="font-semibold text-lg">{title}</span>

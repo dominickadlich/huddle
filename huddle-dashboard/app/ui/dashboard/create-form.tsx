@@ -33,7 +33,35 @@ export const metadata: Metadata = {
 export default function Form() {
   const initialState: HuddleState = { message: null, errors: {} };
   const [state, formAction] = useActionState(createHuddleReport, initialState);
-  const [openAll, setOpenAll] = useState(false)
+
+
+  // Track individual accordion states
+  const [accordionStates, setAccordionStates] = useState({
+    morning: false,
+    afternoon: false,
+    evening: false,
+  })
+
+  // Toggle individual accordion
+  const toggleAccordion = (key: keyof typeof accordionStates) => {
+    setAccordionStates(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
+
+  // Toggle all accordions
+  const toggleAll = () => {
+    const allOpen = Object.values(accordionStates).every(state => state);
+    setAccordionStates({
+      morning: !allOpen,
+      afternoon: !allOpen,
+      evening: !allOpen,
+    });
+  };
+
+  const allOpen = Object.values(accordionStates).every(state => state);
 
   console.log("State:", state);
 
@@ -147,15 +175,19 @@ export default function Form() {
           <div className="mt-10 flex justify-end gap-4">
         <button
         type="button"
-          onClick={() => setOpenAll(!openAll)}
+          onClick={toggleAll}
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
-          {openAll == true ? "Collapse All" : "Expand All"}
+          {allOpen ? "Collapse All" : "Expand All"}
         </button>
         </div>
 
         <div className="mt-10">
-          <AccordionSection title="Morning Huddle" isOpen={openAll}>
+          <AccordionSection 
+            title="Morning Huddle" 
+            isOpen={accordionStates.morning}
+            onToggle={() => toggleAccordion('morning')}
+          >
             <div className="grid grid-cols-2 gap-8">
             {TEXT_INPUT_CONFIGS_MORNING.map((config) => (
               <TextBoxFormField
@@ -168,7 +200,11 @@ export default function Form() {
             </div>
             </AccordionSection>
 
-            <AccordionSection title="Afternoon Huddle" isOpen={openAll}>
+            <AccordionSection 
+              title="Afternoon Huddle" 
+              isOpen={accordionStates.afternoon}
+              onToggle={() => toggleAccordion('afternoon')}
+            >
               <div className="grid grid-cols-2 gap-8">
             {TEXT_INPUT_CONFIGS_NOON.map((config) => (
               <TextBoxFormField
@@ -181,7 +217,11 @@ export default function Form() {
             </div>
             </AccordionSection>
 
-            <AccordionSection title="Evening Huddle" isOpen={openAll}>
+            <AccordionSection 
+              title="Evening Huddle" 
+              isOpen={accordionStates.evening}
+              onToggle={() => toggleAccordion('evening')}
+            >
               <div className="grid grid-cols-2 gap-8">
             {TEXT_INPUT_CONFIGS_NIGHT.map((config) => (
               <TextBoxFormField
