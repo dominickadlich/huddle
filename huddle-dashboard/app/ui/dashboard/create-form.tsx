@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "../button";
+import { Button, CreateReportButton } from "../button";
 import { createHuddleReport, HuddleState } from "@/app/lib/actions";
 import { Children, useActionState } from "react";
 import FormField from "./form-field";
@@ -10,6 +10,10 @@ import {
   ArchiveBoxArrowDownIcon,
   LockClosedIcon,
   UserGroupIcon,
+  XMarkIcon,
+  CheckIcon,
+  PlusIcon,
+  MinusIcon
 } from "@heroicons/react/24/outline";
 import TextBoxFormField from "./textbox-form-field";
 import {
@@ -72,11 +76,11 @@ export default function Form() {
         <div className="flex justify-end gap-4">
           <Link
             href="/dashboard"
-            className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+            className="group relative px-3.5 py-3.5 bg-gray-300 text-white font-semibold rounded-full shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
           >
-            Cancel
+            <XMarkIcon className="h-5 w-5 text-gray-700"/>
           </Link>
-          <Button type="submit">Create Report</Button>
+          <CreateReportButton type="submit"><CheckIcon className="h-5 w-5"/></CreateReportButton>
         </div>
 
 
@@ -91,94 +95,115 @@ export default function Form() {
             />
           ))}
           <div className="mt-10">
-            <div>
-              <div className="sm:col-span-5">
-                <label
-                  htmlFor="staffing"
-                  className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
-                >
-                  <UserGroupIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
-                  Staffing
-                </label>
-                <div className="mt-2 grid grid-cols-1">
-                  <select
-                    id="staffing"
-                    name="staffing"
-                    defaultValue="Full"
-                    className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:*:bg-gray-800 dark:focus-visible:outline-indigo-500"
-                  >
-                    <option>Full</option>
-                    <option>Contingency</option>
-                  </select>
-                  <ChevronDownIcon
-                    aria-hidden="true"
-                    className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-400"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+  <div>
+
+    {/* Staffing Dropdown */}
+    <div className="sm:col-span-5">
+      <label
+        htmlFor="staffing"
+        className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
+      >
+        {/* <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-1.5 shadow-md shadow-indigo-500/20"> */}
+          <UserGroupIcon className="h-4 w-4 text-white" />
+        {/* </div> */}
+        Staffing
+      </label>
+      <div className="relative mt-2">
+        <select
+          id="staffing"
+          name="staffing"
+          defaultValue="Full"
+          className="w-full appearance-none rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 px-4 py-3 pr-10 text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50 cursor-pointer"
+        >
+          <option className="bg-gray-800 text-white">Full</option>
+          <option className="bg-gray-800 text-white">Contingency</option>
+        </select>
+        <ChevronDownIcon
+          aria-hidden="true"
+          className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* Restock Help Needed */}
           <div className="mt-10">
-            <div>
-              <div className="sm:col-span-5">
-                <label
-                  htmlFor="restock"
-                  className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
-                >
-                  <ArchiveBoxArrowDownIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
-                  Restock
-                </label>
-                <div className="mt-2">
-                  <div className="flex items-center rounded-md bg-white px-3 py-1.5 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500">
-                    <input
-                      id="restock"
-                      name="restock"
-                      type="checkbox"
-                      className="h-6 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                    <span className="ml-3 text-sm text-gray-700 dark:text-white">
-                      Help Needed
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div>
+    <div className="sm:col-span-5">
+      <label
+        htmlFor="restock-label"
+        className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
+      >
+        {/* <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-1.5 shadow-md shadow-indigo-500/20"> */}
+          <ArchiveBoxArrowDownIcon className="h-4 w-4 text-white" />
+        {/* </div> */}
+        Restock
+      </label>
+      <div className="mt-2">
+        <label 
+          htmlFor="restock"
+          className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 px-4 py-3 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
+        >
+          <input
+            id="restock"
+            name="restock"
+            type="checkbox"
+            className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
+          />
+          <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+            Help Needed
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+          {/* CS Queue Help Needed */}
           <div className="mt-10">
-            <div>
-              <div className="sm:col-span-5">
-                <label
-                  htmlFor="restock"
-                  className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
-                >
-                  <LockClosedIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
-                  CS Queue
-                </label>
-                <div className="mt-2">
-                  <div className="flex items-center rounded-md bg-white px-3 py-1.5 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500">
-                    <input
-                      id="cs_queue"
-                      name="cs_queue"
-                      type="checkbox"
-                      className="h-6 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                    <span className="ml-3 text-sm text-gray-700 dark:text-white">
-                      Help Needed
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div>
+    <div className="sm:col-span-5">
+      <label
+        htmlFor="cs-queue-label"
+        className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
+      >
+        {/* <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-1.5 shadow-md shadow-indigo-500/20"> */}
+          <LockClosedIcon className="h-4 w-4 text-white" />
+        {/* </div> */}
+        CS Queue
+      </label>
+      <div className="mt-2">
+        <label 
+          htmlFor="cs_queue"
+          className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 px-4 py-3 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
+        >
+          <input
+            id="cs_queue"
+            name="cs_queue"
+            type="checkbox"
+            className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
+          />
+          <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+            Help Needed
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
         </div>
 
           <div className="mt-10 flex justify-end gap-4">
         <button
         type="button"
           onClick={toggleAll}
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          className="group relative px-3.5 py-3.5 bg-gray-300 text-white font-semibold rounded-full shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
         >
-          {allOpen ? "Collapse All" : "Expand All"}
+          {allOpen 
+            ? <MinusIcon className="h-5 w-5 text-gray-700" />
+            : <PlusIcon className="h-5 w-5 text-gray-700" />
+          }
         </button>
         </div>
 

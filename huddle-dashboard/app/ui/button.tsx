@@ -18,6 +18,20 @@ export function Button({ children, className, ...rest }: ButtonProps) {
   );
 }
 
+export function CreateReportButton({ children, className, ...rest }: ButtonProps) {
+  return (
+    <button
+      {...rest}
+      className={clsx(
+        "group relative px-3.5 py-3.5 bg-gradient-to-r from-indigo-700 to-indigo-500 text-white font-semibold rounded-full shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 transition-all duration-300",
+        className,
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
 export function AddNewUserButton({ children, className, ...rest }: ButtonProps) {
   return (
     <button

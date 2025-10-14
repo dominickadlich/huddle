@@ -125,37 +125,41 @@ export function TextBoxInput({
     title: string,
     value: number | string,
 }) {
-
-
     return (
-        <div className="">
-            <div className="flex p-2">
-                <div className="flex justify-center w-50">
-                    <h3 className="ml-2 text-lg font-medium">{title}</h3>
-                </div>
-
-                {/* Handle both empty and filled content */}
-                <div className="flex flex-1 justify-center">
-                {value ? (
-                    <p className="flex flex-1 justify-center items-center p-2 text-gray-900 text-sm text-center border-l-2">
-                    {value}
-                    </p>
-                ) : (
-                    <p className="flex flex-1 justify-center items-center p-2 text-gray-400 text-sm italic text-center border-l-2">
-                    No updates
-                    </p>
-                )}
-                </div>
-            </div>
+    <div className="group/row relative">
+      <div className="grid grid-cols-[120px_1px_1fr] gap-4 p-3 items-center transition-all duration-300 rounded-lg hover:bg-indigo-500/5">
+        {/* Label */}
+        <div className="flex justify-start">
+          <h3 className="text-sm font-semibold text-gray-200 group-hover/row:text-indigo-300 transition-colors duration-300">
+            {title}
+          </h3>
         </div>
-    )
+
+        {/* Divider */}
+        <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-700 to-transparent group-hover/row:via-indigo-500/50 transition-colors duration-300" />
+
+        {/* Content */}
+        <div className="flex items-center">
+          {value ? (
+            <p className="text-sm text-gray-300 leading-relaxed group-hover/row:text-gray-100 transition-colors duration-300">
+              {value}
+            </p>
+          ) : (
+            <p className="text-sm text-gray-600 italic">
+              No updates
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export function TextCard({
   title,
-    value_morning,
-    value_noon,
-    value_night,
+  value_morning,
+  value_noon,
+  value_night,
   type,
 }: {
   title: string;
@@ -175,16 +179,34 @@ export function TextCard({
   const Icon = iconMap[type];
 
   return (
-    <div className="rounded-xl bg-indigo-500 p-1">
-      <div className="rounded-xl bg-gray-200 text-black px-4 py-4 text-center text-2xl">
-          <div className="flex justify-center border-b-2 ">
-            {Icon ? <Icon className="h-6 w-6 text-black" /> : null}
-          <h3 className="ml-2 text-lg font-medium">{title}</h3>
-          </div>
-          <TextBoxInput title="Morning" value={value_morning}/>
-          <TextBoxInput title="Afternoon" value={value_noon}/>
-          <TextBoxInput title="Evening" value={value_night}/>
+    <div className="group relative overflow-hidden rounded-2xl border border-gray-500/80 bg-gray-800/30 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10">
+      {/* Gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      
+      {/* Content */}
+      <div className="relative z-10 p-6">
+        {/* Header with Icon */}
+        <div className="flex justify-center items-center gap-3 mb-6 pb-4 border-b border-gray-700/50 group-hover:border-indigo-500/30 transition-colors duration-300">
+          {Icon ? (
+            // <div className="inline-flex rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-2.5 shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow duration-300">
+              <Icon className="h-6 w-6 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" />
+            // </div>
+          ) : null}
+          <h3 className="text-lg font-semibold text-white group-hover:text-indigo-300 transition-colors duration-300">
+            {title}
+          </h3>
+        </div>
+
+        {/* Text Box Inputs */}
+        <div className="space-y-1">
+          <TextBoxInput title="Morning" value={value_morning} />
+          <TextBoxInput title="Afternoon" value={value_noon} />
+          <TextBoxInput title="Evening" value={value_night} />
+        </div>
       </div>
+
+      {/* Bottom accent line */}
+      <div className="absolute bottom-0 left-0 right-0 h-0.25 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     </div>
   );
 }

@@ -36,13 +36,13 @@ export default async function Page() {
 
   return (
     <main className="px-6">
-      <div className="flex justify-between items-center mt-10">
-        <h1 className="text-2xl font-bold">Huddle Dashboard - {reportDate}</h1>
-        <div className="flex gap-2">
-          <div className="flex gap-2">
+      <div className="flex justify-between items-center mt-20 mb-10">
+        <h1 className="text-4xl font-bold">Huddle Dashboard - {reportDate}</h1>
+        <div className="flex gap-6">
+          <div className="flex gap-4">
             <UpdateHuddleReport id={huddleData.id} />
           </div>
-          <div className="flex gap-2">
+          <div className="flex">
             <CreateHuddleReport />
           </div>
         </div>

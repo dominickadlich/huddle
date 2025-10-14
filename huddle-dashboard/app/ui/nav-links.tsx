@@ -1,30 +1,30 @@
 "use client";
 
 import {
-  PresentationChartBarIcon,
+  BookOpenIcon,
   PhoneIcon,
-  NewspaperIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 
-const navigation = [
+const links = [
   {
     name: "Huddle",
     href: "/dashboard",
-    icon: PresentationChartBarIcon,
+    icon: BookOpenIcon,
   },
   {
     name: "Directory",
     href: "/directory",
     icon: PhoneIcon,
   },
-  {
-    name: "Documents",
-    href: "/docs",
-    icon: NewspaperIcon,
-  },
+  // {
+  //   name: "Documents",
+  //   href: "/docs",
+  //   icon: DocumentTextIcon,
+  // },
 ];
 
 export default function NavLinks() {
@@ -32,21 +32,39 @@ export default function NavLinks() {
 
   return (
     <>
-      {navigation.map((item) => {
-        const ItemIcon = item.icon;
+      {links.map((link) => {
+        const LinkIcon = link.icon;
+        const isActive = pathname === link.href;
+
         return (
           <Link
-            key={item.name}
-            href={item.href}
-            className={clsx("-m-2.5 rounded-md p-2.5", {
-              "text-black": pathname === item.href,
-              "text-white": pathname !== item.href,
-            })}
-          >
-            <div className="flex item-center gap-2">
-              <ItemIcon className="w-6" />
-              <p className="hidden md:block">{item.name}</p>
-            </div>
+            key={link.name}
+            href={link.href}
+            className={clsx(
+                "group relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-300", 
+                {
+                  // Active state - glassmorphic with glow
+                  "bg-white/20 text-white shadow-lg shadow-white/10 border border-white/30": isActive,
+                  // Inactive state - subtle hover
+                  "text-white/90 hover:bg-white/10 hover:text-white border border-transparent hover:border-white/20": !isActive,
+                }
+              )}
+            >
+              <LinkIcon
+                className={clsx(
+                  "h-5 w-5 transition-all duration-300",
+                  {
+                    "text-white": isActive,
+                    "text-white/80 group-hover:text-white group-hover:scale-110": !isActive,
+                  }
+                )}
+              />
+              <span className="hidden lg:block">{link.name}</span>
+
+              {/* Active indicator line */}
+              {/* {isActive && (
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent" />
+              )} */}
           </Link>
         );
       })}
