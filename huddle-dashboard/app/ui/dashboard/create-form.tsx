@@ -151,7 +151,7 @@ export default function Form() {
             type="checkbox"
             className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
           />
-          <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+          <span className="text-sm text-gray-500 group-hover:text-white transition-colors">
             Help Needed
           </span>
         </label>
@@ -184,7 +184,7 @@ export default function Form() {
             type="checkbox"
             className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
           />
-          <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+          <span className="text-sm text-gray-500 group-hover:text-white transition-colors">
             Help Needed
           </span>
         </label>

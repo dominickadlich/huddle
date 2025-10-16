@@ -13,6 +13,7 @@ import { useActionState } from "react";
 import { authenticate } from "@/app/lib/actions";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import NavBar from "./navbar";
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
@@ -27,7 +28,8 @@ export default function LoginForm() {
   };
 
   return (
-
+    <>
+    <NavBar />
     <form action={formAction} className="border rounded-lg">
       <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
         <h1 className="flex justify-center items-center text-2xl text-white mb-5">
@@ -84,11 +86,11 @@ export default function LoginForm() {
             </>
           )}
 
-        <div className="flex justify-between gap-4">
+        <div className="flex justify-end gap-4">
           <input type="hidden" name="redirectTo" value={callbackUrl} />
-          <AddNewUserButton className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
+          {/* <AddNewUserButton className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
             New User 
-          </AddNewUserButton>
+          </AddNewUserButton> */}
           <Button className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
             Log in <ArrowRightIcon className="ml-1 h-5 w-5 text-gray-50" />
           </Button>
@@ -113,8 +115,6 @@ export default function LoginForm() {
         </SSOButton> */}
       </div>
     </form>
-
-
-    
+    </>    
   );
 }
