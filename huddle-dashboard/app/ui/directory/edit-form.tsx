@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BuildingOfficeIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { BuildingOfficeIcon, ClockIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import { Button } from "../button";
 import { updateExtension, State } from "@/app/lib/actions";
 import { useActionState } from "react";
@@ -21,9 +21,10 @@ export default function EditExtensionForm({
 
   return (
     <form action={formAction}>
-      <div className="mt-10">
+      <div className="mt-10 grid grid-cols-3 gap-6">
+
         {/* Extension Name */}
-        <div className="sm:col-span-4">
+        <div className="">
           <label
             htmlFor="siteName"
             className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -43,17 +44,19 @@ export default function EditExtensionForm({
             />
           </div>
         </div>
-        <div id="name-error" aria-live="polite" aria-atomic="true">
+
+        {/* Error Handling */}
+        {/* <div id="name-error" aria-live="polite" aria-atomic="true">
           {state.errors?.name &&
             state.errors.name.map((error: string) => (
               <p className="mt-2 text-sm text-red-500" key={error}>
                 {error}
               </p>
             ))}
-        </div>
+        </div> */}
 
         {/* Extension Number */}
-        <div className="mt-10">
+        <div>
           <label
             htmlFor="siteNumber"
             className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -72,7 +75,7 @@ export default function EditExtensionForm({
               aria-describedby="text-error"
             />
           </div>
-        </div>
+          {/* Error Handling */}
         <div id="text-error" aria-live="polite" aria-atomic="true">
           {state.errors?.extension &&
             state.errors.extension.map((error: string) => (
@@ -81,6 +84,40 @@ export default function EditExtensionForm({
               </p>
             ))}
         </div>
+        </div>
+      
+
+
+      {/* Extension Hours */}
+      <div className="">
+        <label
+          htmlFor="hours"
+          className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
+        >
+          <ClockIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
+          Hours
+        </label>
+        <div className="mt-2">
+        <input
+          id="hours"
+          name="hours"
+          type="text"
+          defaultValue={extension.hours}
+          placeholder="Enter site hours here"
+          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+          aria-describedby="hours-error"
+        >
+        </input>
+        </div>
+        <div id="hours-error" aria-live="polite" aria-atomic="true">
+          {state.errors?.extension &&
+            state.errors.extension.map((error: string) => (
+              <p className="mt-2 text-sm text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+        </div>
+      </div>
       </div>
 
       <div className="mt-6 flex justify-end gap-4">

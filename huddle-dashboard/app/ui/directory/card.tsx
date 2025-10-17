@@ -10,7 +10,7 @@ export default async function ExtensionsTable({ query }: { query: string }) {
       {extensions.map((extension) => (
         <div 
           key={extension.id} 
-          className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10"
+          className="group relative overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10"
         >
 
           {/* Gradient overlay on hover */}

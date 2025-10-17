@@ -32,7 +32,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
       {/* Search Input */}
       <input
         id="search"
-        className="peer block w-full rounded-2xl border border-gray-700/50 bg-gray-800/30 py-4 pl-16 pr-4 text-white placeholder:text-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50"
+        className="peer block w-full rounded-2xl border border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-4 text-white placeholder:text-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50"
         placeholder={placeholder}
         onChange={(e) => handleSearch(e.target.value)}
         defaultValue={searchParams.get("query")?.toString()}

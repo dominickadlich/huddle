@@ -19,7 +19,7 @@ export default function Example() {
 
         {/* Content Container */}
         <div className="relative isolate px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl sm:py-34 lg:py-38  animate-fade-in">
+        <div className="mx-auto max-w-4xl sm:py-34 lg:py-54 animate-fade-in">
 
           {/* Badge with Glow */}
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
@@ -47,7 +47,7 @@ export default function Example() {
 
 
             {/* CTA Buttons */}
-              <div className="mt-10 flex items-center justify-center gap-x-6">
+              {/* <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Link href="/login">
                   <button className="group relative px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 transition-all duration-300">
                     <span className="relative z-10">Get Started</span>
@@ -62,11 +62,11 @@ export default function Example() {
                   Learn more
                   <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1 duration-300"> →</span>
                 </a>
-              </div>
+              </div> */}
             </div>
 
 
-          <div className="mt-20">
+          <div className="mt-10">
           <HomePageCardWrapper />
           </div>
         </div>

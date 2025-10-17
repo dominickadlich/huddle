@@ -15,6 +15,7 @@ const FormSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Please select a name."),
   extension: z.string().min(1, "Please enter an extension."),
+  hours: z.string().min(1, "Please enter available hours"),
   created_at: z.string(),
 });
 
@@ -80,6 +81,7 @@ export type State = {
   errors?: {
     name?: string[];
     extension?: string[];
+    hours?: string[];
   };
   message?: string | null;
 };
@@ -124,6 +126,8 @@ export type HuddleState = {
   message?: string | null;
 };
 
+
+// Create Huddle Report
 export async function createHuddleReport(
   prevState: HuddleState,
   formData: FormData,
@@ -242,6 +246,9 @@ export async function createHuddleReport(
   redirect("/dashboard");
 }
 
+
+
+// Update Huddle Report
 export async function updateHuddleReport(
   id: string,
   prevState: HuddleState,
@@ -293,6 +300,9 @@ export async function updateHuddleReport(
   redirect("/dashboard");
 }
 
+
+
+// Update Extension
 export async function updateExtension(
   id: string,
   prevState: State,
@@ -301,6 +311,7 @@ export async function updateExtension(
   const validatedFields = UpdateExtension.safeParse({
     name: formData.get("name"),
     extension: formData.get("extension"),
+    hours: formData.get("hours"),
   });
 
   if (!validatedFields.success) {
@@ -310,7 +321,7 @@ export async function updateExtension(
     };
   }
 
-  const { name, extension } = validatedFields.data;
+  const { name, extension, hours } = validatedFields.data;
 
   try {
     const supabase = getServiceSupabase();
@@ -320,6 +331,7 @@ export async function updateExtension(
       .update({
         name: name,
         extension: extension,
+        hours: hours,
       })
       .eq("id", id);
 
@@ -333,10 +345,14 @@ export async function updateExtension(
   redirect("/directory");
 }
 
+
+
+// Create Extension
 export async function createExtension(prevState: State, formData: FormData) {
   const validatedFields = CreateExtension.safeParse({
     name: formData.get("name"),
     extension: formData.get("extension"),
+    hours: formData.get("hours"),
   });
 
   // If form validation fails, return errors early. Otherwise, continue
@@ -348,7 +364,7 @@ export async function createExtension(prevState: State, formData: FormData) {
   }
 
   // Prepare data for insertion into the database
-  const { name, extension } = validatedFields.data;
+  const { name, extension, hours } = validatedFields.data;
   const created_at = new Date().toISOString().split("T")[0];
 
   try {

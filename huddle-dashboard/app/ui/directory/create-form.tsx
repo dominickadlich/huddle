@@ -39,9 +39,6 @@ export default function Form() {
           </div>
 
         
-        
-        
-
         {/* Extension Number */}
         <div className="">
           <label
@@ -67,16 +64,16 @@ export default function Form() {
         {/* Office Hours */}
         <div className="">
           <label
-            htmlFor="officeHours"
+            htmlFor="hours"
             className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
           >
             <ClockIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
-            Office Hours
+             Hours
           </label>
           <div className="mt-2">
             <input
-              id="officeHours"
-              name="officeHours"
+              id="hours"
+              name="hours"
               type="text"
               placeholder="Enter site hours here"
               className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"

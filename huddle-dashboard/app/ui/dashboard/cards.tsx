@@ -101,7 +101,7 @@ export function Card({
 
   return (
     // Float & outline on hover
-    <div className="group relative overflow-hidden rounded-2xl border border-gray-500/80 bg-gray-800/30 backdrop-blur-sm p-6 transition-all duration-300 hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10">
+    <div className="group relative overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6 transition-all duration-300 hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10">
       {/* Lift card on hover: hover:-translate-y-2 */}
 
       {/* Gradient overlay on hover */}

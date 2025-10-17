@@ -113,7 +113,7 @@ export default function Form() {
           id="staffing"
           name="staffing"
           defaultValue="Full"
-          className="w-full appearance-none rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 px-4 py-3 pr-10 text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50 cursor-pointer"
+          className="w-full appearance-none rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3 pr-10 text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50 cursor-pointer"
         >
           <option className="bg-gray-800 text-white">Full</option>
           <option className="bg-gray-800 text-white">Contingency</option>
@@ -143,7 +143,7 @@ export default function Form() {
       <div className="mt-2">
         <label 
           htmlFor="restock"
-          className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 px-4 py-3 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
+          className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3.5 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
         >
           <input
             id="restock"
@@ -176,7 +176,7 @@ export default function Form() {
       <div className="mt-2">
         <label 
           htmlFor="cs_queue"
-          className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 px-4 py-3 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
+          className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3.5 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
         >
           <input
             id="cs_queue"

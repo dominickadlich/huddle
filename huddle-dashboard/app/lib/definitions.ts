@@ -24,23 +24,25 @@ export type HuddleData = {
   tpn_count: number;
   haz_count: number;
   non_sterile_count: number;
-  opportunities: {
-    body: string;
-    date: Date;
-    title: string;
-    priority: "low" | "medium" | "high";
-  }[];
+  // opportunities: {
+  //   body: string;
+  //   date: Date;
+  //   title: string;
+  //   priority: "low" | "medium" | "high";
+  // }[];
 };
 
 export type ExtensionField = {
   name: string;
   extension: string;
+  hours: string;
 };
 
 export type ExtensionForm = {
   id: string;
   name: string;
   extension: string;
+  hours: string;
 };
 
 export type HuddleDataForm = {

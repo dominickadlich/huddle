@@ -11,7 +11,7 @@ interface AccordionSectionProps {
 
 export default function AccordionSection({ title, children, isOpen, onToggle }: AccordionSectionProps) {
   return (
-    <div className="border border-gray-700 rounded-lg mb-4">
+    <div className="border border-gray-400/50 rounded-lg mb-4">
       <button
         type="button"
         onClick={onToggle}
