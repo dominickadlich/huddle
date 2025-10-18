@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./app/auth.config";
 import Credentials from "next-auth/providers/credentials";
-import Okta from "next-auth/providers/okta";
 import { z } from 'zod'
 import { User } from "./app/lib/definitions";
 import bcrypt from 'bcrypt'
@@ -9,7 +8,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
 )
 
 async function getUser(email: string): Promise<User | undefined> {
@@ -31,6 +30,11 @@ async function getUser(email: string): Promise<User | undefined> {
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
     ...authConfig,
+
+
+    debug: true,
+
+
     providers: 
     [
         Credentials({
@@ -51,8 +55,56 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
             console.log('Invalid Credentials')
             return null;
         },
-    }), 
-    
-    // Okta
+    }),
+    {
+        id: "duosso",
+        name: "Duo SSO",
+        type: "oidc",
+
+        clientId: process.env.DUO_CLIENT_ID!,
+        clientSecret: process.env.DUO_CLIENT_SECRET!,
+        issuer: process.env.DUO_ISSUER!,
+
+
+        // Standard OIDC configuration
+        authorization: {
+            params: { 
+                scope: "openid email profile",
+            },
+        },
+
+        // Map Duo's user claims to NextAuth format
+        profile(profile) {
+            console.log("Profile received from Duo:", profile)
+            return {
+                id: profile.sub,
+                name: profile.name || `${profile.given_name} ${profile.family_name}`,
+                display_name: profile.display_name,
+                email: profile.email,
+                given_name: profile.given_name,
+                family_name: profile.family_name,
+            }
+        },
+    },
 ],
+
+callbacks: {
+    async jwt({ token, account, profile }) {
+        if (account) {
+            console.log("Account:", account)
+            console.log("Profile in JWT callback:", profile)
+            token.accessToken = account.access_token
+            token.id = profile?.sub
+        }
+        return token
+    },
+    async session({ session, token }) {
+        if (session.user) {
+            session.user.id = token.id as string
+        } 
+        // @ts-ignore - Adding custom property
+        session.accessToken = token.accessToken as string
+        return session
+    }
+}
 })
