@@ -7,7 +7,7 @@ export function CreateHuddleReport() {
   return (
     <Link
       href="/dashboard/create"
-      className="group relative px-3.5 py-3.5 bg-gradient-to-r from-indigo-700 to-indigo-500 text-white font-semibold rounded-full shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 transition-all duration-300"
+      className="group flex items-center gap-2 px-3.5 py-3.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg shadow-indigo-500/30 transition-all duration-300 hover:shadow-indigo-500/50 hover:scale-105 whitespace-nowrap"
     >
       <PlusIcon className="h-5"/>
       {/* <span className="hidden md:block">Create Report</span> */}
@@ -19,9 +19,9 @@ export function UpdateHuddleReport({ id }: { id: string }) {
   return (
     <Link
       href={`/dashboard/${id}/edit`}
-      className="group relative px-3.5 py-3.5 bg-gradient-to-r from-gray-400 to-gray-200 text-white font-semibold rounded-full shadow-lg shadow-indigo-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
+      className="group flex items-center gap-2 px-3.5 py-3.5 rounded-full bg-gradient-to-r from-indigo-600 via-blue-600 to-gray-900 to-indigo-600 text-white font-semibold shadow-lg shadow-indigo-500/30 transition-all duration-300 hover:shadow-indigo-500/50 hover:scale-105 whitespace-nowrap"
     >
-      <PencilIcon className="h-5"/>
+      <PencilIcon className="h-5 "/>
       {/* <span className="hidden md:block">Update Report</span> */}
     </Link>
   );

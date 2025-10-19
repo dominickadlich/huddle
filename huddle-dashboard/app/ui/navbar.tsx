@@ -8,6 +8,7 @@ import { useState } from "react";
 import Link from "next/link";
 import NavLinks from "./nav-links";
 import { signOut, useSession } from "next-auth/react"; // Add useSession
+import { SignInButton, SignInNavBar, SignOutButton, SignOutNavBar } from "./test-sso/auth-buttons";
 
 export default function NavBar({}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -55,30 +56,28 @@ export default function NavBar({}) {
 
         {/* Auth Button */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {status === "loading" ? (
-            <span className="text-sm font-semibold text-white/70">
-              Loading...
-            </span>
-          ) : isAuthenticated ? (
-            <button
-              onClick={handleSignOut}
-              className="group relative px-5 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-lg hover:shadow-white/10"
-            >
-              Sign out 
-              <span aria-hidden="true" className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
-            </button>
+          {isAuthenticated ? (
+            <SignOutNavBar />
+            // <button
+            //   onClick={handleSignOut}
+            //   className="group relative px-5 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-lg hover:shadow-white/10"
+            // >
+            //   Sign out 
+            //   <span aria-hidden="true" className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1">
+            //     →
+            //   </span>
+            // </button>
           ) : (
-            <Link
-              href="/login"
-              className="group relative px-5 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-white/10"
-            >
-              Log in 
-              <span aria-hidden="true" className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
+            <SignInNavBar />
+            // <Link
+            //   href="/login"
+            //   className="group relative px-5 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-white/10"
+            // >
+            //   Log in 
+            //   <span aria-hidden="true" className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1">
+            //     →
+            //   </span>
+            // </Link>
           )}
         </div>
       </nav>

@@ -14,7 +14,7 @@ export default async function TestSSO() {
           <p>ID: {session.user?.id}</p>
           <p>Name: {session.user?.name}</p>
           <p>Email: {session.user?.email}</p>
-          <pre className="bg-gray-100 p-4 rounded">
+          <pre className="bg-gray-800 p-4 rounded">
             {JSON.stringify(session, null, 2)}
           </pre>
          <SignOutButton />

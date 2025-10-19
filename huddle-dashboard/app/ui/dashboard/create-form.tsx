@@ -199,6 +199,7 @@ export default function Form() {
         type="button"
           onClick={toggleAll}
           className="group relative px-3.5 py-3.5 bg-gray-300 text-white font-semibold rounded-full shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
+          title="toggle all"
         >
           {allOpen 
             ? <MinusIcon className="h-5 w-5 text-gray-700" />
