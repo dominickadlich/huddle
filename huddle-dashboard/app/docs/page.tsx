@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   title: "Docs",
 };
 
-
 export default async function Page(props: {
   searchParams?: Promise<{
     query?: string;

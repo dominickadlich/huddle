@@ -42,7 +42,7 @@ export default async function TrialTextWrapper() {
     pass_off_morning,
     pass_off_noon,
     pass_off_night,
-    
+
     unresolved_issues_morning,
     unresolved_issues_noon,
     unresolved_issues_night,
@@ -58,40 +58,40 @@ export default async function TrialTextWrapper() {
 
   return (
     <>
-      <TextCard 
+      <TextCard
         title="Safety"
         value_morning={safety_morning}
         value_noon={safety_noon}
         value_night={safety_night}
-        type="safety" 
+        type="safety"
       />
-      <TextCard 
-        title="Inventory" 
+      <TextCard
+        title="Inventory"
         value_morning={inventory_morning}
         value_noon={inventory_noon}
         value_night={inventory_night}
-        type="inventory" 
+        type="inventory"
       />
-      <TextCard 
-        title="Go Lives" 
+      <TextCard
+        title="Go Lives"
         value_morning={go_lives_morning}
         value_noon={go_lives_noon}
         value_night={go_lives_night}
-        type="go_lives" 
+        type="go_lives"
       />
-      <TextCard 
-        title="Barriers" 
+      <TextCard
+        title="Barriers"
         value_morning={barriers_morning}
         value_noon={barriers_noon}
         value_night={barriers_night}
-        type="barriers" 
+        type="barriers"
       />
-      <TextCard 
-        title="Pass Off" 
-        value_morning={pass_off_morning} 
-        value_noon={pass_off_noon} 
-        value_night={pass_off_night} 
-        type="pass_off" 
+      <TextCard
+        title="Pass Off"
+        value_morning={pass_off_morning}
+        value_noon={pass_off_noon}
+        value_night={pass_off_night}
+        type="pass_off"
       />
       <TextCard
         title="Unresolved Issues"
@@ -107,25 +107,25 @@ export default async function TrialTextWrapper() {
         value_night={opportunities_night}
         type="opportunities"
       />
-      <TextCard 
-        title="Shout Outs" 
-        value_morning={shout_outs_morning} 
+      <TextCard
+        title="Shout Outs"
+        value_morning={shout_outs_morning}
         value_noon={shout_outs_noon}
         value_night={shout_outs_night}
-        type="shout_outs" 
+        type="shout_outs"
       />
     </>
   );
 }
 
 export function TextBoxInput({
-    title,
-    value, 
-  }: {
-    title: string,
-    value: number | string,
+  title,
+  value,
+}: {
+  title: string;
+  value: number | string;
 }) {
-    return (
+  return (
     <div className="group/row relative">
       <div className="grid grid-cols-[120px_1px_1fr] gap-4 p-3 items-center transition-all duration-300 rounded-lg hover:bg-indigo-500/5">
         {/* Label */}
@@ -145,9 +145,7 @@ export function TextBoxInput({
               {value}
             </p>
           ) : (
-            <p className="text-sm text-gray-600 italic">
-              No updates
-            </p>
+            <p className="text-sm text-gray-600 italic">No updates</p>
           )}
         </div>
       </div>
@@ -182,16 +180,16 @@ export function TextCard({
     <div className="group relative overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10">
       {/* Gradient overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      
+
       {/* Content */}
       <div className="relative z-10 p-6">
         {/* Header with Icon */}
         <div className="flex justify-center items-center gap-3 mb-6 pb-4 border-b border-gray-700/50 group-hover:border-indigo-500/30 transition-colors duration-300">
           {Icon ? (
             // <div className="inline-flex rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-2.5 shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow duration-300">
-              <Icon className="h-6 w-6 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" />
-            // </div>
-          ) : null}
+            <Icon className="h-6 w-6 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" />
+          ) : // </div>
+          null}
           <h3 className="text-lg font-semibold text-white group-hover:text-indigo-300 transition-colors duration-300">
             {title}
           </h3>

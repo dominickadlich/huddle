@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
-
 interface AccordionSectionProps {
   title: string;
   children: React.ReactNode;
@@ -9,7 +8,12 @@ interface AccordionSectionProps {
   onToggle: () => void;
 }
 
-export default function AccordionSection({ title, children, isOpen, onToggle }: AccordionSectionProps) {
+export default function AccordionSection({
+  title,
+  children,
+  isOpen,
+  onToggle,
+}: AccordionSectionProps) {
   return (
     <div className="border border-gray-400/50 rounded-lg mb-4">
       <button

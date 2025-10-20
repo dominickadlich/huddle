@@ -107,14 +107,14 @@ export const TEXT_INPUT_CONFIGS_MORNING = [
     icon: ArrowRightStartOnRectangleIcon,
     placeholder: "Pass-off updates...",
   },
-    {
+  {
     name: "unresolved_issues_morning",
     label: "Unresolved Issues - Morning",
     type: "textarea",
     icon: BellAlertIcon,
     placeholder: "Unresolved Issues...",
   },
-   {
+  {
     name: "opportunities_morning",
     label: "Opportunities - Morning",
     type: "textarea",
@@ -128,11 +128,9 @@ export const TEXT_INPUT_CONFIGS_MORNING = [
     icon: TrophyIcon,
     placeholder: "Shout Outs...",
   },
-  ] as const satisfies readonly InputConfig[];
+] as const satisfies readonly InputConfig[];
 
-
-
-  export const TEXT_INPUT_CONFIGS_NOON = [
+export const TEXT_INPUT_CONFIGS_NOON = [
   {
     name: "safety_noon",
     label: "Safety - Noon",
@@ -189,10 +187,9 @@ export const TEXT_INPUT_CONFIGS_MORNING = [
     icon: TrophyIcon,
     placeholder: "Shout Outs...",
   },
-  ] as const satisfies readonly InputConfig[];
+] as const satisfies readonly InputConfig[];
 
-
-    export const TEXT_INPUT_CONFIGS_NIGHT = [
+export const TEXT_INPUT_CONFIGS_NIGHT = [
   {
     name: "safety_night",
     label: "Safety  - Night",

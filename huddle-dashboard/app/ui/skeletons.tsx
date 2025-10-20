@@ -9,7 +9,7 @@ export function CardSkeleton() {
     >
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-50" />
-      
+
       {/* Content */}
       <div className="relative z-10">
         {/* Header with Icon skeleton */}
@@ -37,17 +37,16 @@ export function TextBoxSkeleton() {
     <div
       className={`${shimmer} group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm`}
     >
-
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity" />
       {/* Content */}
-      <div className="relative z-10 p-6" >
+      <div className="relative z-10 p-6">
         {/* Header with Icon skeleton */}
         <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-500/80" />
         {/* Icon placeholder */}
         <div className="rounded-lg bg-gradient-to-br from-gray-700 to-gray-600 p-2.5 w-10 h-10 animate-pulse" />
         {/* Title placeholder */}
-        <div className="h-5 w-28 rounded-md bg-gray-700/70 animate-pulse"/>
+        <div className="h-5 w-28 rounded-md bg-gray-700/70 animate-pulse" />
       </div>
 
       {/* Text box rows */}
@@ -56,25 +55,25 @@ export function TextBoxSkeleton() {
         <div className="grid grid-cols[120px_1px_1fr] gap-4 p-3 items-center rounded-lg">
           <div className="h-4 w-20 rounded-md bg-gray-700/70 animate-pulse" />
           <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-700 to-transparent" />
-          <div className="h-4 w-full rounded-md bg-gray-700/50 animate-pulse"/>
+          <div className="h-4 w-full rounded-md bg-gray-700/50 animate-pulse" />
         </div>
 
         {/* Row 2 */}
         <div className="grid grid-cols[120px_1px_1fr] gap-4 p-3 items-center rounded-lg">
           <div className="h-4 w-20 rounded-md bg-gray-700/70 animate-pulse" />
           <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-700 to-transparent" />
-          <div className="h-4 w-full rounded-md bg-gray-700/50 animate-pulse"/>
+          <div className="h-4 w-full rounded-md bg-gray-700/50 animate-pulse" />
         </div>
 
         {/* Row 3 */}
         <div className="grid grid-cols[120px_1px_1fr] gap-4 p-3 items-center rounded-lg">
           <div className="h-4 w-20 rounded-md bg-gray-700/70 animate-pulse" />
           <div className="w-px h-full bg-gradient-to-b from-transparent via-gray-700 to-transparent" />
-          <div className="h-4 w-full rounded-md bg-gray-700/50 animate-pulse"/>
+          <div className="h-4 w-full rounded-md bg-gray-700/50 animate-pulse" />
         </div>
       </div>
 
-       {/* Bottom accent line - subtle */}
+      {/* Bottom accent line - subtle */}
       <div className="absolute bottom-0 left-0 right-0 h-0.25 bg-gradient-to-r from-indigo-500/20 to-purple-500/20" />
     </div>
   );
@@ -82,20 +81,20 @@ export function TextBoxSkeleton() {
 
 export function DirectoryEntrySkeleton() {
   {
-  return (
-    <div
-      className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
-    >
-      <div className="flex p-4">
-        <div className="h-5 w-5 rounded-md bg-gray-200" />
-        <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium" />
+    return (
+      <div
+        className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
+      >
+        <div className="flex p-4">
+          <div className="h-5 w-5 rounded-md bg-gray-200" />
+          <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium" />
+        </div>
+        <div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
+          <div className="h-7 w-20 rounded-md bg-gray-200" />
+        </div>
       </div>
-      <div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
-        <div className="h-7 w-20 rounded-md bg-gray-200" />
-      </div>
-    </div>
-  );
-}
+    );
+  }
 }
 
 export function CardsSkeleton() {
@@ -196,26 +195,26 @@ export default function DashboardSkeleton() {
 
 export function DirectorySkeleton() {
   return (
-  <>
-   <div
+    <>
+      <div
         className={`${shimmer} relative mb-4 h-8 w-36 overflow-hidden rounded-md bg-gray-100`}
       />
-  <div className="mt-8 grid gap-6 grid-cols-2">
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    <DirectoryEntrySkeleton />
-    </div>
-  </> 
-  )
+      <div className="mt-8 grid gap-6 grid-cols-2">
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+        <DirectoryEntrySkeleton />
+      </div>
+    </>
+  );
 }
 
 export function TableRowSkeleton() {

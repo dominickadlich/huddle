@@ -22,13 +22,10 @@ export const metadata: Metadata = {
   title: "Dashboard",
 };
 
-
-
 export default async function Page() {
   const huddleData = await fetchLatestHuddleData();
   const session = await auth();
-  const reportDate = new Date(huddleData.date).toLocaleDateString()
-
+  const reportDate = new Date(huddleData.date).toLocaleDateString();
 
   if (!session?.user) {
     redirect("/login");

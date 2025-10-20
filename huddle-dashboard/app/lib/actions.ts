@@ -10,7 +10,6 @@ import { AuthError } from "next-auth";
 import { parseHuddleFormData } from "./form-helpers";
 import { getServiceSupabase, getCurrentUserId } from "./supabase-server";
 
-
 const FormSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Please select a name."),
@@ -126,7 +125,6 @@ export type HuddleState = {
   message?: string | null;
 };
 
-
 // Create Huddle Report
 export async function createHuddleReport(
   prevState: HuddleState,
@@ -201,29 +199,29 @@ export async function createHuddleReport(
         staffing,
         complex_preps_count,
         safety_morning,
-    inventory_morning,
-    go_lives_morning,
-    barriers_morning,
-    pass_off_morning,
-    unresolved_issues_morning,
-    opportunities_morning,
-    shout_outs_morning,
-    safety_noon,
-    inventory_noon,
-    go_lives_noon,
-    barriers_noon,
-    pass_off_noon,
-    unresolved_issues_noon,
-    opportunities_noon,
-    shout_outs_noon,
-    safety_night,
-    inventory_night,
-    go_lives_night,
-    barriers_night,
-    pass_off_night,
-    unresolved_issues_night,
-    opportunities_night,
-    shout_outs_night,
+        inventory_morning,
+        go_lives_morning,
+        barriers_morning,
+        pass_off_morning,
+        unresolved_issues_morning,
+        opportunities_morning,
+        shout_outs_morning,
+        safety_noon,
+        inventory_noon,
+        go_lives_noon,
+        barriers_noon,
+        pass_off_noon,
+        unresolved_issues_noon,
+        opportunities_noon,
+        shout_outs_noon,
+        safety_night,
+        inventory_night,
+        go_lives_night,
+        barriers_night,
+        pass_off_night,
+        unresolved_issues_night,
+        opportunities_night,
+        shout_outs_night,
       },
     ]);
 
@@ -245,8 +243,6 @@ export async function createHuddleReport(
   revalidatePath("/dashboard");
   redirect("/dashboard");
 }
-
-
 
 // Update Huddle Report
 export async function updateHuddleReport(
@@ -300,8 +296,6 @@ export async function updateHuddleReport(
   redirect("/dashboard");
 }
 
-
-
 // Update Extension
 export async function updateExtension(
   id: string,
@@ -344,8 +338,6 @@ export async function updateExtension(
   revalidatePath("/directory");
   redirect("/directory");
 }
-
-
 
 // Create Extension
 export async function createExtension(prevState: State, formData: FormData) {

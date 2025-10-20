@@ -18,7 +18,6 @@ import {
   TEXT_INPUT_CONFIGS_MORNING,
   TEXT_INPUT_CONFIGS_NOON,
   TEXT_INPUT_CONFIGS_NIGHT,
-  
 } from "@/app/lib/form-configs";
 import AccordionSection from "../accordion";
 
@@ -35,18 +34,16 @@ export default function UpdateForm({
 
   return (
     <form action={formAction}>
-
       {/* Submit button */}
-        <div className="flex justify-end gap-4">
-          <Link
-            href="/dashboard"
-            className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-          >
-            Cancel
-          </Link>
-          <Button type="submit">Update Report</Button>
-        </div>
-
+      <div className="flex justify-end gap-4">
+        <Link
+          href="/dashboard"
+          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+        >
+          Cancel
+        </Link>
+        <Button type="submit">Update Report</Button>
+      </div>
 
       <div className="">
         <div className="grid grid-cols-5 gap-6">

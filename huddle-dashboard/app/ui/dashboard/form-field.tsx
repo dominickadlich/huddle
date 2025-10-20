@@ -25,7 +25,6 @@ export default function FormField({
     <div className="mt-10">
       <div className="grid grid-cols-5">
         <div className="sm:col-span-5">
-
           {/* Label with Gradient Icon Container */}
           <label
             htmlFor={name}
@@ -43,7 +42,7 @@ export default function FormField({
               type={type}
               placeholder={placeholder}
               defaultValue={defaultValue}
-               className="block w-full rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3 text-white placeholder:text-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50"
+              className="block w-full rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3 text-white placeholder:text-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50"
             />
           </div>
 
@@ -51,9 +50,20 @@ export default function FormField({
           {state.errors?.[name] && (
             <div id={`${name}-error`} className="mt-2" aria-live="polite">
               {state.errors[name].map((error: string) => (
-                <div key={error} className="flex items-center gap-1.5 text-sm text-red-400">
-                  <svg className="h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                <div
+                  key={error}
+                  className="flex items-center gap-1.5 text-sm text-red-400"
+                >
+                  <svg
+                    className="h-4 w-4 flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <span>{error}</span>
                 </div>

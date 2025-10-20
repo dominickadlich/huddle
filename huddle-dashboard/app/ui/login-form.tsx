@@ -29,74 +29,74 @@ export default function LoginForm() {
 
   return (
     <>
-    <NavBar />
-    <form action={formAction} className="border rounded-lg">
-      <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
-        <h1 className="flex justify-center items-center text-2xl text-white mb-5">
-          Please log in
-        </h1>
-        <div className="w-full">
-          <div className="">
-            <label
-              className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
-              htmlFor="email"
-            >
-              <AtSymbolIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
-              Email
-            </label>
-            <div className="mt-2">
-              <input
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                required
-              />
+      <NavBar />
+      <form action={formAction} className="border rounded-lg">
+        <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
+          <h1 className="flex justify-center items-center text-2xl text-white mb-5">
+            Please log in
+          </h1>
+          <div className="w-full">
+            <div className="">
+              <label
+                className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
+                htmlFor="email"
+              >
+                <AtSymbolIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
+                Email
+              </label>
+              <div className="mt-2">
+                <input
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email address"
+                  required
+                />
+              </div>
+            </div>
+            <div className="mt-10">
+              <label
+                className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
+                htmlFor="password"
+              >
+                <KeyIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
+                Password
+              </label>
+              <div className="mt-2">
+                <input
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Enter password"
+                  required
+                  minLength={6}
+                />
+              </div>
             </div>
           </div>
-          <div className="mt-10">
-            <label
-              className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
-              htmlFor="password"
-            >
-              <KeyIcon className="pointer-events-none h-[18px] w-[18px] text-gray-900 dark:text-white mr-2" />
-              Password
-            </label>
-            <div className="mt-2">
-              <input
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                required
-                minLength={6}
-              />
-            </div>
-          </div>
-        </div>
-        
-        {errorMessage && (
+
+          {errorMessage && (
             <>
-            <div className="flex mt-2 gap-2">
+              <div className="flex mt-2 gap-2">
                 <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
                 <p className="text-sm text-red-500">{errorMessage}</p>
               </div>
             </>
           )}
 
-        <div className="flex justify-end gap-4">
-          <input type="hidden" name="redirectTo" value={callbackUrl} />
-          {/* <AddNewUserButton className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
+          <div className="flex justify-end gap-4">
+            <input type="hidden" name="redirectTo" value={callbackUrl} />
+            {/* <AddNewUserButton className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
             New User 
           </AddNewUserButton> */}
-          <Button className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
-            Log in <ArrowRightIcon className="ml-1 h-5 w-5 text-gray-50" />
-          </Button>
-        </div>
-        {/* Divider */}
-      {/* <div className="mt-6 mb-6 relative">
+            <Button className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
+              Log in <ArrowRightIcon className="ml-1 h-5 w-5 text-gray-50" />
+            </Button>
+          </div>
+          {/* Divider */}
+          {/* <div className="mt-6 mb-6 relative">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
         </div>
@@ -105,16 +105,16 @@ export default function LoginForm() {
         </div>
         </div> */}
 
-        {/* Okta SSO button */}
-        {/* <SSOButton 
+          {/* Okta SSO button */}
+          {/* <SSOButton 
         onClick={handleOktaSignIn}
           type="button"
           className="mb-6 w-full flex items-center justify-center"
         >
           Sign in with SSO
         </SSOButton> */}
-      </div>
-    </form>
-    </>    
+        </div>
+      </form>
+    </>
   );
 }

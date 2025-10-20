@@ -13,7 +13,6 @@ export const metadata: Metadata = {
   title: "Directory",
 };
 
-
 export default async function Page(props: {
   searchParams?: Promise<{
     query?: string;
@@ -31,16 +30,16 @@ export default async function Page(props: {
     <div className="w-full">
       {/* Page Header with Gradient Title */}
       <div className="mt-20 flex w-full items-center justify-between mb-8">
-         <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
-            Directory 
-          </h1>
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+          Directory
+        </h1>
       </div>
 
       {/* Search Bar + Create Button */}
       <div className="mt-10 flex items-center justify-between gap-4 mb-6">
-          <Search placeholder="Search Extensions..." />
+        <Search placeholder="Search Extensions..." />
 
-           {/* Create Extension Button */}
+        {/* Create Extension Button */}
         <Link
           href="/directory/create"
           className="group flex items-center gap-2 px-3.5 py-3.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg shadow-indigo-500/30 transition-all duration-300 hover:shadow-indigo-500/50 hover:scale-105 whitespace-nowrap"
@@ -49,9 +48,9 @@ export default async function Page(props: {
         </Link>
       </div>
 
-        {/* Extensions Table */}
-      <Suspense 
-        key={query} 
+      {/* Extensions Table */}
+      <Suspense
+        key={query}
         fallback={
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Loading skeleton */}

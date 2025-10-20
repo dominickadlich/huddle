@@ -8,7 +8,12 @@ import { useState } from "react";
 import Link from "next/link";
 import NavLinks from "./nav-links";
 import { signOut, useSession } from "next-auth/react"; // Add useSession
-import { SignInButton, SignInNavBar, SignOutButton, SignOutNavBar } from "./test-sso/auth-buttons";
+import {
+  SignInButton,
+  SignInNavBar,
+  SignOutButton,
+  SignOutNavBar,
+} from "./test-sso/auth-buttons";
 
 export default function NavBar({}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,7 +32,6 @@ export default function NavBar({}) {
         aria-label="Global"
         className="mx-4 mt-4 flex items-center justify-between p-4 lg:px-8 rounded-2xl border border-indigo-500/50 bg-indigo-500/90 backdrop-blur-md shadow-lg shadow-indigo-500/20"
       >
-
         {/* Logo Section */}
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
@@ -44,7 +48,10 @@ export default function NavBar({}) {
             className="group -m-2.5 inline-flex items-center justify-center rounded-lg p-2.5 text-white transition-all duration-300"
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
+            <Bars3Icon
+              aria-hidden="true"
+              className="h-6 w-6 group-hover:scale-110 transition-transform duration-300"
+            />
           </button>
         </div>
 
@@ -53,27 +60,26 @@ export default function NavBar({}) {
           <NavLinks />
         </div>
 
-
         {/* Auth Button */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           {isAuthenticated ? (
             <SignOutNavBar />
+          ) : (
             // <button
             //   onClick={handleSignOut}
             //   className="group relative px-5 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-lg hover:shadow-white/10"
             // >
-            //   Sign out 
+            //   Sign out
             //   <span aria-hidden="true" className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1">
             //     →
             //   </span>
             // </button>
-          ) : (
             <SignInNavBar />
             // <Link
             //   href="/login"
             //   className="group relative px-5 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-white/10"
             // >
-            //   Log in 
+            //   Log in
             //   <span aria-hidden="true" className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1">
             //     →
             //   </span>
@@ -102,7 +108,10 @@ export default function NavBar({}) {
               className="group -m-2.5 rounded-lg p-2.5 text-gray-300 hover:bg-white/10 transition-all duration-300"
             >
               <span className="sr-only">Close menu</span>
-              <XMarkIcon aria-hidden="true" className="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+              <XMarkIcon
+                aria-hidden="true"
+                className="h-6 w-6 group-hover:rotate-90 transition-transform duration-300"
+              />
             </button>
           </div>
 
@@ -119,7 +128,10 @@ export default function NavBar({}) {
                     className="group -mx-3 flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-white/10 transition-all duration-300 border border-transparent hover:border-indigo-500/30"
                   >
                     Sign out
-                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+                    <span
+                      aria-hidden="true"
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    >
                       →
                     </span>
                   </button>
@@ -129,7 +141,10 @@ export default function NavBar({}) {
                     className="group -mx-3 flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-white/10 transition-all duration-300 border border-transparent hover:border-indigo-500/30"
                   >
                     Log in
-                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+                    <span
+                      aria-hidden="true"
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    >
                       →
                     </span>
                   </Link>

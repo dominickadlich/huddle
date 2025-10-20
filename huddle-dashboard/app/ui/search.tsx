@@ -26,7 +26,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         Search
       </label>
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-          <MagnifyingGlassIcon className="h-5 w-5 text-white" />
+        <MagnifyingGlassIcon className="h-5 w-5 text-white" />
       </div>
 
       {/* Search Input */}

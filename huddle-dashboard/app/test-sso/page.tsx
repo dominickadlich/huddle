@@ -1,13 +1,13 @@
-import { auth } from "@/auth"
-import { SignInButton, SignOutButton } from "../ui/test-sso/auth-buttons"
+import { auth } from "@/auth";
+import { SignInButton, SignOutButton } from "../ui/test-sso/auth-buttons";
 
 export default async function TestSSO() {
-  const session = await auth()
+  const session = await auth();
 
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">SSO Test</h1>
-      
+
       {session ? (
         <div className="space-y-2">
           <p>✅ Logged in!</p>
@@ -17,7 +17,7 @@ export default async function TestSSO() {
           <pre className="bg-gray-800 p-4 rounded">
             {JSON.stringify(session, null, 2)}
           </pre>
-         <SignOutButton />
+          <SignOutButton />
         </div>
       ) : (
         <div>
@@ -26,5 +26,5 @@ export default async function TestSSO() {
         </div>
       )}
     </div>
-  )
+  );
 }

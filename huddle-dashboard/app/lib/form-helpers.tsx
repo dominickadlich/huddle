@@ -13,7 +13,7 @@ export function parseHuddleFormData(formData: FormData) {
     complex_preps_count: Number(formData.get("complex_preps_count")),
     missed_dispense_prep: Number(formData.get("missed_dispense_prep")),
     missed_dispense_check: Number(formData.get("missed_dispense_check")),
-    
+
     // Morning
     safety_morning: formData.get("safety_morning") || "",
     inventory_morning: formData.get("inventory_morning") || "",

@@ -1,110 +1,106 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./app/auth.config";
 import Credentials from "next-auth/providers/credentials";
-import { z } from 'zod'
+import { z } from "zod";
 import { User } from "./app/lib/definitions";
-import bcrypt from 'bcrypt'
+import bcrypt from "bcrypt";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-)
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+);
 
 async function getUser(email: string): Promise<User | undefined> {
-    try {
-        const { data, error } = await supabase
-        .from("users")
-        .select('*')
-        .eq("email", email)
-        .single();
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", email)
+      .single();
 
-        if (error) throw error;
+    if (error) throw error;
 
-        return data;
-    } catch (error) {
-        console.error("Failed to fetch user:", error)
-        throw new Error('Failed to fetch user.')
-    }
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    throw new Error("Failed to fetch user.");
+  }
 }
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
-    ...authConfig,
+  ...authConfig,
 
+  debug: true,
 
-    debug: true,
+  providers: [
+    Credentials({
+      async authorize(credentials) {
+        const parsedCredentials = z
+          .object({ email: z.string().email(), password: z.string().min(6) })
+          .safeParse(credentials);
 
+        if (parsedCredentials.success) {
+          const { email, password } = parsedCredentials.data;
+          const user = await getUser(email);
+          if (!user) return null;
+          const passwordsMatch = await bcrypt.compare(password, user.password);
 
-    providers: 
-    [
-        Credentials({
-        async authorize(credentials) {
-            const parsedCredentials = z
-                .object({ email: z.string().email(), password: z.string().min(6) })
-                .safeParse(credentials);
+          if (passwordsMatch) return user;
+        }
 
-            if (parsedCredentials.success) {
-                const { email, password } = parsedCredentials.data;
-                const user = await getUser(email);
-                if (!user) return null
-                const passwordsMatch = await bcrypt.compare(password, user.password);
-
-                if (passwordsMatch) return user;
-            }
-
-            console.log('Invalid Credentials')
-            return null;
-        },
+        console.log("Invalid Credentials");
+        return null;
+      },
     }),
     {
-        id: "duosso",
-        name: "Duo SSO",
-        type: "oidc",
+      id: "duosso",
+      name: "Duo SSO",
+      type: "oidc",
 
-        clientId: process.env.DUO_CLIENT_ID!,
-        clientSecret: process.env.DUO_CLIENT_SECRET!,
-        issuer: process.env.DUO_ISSUER!,
+      clientId: process.env.DUO_CLIENT_ID!,
+      clientSecret: process.env.DUO_CLIENT_SECRET!,
+      issuer: process.env.DUO_ISSUER!,
 
-
-        // Standard OIDC configuration
-        authorization: {
-            params: { 
-                scope: "openid email profile",
-            },
+      // Standard OIDC configuration
+      authorization: {
+        params: {
+          scope: "openid email profile",
         },
+      },
 
-        // Map Duo's user claims to NextAuth format
-        profile(profile) {
-            console.log("Profile received from Duo:", profile)
-            return {
-                id: profile.sub,
-                name: profile.name || `${profile.given_name} ${profile.family_name}`,
-                display_name: profile.display_name,
-                email: profile.email,
-                given_name: profile.given_name,
-                family_name: profile.family_name,
-            }
-        },
+      // Map Duo's user claims to NextAuth format
+      profile(profile) {
+        console.log("Profile received from Duo:", profile);
+        return {
+          id: profile.sub,
+          name: profile.name || `${profile.given_name} ${profile.family_name}`,
+          display_name: profile.display_name,
+          email: profile.email,
+          given_name: profile.given_name,
+          family_name: profile.family_name,
+        };
+      },
     },
-],
+  ],
 
-callbacks: {
+  callbacks: {
     async jwt({ token, account, profile }) {
-        if (account) {
-            console.log("Account:", account)
-            console.log("Profile in JWT callback:", profile)
-            token.accessToken = account.access_token
-            token.id = profile?.sub
-        }
-        return token
+      if (account) {
+        console.log("Account:", account);
+        console.log("Profile in JWT callback:", profile);
+        token.accessToken = account.access_token;
+        token.id = profile?.sub;
+      }
+      return token;
     },
     async session({ session, token }) {
-        if (session.user) {
-            session.user.id = token.id as string
-        } 
-        // @ts-ignore - Adding custom property
-        session.accessToken = token.accessToken as string
-        return session
-    }
-}
-})
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
+      // @ts-ignore - Adding custom property
+      session.accessToken = token.accessToken as string;
+      return session;
+    },
+  },
+});

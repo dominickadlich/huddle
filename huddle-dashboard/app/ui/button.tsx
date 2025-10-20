@@ -18,7 +18,11 @@ export function Button({ children, className, ...rest }: ButtonProps) {
   );
 }
 
-export function CreateReportButton({ children, className, ...rest }: ButtonProps) {
+export function CreateReportButton({
+  children,
+  className,
+  ...rest
+}: ButtonProps) {
   return (
     <button
       {...rest}
@@ -32,7 +36,11 @@ export function CreateReportButton({ children, className, ...rest }: ButtonProps
   );
 }
 
-export function AddNewUserButton({ children, className, ...rest }: ButtonProps) {
+export function AddNewUserButton({
+  children,
+  className,
+  ...rest
+}: ButtonProps) {
   return (
     <button
       {...rest}

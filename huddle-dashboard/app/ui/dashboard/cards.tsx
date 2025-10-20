@@ -109,40 +109,40 @@ export function Card({
 
       {/* Content */}
       <div className="relative z-10">
-
         {/* Header with Icon */}
         <div className="flex justify-center gap-2 mb-4 pb-3 border-b border-gray-700/50 group-hover:border-indigo-500/30 transition-colors duration-300">
           {Icon ? (
             // <div className="inline-flex rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-2 shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow duration--300">
-              <Icon className="h-6 w-6 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" /> 
-            // </div>
-              ) : null}
+            <Icon className="h-6 w-6 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" />
+          ) : // </div>
+          null}
           <h3 className="text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300">
             {title}
           </h3>
         </div>
 
-
         {/* Value Display */}
         <div className="flex justify-center items-center min-h-[2rem]">
-        {isBooleanCard ? (
-          <div 
-            className={`w-8 h-8 rounded-full shadow-lg transition-all duration-300 ${
-                value 
-                ? "bg-gradient-to-br from red-500 to-red-600 shadow-red-500/40 group-hover:shadow-red-500/60"
-                : "bg-gradient-to-br from-green-500 to-green-600 shadow-green-500/30 group-hover:shadow-green-500/60"
+          {isBooleanCard ? (
+            <div
+              className={`w-8 h-8 rounded-full shadow-lg transition-all duration-300 ${
+                value
+                  ? "bg-gradient-to-br from red-500 to-red-600 shadow-red-500/40 group-hover:shadow-red-500/60"
+                  : "bg-gradient-to-br from-green-500 to-green-600 shadow-green-500/30 group-hover:shadow-green-500/60"
               }`}
             />
-        ) : noValue ? (
+          ) : noValue ? (
             <p className="text-gray-500 text-lg italic">No updates</p>
-        ) : (
-          <p className="text-4xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">{value}</p>
-        )}
-      </div>
+          ) : (
+            <p className="text-4xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">
+              {value}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Bottom accent line */}
-      <div className="absolute bottom-0 left-0 right-0 h-0.25 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
-      </div>
+      <div className="absolute bottom-0 left-0 right-0 h-0.25 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    </div>
   );
 }

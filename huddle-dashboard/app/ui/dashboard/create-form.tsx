@@ -13,7 +13,7 @@ import {
   XMarkIcon,
   CheckIcon,
   PlusIcon,
-  MinusIcon
+  MinusIcon,
 } from "@heroicons/react/24/outline";
 import TextBoxFormField from "./textbox-form-field";
 import {
@@ -21,7 +21,6 @@ import {
   TEXT_INPUT_CONFIGS_MORNING,
   TEXT_INPUT_CONFIGS_NOON,
   TEXT_INPUT_CONFIGS_NIGHT,
-  
 } from "@/app/lib/form-configs";
 import AccordionSection from "../accordion";
 import { Metadata } from "next";
@@ -33,31 +32,28 @@ export const metadata: Metadata = {
   title: "Create Huddle Report",
 };
 
-
 export default function Form() {
   const initialState: HuddleState = { message: null, errors: {} };
   const [state, formAction] = useActionState(createHuddleReport, initialState);
-
 
   // Track individual accordion states
   const [accordionStates, setAccordionStates] = useState({
     morning: false,
     afternoon: false,
     evening: false,
-  })
+  });
 
   // Toggle individual accordion
   const toggleAccordion = (key: keyof typeof accordionStates) => {
-    setAccordionStates(prev => ({
+    setAccordionStates((prev) => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: !prev[key],
     }));
   };
 
-
   // Toggle all accordions
   const toggleAll = () => {
-    const allOpen = Object.values(accordionStates).every(state => state);
+    const allOpen = Object.values(accordionStates).every((state) => state);
     setAccordionStates({
       morning: !allOpen,
       afternoon: !allOpen,
@@ -65,24 +61,24 @@ export default function Form() {
     });
   };
 
-  const allOpen = Object.values(accordionStates).every(state => state);
+  const allOpen = Object.values(accordionStates).every((state) => state);
 
   console.log("State:", state);
 
   return (
     <form action={formAction} className="max-w-8xl">
-
       {/* Submit button */}
-        <div className="flex justify-end gap-4">
-          <Link
-            href="/dashboard"
-            className="group relative px-3.5 py-3.5 bg-gray-300 text-white font-semibold rounded-full shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
-          >
-            <XMarkIcon className="h-5 w-5 text-gray-700"/>
-          </Link>
-          <CreateReportButton type="submit"><CheckIcon className="h-5 w-5"/></CreateReportButton>
-        </div>
-
+      <div className="flex justify-end gap-4">
+        <Link
+          href="/dashboard"
+          className="group relative px-3.5 py-3.5 bg-gray-300 text-white font-semibold rounded-full shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
+        >
+          <XMarkIcon className="h-5 w-5 text-gray-700" />
+        </Link>
+        <CreateReportButton type="submit">
+          <CheckIcon className="h-5 w-5" />
+        </CreateReportButton>
+      </div>
 
       <div className="">
         <div className="grid grid-cols-5 gap-6">
@@ -95,172 +91,172 @@ export default function Form() {
             />
           ))}
           <div className="mt-10">
-  <div>
+            <div>
+              {/* Staffing Dropdown */}
+              <div className="sm:col-span-5">
+                <label
+                  htmlFor="staffing"
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
+                >
+                  {/* <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-1.5 shadow-md shadow-indigo-500/20"> */}
+                  <UserGroupIcon className="h-4 w-4 text-white" />
+                  {/* </div> */}
+                  Staffing
+                </label>
+                <div className="relative mt-2">
+                  <select
+                    id="staffing"
+                    name="staffing"
+                    defaultValue="Full"
+                    className="w-full appearance-none rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3 pr-10 text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50 cursor-pointer"
+                  >
+                    <option className="bg-gray-800 text-white">Full</option>
+                    <option className="bg-gray-800 text-white">
+                      Contingency
+                    </option>
+                  </select>
+                  <ChevronDownIcon
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
 
-    {/* Staffing Dropdown */}
-    <div className="sm:col-span-5">
-      <label
-        htmlFor="staffing"
-        className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
-      >
-        {/* <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-1.5 shadow-md shadow-indigo-500/20"> */}
-          <UserGroupIcon className="h-4 w-4 text-white" />
-        {/* </div> */}
-        Staffing
-      </label>
-      <div className="relative mt-2">
-        <select
-          id="staffing"
-          name="staffing"
-          defaultValue="Full"
-          className="w-full appearance-none rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3 pr-10 text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50 cursor-pointer"
-        >
-          <option className="bg-gray-800 text-white">Full</option>
-          <option className="bg-gray-800 text-white">Contingency</option>
-        </select>
-        <ChevronDownIcon
-          aria-hidden="true"
-          className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
-        />
-      </div>
-    </div>
-  </div>
-</div>
-
-{/* Restock Help Needed */}
+          {/* Restock Help Needed */}
           <div className="mt-10">
-  <div>
-    <div className="sm:col-span-5">
-      <label
-        htmlFor="restock-label"
-        className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
-      >
-        {/* <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-1.5 shadow-md shadow-indigo-500/20"> */}
-          <ArchiveBoxArrowDownIcon className="h-4 w-4 text-white" />
-        {/* </div> */}
-        Restock
-      </label>
-      <div className="mt-2">
-        <label 
-          htmlFor="restock"
-          className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3.5 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
-        >
-          <input
-            id="restock"
-            name="restock"
-            type="checkbox"
-            className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
-          />
-          <span className="text-sm text-gray-500 group-hover:text-white transition-colors">
-            Help Needed
-          </span>
-        </label>
-      </div>
-    </div>
-  </div>
-</div>
+            <div>
+              <div className="sm:col-span-5">
+                <label
+                  htmlFor="restock-label"
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
+                >
+                  {/* <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-1.5 shadow-md shadow-indigo-500/20"> */}
+                  <ArchiveBoxArrowDownIcon className="h-4 w-4 text-white" />
+                  {/* </div> */}
+                  Restock
+                </label>
+                <div className="mt-2">
+                  <label
+                    htmlFor="restock"
+                    className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3.5 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
+                  >
+                    <input
+                      id="restock"
+                      name="restock"
+                      type="checkbox"
+                      className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
+                    />
+                    <span className="text-sm text-gray-500 group-hover:text-white transition-colors">
+                      Help Needed
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* CS Queue Help Needed */}
           <div className="mt-10">
-  <div>
-    <div className="sm:col-span-5">
-      <label
-        htmlFor="cs-queue-label"
-        className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
-      >
-        {/* <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-1.5 shadow-md shadow-indigo-500/20"> */}
-          <LockClosedIcon className="h-4 w-4 text-white" />
-        {/* </div> */}
-        CS Queue
-      </label>
-      <div className="mt-2">
-        <label 
-          htmlFor="cs_queue"
-          className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3.5 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
-        >
-          <input
-            id="cs_queue"
-            name="cs_queue"
-            type="checkbox"
-            className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
-          />
-          <span className="text-sm text-gray-500 group-hover:text-white transition-colors">
-            Help Needed
-          </span>
-        </label>
-      </div>
-    </div>
-  </div>
-</div>
+            <div>
+              <div className="sm:col-span-5">
+                <label
+                  htmlFor="cs-queue-label"
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
+                >
+                  {/* <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 p-1.5 shadow-md shadow-indigo-500/20"> */}
+                  <LockClosedIcon className="h-4 w-4 text-white" />
+                  {/* </div> */}
+                  CS Queue
+                </label>
+                <div className="mt-2">
+                  <label
+                    htmlFor="cs_queue"
+                    className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3.5 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
+                  >
+                    <input
+                      id="cs_queue"
+                      name="cs_queue"
+                      type="checkbox"
+                      className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
+                    />
+                    <span className="text-sm text-gray-500 group-hover:text-white transition-colors">
+                      Help Needed
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-          <div className="mt-10 flex justify-end gap-4">
-        <button
-        type="button"
-          onClick={toggleAll}
-          className="group relative px-3.5 py-3.5 bg-gray-300 text-white font-semibold rounded-full shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
-          title="toggle all"
-        >
-          {allOpen 
-            ? <MinusIcon className="h-5 w-5 text-gray-700" />
-            : <PlusIcon className="h-5 w-5 text-gray-700" />
-          }
-        </button>
+        <div className="mt-10 flex justify-end gap-4">
+          <button
+            type="button"
+            onClick={toggleAll}
+            className="group relative px-3.5 py-3.5 bg-gray-300 text-white font-semibold rounded-full shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
+            title="toggle all"
+          >
+            {allOpen ? (
+              <MinusIcon className="h-5 w-5 text-gray-700" />
+            ) : (
+              <PlusIcon className="h-5 w-5 text-gray-700" />
+            )}
+          </button>
         </div>
 
         <div className="mt-10">
-          <AccordionSection 
-            title="Morning Huddle" 
+          <AccordionSection
+            title="Morning Huddle"
             isOpen={accordionStates.morning}
-            onToggle={() => toggleAccordion('morning')}
+            onToggle={() => toggleAccordion("morning")}
           >
             <div className="grid grid-cols-2 gap-8">
-            {TEXT_INPUT_CONFIGS_MORNING.map((config) => (
-              <TextBoxFormField
-                key={config.name}
-                config={config}
-                state={state}
-                defaultValue=""
-              />
-            ))}
+              {TEXT_INPUT_CONFIGS_MORNING.map((config) => (
+                <TextBoxFormField
+                  key={config.name}
+                  config={config}
+                  state={state}
+                  defaultValue=""
+                />
+              ))}
             </div>
-            </AccordionSection>
+          </AccordionSection>
 
-            <AccordionSection 
-              title="Afternoon Huddle" 
-              isOpen={accordionStates.afternoon}
-              onToggle={() => toggleAccordion('afternoon')}
-            >
-              <div className="grid grid-cols-2 gap-8">
-            {TEXT_INPUT_CONFIGS_NOON.map((config) => (
-              <TextBoxFormField
-                key={config.name}
-                config={config}
-                state={state}
-                defaultValue=""
-              />
-            ))}
+          <AccordionSection
+            title="Afternoon Huddle"
+            isOpen={accordionStates.afternoon}
+            onToggle={() => toggleAccordion("afternoon")}
+          >
+            <div className="grid grid-cols-2 gap-8">
+              {TEXT_INPUT_CONFIGS_NOON.map((config) => (
+                <TextBoxFormField
+                  key={config.name}
+                  config={config}
+                  state={state}
+                  defaultValue=""
+                />
+              ))}
             </div>
-            </AccordionSection>
+          </AccordionSection>
 
-            <AccordionSection 
-              title="Evening Huddle" 
-              isOpen={accordionStates.evening}
-              onToggle={() => toggleAccordion('evening')}
-            >
-              <div className="grid grid-cols-2 gap-8">
-            {TEXT_INPUT_CONFIGS_NIGHT.map((config) => (
-              <TextBoxFormField
-                key={config.name}
-                config={config}
-                state={state}
-                defaultValue=""
-              />
-            ))}
+          <AccordionSection
+            title="Evening Huddle"
+            isOpen={accordionStates.evening}
+            onToggle={() => toggleAccordion("evening")}
+          >
+            <div className="grid grid-cols-2 gap-8">
+              {TEXT_INPUT_CONFIGS_NIGHT.map((config) => (
+                <TextBoxFormField
+                  key={config.name}
+                  config={config}
+                  state={state}
+                  defaultValue=""
+                />
+              ))}
             </div>
-            </AccordionSection>
-
-
+          </AccordionSection>
         </div>
       </div>
     </form>

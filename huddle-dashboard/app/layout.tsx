@@ -9,7 +9,8 @@ export const metadata: Metadata = {
     template: "Pharmacy Huddle | %s",
     default: "Pharmacy Huddle",
   },
-  description: "Stop juggling spreadsheets, missed messages, and scattered updates. Run seamless daily huddles that keep your entire pharmacy team aligned, informed, and ready to deliver exceptional patient care.",
+  description:
+    "Stop juggling spreadsheets, missed messages, and scattered updates. Run seamless daily huddles that keep your entire pharmacy team aligned, informed, and ready to deliver exceptional patient care.",
   metadataBase: new URL("https://huddle-lime-gamma.vercel.app/"),
 };
 
