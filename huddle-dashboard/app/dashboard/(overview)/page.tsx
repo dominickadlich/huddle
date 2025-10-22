@@ -27,9 +27,9 @@ export default async function Page() {
   const session = await auth();
   const reportDate = new Date(huddleData.date).toLocaleDateString();
 
-  if (!session?.user) {
-    redirect("/login");
-  }
+  // if (!session?.user) {
+  //   redirect("/login");
+  // }
 
   return (
     <main className="px-6">

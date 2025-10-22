@@ -1,19 +1,26 @@
 import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
-  pages: {
-    signIn: "/login",
-  },
+  // pages: {
+  //   signIn: '/api/auth/signin/duosso',
+  // },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
-      if (isOnDashboard) {
-        if (isLoggedIn) return true;
+
+      const protectedRoutes = [
+        '/dashboard',
+        '/directory'
+      ]
+
+      const isProtectedRoute = protectedRoutes.some(route => 
+        nextUrl.pathname.startsWith(route)
+      )
+      
+      if (!isLoggedIn && isProtectedRoute) {
         return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL("/dashboard", nextUrl));
       }
+
       return true;
     },
   },

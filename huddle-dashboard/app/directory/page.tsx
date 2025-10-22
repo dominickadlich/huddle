@@ -22,9 +22,9 @@ export default async function Page(props: {
   const query = searchParams?.query || "";
   const session = await auth();
 
-  if (!session?.user) {
-    redirect("/login");
-  }
+  // if (!session?.user) {
+  //   redirect("/login");
+  // }
 
   return (
     <div className="w-full">

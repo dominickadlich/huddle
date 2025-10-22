@@ -1,11 +1,10 @@
 import NextAuth from "next-auth";
-import { authConfig } from "./auth.config";
+import { authConfig } from "./app/auth.config";
 
 export default NextAuth(authConfig).auth
 
 export const config = {
   matcher: [
-    "/dashboard/:path*",
-    "/huddle/:path*",
+    '/((?!api|_next/static|_next/image|.*\\.png$).*)'
   ],
 };
