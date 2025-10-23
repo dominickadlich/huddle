@@ -14,6 +14,7 @@ import { authenticate } from "@/app/lib/actions";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import NavBar from "./navbar";
+import { SignInButton } from "./test-sso/auth-buttons";
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
@@ -23,13 +24,8 @@ export default function LoginForm() {
     undefined,
   );
 
-  const handleOktaSignIn = async () => {
-    await signIn("okta", { callbackUrl });
-  };
-
   return (
     <>
-      <NavBar />
       <form action={formAction} className="border rounded-lg">
         <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
           <h1 className="flex justify-center items-center text-2xl text-white mb-5">
@@ -96,23 +92,17 @@ export default function LoginForm() {
             </Button>
           </div>
           {/* Divider */}
-          {/* <div className="mt-6 mb-6 relative">
+          <div className="mt-6 mb-6 relative">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
         </div>
         <div className="relative flex justify-center text-sm">
           <span className="px-2 bg-gray-900 text-gray-400">Or</span>
         </div>
-        </div> */}
-
-          {/* Okta SSO button */}
-          {/* <SSOButton 
-        onClick={handleOktaSignIn}
-          type="button"
-          className="mb-6 w-full flex items-center justify-center"
-        >
-          Sign in with SSO
-        </SSOButton> */}
+        </div>
+        <div className="flex justify-center">
+          <SignInButton />
+        </div>
         </div>
       </form>
     </>
