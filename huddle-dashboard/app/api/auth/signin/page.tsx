@@ -6,9 +6,6 @@ import NavBar from "@/app/ui/navbar";
 
 export default function LoginPage() {
   return (
-    <>
-    <NavBar />
-
     <main className="mt-10 flex items-center justify-center md:h-screen">
       <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
         <Link
@@ -22,6 +19,5 @@ export default function LoginPage() {
         </Suspense>
       </div>
     </main>
-    </>
   );
 }
