@@ -11,7 +11,9 @@ import {
   LockClosedIcon,
   UserGroupIcon,
   XMarkIcon,
-  CheckIcon
+  CheckIcon,
+  PlusIcon,
+  MinusIcon,
 } from "@heroicons/react/24/outline";
 import TextBoxFormField from "./textbox-form-field";
 import { HuddleDataForm } from "@/app/lib/definitions";
@@ -58,6 +60,8 @@ export default function UpdateForm({
         evening: !allOpen,
       });
     };
+
+    const allOpen = Object.values(accordionStates).every((state) => state);
 
   console.log("State:", state);
 
@@ -188,57 +192,72 @@ export default function UpdateForm({
           </div>
         </div>
 
+        <div className="mt-10 flex justify-end gap-4">
+          <button
+            type="button"
+            onClick={toggleAll}
+            className="group relative px-3.5 py-3.5 bg-gray-300 text-white font-semibold rounded-full shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
+            title="toggle all"
+          >
+            {allOpen ? (
+              <MinusIcon className="h-5 w-5 text-gray-700" />
+            ) : (
+              <PlusIcon className="h-5 w-5 text-gray-700" />
+            )}
+          </button>
+        </div>
+
         <div className="mt-10">
-                  <AccordionSection
-                    title="Morning Huddle"
-                    isOpen={accordionStates.morning}
-                    onToggle={() => toggleAccordion("morning")}
-                  >
-                    <div className="grid grid-cols-2 gap-8">
-                      {TEXT_INPUT_CONFIGS_MORNING.map((config) => (
-                        <TextBoxFormField
-                          key={config.name}
-                          config={config}
-                          state={state}
-                          defaultValue={huddle_data[config.name]?.toString() || ""}
-                        />
-                      ))}
-                    </div>
-                  </AccordionSection>
-        
-                  <AccordionSection
-                    title="Afternoon Huddle"
-                    isOpen={accordionStates.afternoon}
-                    onToggle={() => toggleAccordion("afternoon")}
-                  >
-                    <div className="grid grid-cols-2 gap-8">
-                      {TEXT_INPUT_CONFIGS_NOON.map((config) => (
-                        <TextBoxFormField
-                          key={config.name}
-                          config={config}
-                          state={state}
-                          defaultValue={huddle_data[config.name]?.toString() || ""}
-                        />
-                      ))}
-                    </div>
-                  </AccordionSection>
-        
-                  <AccordionSection
-                    title="Evening Huddle"
-                    isOpen={accordionStates.evening}
-                    onToggle={() => toggleAccordion("evening")}
-                  >
-                    <div className="grid grid-cols-2 gap-8">
-                      {TEXT_INPUT_CONFIGS_NIGHT.map((config) => (
-                        <TextBoxFormField
-                          key={config.name}
-                          config={config}
-                          state={state}
-                          defaultValue={huddle_data[config.name]?.toString() || ""}
-                        />
-                      ))}
-                    </div>
-                  </AccordionSection>
+          <AccordionSection
+            title="Morning Huddle"
+            isOpen={accordionStates.morning}
+            onToggle={() => toggleAccordion("morning")}
+          >
+            <div className="grid grid-cols-2 gap-8">
+              {TEXT_INPUT_CONFIGS_MORNING.map((config) => (
+                <TextBoxFormField
+                  key={config.name}
+                  config={config}
+                  state={state}
+                  defaultValue={huddle_data[config.name]?.toString() || ""}
+                />
+              ))}
+            </div>
+          </AccordionSection>
+
+          <AccordionSection
+            title="Afternoon Huddle"
+            isOpen={accordionStates.afternoon}
+            onToggle={() => toggleAccordion("afternoon")}
+          >
+            <div className="grid grid-cols-2 gap-8">
+              {TEXT_INPUT_CONFIGS_NOON.map((config) => (
+                <TextBoxFormField
+                  key={config.name}
+                  config={config}
+                  state={state}
+                  defaultValue={huddle_data[config.name]?.toString() || ""}
+                />
+              ))}
+            </div>
+          </AccordionSection>
+
+          <AccordionSection
+            title="Evening Huddle"
+            isOpen={accordionStates.evening}
+            onToggle={() => toggleAccordion("evening")}
+          >
+            <div className="grid grid-cols-2 gap-8">
+              {TEXT_INPUT_CONFIGS_NIGHT.map((config) => (
+                <TextBoxFormField
+                  key={config.name}
+                  config={config}
+                  state={state}
+                  defaultValue={huddle_data[config.name]?.toString() || ""}
+                />
+              ))}
+            </div>
+          </AccordionSection>
         </div>
       </div>
     </form>
