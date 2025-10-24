@@ -10,7 +10,8 @@ export const authConfig = {
 
       const protectedRoutes = [
         '/dashboard',
-        '/directory'
+        '/directory',
+        '/docs'
       ]
 
       const isProtectedRoute = protectedRoutes.some(route => 

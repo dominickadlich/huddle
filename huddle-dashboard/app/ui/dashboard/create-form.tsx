@@ -22,7 +22,7 @@ import {
   TEXT_INPUT_CONFIGS_NOON,
   TEXT_INPUT_CONFIGS_NIGHT,
 } from "@/app/lib/form-configs";
-import AccordionSection from "../accordion";
+import AccordionSection from "./accordion";
 import { Metadata } from "next";
 
 import { useState } from "react";
@@ -75,11 +75,13 @@ export default function Form() {
         >
           <XMarkIcon className="h-5 w-5 text-gray-700" />
         </Link>
+
         <CreateReportButton type="submit">
           <CheckIcon className="h-5 w-5" />
         </CreateReportButton>
       </div>
 
+      {/* NUMERIC_INPUT_CONFIGS */}
       <div className="">
         <div className="grid grid-cols-5 gap-6">
           {NUMERIC_INPUT_CONFIGS.map((config) => (
@@ -90,8 +92,11 @@ export default function Form() {
               defaultValue=""
             />
           ))}
+
+
           <div className="mt-10">
             <div>
+
               {/* Staffing Dropdown */}
               <div className="sm:col-span-5">
                 <label

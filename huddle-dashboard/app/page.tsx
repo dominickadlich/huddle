@@ -3,7 +3,7 @@
 import NavBar from "./ui/navbar";
 import Link from "next/link";
 import { SparklesIcon } from "@heroicons/react/24/outline";
-import HomePageCardWrapper from "./ui/homepage-card";
+import HomePageCardWrapper from "./ui/page/homepage-card";
 import { SignInButton } from "./ui/test-sso/auth-buttons";
 
 export default function Example() {
@@ -22,7 +22,7 @@ export default function Example() {
 
         {/* Content Container */}
         <div className="relative isolate px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl sm:py-34 lg:py-54 animate-fade-in">
+          <div className="mx-auto max-w-4xl sm:py-34 lg:py-44 animate-fade-in">
             {/* Badge with Glow */}
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
               <div className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-sm text-gray-200 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 transition-all duration-300 hover:scale-105">

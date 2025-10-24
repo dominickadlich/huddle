@@ -13,8 +13,10 @@ import { useActionState } from "react";
 import { authenticate } from "@/app/lib/actions";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import NavBar from "./navbar";
-import { SignInButton } from "./test-sso/auth-buttons";
+import NavBar from "../../../navbar";
+import { SignInButton } from "../../../test-sso/auth-buttons";
+import Link from "next/link";
+import HuddleLogo from "@/app/ui/huddle-logo";
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
@@ -26,12 +28,22 @@ export default function LoginForm() {
 
   return (
     <>
-      <form action={formAction} className="border rounded-lg">
+      {/* <form action={formAction} className="border py-20 rounded-lg"> */}
+
+      {/* <Link
+        href="/"
+        className="flex h-20 w-full justify-center items-center rounded-lg bg-indigo-500 "
+      >
+        <HuddleLogo />
+      </Link> */}
+
         <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
           <h1 className="flex justify-center items-center text-2xl text-white mb-5">
             Please log in
           </h1>
-          <div className="w-full">
+
+          {/* Email Input */}
+          {/* <div className="w-full">
             <div className="">
               <label
                 className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -50,8 +62,10 @@ export default function LoginForm() {
                   required
                 />
               </div>
-            </div>
-            <div className="mt-10">
+            </div> */}
+
+            {/* Password */}
+            {/* <div className="mt-10">
               <label
                 className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
                 htmlFor="password"
@@ -71,40 +85,44 @@ export default function LoginForm() {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
 
-          {errorMessage && (
+          {/* Error Handling */}
+          {/* {errorMessage && (
             <>
               <div className="flex mt-2 gap-2">
                 <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
                 <p className="text-sm text-red-500">{errorMessage}</p>
               </div>
             </>
-          )}
+          )} */}
 
-          <div className="flex justify-end gap-4">
+          {/* Form Buttons */}
+          {/* <div className="flex justify-between gap-4">
             <input type="hidden" name="redirectTo" value={callbackUrl} />
-            {/* <AddNewUserButton className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
+            <AddNewUserButton className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
             New User 
-          </AddNewUserButton> */}
+          </AddNewUserButton>
             <Button className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
               Log in <ArrowRightIcon className="ml-1 h-5 w-5 text-gray-50" />
             </Button>
-          </div>
+          </div> */}
+
           {/* Divider */}
-          <div className="mt-6 mb-6 relative">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
-        </div>
-        <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-gray-900 text-gray-400">Or</span>
-        </div>
-        </div>
-        <div className="flex justify-center">
+          {/* <div className="mt-6 mb-6 relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-gray-900 text-gray-400">Or</span>
+            </div>
+          </div> */}
+
+        <div className="mt-10 flex justify-center">
           <SignInButton />
         </div>
         </div>
-      </form>
+      {/* </form> */}
     </>
   );
 }
