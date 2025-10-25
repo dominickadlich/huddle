@@ -5,8 +5,10 @@ import {
   BuildingOfficeIcon,
   ClockIcon,
   PhoneIcon,
+  CheckIcon,
+  XMarkIcon
 } from "@heroicons/react/24/outline";
-import { Button } from "../button";
+import { CreateReportButton } from "../button";
 import { updateExtension, State } from "@/app/lib/actions";
 import { useActionState } from "react";
 import { ExtensionForm } from "@/app/lib/definitions";
@@ -120,14 +122,17 @@ export default function EditExtensionForm({
         </div>
       </div>
 
-      <div className="mt-6 flex justify-end gap-4">
+      {/* Submit button */}
+      <div className="mt-10 flex justify-end gap-4">
         <Link
           href="/directory"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          className="group relative px-3.5 py-3.5 bg-gray-300 text-white font-semibold rounded-full shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 transition-all duration-300"
         >
-          Cancel
+          <XMarkIcon className="h-5 w-5 text-gray-700" />
         </Link>
-        <Button type="submit">Edit Extension</Button>
+        <CreateReportButton type="submit">
+          <CheckIcon className="h-5 w-5" />
+        </CreateReportButton>
       </div>
     </form>
   );

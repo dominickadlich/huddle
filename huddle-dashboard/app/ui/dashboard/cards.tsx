@@ -80,7 +80,7 @@ export function Card({
   type,
 }: {
   title: string;
-  value: number | string;
+  value: number | string | boolean;
   type:
     | "census"
     | "tpn_count"
@@ -97,6 +97,7 @@ export function Card({
   const Icon = iconMap[type];
 
   const isBooleanCard = type === "restock" || type === "cs_queue";
+  const trueValue = value === true;
   const noValue = value === null;
 
   return (
@@ -126,8 +127,8 @@ export function Card({
           {isBooleanCard ? (
             <div
               className={`w-8 h-8 rounded-full shadow-lg transition-all duration-300 ${
-                value
-                  ? "bg-gradient-to-br from red-500 to-red-600 shadow-red-500/40 group-hover:shadow-red-500/60"
+                trueValue
+                  ? "bg-gradient-to-br from-red-500 to-red-600 shadow-red-500/40 group-hover:shadow-red-500/60"
                   : "bg-gradient-to-br from-green-500 to-green-600 shadow-green-500/30 group-hover:shadow-green-500/60"
               }`}
             />

@@ -35,6 +35,8 @@ export default function UpdateForm({
   const initialState: HuddleState = { message: null, errors: {} };
   const updateReportWithId = updateHuddleReport.bind(null, huddle_data.id);
   const [state, formAction] = useActionState(updateReportWithId, initialState);
+  const [isCheckedRestock, setIsCheckedRestock] = useState(false);
+  const [isCheckedCS, setIsCheckedCS] = useState(false);
 
     // Track individual accordion states
     const [accordionStates, setAccordionStates] = useState({
@@ -146,7 +148,8 @@ export default function UpdateForm({
                       id="restock"
                       name="restock"
                       type="checkbox"
-                      defaultValue={huddle_data.restock}
+                      defaultChecked={huddle_data.restock}
+                      onChange={() => setIsCheckedRestock(!isCheckedRestock)}
                       className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
                     />
                     <span className="text-sm text-gray-500 group-hover:text-white transition-colors">
@@ -179,7 +182,8 @@ export default function UpdateForm({
                       id="cs_queue"
                       name="cs_queue"
                       type="checkbox"
-                      defaultValue={huddle_data.cs_queue}
+                      defaultChecked={huddle_data.cs_queue}
+                      onChange={() => setIsCheckedCS(!isCheckedCS)}
                       className="h-5 w-5 rounded border-gray-600 bg-gray-700/50 text-indigo-600 focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-0 transition-all cursor-pointer"
                     />
                     <span className="text-sm text-gray-500 group-hover:text-white transition-colors">

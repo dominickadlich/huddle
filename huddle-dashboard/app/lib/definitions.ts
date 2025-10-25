@@ -54,8 +54,8 @@ export type HuddleDataForm = {
   tpn_count: string;
   haz_count: string;
   non_sterile_count: string;
-  restock: string;
-  cs_queue: string;
+  restock: boolean;
+  cs_queue: boolean;
   staffing: string;
   complex_preps_count: string;
   missed_dispense_check: string;
