@@ -9,6 +9,7 @@ import { signIn, auth } from "@/auth";
 import { AuthError } from "next-auth";
 import { parseHuddleFormData } from "./form-helpers";
 import { getServiceSupabase, getCurrentUserId } from "./supabase-server";
+// import { supabase } from "@/scripts/docs_sections_seed";
 
 const FormSchema = z.object({
   id: z.string(),
@@ -133,6 +134,12 @@ export async function createHuddleReport(
   const parsedData = parseHuddleFormData(formData);
   const validatedFields = CreateHuddleReportSchema.safeParse(parsedData);
 
+   const session = await auth();
+
+  if (!session?.user) {
+    return { message: "Authentication required" };
+  }
+
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -244,6 +251,8 @@ export async function createHuddleReport(
   redirect("/dashboard");
 }
 
+
+
 // Update Huddle Report
 export async function updateHuddleReport(
   id: string,
@@ -296,6 +305,8 @@ export async function updateHuddleReport(
   redirect("/dashboard");
 }
 
+
+
 // Update Extension
 export async function updateExtension(
   id: string,
@@ -307,6 +318,14 @@ export async function updateExtension(
     extension: formData.get("extension"),
     hours: formData.get("hours"),
   });
+
+   const session = await auth();
+
+  if (!session?.user) {
+    return { message: "Authentication required" };
+  }
+
+  
 
   if (!validatedFields.success) {
     return {
@@ -339,6 +358,8 @@ export async function updateExtension(
   redirect("/directory");
 }
 
+
+
 // Create Extension
 export async function createExtension(prevState: State, formData: FormData) {
   const validatedFields = CreateExtension.safeParse({
@@ -353,6 +374,12 @@ export async function createExtension(prevState: State, formData: FormData) {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing Fields. Failed to create extension.",
     };
+  }
+
+   const session = await auth();
+
+  if (!session?.user) {
+    return { message: "Authentication required" };
   }
 
   // Prepare data for insertion into the database
@@ -380,8 +407,15 @@ export async function createExtension(prevState: State, formData: FormData) {
   redirect("/directory");
 }
 
+
+
 export async function deleteExtension(id: string) {
   // throw new Error('Failed to Delete Extension')
+   const session = await auth();
+
+  if (!session?.user) {
+    return { message: "Authentication required" };
+  }
 
   try {
     const supabase = getServiceSupabase();
@@ -402,6 +436,8 @@ export async function deleteExtension(id: string) {
   }
 }
 
+
+
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
@@ -420,5 +456,51 @@ export async function authenticate(
       }
     }
     throw error;
+  }
+}
+
+
+export async function upsertUser(userData: any) {
+  const supabase = getServiceSupabase();
+
+  const session = await auth();
+
+  if (!session?.user) {
+    return { message: "Authentication required" };
+  }
+
+  try {
+    const {
+      sub,
+      email,
+      name,
+      given_name,
+      family_name,
+    } = userData
+
+    const user = {
+      id: sub,
+      email,
+      full_name: name,
+      first_name: given_name,
+      last_name: family_name,
+      last_sign_in: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+
+    const { data, error } = await supabase
+      .from("users")
+      .upsert(user, {
+        onConflict: 'id',
+        ignoreDuplicates: false,
+        count: "exact"
+      });
+
+      if (error) throw error;
+      return true
+  } catch (error) {
+    console.error("Failed to upsert user:", error)
+    return false;
   }
 }

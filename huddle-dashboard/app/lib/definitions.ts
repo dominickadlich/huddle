@@ -1,8 +1,11 @@
 export type User = {
   id: string;
-  name: string;
+  full_name?: string;
+  first_name?: string;
+  last_name?: string;
   email: string;
   password: string;
+  last_sign_in?: string;
 };
 
 export type CensusData = {
