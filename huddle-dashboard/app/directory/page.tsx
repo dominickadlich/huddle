@@ -1,12 +1,9 @@
 import Search from "../ui/search";
 import Link from "next/link";
-import { DirectorySkeleton } from "../ui/skeletons";
 import ExtensionsTable from "../ui/directory/card";
 import { Suspense } from "react";
 import { Metadata } from "next";
 import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-import Card from "../ui/directory/card";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 export const metadata: Metadata = {

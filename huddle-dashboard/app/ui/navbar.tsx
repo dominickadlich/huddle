@@ -2,18 +2,13 @@
 
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
 import HuddleLogo from "./huddle-logo";
 import { useState } from "react";
 import Link from "next/link";
 import NavLinks from "./nav-links";
 import { signOut, useSession } from "next-auth/react"; // Add useSession
 import {
-  SignInButton,
-  SignInNavBar,
-  SignOutButton,
-  SignOutNavBar,
-} from "./test-sso/auth-buttons";
+  SignInNavBar,SignOutNavBar } from "./test-sso/auth-buttons";
 
 export default function NavBar({}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

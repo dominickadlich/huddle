@@ -1,22 +1,9 @@
 "use client";
 
-import {
-  AtSymbolIcon,
-  KeyIcon,
-  ExclamationCircleIcon,
-  PlusCircleIcon,
-  PlusIcon,
-} from "@heroicons/react/24/outline";
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import { AddNewUserButton, Button, SSOButton } from "@/app/ui/button";
 import { useActionState } from "react";
 import { authenticate } from "@/app/lib/actions";
 import { useSearchParams } from "next/navigation";
-import { signIn } from "next-auth/react";
-import NavBar from "../../../navbar";
 import { SignInButton } from "../../../test-sso/auth-buttons";
-import Link from "next/link";
-import HuddleLogo from "@/app/ui/huddle-logo";
 
 export default function LoginForm() {
   const searchParams = useSearchParams();

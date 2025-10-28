@@ -1,22 +1,11 @@
 import CardWrapper from "../../ui/dashboard/cards";
-import CensusChart from "../../ui/dashboard/census-chart";
-import LatestOpportunities from "../../ui/dashboard/latest-opportunities";
 import { Suspense } from "react";
-import {
-  CensusChartSkeleton,
-  LatestOpportunitiesSkeleton,
-  CardSkeleton,
-} from "../../ui/skeletons";
+import { CardSkeleton }  from "../../ui/skeletons";
 import { Metadata } from "next";
 import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-import TextWrapper from "@/app/ui/dashboard/text-box";
 import TrialTextWrapper from "@/app/ui/dashboard/trial-text-box";
-import {
-  CreateHuddleReport,
-  UpdateHuddleReport,
-} from "@/app/ui/dashboard/buttons";
-import { fetchHuddleData, fetchLatestHuddleData } from "@/app/lib/data";
+import { CreateHuddleReport, UpdateHuddleReport } from "@/app/ui/dashboard/buttons";
+import { fetchLatestHuddleData } from "@/app/lib/data";
 
 export const metadata: Metadata = {
   title: "Dashboard",

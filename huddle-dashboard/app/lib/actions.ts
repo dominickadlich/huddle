@@ -460,7 +460,16 @@ export async function authenticate(
 }
 
 
-export async function upsertUser(userData: any) {
+
+interface OIDCUserProfile {
+  sub: string;
+  email: string;
+  name?: string;
+  given_name?: string;
+  family_name?: string;
+}
+
+export async function upsertUser(userData: OIDCUserProfile) {
   const supabase = getServiceSupabase();
 
   const session = await auth();
@@ -481,9 +490,9 @@ export async function upsertUser(userData: any) {
     const user = {
       id: sub,
       email,
-      full_name: name,
-      first_name: given_name,
-      last_name: family_name,
+      full_name: name || '',
+      first_name: given_name || '',
+      last_name: family_name || '',
       last_sign_in: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };

@@ -1,8 +1,5 @@
-import Link from "next/link";
-import HuddleLogo from "@/app/ui/huddle-logo";
 import LoginForm from "@/app/ui/api/auth/signin/login-form";
 import { Suspense } from "react";
-import NavBar from "@/app/ui/navbar";
 
 export default function LoginPage() {
   return (

@@ -12,6 +12,14 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
+interface OIDCUserProfile {
+  sub: string;
+  email: string;
+  name?: string;
+  given_name?: string;
+  family_name?: string;
+}
+
 async function getUser(email: string): Promise<User | undefined> {
   try {
     const { data, error } = await supabase
@@ -87,8 +95,8 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
   callbacks: {
     async signIn({ user, account, profile }) {
-      if (account?.provider === 'duosso' && profile) {
-        await upsertUser(profile);
+      if (account?.provider === 'duosso' && profile && 'sub' in profile && 'email' in profile) {
+        await upsertUser(profile as OIDCUserProfile);
       }
       return true;
     },

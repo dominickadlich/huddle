@@ -17,7 +17,9 @@ export function UpdateExtension({ id }: { id: string }) {
 }
 
 export function DeleteExtension({ id }: { id: string }) {
-  const deleteExtensionWithId = deleteExtension.bind(null, id);
+  const deleteExtensionWithId = async (formData: FormData) => {
+    await deleteExtension(id);
+  }
 
   return (
     <form action={deleteExtensionWithId}>
