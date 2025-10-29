@@ -43,6 +43,7 @@ export default function TextBoxFormField({
                 placeholder={placeholder}
                 rows={3}
                 defaultValue={defaultValue}
+                spellCheck={true}
                 className="w-full rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3 text-white placeholder:text-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50 resize-none"
               />
             </div>
