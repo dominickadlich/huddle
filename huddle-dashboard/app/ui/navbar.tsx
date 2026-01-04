@@ -25,7 +25,7 @@ export default function NavBar({}) {
     <header className="fixed inset-x-0 top-0 z-50">
       <nav
         aria-label="Global"
-        className="mx-4 mt-4 flex items-center justify-between p-4 lg:px-8 rounded-2xl border border-indigo-500/50 bg-indigo-500/90 backdrop-blur-md shadow-lg shadow-indigo-500/20"
+        className="mx-4 mt-2 flex items-center justify-between p-4 lg:px-8 rounded-2xl border border-indigo-500/50 bg-indigo-500/90 backdrop-blur-md shadow-lg shadow-indigo-500/20"
       >
         {/* Logo Section */}
         <div className="flex lg:flex-1">

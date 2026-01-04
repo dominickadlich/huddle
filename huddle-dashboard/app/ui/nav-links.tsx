@@ -4,6 +4,7 @@ import {
   BookOpenIcon,
   PhoneIcon,
   DocumentTextIcon,
+  BugAntIcon
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -20,11 +21,16 @@ const links = [
     href: "/directory",
     icon: PhoneIcon,
   },
-  // {
-  //   name: "Documents",
-  //   href: "/docs",
-  //   icon: DocumentTextIcon,
-  // },
+  {
+    name: "Docs",
+    href: "/docs",
+    icon: DocumentTextIcon,
+  },
+  {
+    name: "ID",
+    href: "/ID",
+    icon: BugAntIcon
+  },
 ];
 
 export default function NavLinks() {
