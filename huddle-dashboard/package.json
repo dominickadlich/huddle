@@ -17,6 +17,7 @@
     "bcrypt": "^6.0.0",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.1",
+    "gray-matter": "^4.0.3",
     "headlessui": "^0.0.0",
     "lorem-ipsum": "^2.0.8",
     "next": "15.4.10",
@@ -24,6 +25,8 @@
     "postgres": "^3.4.7",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
     "use-debounce": "^10.0.5",
     "vercel": "^47.0.5",
     "zod": "^4.1.1"
