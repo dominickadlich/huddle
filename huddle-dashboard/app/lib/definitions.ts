@@ -85,3 +85,9 @@ export type HuddleDataForm = {
   opportunities_night: string;
   shout_outs_night: string;
 };
+
+export type FileData = {
+    slug: string,
+    title: string,
+    category: string
+}

@@ -1,12 +1,29 @@
-export default function DocsLayout() {
+import DocsNav from "../ui/docs/docs-nav"
+
+export default function DocsLayout({
+  children
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <div className="flex min-h-full flex-col">
-      <div className="mx-auto flex w-full max-w-7xl items-start gap-x-8 px-4 py-10 sm:px-6 lg:px-8">
-        <aside className="sticky top-8 hidden w-44 shrink-0 lg:block">{/* Left column area */}</aside>
+    <div className="mt-20 flex min-h-full flex-col border">
+      <div className="mx-auto flex w-full items-start gap-x-8 px-4 py-10 sm:px-6 lg:px-8">
+        
+        {/* Left sidebar - Navigation */}
+        <aside className="sticky top-8 hidden w-96 shrink-0 lg:block border">
+          <DocsNav />
+        </aside>
 
-        <main className="flex-1">{/* Main area */}</main>
+        {/* Main content - The page content */}
+        <main className="flex-1 border">
+          {children}  {/* This is your page.tsx content */}
+        </main>
 
-        <aside className="sticky top-8 hidden w-96 shrink-0 xl:block">{/* Right column area */}</aside>
+        {/* Right sidebar - Table of Contents */}
+        <aside className="sticky top-8 hidden w-44 shrink-0 xl:block">
+          {/* TODO: TableOfContents component will go here */}
+        </aside>
+        
       </div>
     </div>
   )
