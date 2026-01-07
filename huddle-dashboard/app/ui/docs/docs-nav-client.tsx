@@ -8,14 +8,14 @@ export default function DocsNavClient({ docs }: { docs: FileData[] }) {
    const pathname = usePathname()
    
    return (
-    <ul className="list-none space-y-2">
+    <ul className="list-none space-y-4">
             {docs.map((doc) => (
                 <li key={`${doc.category}/${doc.slug}`}>
                 <Link
                     href={`/docs/iv-room/${doc.slug}`}
                     className={ pathname === `/docs/iv-room/${doc.slug}`
-                        ? 'bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white'
+                        ? 'bg-gray-50 text-indigo-600 bg-white/5 text-white'
+                        : 'text-gray-100 hover:bg-gray-50 hover:text-indigo-600 text-gray-400 hover:bg-white/5 hover:text-white'
                     }
                 >
                     {doc.title}
