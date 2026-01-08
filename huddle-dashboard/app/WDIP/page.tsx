@@ -2,6 +2,6 @@ import Header from "../ui/header";
 
 export default function Page() {
     return (
-        <Header title="ID"/>
+        <Header title="WDIP"/>
     )
 }

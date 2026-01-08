@@ -5,6 +5,7 @@ import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
+import TOC from '@/app/ui/docs/table-of-contents'
 import rehypeSlug from 'rehype-slug'
 import DocsPageLayout from '@/app/ui/docs/docs-page-layout'
 
@@ -42,7 +43,11 @@ export default async function Page(props: {
 
   // Generate ID's for each heading
   const headingList = headings?.map((heading) => {
-    const headingId = heading.trim().toLowerCase().replace(/\s+/g, '-')
+    const headingId = heading
+      .trim()
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '') // Remove special characters including parentheses
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
 
     return {
       text: heading,
