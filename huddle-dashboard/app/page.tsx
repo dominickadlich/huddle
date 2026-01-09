@@ -27,25 +27,22 @@ export default function Example() {
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
               <div className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-sm text-gray-200 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 transition-all duration-300 hover:scale-105">
                 <SparklesIcon className="h-5 w-5 text-indigo-400" />
-                <span>The Smart Way to Stay Informed</span>
+                <span>Your Central Hub for Pharmacy Operations</span>
               </div>
             </div>
 
             {/* Main Heading with Gradient Text */}
             <div className="text-center">
               <h1 className="text-5xl font-bold tracking-tight sm:text-7xl bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
-                Transform Your Team Communication
+                Transform Your Pharmacy Operations
               </h1>
 
               {/* Subtitle */}
               <p className="mt-8 text-lg font-medium text-gray-300 sm:text-xl leading-relaxed max-w-3xl mx-auto ">
-                Stop juggling spreadsheets, missed messages, and scattered
-                updates.
+                Stop juggling spreadsheets, missed messages, and scattered tools.
                 <br />
                 <span className="text-gray-400">
-                  Run seamless daily huddles that keep your entire pharmacy team
-                  aligned, informed, and ready to deliver exceptional patient
-                  care.
+                  Centralize your pharmacy operations with real-time insights, seamless communication, and data-driven workflows that keep your entire team aligned and ready to deliver exceptional patient care.
                 </span>
               </p>
 

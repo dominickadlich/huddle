@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx scripts/seed.ts",
-    "seed-directory": "tsx scripts/extension_seed.ts"
+    "seed-directory": "tsx scripts/extension_seed.ts",
+    "parse-coverage": "tsx app/scripts/parse-coverage.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
