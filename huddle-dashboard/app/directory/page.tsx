@@ -24,13 +24,13 @@ export default async function Page(props: {
   // }
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-20">
       {/* Page Header with Gradient Title */}
-      <div className="mt-20 flex w-full items-center justify-between mb-8">
+      {/* <div className="mt-20 flex w-full items-center justify-between mb-8">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
           Directory
         </h1>
-      </div>
+      </div> */}
 
       {/* Search Bar + Create Button */}
       <div className="mt-10 flex items-center justify-between gap-4 mb-6">
