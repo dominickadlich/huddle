@@ -1,6 +1,6 @@
 import Header from "../ui/header";
 
-function getCurrentShift(): 'weekday-day' | 'weekday-evening' | 'weekend' | undefined {
+function getCurrentShift(): 'weekday-day' | 'weekday-evening' | 'weekend' {
     const now = new Date();
     const dayOfWeek = now.getDay()
     const hour = now.getHours()
@@ -9,20 +9,25 @@ function getCurrentShift(): 'weekday-day' | 'weekday-evening' | 'weekend' | unde
     console.log(`Date Day: ${dayOfWeek}`)
     console.log(`Date hour: ${hour}`)
 
-    if (dayOfWeek !== 0 || 6) {
-        if (hour > 1400) {
-            'weekday-evening'
+    let shift: 'weekday-day' | 'weekday-evening' | 'weekend'
+
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        if (hour >= 14) {
+            shift = 'weekday-evening'
         } else {
-            'weekday-day'
-        } 
+            shift = 'weekday-day'
+        }
     } else {
-        return 'weekend'
+        shift = 'weekend'
     }
+    return shift
 }
 
 export default function Page() {
     const now = new Date().toLocaleString();
     const shift = getCurrentShift()
+
+    console.log(`shift: ${shift}`)
 
     switch (shift) {
         case 'weekday-day':
@@ -36,8 +41,12 @@ export default function Page() {
     return (
         <>
             <Header title="WDIP"/>
-            <h1>Date: {now}</h1>
-            
+            <div className="flex justify-center text-3xl">
+                Date: {now}
+            </div>
+            <div className="flex justify-center text-3xl mt-10">
+                Viewing Shift: {shift.charAt(0).toUpperCase() + shift.slice(1)}
+            </div>
         </>
     )
 }
