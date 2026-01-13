@@ -1,5 +1,10 @@
+'use client'
+
 import Header from "../ui/header";
 import Search from "../ui/search";
+import { floorCoverage, findCoverageByFloor, type Coverage } from "../lib/floor-coverage";
+import { SetStateAction, useEffect, useMemo, useState } from "react";
+import Fuse from "fuse.js";
 
 function getCurrentShift(): 'weekday-day' | 'weekday-evening' | 'weekend' {
     const now = new Date();
@@ -25,19 +30,38 @@ function getCurrentShift(): 'weekday-day' | 'weekday-evening' | 'weekend' {
 }
 
 export default function Page() {
-    const now = new Date().toLocaleString();
-    const shift = getCurrentShift()
+    const [shift, setShift] = useState<'weekday-day' | 'weekday-evening' | 'weekend'>("weekday-day")
+    const [searchQuery, setSearchQuery] = useState('')
+    const [filteredCoverage, setFilteredCoverage] = useState<Coverage[]>([])
 
-    console.log(`shift: ${shift}`)
+    const fuse = useMemo(
+        () => new Fuse(filteredCoverage, {
+            keys: ['team', 'floors', 'service'],
+            threshold: 0.3
+        }),
+        [filteredCoverage]
+    )
+    
 
-    switch (shift) {
-        case 'weekday-day':
-            // return weekdayDayCoverage
-        case 'weekday-evening':
-            // return weekdayEveningCoverage
-        case 'weekend':
-            // return weekendCoverage
+    function handleSearchQuery(e: { target: { value: SetStateAction<string>; }; }) {
+        setSearchQuery(e.target.value)
     }
+
+    // Calculate shift on mount
+    useEffect(() => {
+        const currentShift = getCurrentShift()
+        setShift(currentShift)
+
+        // Filter by current shift
+        const shiftCoverage = floorCoverage.filter(c => c.shift === currentShift)
+        setFilteredCoverage(shiftCoverage)
+    }, [])
+
+    // Filter by search query
+    const displayedCoverage = searchQuery
+        ? fuse.search(searchQuery).map(result => result.item)
+        : filteredCoverage
+    
 
     return (
         <>
@@ -52,22 +76,28 @@ export default function Page() {
                 <div className="flex justify-center text-3xl mt-20">
                     Current Staffing Schedule: {shift.charAt(0).toUpperCase() + shift.slice(1)}
                 </div>
-                <table className="flex justify-center mt-20">
-                    <tbody className="rounded-2xl overflow-hidden border border-gray-400/50">
-                        <tr>
-                        <td className="border-r border-b border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-16 text-white">Indiana</td>
-                        <td className="border-b border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-16 text-white">Indianapolis</td>
-                        </tr>
-                        <tr>
-                        <td className="border-r border-b border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-16 text-white">Ohio</td>
-                        <td className="border-b border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-16 text-white">Columbus</td>
-                        </tr>
-                        <tr>
-                        <td className="border-r border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-16 text-white">Michigan</td>
-                        <td className="bg-gray-800/30 py-4 pl-16 pr-16 text-white">Detroit</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="flex justify-center mt-20">
+                     <table className="rounded-2xl overflow-hidden border border-gray-400/50 border-separate border-spacing-0">
+                        <thead>
+                            <tr>
+                                <th className="border-r border-b border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-16 text-white first:rounded-tl-2xl">Team</th>
+                                <th className="border-r border-b border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-16 text-white">Phone</th>
+                                <th className="border-r border-b border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-16 text-white">Floors</th>
+                                <th className="border-b border-gray-400/50 bg-gray-800/30 py-4 pl-16 pr-16 text-white last:rounded-tr-2xl">Service</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {displayedCoverage.map((coverage, index) => (
+                                <tr key={coverage.team}>
+                                    <td className={`border-r border-gray-400/50 py-4 pl-16 pr-16 ${index === displayedCoverage.length - 1 ? 'first:rounded-bl-2xl' : 'border-b'}`}>{coverage.team}</td>
+                                    <td className={`border-r border-gray-400/50 py-4 pl-16 pr-16 ${index !== displayedCoverage.length - 1 ? 'border-b' : ''}`}>{coverage.phone}</td>
+                                    <td className={`border-r border-gray-400/50 py-4 pl-16 pr-16 ${index !== displayedCoverage.length - 1 ? 'border-b' : ''}`}>{coverage.floors.join(', ')}</td>
+                                    <td className={`py-4 pl-16 pr-16 ${index === displayedCoverage.length - 1 ? 'last:rounded-br-2xl' : 'border-b'}`}>{coverage.service}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     )

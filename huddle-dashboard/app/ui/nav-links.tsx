@@ -27,7 +27,7 @@ const links = [
     icon: ArrowUpOnSquareIcon
   },
   {
-    name: "Docs",
+    name: "SOPs",
     href: "/docs",
     icon: DocumentTextIcon,
   },
