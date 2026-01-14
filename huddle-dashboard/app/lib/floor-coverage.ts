@@ -11,7 +11,7 @@ export type Coverage = {
 
 export const floorCoverage: Coverage[] = [
   {
-    "team": "Team 1A",
+    "team": "1A",
     "phone": "8-4035",
     "floors": [
       "PEDS-44",
@@ -22,7 +22,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 1B",
+    "team": "1B",
     "phone": "8-5681",
     "floors": [
       "55 (NICU)",
@@ -32,7 +32,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 1C",
+    "team": "1C",
     "phone": "5-9481",
     "floors": [
       "55 (NICU)",
@@ -42,7 +42,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 2A",
+    "team": "2A",
     "phone": "5-8781",
     "floors": [
       "New dofetilide/sotalol starts"
@@ -51,7 +51,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 2C",
+    "team": "2C",
     "phone": "8-8155",
     "floors": [
       "HC3-ICU"
@@ -60,7 +60,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 2G",
+    "team": "2G",
     "phone": "4-3315",
     "floors": [
       "HC4/HC5/ HC9 off-service"
@@ -69,7 +69,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3A",
+    "team": "3A",
     "phone": "5-8253",
     "floors": [
       "46"
@@ -78,7 +78,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3B",
+    "team": "3B",
     "phone": "TBD",
     "floors": [
       "45"
@@ -87,7 +87,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3C",
+    "team": "3C",
     "phone": "8-0930",
     "floors": [
       "66"
@@ -96,7 +96,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3D",
+    "team": "3D",
     "phone": "5-9365",
     "floors": [
       "MPO Voalte Triage"
@@ -105,7 +105,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3F",
+    "team": "3F",
     "phone": "5-5058",
     "floors": [
       "BH15",
@@ -115,7 +115,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3G",
+    "team": "3G",
     "phone": "--",
     "floors": [
       "42"
@@ -124,7 +124,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3H",
+    "team": "3H",
     "phone": "5-8251",
     "floors": [
       "Med pts CA7"
@@ -133,7 +133,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3I",
+    "team": "3I",
     "phone": "5-8881",
     "floors": [
       "Med pts CA6"
@@ -142,7 +142,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3J",
+    "team": "3J",
     "phone": "8-2920",
     "floors": [
       "41"
@@ -151,7 +151,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3K",
+    "team": "3K",
     "phone": "5-9391",
     "floors": [
       "Med pts HC8"
@@ -160,7 +160,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3L",
+    "team": "3L",
     "phone": "5-9390",
     "floors": [
       "HC7"
@@ -169,7 +169,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3M",
+    "team": "3M",
     "phone": "8-0948",
     "floors": [
       "64",
@@ -179,7 +179,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 3N",
+    "team": "3N",
     "phone": "--",
     "floors": [
       "62"
@@ -188,7 +188,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 4A",
+    "team": "4A",
     "phone": "8-2850",
     "floors": [
       "SIC (26/28)",
@@ -198,7 +198,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 4B",
+    "team": "4B",
     "phone": "Unit 65 8-0800",
     "floors": [
       "MIC (65)"
@@ -207,7 +207,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 4C",
+    "team": "4C",
     "phone": "Unit 63 8-5950",
     "floors": [
       "TICU(63) & 61/63/65 off service"
@@ -216,7 +216,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 4D",
+    "team": "4D",
     "phone": "UnitCA8 ICU 4-4450",
     "floors": [
       "CA8 ICU",
@@ -226,7 +226,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 4F",
+    "team": "4F",
     "phone": "Unit CA5 4-4100",
     "floors": [
       "CA5 (NEICU)"
@@ -235,7 +235,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 5A",
+    "team": "5A",
     "phone": "UnitCA9 4-4566",
     "floors": [
       "CA9"
@@ -244,7 +244,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 5B1",
+    "team": "5B1",
     "phone": "--",
     "floors": [
       "CA10"
@@ -253,7 +253,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 5B2",
+    "team": "5B2",
     "phone": "--",
     "floors": [
       "CA10"
@@ -262,7 +262,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 5B3",
+    "team": "5B3",
     "phone": "--",
     "floors": [
       "CA9"
@@ -271,7 +271,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 5C",
+    "team": "5C",
     "phone": "4-3628 (CA11 office)",
     "floors": [
       "HC8 (Gyn/GynONC)",
@@ -281,7 +281,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 5F",
+    "team": "5F",
     "phone": "--",
     "floors": [
       "CA8 non-ICU",
@@ -291,7 +291,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 6A",
+    "team": "6A",
     "phone": "82826",
     "floors": [
       "BH43",
@@ -367,19 +367,19 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Psych",
-    "phone": "Marillac 4-3839",
+    "team": "Psych-Marillac",
+    "phone": "4-3839",
     "floors": [
-      "0800 - 1630"
+      '--'
     ],
     "service": "--",
     "shift": "weekday-day"
   },
   {
-    "team": "Psych",
-    "phone": "Strawberry Hill 4-3720",
+    "team": "Psych-Strawberry Hill",
+    "phone": "4-3720",
     "floors": [
-      "0800-1630"
+      "--"
     ],
     "service": "--",
     "shift": "weekday-day"
@@ -433,7 +433,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-day"
   },
   {
-    "team": "Team 1E",
+    "team": "1E",
     "phone": "8-4035 or 8-5681",
     "floors": [
       "PEDS-44",
@@ -447,7 +447,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-evening"
   },
   {
-    "team": "Team 2E",
+    "team": " 2E",
     "phone": "8-3812",
     "floors": [
       "HCOR",
@@ -461,7 +461,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-evening"
   },
   {
-    "team": "Team 3EA",
+    "team": "3EA",
     "phone": "--",
     "floors": [
       "BH15",
@@ -475,7 +475,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-evening"
   },
   {
-    "team": "Team 3EB",
+    "team": "3EB",
     "phone": "--",
     "floors": [
       "42",
@@ -488,7 +488,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-evening"
   },
   {
-    "team": "Team 4E",
+    "team": "4E",
     "phone": "--",
     "floors": [
       "SIC (26/28)",
@@ -504,7 +504,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-evening"
   },
   {
-    "team": "Team 5E",
+    "team": "5E",
     "phone": "--",
     "floors": [
       "CA8",
@@ -516,7 +516,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekday-evening"
   },
   {
-    "team": "Team 6E",
+    "team": "6E",
     "phone": "4-3350",
     "floors": [
       "CAIR",
@@ -551,12 +551,12 @@ export const floorCoverage: Coverage[] = [
     "team": "Psych",
     "phone": "Marillac 4-3839 Strawberry Hill 4-3720",
     "floors": [
-      "0800-1630 0800-1630"
+      "--"
     ],
     "shift": "weekday-evening"
   },
   {
-    "team": "Team 1A",
+    "team": "1A",
     "phone": "8-4035 or 8-5681",
     "floors": [
       "PEDS-44",
@@ -568,7 +568,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 2A",
+    "team": "2A",
     "phone": "--",
     "floors": [
       "Cardiology Service",
@@ -580,7 +580,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 2B",
+    "team": "2B",
     "phone": "--",
     "floors": [
       "Cardiothor Surg-Cardiac/Thoracic",
@@ -595,7 +595,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 3A",
+    "team": "3A",
     "phone": "--",
     "floors": [
       "Med 1",
@@ -612,7 +612,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 3B",
+    "team": "3B",
     "phone": "--",
     "floors": [
       "Neurology",
@@ -629,7 +629,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 3C",
+    "team": "3C",
     "phone": "--",
     "floors": [
       "Fam Med 2",
@@ -646,7 +646,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 7W",
+    "team": "7W",
     "phone": "--",
     "floors": [
       "MPN",
@@ -658,7 +658,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 6W",
+    "team": "6W",
     "phone": "--",
     "floors": [
       "Surg-trauma (excluding Flour Trauma on 26/28)",
@@ -680,7 +680,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 4A",
+    "team": "4A",
     "phone": "--",
     "floors": [
       "CA5 (Neuro ENT ICU)",
@@ -691,7 +691,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 4B",
+    "team": "4B",
     "phone": "--",
     "floors": [
       "MICU 1",
@@ -703,7 +703,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 5A",
+    "team": "5A",
     "phone": "--",
     "floors": [
       "Hematology",
@@ -715,7 +715,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 5B1",
+    "team": "5B1",
     "phone": "--",
     "floors": [
       "Med-BMT Allo",
@@ -725,7 +725,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 5B2",
+    "team": "5B2",
     "phone": "--",
     "floors": [
       "Med-Acute Leukemia",
@@ -735,7 +735,7 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Team 5B3",
+    "team": "5B3",
     "phone": "--",
     "floors": [
       "Med-BMT and Cell Therapy",
@@ -756,8 +756,8 @@ export const floorCoverage: Coverage[] = [
     "shift": "weekend"
   },
   {
-    "team": "Psych",
-    "phone": "Strawberry Hill 4-3720",
+    "team": "Psych-Strawberry Hill",
+    "phone": "4-3720",
     "floors": [
       "08:00 – 16:00 Strawberry Hill & Marillac (patient monitoring",
       "pharmacy operations and orders)"
@@ -776,7 +776,7 @@ export const floorCoverage: Coverage[] = [
     "team": "ASW",
     "phone": "Voalte",
     "floors": [
-      "Direct all antimimcrobial-related curbside questions to the ASW pharmacist OV duties: GB non-ED pts 0700-1500; PTM abx for specific KC and GB teams 0700-1500; Team 4 pts 1000-1200 Full list of responsibilities listed here: ID ASP Team Shift Descriptions"
+      "Direct all antimimcrobial-related curbside questions to the ASW pharmacist OV duties: GB non-ED pts 0700-1500; PTM abx for specific KC and GB teams 0700-1500;  4 pts 1000-1200 Full list of responsibilities listed here: ID ASP  Shift Descriptions"
     ],
     "shift": "weekend"
   },

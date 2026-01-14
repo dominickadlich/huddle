@@ -1,19 +1,15 @@
 'use client'
 
-import Header from "../ui/header";
 import Search from "../ui/search";
 import { floorCoverage, findCoverageByFloor, type Coverage } from "../lib/floor-coverage";
 import { SetStateAction, useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
+import WDIPSearch from "../ui/WDIP/wdip-search";
 
 function getCurrentShift(): 'weekday-day' | 'weekday-evening' | 'weekend' {
     const now = new Date();
     const dayOfWeek = now.getDay()
     const hour = now.getHours()
-
-    console.log(`Date: ${now}`)
-    console.log(`Date Day: ${dayOfWeek}`)
-    console.log(`Date hour: ${hour}`)
 
     let shift: 'weekday-day' | 'weekday-evening' | 'weekend'
 
@@ -36,7 +32,7 @@ export default function Page() {
 
     const fuse = useMemo(
         () => new Fuse(filteredCoverage, {
-            keys: ['team', 'floors', 'service'],
+            keys: ['team', 'floors', 'service', 'phone'],
             threshold: 0.3
         }),
         [filteredCoverage]
@@ -67,16 +63,17 @@ export default function Page() {
         <>
             {/* <Header title="WDIP"/> */}
             <div className="mt-20">
+                <div className="text-3xl font-bold mt-20">
+                    Current Schedule: {shift.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                </div>
                 <div className="flex justify-center mt-10">
-                    <Search placeholder={"Enter a service"} />
+                    <WDIPSearch
+                        placeholder={"Enter a team name, phone number, floor number, or service"} 
+                        onChange={handleSearchQuery}
+                        value={searchQuery}    
+                    />
                 </div>
-                {/* <div className="flex justify-center text-3xl">
-                    Date: {now}
-                </div> */}
-                <div className="flex justify-center text-3xl mt-20">
-                    Current Staffing Schedule: {shift.charAt(0).toUpperCase() + shift.slice(1)}
-                </div>
-                <div className="flex justify-center mt-20">
+                <div className="flex justify-center mt-5">
                      <table className="rounded-2xl overflow-hidden border border-gray-400/50 border-separate border-spacing-0">
                         <thead>
                             <tr>
@@ -92,7 +89,7 @@ export default function Page() {
                                     <td className={`border-r border-gray-400/50 py-4 pl-16 pr-16 ${index === displayedCoverage.length - 1 ? 'first:rounded-bl-2xl' : 'border-b'}`}>{coverage.team}</td>
                                     <td className={`border-r border-gray-400/50 py-4 pl-16 pr-16 ${index !== displayedCoverage.length - 1 ? 'border-b' : ''}`}>{coverage.phone}</td>
                                     <td className={`border-r border-gray-400/50 py-4 pl-16 pr-16 ${index !== displayedCoverage.length - 1 ? 'border-b' : ''}`}>{coverage.floors.join(', ')}</td>
-                                    <td className={`py-4 pl-16 pr-16 ${index === displayedCoverage.length - 1 ? 'last:rounded-br-2xl' : 'border-b'}`}>{coverage.service}</td>
+                                    <td className={`py-4 pl-16 pr-16 border-gray-400/50 ${index === displayedCoverage.length - 1 ? 'last:rounded-br-2xl' : 'border-b'}`}>{coverage.service}</td>
                                 </tr>
                             ))}
                         </tbody>
