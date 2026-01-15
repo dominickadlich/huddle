@@ -1,10 +1,9 @@
 'use client'
 
-import Search from "../ui/search";
 import { floorCoverage, findCoverageByFloor, type Coverage } from "../lib/floor-coverage";
 import { SetStateAction, useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
-import WDIPSearch from "../ui/WDIP/wdip-search";
+import StaticSearch from "../ui/static-search";
 
 function getCurrentShift(): 'weekday-day' | 'weekday-evening' | 'weekend' {
     const now = new Date();
@@ -63,11 +62,11 @@ export default function Page() {
         <>
             {/* <Header title="WDIP"/> */}
             <div className="mt-20">
-                <div className="text-3xl font-bold mt-20">
+                <div className="text-4xl font-bold mt-20">
                     Current Schedule: {shift.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                 </div>
                 <div className="flex justify-center mt-10">
-                    <WDIPSearch
+                    <StaticSearch
                         placeholder={"Enter a team name, phone number, floor number, or service"} 
                         onChange={handleSearchQuery}
                         value={searchQuery}    
