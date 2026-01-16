@@ -41,15 +41,17 @@ export default function Page() {
     return (
         <>
         <div className="mt-20">
-            <div className="text-4xl font-bold mt-20">
-                Directory
-            </div>
-            <div className="flex justify-center mt-10">
-                <StaticSearch
-                    placeholder={"Enter a location, phone number, or category"} 
-                    onChange={handleSearchQuery}
-                    value={searchQuery}    
-                />
+            <div className="flex">
+                <div className="flex justify-start text-4xl font-bold pr-4">
+                    Directory
+                </div>
+                <div className="flex-3 justify-center">
+                    <StaticSearch
+                        placeholder={"Enter a location, phone number, or category"} 
+                        onChange={handleSearchQuery}
+                        value={searchQuery}    
+                    />
+                </div>
             </div>
 
             <Suspense
