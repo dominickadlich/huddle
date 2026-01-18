@@ -7,11 +7,11 @@ import NavBar from "./ui/navbar";
 
 export const metadata: Metadata = {
   title: {
-    template: "Pharmacy Huddle | %s",
+    template: "%s | Pharmacy Huddle",
     default: "Pharmacy Huddle",
   },
   description:
-    "Stop juggling spreadsheets, missed messages, and scattered updates. Run seamless daily huddles that keep your entire pharmacy team aligned, informed, and ready to deliver exceptional patient care.",
+    "SStop juggling spreadsheets, missed messages, and scattered tools. Centralize your pharmacy operations with real-time insights, seamless communication, and data-driven workflows that keep your entire team aligned and ready to deliver exceptional patient care.",
   metadataBase: new URL("https://huddle-lime-gamma.vercel.app/"),
 };
 
