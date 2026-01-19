@@ -6,7 +6,7 @@ import {
   ClockIcon,
   PhoneIcon,
   CheckIcon,
-  XMarkIcon
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { CreateReportButton } from "../button";
 import { updateExtension, State } from "@/app/lib/actions";

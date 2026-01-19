@@ -9,15 +9,17 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user;
 
       const protectedRoutes = [
-        '/dashboard',
-        '/directory',
-        '/docs'
-      ]
+        "/dashboard",
+        "/directory",
+        "/docs",
+        "/WDIP",
+        "/schedule",
+      ];
 
-      const isProtectedRoute = protectedRoutes.some(route => 
-        nextUrl.pathname.startsWith(route)
-      )
-      
+      const isProtectedRoute = protectedRoutes.some((route) =>
+        nextUrl.pathname.startsWith(route),
+      );
+
       if (!isLoggedIn && isProtectedRoute) {
         return false; // Redirect unauthenticated users to login page
       }

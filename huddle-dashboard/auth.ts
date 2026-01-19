@@ -95,7 +95,12 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
   callbacks: {
     async signIn({ user, account, profile }) {
-      if (account?.provider === 'duosso' && profile && 'sub' in profile && 'email' in profile) {
+      if (
+        account?.provider === "duosso" &&
+        profile &&
+        "sub" in profile &&
+        "email" in profile
+      ) {
         await upsertUser(profile as OIDCUserProfile);
       }
       return true;
@@ -107,14 +112,14 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         console.log("Profile in JWT callback:", profile);
 
         token.id = profile.sub;
-        token.email = profile.email
+        token.email = profile.email;
 
         token.accessToken = account.access_token;
         token.id = profile?.sub;
       }
       return token;
     },
-    
+
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;

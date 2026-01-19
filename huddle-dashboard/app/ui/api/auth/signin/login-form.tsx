@@ -24,13 +24,13 @@ export default function LoginForm() {
         <HuddleLogo />
       </Link> */}
 
-        <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
-          <h1 className="flex justify-center items-center text-2xl text-white mb-5">
-            Please log in
-          </h1>
+      <div className="flex-1 rounded-lg px-6 pb-4 pt-8">
+        <h1 className="flex justify-center items-center text-2xl text-white mb-5">
+          Please log in
+        </h1>
 
-          {/* Email Input */}
-          {/* <div className="w-full">
+        {/* Email Input */}
+        {/* <div className="w-full">
             <div className="">
               <label
                 className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
@@ -51,8 +51,8 @@ export default function LoginForm() {
               </div>
             </div> */}
 
-            {/* Password */}
-            {/* <div className="mt-10">
+        {/* Password */}
+        {/* <div className="mt-10">
               <label
                 className="flex items-center text-sm/6 font-medium text-gray-900 dark:text-white"
                 htmlFor="password"
@@ -74,8 +74,8 @@ export default function LoginForm() {
             </div>
           </div> */}
 
-          {/* Error Handling */}
-          {/* {errorMessage && (
+        {/* Error Handling */}
+        {/* {errorMessage && (
             <>
               <div className="flex mt-2 gap-2">
                 <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
@@ -84,8 +84,8 @@ export default function LoginForm() {
             </>
           )} */}
 
-          {/* Form Buttons */}
-          {/* <div className="flex justify-between gap-4">
+        {/* Form Buttons */}
+        {/* <div className="flex justify-between gap-4">
             <input type="hidden" name="redirectTo" value={callbackUrl} />
             <AddNewUserButton className=" mt-10 sm:col-span-4" aria-disabled={isPending}>
             New User 
@@ -95,8 +95,8 @@ export default function LoginForm() {
             </Button>
           </div> */}
 
-          {/* Divider */}
-          {/* <div className="mt-6 mb-6 relative">
+        {/* Divider */}
+        {/* <div className="mt-6 mb-6 relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
             </div>
@@ -108,7 +108,7 @@ export default function LoginForm() {
         <div className="mt-10 flex justify-center">
           <SignInButton />
         </div>
-        </div>
+      </div>
       {/* </form> */}
     </>
   );

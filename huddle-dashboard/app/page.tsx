@@ -39,10 +39,14 @@ export default function Example() {
 
               {/* Subtitle */}
               <p className="mt-8 text-lg font-medium text-gray-300 sm:text-xl leading-relaxed max-w-3xl mx-auto ">
-                Stop juggling spreadsheets, missed messages, and scattered tools.
+                Stop juggling spreadsheets, missed messages, and scattered
+                tools.
                 <br />
                 <span className="text-gray-400">
-                  Centralize your pharmacy operations with real-time insights, seamless communication, and data-driven workflows that keep your entire team aligned and ready to deliver exceptional patient care.
+                  Centralize your pharmacy operations with real-time insights,
+                  seamless communication, and data-driven workflows that keep
+                  your entire team aligned and ready to deliver exceptional
+                  patient care.
                 </span>
               </p>
 

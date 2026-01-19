@@ -134,7 +134,7 @@ export async function createHuddleReport(
   const parsedData = parseHuddleFormData(formData);
   const validatedFields = CreateHuddleReportSchema.safeParse(parsedData);
 
-   const session = await auth();
+  const session = await auth();
 
   if (!session?.user) {
     return { message: "Authentication required" };
@@ -251,8 +251,6 @@ export async function createHuddleReport(
   redirect("/dashboard");
 }
 
-
-
 // Update Huddle Report
 export async function updateHuddleReport(
   id: string,
@@ -305,8 +303,6 @@ export async function updateHuddleReport(
   redirect("/dashboard");
 }
 
-
-
 // Update Extension
 export async function updateExtension(
   id: string,
@@ -319,13 +315,11 @@ export async function updateExtension(
     hours: formData.get("hours"),
   });
 
-   const session = await auth();
+  const session = await auth();
 
   if (!session?.user) {
     return { message: "Authentication required" };
   }
-
-  
 
   if (!validatedFields.success) {
     return {
@@ -358,8 +352,6 @@ export async function updateExtension(
   redirect("/directory");
 }
 
-
-
 // Create Extension
 export async function createExtension(prevState: State, formData: FormData) {
   const validatedFields = CreateExtension.safeParse({
@@ -376,7 +368,7 @@ export async function createExtension(prevState: State, formData: FormData) {
     };
   }
 
-   const session = await auth();
+  const session = await auth();
 
   if (!session?.user) {
     return { message: "Authentication required" };
@@ -407,11 +399,9 @@ export async function createExtension(prevState: State, formData: FormData) {
   redirect("/directory");
 }
 
-
-
 export async function deleteExtension(id: string) {
   // throw new Error('Failed to Delete Extension')
-   const session = await auth();
+  const session = await auth();
 
   if (!session?.user) {
     return { message: "Authentication required" };
@@ -436,8 +426,6 @@ export async function deleteExtension(id: string) {
   }
 }
 
-
-
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
@@ -459,8 +447,6 @@ export async function authenticate(
   }
 }
 
-
-
 interface OIDCUserProfile {
   sub: string;
   email: string;
@@ -479,37 +465,28 @@ export async function upsertUser(userData: OIDCUserProfile) {
   }
 
   try {
-    const {
-      sub,
-      email,
-      name,
-      given_name,
-      family_name,
-    } = userData
+    const { sub, email, name, given_name, family_name } = userData;
 
     const user = {
       id: sub,
       email,
-      full_name: name || '',
-      first_name: given_name || '',
-      last_name: family_name || '',
+      full_name: name || "",
+      first_name: given_name || "",
+      last_name: family_name || "",
       last_sign_in: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
 
+    const { data, error } = await supabase.from("users").upsert(user, {
+      onConflict: "id",
+      ignoreDuplicates: false,
+      count: "exact",
+    });
 
-    const { data, error } = await supabase
-      .from("users")
-      .upsert(user, {
-        onConflict: 'id',
-        ignoreDuplicates: false,
-        count: "exact"
-      });
-
-      if (error) throw error;
-      return true
+    if (error) throw error;
+    return true;
   } catch (error) {
-    console.error("Failed to upsert user:", error)
+    console.error("Failed to upsert user:", error);
     return false;
   }
 }

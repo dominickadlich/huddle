@@ -38,32 +38,32 @@ export default function UpdateForm({
   const [isCheckedRestock, setIsCheckedRestock] = useState(false);
   const [isCheckedCS, setIsCheckedCS] = useState(false);
 
-    // Track individual accordion states
-    const [accordionStates, setAccordionStates] = useState({
-      morning: false,
-      afternoon: false,
-      evening: false,
-    });
-  
-    // Toggle individual accordion
-    const toggleAccordion = (key: keyof typeof accordionStates) => {
-      setAccordionStates((prev) => ({
-        ...prev,
-        [key]: !prev[key],
-      }));
-    };
-  
-    // Toggle all accordions
-    const toggleAll = () => {
-      const allOpen = Object.values(accordionStates).every((state) => state);
-      setAccordionStates({
-        morning: !allOpen,
-        afternoon: !allOpen,
-        evening: !allOpen,
-      });
-    };
+  // Track individual accordion states
+  const [accordionStates, setAccordionStates] = useState({
+    morning: false,
+    afternoon: false,
+    evening: false,
+  });
 
+  // Toggle individual accordion
+  const toggleAccordion = (key: keyof typeof accordionStates) => {
+    setAccordionStates((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
+
+  // Toggle all accordions
+  const toggleAll = () => {
     const allOpen = Object.values(accordionStates).every((state) => state);
+    setAccordionStates({
+      morning: !allOpen,
+      afternoon: !allOpen,
+      evening: !allOpen,
+    });
+  };
+
+  const allOpen = Object.values(accordionStates).every((state) => state);
 
   console.log("State:", state);
 
@@ -78,7 +78,7 @@ export default function UpdateForm({
           <XMarkIcon className="h-5 w-5 text-gray-700" />
         </Link>
 
-         <CreateReportButton type="submit">
+        <CreateReportButton type="submit">
           <CheckIcon className="h-5 w-5" />
         </CreateReportButton>
       </div>
@@ -94,10 +94,8 @@ export default function UpdateForm({
             />
           ))}
 
-
           <div className="mt-10">
             <div>
-
               {/* Staffing Dropdown */}
               <div className="sm:col-span-5">
                 <label
@@ -165,7 +163,7 @@ export default function UpdateForm({
           <div className="mt-10">
             <div>
               <div className="sm:col-span-5">
-                 <label
+                <label
                   htmlFor="cs-queue-label"
                   className="flex items-center gap-2 text-sm font-semibold text-gray-200 mb-2 hover:text-indigo-300 transition-colors duration-300"
                 >
@@ -174,7 +172,7 @@ export default function UpdateForm({
                 </label>
 
                 <div className="mt-2">
-                   <label
+                  <label
                     htmlFor="cs_queue"
                     className="group relative flex items-center gap-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-400/50 px-4 py-3.5 cursor-pointer transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50"
                   >

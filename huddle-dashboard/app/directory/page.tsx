@@ -2,11 +2,9 @@ import DirectoryClient from "./directory-client";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'Directory'
-}
+  title: "Directory",
+};
 
 export default function Page() {
-    return (
-        <DirectoryClient />
-    )
+  return <DirectoryClient />;
 }

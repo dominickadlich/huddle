@@ -11,7 +11,8 @@
     "seed-directory": "tsx scripts/extension_seed.ts",
     "parse-coverage": "tsx app/scripts/parse-coverage.ts",
     "parse-directory": "tsx app/scripts/parse-directory.ts",
-    "parse-docs-index": "tsx scripts/parse-docs-index.ts"
+    "parse-docs-index": "tsx app/scripts/parse-docs-index.ts",
+    "parse-schedule": "tsx app/scripts/parse-schedule.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",

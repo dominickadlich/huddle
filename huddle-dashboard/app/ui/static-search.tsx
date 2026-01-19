@@ -3,16 +3,15 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { SetStateAction } from "react";
 
-export default function StaticSearch({ 
-    placeholder,
-    onChange,
-    value,
-}: { 
-    placeholder: string,
-    onChange: (e: { target: { value: SetStateAction<string>; }; }) => void
-    value: string,
+export default function StaticSearch({
+  placeholder,
+  onChange,
+  value,
+}: {
+  placeholder: string;
+  onChange: (e: { target: { value: SetStateAction<string> } }) => void;
+  value: string;
 }) {
-
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       {/* Search Icon */}

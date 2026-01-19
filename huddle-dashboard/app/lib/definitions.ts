@@ -87,7 +87,7 @@ export type HuddleDataForm = {
 };
 
 export type FileData = {
-    slug: string,
-    title: string,
-    category: string
-}
+  slug: string;
+  title: string;
+  category: string;
+};

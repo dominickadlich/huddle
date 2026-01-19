@@ -4,7 +4,8 @@ import {
   BookOpenIcon,
   PhoneIcon,
   DocumentTextIcon,
-  ArrowUpOnSquareIcon
+  ArrowUpOnSquareIcon,
+  CalendarIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -24,8 +25,13 @@ const links = [
   {
     name: "WDIP",
     href: "/WDIP",
-    icon: ArrowUpOnSquareIcon
+    icon: ArrowUpOnSquareIcon,
   },
+  // {
+  //   name: "Schedule",
+  //   href: "/schedule",
+  //   icon: CalendarIcon,
+  // },
   {
     name: "SOPs",
     href: "/docs",

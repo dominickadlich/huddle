@@ -1,10 +1,13 @@
 import CardWrapper from "../../ui/dashboard/cards";
 import { Suspense } from "react";
-import { CardSkeleton }  from "../../ui/skeletons";
+import { CardSkeleton } from "../../ui/skeletons";
 import { Metadata } from "next";
 import { auth } from "@/auth";
 import TrialTextWrapper from "@/app/ui/dashboard/trial-text-box";
-import { CreateHuddleReport, UpdateHuddleReport } from "@/app/ui/dashboard/buttons";
+import {
+  CreateHuddleReport,
+  UpdateHuddleReport,
+} from "@/app/ui/dashboard/buttons";
 import { fetchLatestHuddleData } from "@/app/lib/data";
 
 export const metadata: Metadata = {

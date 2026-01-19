@@ -22,6 +22,15 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js", "app/ui/side-nav.jsx", "app/ui/side-nav.jsx", "app/ui/docs/sidenav.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "tailwind.config.js",
+    "app/ui/side-nav.jsx",
+    "app/ui/side-nav.jsx",
+    "app/ui/docs/sidenav.jsx"
+  ],
   "exclude": ["node_modules"]
 }
