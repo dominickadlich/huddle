@@ -49,7 +49,7 @@ function transformToWideFormat(shifts: Shift[]): {
 
 export default function Page() {
     const [searchQuery, setSearchQuery] = useState('')
-    const [dateRange, setDateRange] = useState<'week' | 'month' | 'all'>('week')
+    const [dateRange, setDateRange] = useState<'week' | 'month' | 'all'>('all')
 
     const now = new Date()
     const today = formatDateToCSVFormat(now)
