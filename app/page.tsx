@@ -14,11 +14,11 @@ export default function Example() {
       {/* Hero Section with Gradient Background */}
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900">
         {/* Animated Gradient Orbs */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-pulse" />
+        {/* <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-pulse" />
         <div
           className="absolute bottom-0 right-0 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "1s" }}
-        />
+        /> */}
 
         {/* Content Container */}
         <div className="relative isolate px-6 lg:px-8">
