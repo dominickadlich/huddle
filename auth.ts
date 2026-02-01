@@ -7,8 +7,6 @@ import { OIDCUserProfile } from "./app/lib/definitions";
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
 
-  basePath: "/auth",
-
   debug: true,
 
   providers: [
