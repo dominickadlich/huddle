@@ -1,4 +1,4 @@
-import LoginForm from "@/app/ui/api/auth/signin/login-form";
+import LoginForm from "@/app/ui/auth/signin/login-form";
 import { Suspense } from "react";
 
 export default function LoginPage() {

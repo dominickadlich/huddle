@@ -9,6 +9,7 @@ import { signIn, auth } from "@/auth";
 import { AuthError } from "next-auth";
 import { parseHuddleFormData } from "./form-helpers";
 import { getServiceSupabase, getCurrentUserId } from "./supabase-server";
+import { OIDCUserProfile } from "./definitions";
 // import { supabase } from "@/scripts/docs_sections_seed";
 
 const FormSchema = z.object({
@@ -447,22 +448,9 @@ export async function authenticate(
   }
 }
 
-interface OIDCUserProfile {
-  sub: string;
-  email: string;
-  name?: string;
-  given_name?: string;
-  family_name?: string;
-}
 
 export async function upsertUser(userData: OIDCUserProfile) {
   const supabase = getServiceSupabase();
-
-  const session = await auth();
-
-  if (!session?.user) {
-    return { message: "Authentication required" };
-  }
 
   try {
     const { sub, email, name, given_name, family_name } = userData;
