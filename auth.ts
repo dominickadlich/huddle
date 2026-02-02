@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import { upsertUser } from "./app/lib/actions/auth";
-import { OIDCUserProfile } from "./app/lib/definitions";
+import { OIDCUserProfile } from "./app/lib/actions/auth";
 
 
 export const { auth, signIn, signOut, handlers } = NextAuth({

@@ -1,7 +1,14 @@
 "use server"
 
-import { OIDCUserProfile } from "../definitions";
 import { supabaseAdmin } from "../supabase/admin";
+
+export type OIDCUserProfile = {
+  sub: string;
+  email: string;
+  name?: string;
+  given_name?: string;
+  family_name?: string;
+}
 
 export async function upsertUser(userData: OIDCUserProfile) {
 

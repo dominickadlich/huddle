@@ -1,10 +1,9 @@
-import { inter } from "./fonts";
 import Image from "next/image";
 
 export default function HuddleLogo() {
   return (
     <div
-      className={`${inter.className} flex flex-row items-center leading-none text-white`}
+      className='flex flex-row items-center leading-none text-white'
     >
       <Image
         src="/icon.png"

@@ -3,7 +3,7 @@
 import NavBar from "./ui/navbar";
 import Link from "next/link";
 import { SparklesIcon } from "@heroicons/react/24/outline";
-import HomePageCardWrapper from "./ui/page/homepage-card";
+import HomePageCardWrapper from "./ui/homepage-card";
 import { SignInButton } from "./ui/auth-buttons";
 
 export default function Example() {
@@ -13,13 +13,6 @@ export default function Example() {
 
       {/* Hero Section with Gradient Background */}
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900">
-        {/* Animated Gradient Orbs */}
-        {/* <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-0 right-0 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        /> */}
-
         {/* Content Container */}
         <div className="relative isolate px-6 lg:px-8">
           <div className="mx-auto max-w-4xl py-[8vh] sm:py-[12vh] lg:py-[16vh] animate-fade-in">
@@ -53,21 +46,6 @@ export default function Example() {
               {/* CTA Buttons */}
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <SignInButton />
-
-                {/* <Link href="/login">
-                  <button className="group relative px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 transition-all duration-300">
-                    <span className="relative z-10">Get Started</span>
-                    <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 blur transition-opacity duration-300" />
-                  </button>
-                </Link> */}
-
-                {/* <a
-                  href="#"
-                  className="group px-8 py-3.5 font-semibold text-gray-200 border border-gray-600 rounded-lg hover:border-gray-500 hover:bg-gray-800/50 backdrop-blur-sm transition-all duration-300 hover:scale-105"
-                >
-                  Learn more
-                  <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1 duration-300"> →</span>
-                </a> */}
               </div>
             </div>
 

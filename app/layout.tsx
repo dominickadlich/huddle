@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./ui/global.css";
-import { inter, lusitana } from "./ui/fonts";
+import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import NavBar from "./ui/navbar";
 
@@ -23,6 +23,10 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const inter = Inter({ 
+  subsets: ["latin"] 
 });
 
 export default function RootLayout({
