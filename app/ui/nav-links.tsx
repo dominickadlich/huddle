@@ -23,19 +23,9 @@ const links = [
     icon: PhoneIcon,
   },
   {
-    name: "WDIP",
-    href: "/WDIP",
+    name: "wdip",
+    href: "/wdip",
     icon: ArrowUpOnSquareIcon,
-  },
-  // {
-  //   name: "Schedule",
-  //   href: "/schedule",
-  //   icon: CalendarIcon,
-  // },
-  {
-    name: "SOPs",
-    href: "/docs",
-    icon: DocumentTextIcon,
   },
 ];
 
@@ -72,11 +62,6 @@ export default function NavLinks() {
               })}
             />
             <span className="hidden lg:block">{link.name}</span>
-
-            {/* Active indicator line */}
-            {/* {isActive && (
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent" />
-              )} */}
           </Link>
         );
       })}

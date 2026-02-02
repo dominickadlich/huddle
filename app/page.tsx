@@ -4,7 +4,7 @@ import NavBar from "./ui/navbar";
 import Link from "next/link";
 import { SparklesIcon } from "@heroicons/react/24/outline";
 import HomePageCardWrapper from "./ui/page/homepage-card";
-import { SignInButton } from "./ui/test-sso/auth-buttons";
+import { SignInButton } from "./ui/auth-buttons";
 
 export default function Example() {
   return (

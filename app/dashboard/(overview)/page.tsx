@@ -19,10 +19,6 @@ export default async function Page() {
   const session = await auth();
   const reportDate = new Date(huddleData.date).toLocaleDateString();
 
-  // if (!session?.user) {
-  //   redirect("/login");
-  // }
-
   return (
     <main className="px-6">
       <div className="flex justify-between items-center mt-20 mb-10">

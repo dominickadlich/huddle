@@ -8,9 +8,26 @@ import { redirect } from "next/navigation";
 import { signIn, auth } from "@/auth";
 import { AuthError } from "next-auth";
 import { parseHuddleFormData } from "./form-helpers";
-import { getServiceSupabase, getCurrentUserId } from "./supabase-server";
 import { OIDCUserProfile } from "./definitions";
-// import { supabase } from "@/scripts/docs_sections_seed";
+import { createClient } from "@supabase/supabase-js";
+
+
+const supabase =  createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  );
+
+
+async function getCurrentUserId() {
+  const session = await auth();
+  
+  if (!session?.user?.id) {
+    throw new Error("Not authenticated");
+  }
+  
+  return session.user.id;
+}
+
 
 const FormSchema = z.object({
   id: z.string(),
@@ -19,9 +36,6 @@ const FormSchema = z.object({
   hours: z.string().min(1, "Please enter available hours"),
   created_at: z.string(),
 });
-
-const CreateExtension = FormSchema.omit({ id: true, created_at: true });
-const UpdateExtension = FormSchema.omit({ id: true, created_at: true });
 
 const HuddleFormSchema = z.object({
   id: z.string(),
@@ -78,14 +92,6 @@ const UpdateHuddleReportSchema = HuddleFormSchema.omit({
   created_at: true,
 });
 
-export type State = {
-  errors?: {
-    name?: string[];
-    extension?: string[];
-    hours?: string[];
-  };
-  message?: string | null;
-};
 
 export type HuddleState = {
   errors?: {
@@ -189,7 +195,6 @@ export async function createHuddleReport(
   const currentDate = new Date().toISOString();
 
   try {
-    const supabase = getServiceSupabase();
     const userId = await getCurrentUserId();
 
     const { error } = await supabase.from("huddle_data").insert([
@@ -252,7 +257,8 @@ export async function createHuddleReport(
   redirect("/dashboard");
 }
 
-// Update Huddle Report
+
+
 export async function updateHuddleReport(
   id: string,
   prevState: HuddleState,
@@ -277,7 +283,6 @@ export async function updateHuddleReport(
   const updateData = validatedFields.data;
 
   try {
-    const supabase = getServiceSupabase();
     await getCurrentUserId();
 
     const { error } = await supabase
@@ -304,128 +309,7 @@ export async function updateHuddleReport(
   redirect("/dashboard");
 }
 
-// Update Extension
-export async function updateExtension(
-  id: string,
-  prevState: State,
-  formData: FormData,
-) {
-  const validatedFields = UpdateExtension.safeParse({
-    name: formData.get("name"),
-    extension: formData.get("extension"),
-    hours: formData.get("hours"),
-  });
 
-  const session = await auth();
-
-  if (!session?.user) {
-    return { message: "Authentication required" };
-  }
-
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing Fields. Failed to update extension",
-    };
-  }
-
-  const { name, extension, hours } = validatedFields.data;
-
-  try {
-    const supabase = getServiceSupabase();
-
-    const { data, error } = await supabase
-      .from("central_directory")
-      .update({
-        name: name,
-        extension: extension,
-        hours: hours,
-      })
-      .eq("id", id);
-
-    if (error) throw error;
-  } catch (error) {
-    console.error("Database Error:", error);
-    return { message: "Failed to update extension" };
-  }
-
-  revalidatePath("/directory");
-  redirect("/directory");
-}
-
-// Create Extension
-export async function createExtension(prevState: State, formData: FormData) {
-  const validatedFields = CreateExtension.safeParse({
-    name: formData.get("name"),
-    extension: formData.get("extension"),
-    hours: formData.get("hours"),
-  });
-
-  // If form validation fails, return errors early. Otherwise, continue
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing Fields. Failed to create extension.",
-    };
-  }
-
-  const session = await auth();
-
-  if (!session?.user) {
-    return { message: "Authentication required" };
-  }
-
-  // Prepare data for insertion into the database
-  const { name, extension, hours } = validatedFields.data;
-  const created_at = new Date().toISOString().split("T")[0];
-
-  try {
-    const supabase = getServiceSupabase();
-
-    const { data, error } = await supabase.from("central_directory").insert([
-      {
-        name: name,
-        extension: extension,
-        created_at: created_at,
-      },
-    ]);
-
-    if (error) throw error;
-  } catch (error) {
-    console.error("Database Error:", error);
-    return { message: "Database Error: Failed to create extension." };
-  }
-
-  revalidatePath("/directory");
-  redirect("/directory");
-}
-
-export async function deleteExtension(id: string) {
-  // throw new Error('Failed to Delete Extension')
-  const session = await auth();
-
-  if (!session?.user) {
-    return { message: "Authentication required" };
-  }
-
-  try {
-    const supabase = getServiceSupabase();
-
-    const { data, error } = await supabase
-      .from("central_directory")
-      .delete()
-      .eq("id", id);
-
-    if (error) throw error;
-
-    revalidatePath("/dashboard/directory");
-    // return { message: 'Extension deleted successfully!' }
-  } catch (error) {
-    console.error("Database Error:", error);
-    // return { message: 'Database Error: Failed to delete extension' };
-    throw new Error("Failed to delete extension");
-  }
-}
 
 export async function authenticate(
   prevState: string | undefined,
@@ -445,36 +329,5 @@ export async function authenticate(
       }
     }
     throw error;
-  }
-}
-
-
-export async function upsertUser(userData: OIDCUserProfile) {
-  const supabase = getServiceSupabase();
-
-  try {
-    const { sub, email, name, given_name, family_name } = userData;
-
-    const user = {
-      id: sub,
-      email,
-      full_name: name || "",
-      first_name: given_name || "",
-      last_name: family_name || "",
-      last_sign_in: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-
-    const { data, error } = await supabase.from("users").upsert(user, {
-      onConflict: "id",
-      ignoreDuplicates: false,
-      count: "exact",
-    });
-
-    if (error) throw error;
-    return true;
-  } catch (error) {
-    console.error("Failed to upsert user:", error);
-    return false;
   }
 }

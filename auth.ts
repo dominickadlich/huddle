@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
-import { upsertUser } from "./app/lib/actions";
+import { upsertUser } from "./app/lib/actions/auth";
 import { OIDCUserProfile } from "./app/lib/definitions";
 
 
@@ -43,16 +43,11 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
 
   callbacks: {
-    async signIn({ user, account, profile }) {
-      if (
-        account?.provider === "duosso" &&
-        profile &&
-        "sub" in profile &&
-        "email" in profile
-      ) {
-        await upsertUser(profile as OIDCUserProfile);
-      }
-      return true;
+    async signIn({ profile }) {
+      if (!profile) return false;
+
+      const success = await upsertUser(profile as OIDCUserProfile);
+      return success
     },
 
 

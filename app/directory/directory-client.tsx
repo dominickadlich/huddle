@@ -1,6 +1,6 @@
 "use client";
 
-import { directory } from "../lib/phone-directory";
+import { directory } from "../lib/script-docs/phone-directory";
 import { SetStateAction, Suspense, useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import StaticSearch from "../ui/static-search";

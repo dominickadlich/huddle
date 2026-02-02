@@ -2,7 +2,7 @@
 
 import { SetStateAction, useMemo, useState } from 'react'
 import StaticSearch from "../ui/static-search"
-import { schedule, Shift } from '../lib/schedule'
+import { schedule, Shift } from '../lib/script-docs/schedule'
 import Fuse from 'fuse.js'
 
 function formatDateToCSVFormat(date: Date): string {

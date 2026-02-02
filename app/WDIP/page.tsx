@@ -4,7 +4,7 @@ import {
   floorCoverage,
   findCoverageByFloor,
   type Coverage,
-} from "../lib/floor-coverage";
+} from "../lib/script-docs/floor-coverage";
 import { SetStateAction, useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import StaticSearch from "../ui/static-search";

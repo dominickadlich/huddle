@@ -7,7 +7,7 @@ import { useState } from "react";
 import Link from "next/link";
 import NavLinks from "./nav-links";
 import { signOut, useSession } from "next-auth/react"; // Add useSession
-import { SignInNavBar, SignOutNavBar } from "./test-sso/auth-buttons";
+import { SignInNavBar, SignOutNavBar } from "./auth-buttons";
 
 export default function NavBar({}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

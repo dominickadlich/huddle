@@ -8,18 +8,6 @@ export type User = {
   last_sign_in?: string;
 };
 
-export type CensusData = {
-  census: number;
-  date: string;
-};
-
-export type OpportunityData = {
-  date: string;
-  title: string;
-  body: string;
-  priority: string;
-};
-
 export type HuddleData = {
   id: string;
   date: Date;
@@ -27,25 +15,6 @@ export type HuddleData = {
   tpn_count: number;
   haz_count: number;
   non_sterile_count: number;
-  // opportunities: {
-  //   body: string;
-  //   date: Date;
-  //   title: string;
-  //   priority: "low" | "medium" | "high";
-  // }[];
-};
-
-export type ExtensionField = {
-  name: string;
-  extension: string;
-  hours: string;
-};
-
-export type ExtensionForm = {
-  id: string;
-  name: string;
-  extension: string;
-  hours: string;
 };
 
 export type HuddleDataForm = {
@@ -84,12 +53,6 @@ export type HuddleDataForm = {
   unresolved_issues_night: string;
   opportunities_night: string;
   shout_outs_night: string;
-};
-
-export type FileData = {
-  slug: string;
-  title: string;
-  category: string;
 };
 
 

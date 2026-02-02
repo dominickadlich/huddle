@@ -1,14 +1,22 @@
+import { auth } from "@/auth";
 import { createClient } from "@supabase/supabase-js";
-import { User, HuddleData } from "./definitions";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
 export async function fetchHuddleData() {
+  const session = await auth();
+  if (!session?.user) {
+    throw new Error("Authentication required");
+  }
+
   try {
-    const { data, error } = await supabase.from("huddle_data").select("*");
+    const { data, error } = await supabase
+      .from("huddle_data")
+      .select("*")
+      .order("date", { ascending: false });
 
     if (error) throw error;
     return data || [];
@@ -19,6 +27,11 @@ export async function fetchHuddleData() {
 }
 
 export async function fetchLatestHuddleData() {
+  const session = await auth();
+  if (!session?.user) {
+    throw new Error("Authentication required");
+  }
+
   try {
     console.log("Attempting to fetch data...");
 
@@ -40,95 +53,12 @@ export async function fetchLatestHuddleData() {
   }
 }
 
-export async function fetchAllCensusData() {
-  try {
-    const { data, error } = await supabase
-      .from("huddle_data")
-      .select("census, date")
-      .order("date", { ascending: false });
-
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch census data.");
-  }
-}
-
-export async function fetchLatestOpportunities() {
-  try {
-    const { data, error } = await supabase
-      .from("huddle_data")
-      .select("*")
-      .order("date", { ascending: false })
-      .limit(4);
-
-    if (error) throw error;
-    return data?.flatMap((row) => row.opportunities || []) || [];
-  } catch (error) {
-    console.log("Database Error:", error);
-    throw new Error("Failed to fetch opportunity data");
-  }
-}
-
-const ITEMS_PER_PAGE = 6;
-export async function fetchFilteredExtensions(
-  query: string,
-  currentPage: number,
-) {
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
-  try {
-    const { data, error } = await supabase
-      .from("central_directory")
-      .select("*")
-      .ilike("name", `%${query}%`)
-      .order("name")
-      .range(offset, offset + ITEMS_PER_PAGE - 1);
-
-    if (error) throw error;
-    return data || [];
-  } catch (error) {
-    console.error("Extension database error:", error);
-    throw new Error("Failed to fetch extension data");
-  }
-}
-
-export async function fetchExtensionsPages(query: string) {
-  try {
-    const { count, error } = await supabase
-      .from("central_directory")
-      .select("*", { count: "exact", head: true })
-      .or(`name.ilike.%${query}%,extension.ilike.%${query}%`);
-
-    if (error) throw error;
-
-    const totalPages = Math.ceil((count || 0) / ITEMS_PER_PAGE);
-    return totalPages;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch total number of extensions");
-  }
-}
-
-export async function fetchExtensions(query: string) {
-  try {
-    const { data, error } = await supabase
-      .from("central_directory")
-      .select("*")
-      .order("name")
-      .or(`name.ilike.%${query}%,extension.ilike.%${query}%`);
-
-    if (error) throw error;
-
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch extensions");
-  }
-}
-
 export async function fetchHuddleDataById(id: string) {
+  const session = await auth();
+  if (!session?.user) {
+    throw new Error("Authentication required");
+  }
+
   try {
     const { data, error } = await supabase
       .from("huddle_data")
@@ -148,74 +78,5 @@ export async function fetchHuddleDataById(id: string) {
   } catch (error) {
     console.log("Database Error:", error);
     return { message: "Failed to fetch huddle report with url id" };
-  }
-}
-
-export async function fetchExtensionById(id: string) {
-  try {
-    const { data, error } = await supabase
-      .from("central_directory")
-      .select("*")
-      .eq("id", id)
-      .single();
-
-    if (error) {
-      if (error.code === "PGRST116") {
-        // No rows found
-        return null;
-      }
-      throw error;
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error(`Failed to fetch extension with id: ${id}`);
-  }
-}
-
-export async function fetchSections(query?: string) {
-  console.log("Fetching sections...");
-
-  try {
-    let supabaseQuery = supabase
-      .from("sections")
-      .select("*")
-      .order("category", { ascending: true });
-
-    if (query) {
-      supabaseQuery = supabaseQuery.or(
-        `title.ilike.%${query}%,description.ilike.%${query}%,category.ilike.%${query}%`,
-      );
-    }
-
-    const { data, error } = await supabaseQuery;
-
-    console.log("Supabase response:", { data, error });
-
-    if (error) throw error;
-
-    console.log("Returning data:", data);
-    return data || [];
-  } catch (error) {
-    console.error("Error fetching sections:", error);
-    throw new Error("Failed to fetch section data");
-  }
-}
-
-export async function fetchSectionBySlug(slug: string) {
-  try {
-    const { data, error } = await supabase
-      .from("sections")
-      .select("*")
-      .eq("slug", slug)
-      .single();
-
-    if (error) throw error;
-
-    return data;
-  } catch (error) {
-    console.error("Error fetching section by slug:", error);
-    throw new Error("Failed to fetch section with slug");
   }
 }
