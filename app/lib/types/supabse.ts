@@ -16,38 +16,50 @@ export type Database = {
     Tables: {
       daily_summary: {
         Row: {
+          announcements: string | null
           census: number | null
           created_at: string | null
           created_by: string | null
           date: string
+          hazardous: string | null
           id: string
+          issues_safety: string | null
+          recognition: string | null
           shift: string
-          shift_leads: string | null
           staffing: string | null
+          tpn: string | null
           updated_at: string | null
           updated_by: string | null
         }
         Insert: {
+          announcements?: string | null
           census?: number | null
           created_at?: string | null
           created_by?: string | null
           date: string
+          hazardous?: string | null
           id?: string
+          issues_safety?: string | null
+          recognition?: string | null
           shift: string
-          shift_leads?: string | null
           staffing?: string | null
+          tpn?: string | null
           updated_at?: string | null
           updated_by?: string | null
         }
         Update: {
+          announcements?: string | null
           census?: number | null
           created_at?: string | null
           created_by?: string | null
           date?: string
+          hazardous?: string | null
           id?: string
+          issues_safety?: string | null
+          recognition?: string | null
           shift?: string
-          shift_leads?: string | null
           staffing?: string | null
+          tpn?: string | null
           updated_at?: string | null
           updated_by?: string | null
         }
@@ -68,167 +80,57 @@ export type Database = {
           },
         ]
       }
-      huddle_items: {
-        Row: {
-          completed_at: string | null
-          completed_by: string | null
-          created_at: string | null
-          created_by: string | null
-          description: string
-          huddle_id: string | null
-          id: string
-          status: string | null
-          type: string
-        }
-        Insert: {
-          completed_at?: string | null
-          completed_by?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          description: string
-          huddle_id?: string | null
-          id?: string
-          status?: string | null
-          type: string
-        }
-        Update: {
-          completed_at?: string | null
-          completed_by?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          description?: string
-          huddle_id?: string | null
-          id?: string
-          status?: string | null
-          type?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "huddle_items_completed_by_fkey"
-            columns: ["completed_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "huddle_items_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "huddle_items_huddle_id_fkey"
-            columns: ["huddle_id"]
-            isOneToOne: false
-            referencedRelation: "huddles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      huddle_metrics: {
+      huddle_updates: {
         Row: {
           created_at: string | null
           created_by: string | null
-          huddle_id: string | null
+          daily_summary_id: string
+          department: string
           id: string
-          metrics: Json
+          responsible_person: string | null
+          update_text: string | null
           updated_at: string | null
           updated_by: string | null
         }
         Insert: {
           created_at?: string | null
           created_by?: string | null
-          huddle_id?: string | null
+          daily_summary_id: string
+          department: string
           id?: string
-          metrics?: Json
+          responsible_person?: string | null
+          update_text?: string | null
           updated_at?: string | null
           updated_by?: string | null
         }
         Update: {
           created_at?: string | null
           created_by?: string | null
-          huddle_id?: string | null
-          id?: string
-          metrics?: Json
-          updated_at?: string | null
-          updated_by?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "huddle_metrics_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "huddle_metrics_huddle_id_fkey"
-            columns: ["huddle_id"]
-            isOneToOne: true
-            referencedRelation: "huddles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "huddle_metrics_updated_by_fkey"
-            columns: ["updated_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      huddles: {
-        Row: {
-          created_at: string | null
-          created_by: string | null
-          daily_summary_id: string | null
-          date: string
-          department: string
-          id: string
-          shift: string
-          updated_at: string | null
-          updated_by: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          created_by?: string | null
-          daily_summary_id?: string | null
-          date: string
-          department: string
-          id?: string
-          shift: string
-          updated_at?: string | null
-          updated_by?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          created_by?: string | null
-          daily_summary_id?: string | null
-          date?: string
+          daily_summary_id?: string
           department?: string
           id?: string
-          shift?: string
+          responsible_person?: string | null
+          update_text?: string | null
           updated_at?: string | null
           updated_by?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "huddles_created_by_fkey"
+            foreignKeyName: "huddle_updates_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "huddles_daily_summary_id_fkey"
+            foreignKeyName: "huddle_updates_daily_summary_id_fkey"
             columns: ["daily_summary_id"]
             isOneToOne: false
             referencedRelation: "daily_summary"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "huddles_updated_by_fkey"
+            foreignKeyName: "huddle_updates_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
             referencedRelation: "users"

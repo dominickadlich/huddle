@@ -4,26 +4,36 @@ import { auth } from "@/auth";
 import { createClient } from "./supabase/server";
 import type {
   DailySummary,
-  Huddle,
-  HuddleMetrics,
-  HuddleItem,
-  HuddleWithMetrics,
-  DailySummaryWithHuddles,
+  HuddleUpdate,
+  DailySummaryWithUpdates,
   DashboardData,
   ShiftType,
   DepartmentType,
-} from "../lib/types/database";
+} from "./types/database";
 
 // ============================================
-// HELPER: Get authenticated Supabase client
+// TYPE GUARDS
 // ============================================
+
+function isValidShift(shift: string): shift is ShiftType {
+  return ['morning', 'afternoon', 'evening'].includes(shift);
+}
+
+function isValidDepartment(department: string): department is DepartmentType {
+  return ['Distribution', 'CSR', 'IVR', 'Nonsterile', 'RX Leadership'].includes(department);
+}
+
+// ============================================
+// HELPER: Get authenticated client
+// ============================================
+
 async function getAuthenticatedClient() {
   const session = await auth();
   if (!session?.user) {
     throw new Error("Authentication required");
   }
   
-  const supabase = await createClient(); // Uses anon key, respects RLS
+  const supabase = await createClient();
   return { supabase, userId: session.user.id };
 }
 
@@ -44,7 +54,7 @@ export async function fetchLatestDailySummary(): Promise<DailySummary | null> {
       .single();
 
     if (error) {
-      if (error.code === "PGRST116") return null; // No rows found
+      if (error.code === "PGRST116") return null; // Handle no results
       throw error;
     }
 
@@ -81,90 +91,74 @@ export async function fetchDailySummaryByDateAndShift(
   }
 }
 
-// ============================================
-// HUDDLE QUERIES (with related data)
-// ============================================
-
-export async function fetchHuddlesByDateAndShift(
+export async function fetchDailySummaryWithUpdates(
   date: string,
   shift: ShiftType
-): Promise<HuddleWithMetrics[]> {
+): Promise<DailySummaryWithUpdates | null> {
   const { supabase } = await getAuthenticatedClient();
 
   try {
     const { data, error } = await supabase
-      .from("huddles")
+      .from("daily_summary")
       .select(`
         *,
-        metrics:huddle_metrics(*),
-        items:huddle_items(*)
+        updates:huddle_updates(*)
       `)
       .eq("date", date)
       .eq("shift", shift)
+      .single();
+
+    if (error) {
+      if (error.code === "PGRST116") return null;
+      throw error;
+    }
+
+    return {
+      ...data,
+      updates: data.updates || [],
+    };
+  } catch (error) {
+    console.error("Failed to fetch daily summary with updates:", error);
+    throw new Error("Failed to fetch daily summary with updates");
+  }
+}
+
+// ============================================
+// HUDDLE UPDATES QUERIES
+// ============================================
+
+export async function fetchUpdatesByDailySummaryId(
+  dailySummaryId: string
+): Promise<HuddleUpdate[]> {
+  const { supabase } = await getAuthenticatedClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("huddle_updates")
+      .select("*")
+      .eq("daily_summary_id", dailySummaryId)
       .order("department", { ascending: true });
 
     if (error) throw error;
-
-    // Transform the data to match our type
-    return (data || []).map((huddle) => ({
-      ...huddle,
-      metrics: Array.isArray(huddle.metrics) ? huddle.metrics[0] || null : huddle.metrics,
-      items: huddle.items || [],
-    }));
+    return data || [];
   } catch (error) {
-    console.error("Failed to fetch huddles:", error);
-    throw new Error("Failed to fetch huddles");
+    console.error("Failed to fetch huddle updates:", error);
+    throw new Error("Failed to fetch huddle updates");
   }
 }
 
-export async function fetchHuddleById(id: string): Promise<HuddleWithMetrics | null> {
+export async function fetchUpdateByDepartment(
+  dailySummaryId: string,
+  department: DepartmentType
+): Promise<HuddleUpdate | null> {
   const { supabase } = await getAuthenticatedClient();
 
   try {
     const { data, error } = await supabase
-      .from("huddles")
-      .select(`
-        *,
-        metrics:huddle_metrics(*),
-        items:huddle_items(*)
-      `)
-      .eq("id", id)
-      .single();
-
-    if (error) {
-      if (error.code === "PGRST116") return null;
-      throw error;
-    }
-
-    return {
-      ...data,
-      metrics: Array.isArray(data.metrics) ? data.metrics[0] || null : data.metrics,
-      items: data.items || [],
-    };
-  } catch (error) {
-    console.error("Failed to fetch huddle:", error);
-    throw new Error("Failed to fetch huddle");
-  }
-}
-
-export async function fetchHuddleByDepartmentDateShift(
-  department: DepartmentType,
-  date: string,
-  shift: ShiftType
-): Promise<HuddleWithMetrics | null> {
-  const { supabase } = await getAuthenticatedClient();
-
-  try {
-    const { data, error } = await supabase
-      .from("huddles")
-      .select(`
-        *,
-        metrics:huddle_metrics(*),
-        items:huddle_items(*)
-      `)
+      .from("huddle_updates")
+      .select("*")
+      .eq("daily_summary_id", dailySummaryId)
       .eq("department", department)
-      .eq("date", date)
-      .eq("shift", shift)
       .single();
 
     if (error) {
@@ -172,49 +166,49 @@ export async function fetchHuddleByDepartmentDateShift(
       throw error;
     }
 
-    return {
-      ...data,
-      metrics: Array.isArray(data.metrics) ? data.metrics[0] || null : data.metrics,
-      items: data.items || [],
-    };
+    return data;
   } catch (error) {
-    console.error("Failed to fetch huddle:", error);
-    throw new Error("Failed to fetch huddle");
+    console.error("Failed to fetch department update:", error);
+    throw new Error("Failed to fetch department update");
   }
 }
 
 // ============================================
-// DASHBOARD QUERIES (complete view)
+// DASHBOARD QUERY (complete view)
 // ============================================
 
 export async function fetchLatestDashboardData(): Promise<DashboardData | null> {
-  const { supabase } = await getAuthenticatedClient();
-
   try {
-    // First, get the latest daily summary
     const latestSummary = await fetchLatestDailySummary();
     if (!latestSummary) return null;
 
-    // Then get all huddles for that date/shift
-    const huddles = await fetchHuddlesByDateAndShift(
-      latestSummary.date,
-      latestSummary.shift
-    );
+    if (!isValidShift(latestSummary.shift)) {
+      throw new Error(`Invalid shift type: ${latestSummary.shift}`);
+    }
 
-    // Organize by department
-    const huddlesByDept = huddles.reduce((acc, huddle) => {
-      acc[huddle.department.toLowerCase() as keyof typeof acc] = huddle;
+    const updates = await fetchUpdatesByDailySummaryId(latestSummary.id);
+
+    // Organize updates by department
+    const updatesByDept = updates.reduce((acc, update) => {
+      if (!isValidDepartment(update.department)) {
+        console.warn(`Invalid department: ${update.department}`);
+        return acc;
+      }
+      
+      const key = update.department.toLowerCase().replace(' ', '_') as keyof typeof acc;
+      acc[key] = update;
       return acc;
     }, {
-      csr: null as HuddleWithMetrics | null,
-      ivr: null as HuddleWithMetrics | null,
-      cambridge: null as HuddleWithMetrics | null,
-      operations: null as HuddleWithMetrics | null,
+      distribution: null as HuddleUpdate | null,
+      csr: null as HuddleUpdate | null,
+      ivr: null as HuddleUpdate | null,
+      nonsterile: null as HuddleUpdate | null,
+      rx_leadership: null as HuddleUpdate | null,
     });
 
     return {
       daily_summary: latestSummary,
-      huddles: huddlesByDept,
+      updates: updatesByDept,
     };
   } catch (error) {
     console.error("Failed to fetch dashboard data:", error);
@@ -226,27 +220,32 @@ export async function fetchDashboardDataByDateAndShift(
   date: string,
   shift: ShiftType
 ): Promise<DashboardData | null> {
-  const { supabase } = await getAuthenticatedClient();
-
   try {
     const dailySummary = await fetchDailySummaryByDateAndShift(date, shift);
     if (!dailySummary) return null;
 
-    const huddles = await fetchHuddlesByDateAndShift(date, shift);
+    const updates = await fetchUpdatesByDailySummaryId(dailySummary.id);
 
-    const huddlesByDept = huddles.reduce((acc, huddle) => {
-      acc[huddle.department.toLowerCase() as keyof typeof acc] = huddle;
+    const updatesByDept = updates.reduce((acc, update) => {
+      if (!isValidDepartment(update.department)) {
+        console.warn(`Invalid department: ${update.department}`);
+        return acc;
+      }
+      
+      const key = update.department.toLowerCase().replace(' ', '_') as keyof typeof acc;
+      acc[key] = update;
       return acc;
     }, {
-      csr: null as HuddleWithMetrics | null,
-      ivr: null as HuddleWithMetrics | null,
-      cambridge: null as HuddleWithMetrics | null,
-      operations: null as HuddleWithMetrics | null,
+      distribution: null as HuddleUpdate | null,
+      csr: null as HuddleUpdate | null,
+      ivr: null as HuddleUpdate | null,
+      nonsterile: null as HuddleUpdate | null,
+      rx_leadership: null as HuddleUpdate | null,
     });
 
     return {
       daily_summary: dailySummary,
-      huddles: huddlesByDept,
+      updates: updatesByDept,
     };
   } catch (error) {
     console.error("Failed to fetch dashboard data:", error);
@@ -255,51 +254,7 @@ export async function fetchDashboardDataByDateAndShift(
 }
 
 // ============================================
-// HUDDLE ITEMS QUERIES
-// ============================================
-
-export async function fetchOpenIssuesAndBarriers(): Promise<HuddleItem[]> {
-  const { supabase } = await getAuthenticatedClient();
-
-  try {
-    const { data, error } = await supabase
-      .from("huddle_items")
-      .select(`
-        *,
-        huddle:huddles(date, shift, department)
-      `)
-      .in("type", ["unresolved_issue", "barrier"])
-      .eq("status", "open")
-      .order("created_at", { ascending: false });
-
-    if (error) throw error;
-    return data || [];
-  } catch (error) {
-    console.error("Failed to fetch open issues:", error);
-    throw new Error("Failed to fetch open issues");
-  }
-}
-
-export async function fetchItemsByHuddleId(huddleId: string): Promise<HuddleItem[]> {
-  const { supabase } = await getAuthenticatedClient();
-
-  try {
-    const { data, error } = await supabase
-      .from("huddle_items")
-      .select("*")
-      .eq("huddle_id", huddleId)
-      .order("created_at", { ascending: true });
-
-    if (error) throw error;
-    return data || [];
-  } catch (error) {
-    console.error("Failed to fetch huddle items:", error);
-    throw new Error("Failed to fetch huddle items");
-  }
-}
-
-// ============================================
-// HISTORICAL DATA QUERIES
+// HISTORICAL QUERIES
 // ============================================
 
 export async function fetchRecentDailySummaries(limit: number = 7): Promise<DailySummary[]> {
@@ -318,43 +273,5 @@ export async function fetchRecentDailySummaries(limit: number = 7): Promise<Dail
   } catch (error) {
     console.error("Failed to fetch recent summaries:", error);
     throw new Error("Failed to fetch recent summaries");
-  }
-}
-
-export async function fetchHuddlesByDateRange(
-  startDate: string,
-  endDate: string,
-  department?: DepartmentType
-): Promise<HuddleWithMetrics[]> {
-  const { supabase } = await getAuthenticatedClient();
-
-  try {
-    let query = supabase
-      .from("huddles")
-      .select(`
-        *,
-        metrics:huddle_metrics(*),
-        items:huddle_items(*)
-      `)
-      .gte("date", startDate)
-      .lte("date", endDate)
-      .order("date", { ascending: false });
-
-    if (department) {
-      query = query.eq("department", department);
-    }
-
-    const { data, error } = await query;
-
-    if (error) throw error;
-
-    return (data || []).map((huddle) => ({
-      ...huddle,
-      metrics: Array.isArray(huddle.metrics) ? huddle.metrics[0] || null : huddle.metrics,
-      items: huddle.items || [],
-    }));
-  } catch (error) {
-    console.error("Failed to fetch huddles by date range:", error);
-    throw new Error("Failed to fetch huddles by date range");
   }
 }
