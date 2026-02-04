@@ -1,10 +1,8 @@
 "use client";
 
-import NavBar from "./ui/navbar";
-import Link from "next/link";
+import NavBar from "./ui/global/navbar";
 import { SparklesIcon } from "@heroicons/react/24/outline";
-import HomePageCardWrapper from "./ui/homepage-card";
-import { SignInButton } from "./ui/auth-buttons";
+import { SignInButton } from "./ui/global/auth-buttons";
 
 export default function Example() {
   return (
@@ -47,10 +45,6 @@ export default function Example() {
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <SignInButton />
               </div>
-            </div>
-
-            <div className="mt-10">
-              <HomePageCardWrapper />
             </div>
           </div>
         </div>

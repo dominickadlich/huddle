@@ -1,7 +1,6 @@
 "use server";
 
-import { auth } from "@/auth";
-import { createClient } from "./supabase/server";
+import { getAuthenticatedClient } from "./supabase/auth-helpers";
 import type {
   DailySummary,
   HuddleUpdate,
@@ -21,20 +20,6 @@ function isValidShift(shift: string): shift is ShiftType {
 
 function isValidDepartment(department: string): department is DepartmentType {
   return ['Distribution', 'CSR', 'IVR', 'Nonsterile', 'RX Leadership'].includes(department);
-}
-
-// ============================================
-// HELPER: Get authenticated client
-// ============================================
-
-async function getAuthenticatedClient() {
-  const session = await auth();
-  if (!session?.user) {
-    throw new Error("Authentication required");
-  }
-  
-  const supabase = await createClient();
-  return { supabase, userId: session.user.id };
 }
 
 // ============================================
@@ -62,6 +47,30 @@ export async function fetchLatestDailySummary(): Promise<DailySummary | null> {
   } catch (error) {
     console.error("Failed to fetch latest daily summary:", error);
     throw new Error("Failed to fetch latest daily summary");
+  }
+}
+
+export async function fetchLatestHuddleUpdates(): Promise<DashboardData | null> {
+  const { supabase } = await getAuthenticatedClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("huddle_updates")
+      .select("*")
+      .order("date", { ascending: false })
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error) {
+      if (error.code === "PGRST116") return null; // Handle no results
+      throw error;
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch latest huddle updates:", error);
+    throw new Error("Failed to fetch latest huddle updates");
   }
 }
 

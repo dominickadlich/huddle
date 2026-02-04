@@ -1,9 +1,9 @@
 "use client";
 
-import { directory } from "../lib/script-docs/phone-directory";
+import { directory } from "@/app/lib/script-docs/phone-directory";
 import { SetStateAction, Suspense, useMemo, useState } from "react";
 import Fuse from "fuse.js";
-import StaticSearch from "../ui/static-search";
+import StaticSearch from "../static-search";
 
 export default function DirectoryClient() {
   const [searchQuery, setSearchQuery] = useState("");

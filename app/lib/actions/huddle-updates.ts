@@ -2,8 +2,7 @@
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { auth } from "@/auth";
-import { createClient } from "../supabase/server";
+import { getAuthenticatedClient } from "../supabase/auth-helpers";
 import type { 
   HuddleUpdate, 
   HuddleUpdateInsert, 
@@ -36,151 +35,6 @@ export type HuddleUpdateState = {
   data?: HuddleUpdate | null;
 };
 
-// ============================================
-// HELPER: Get authenticated client
-// ============================================
-
-async function getAuthenticatedClient() {
-  const session = await auth();
-  if (!session?.user) {
-    throw new Error("Authentication required");
-  }
-  
-  const supabase = await createClient();
-  return { supabase, userId: session.user.id };
-}
-
-// ============================================
-// CREATE HUDDLE UPDATE
-// ============================================
-
-export async function createHuddleUpdate(
-  prevState: HuddleUpdateState,
-  formData: FormData
-): Promise<HuddleUpdateState> {
-  try {
-    const { supabase, userId } = await getAuthenticatedClient();
-
-    const rawData = {
-      daily_summary_id: formData.get('daily_summary_id'),
-      department: formData.get('department'),
-      update_text: formData.get('update_text') || null,
-    };
-
-    const validatedFields = HuddleUpdateSchema.safeParse(rawData);
-
-    if (!validatedFields.success) {
-      return {
-        errors: validatedFields.error.flatten().fieldErrors,
-        message: "Invalid fields. Please check your input.",
-      };
-    }
-
-    const { daily_summary_id, department, update_text } = validatedFields.data;
-
-    // Check if update already exists for this department
-    const { data: existing } = await supabase
-      .from('huddle_updates')
-      .select('id')
-      .eq('daily_summary_id', daily_summary_id)
-      .eq('department', department)
-      .single();
-
-    if (existing) {
-      return {
-        errors: {
-          _form: ["An update for this department already exists."]
-        },
-        message: "Update already exists for this department.",
-      };
-    }
-
-    // Create the update
-    const insertData: HuddleUpdateInsert = {
-      daily_summary_id,
-      department,
-      update_text,
-      created_by: userId,
-      updated_by: userId,
-    };
-
-    const { data, error } = await supabase
-      .from('huddle_updates')
-      .insert(insertData)
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    revalidatePath('/dashboard');
-    
-    return {
-      message: "Department update created successfully!",
-      data,
-    };
-  } catch (error) {
-    console.error("Failed to create huddle update:", error);
-    return {
-      message: "Database error: Failed to create update.",
-    };
-  }
-}
-
-// ============================================
-// UPDATE HUDDLE UPDATE
-// ============================================
-
-export async function updateHuddleUpdate(
-  id: string,
-  prevState: HuddleUpdateState,
-  formData: FormData
-): Promise<HuddleUpdateState> {
-  try {
-    const { supabase, userId } = await getAuthenticatedClient();
-
-    const rawData = {
-      daily_summary_id: formData.get('daily_summary_id'),
-      department: formData.get('department'),
-      update_text: formData.get('update_text') || null,
-    };
-
-    const validatedFields = HuddleUpdateSchema.safeParse(rawData);
-
-    if (!validatedFields.success) {
-      return {
-        errors: validatedFields.error.flatten().fieldErrors,
-        message: "Invalid fields. Please check your input.",
-      };
-    }
-
-    const updateData: HuddleUpdateUpdate = {
-      ...validatedFields.data,
-      updated_by: userId,
-      updated_at: new Date().toISOString(),
-    };
-
-    const { data, error } = await supabase
-      .from('huddle_updates')
-      .update(updateData)
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    revalidatePath('/dashboard');
-    
-    return {
-      message: "Department update updated successfully!",
-      data,
-    };
-  } catch (error) {
-    console.error("Failed to update huddle update:", error);
-    return {
-      message: "Database error: Failed to update.",
-    };
-  }
-}
 
 // ============================================
 // UPSERT HUDDLE UPDATE (Create or Update)
@@ -368,3 +222,19 @@ export async function updateDepartmentText(
     };
   }
 }
+
+
+// ============================================
+// USAGE EXAMPLES (for reference in frontend)
+// ============================================
+
+/*
+// Example 1: Upsert huddle update (form submission)
+const result = await upsertHuddleUpdate(prevState, formData);
+
+// Example 2: Quick text update (click-to-edit)
+const result = await updateDepartmentText(summaryId, 'CSR', 'Rane C. - 5 preps done');
+
+// Example 3: Delete a department update
+const result = await deleteHuddleUpdate(updateId);
+*/

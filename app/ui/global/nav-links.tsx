@@ -23,7 +23,7 @@ const links = [
     icon: PhoneIcon,
   },
   {
-    name: "wdip",
+    name: "WDIP",
     href: "/wdip",
     icon: ArrowUpOnSquareIcon,
   },

@@ -1,4 +1,4 @@
-import DirectoryClient from "./directory-client";
+import DirectoryClient from "../ui/directory/directory-client";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

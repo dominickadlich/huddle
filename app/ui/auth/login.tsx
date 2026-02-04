@@ -1,6 +1,6 @@
 "use client";
 
-import { SignInButton } from "../auth-buttons";
+import { SignInButton } from "../global/auth-buttons";
 
 export default function LoginForm() {
   return (
