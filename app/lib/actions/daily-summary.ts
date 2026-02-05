@@ -84,12 +84,16 @@ export async function upsertDailySummary(
     const { date, shift, ...fields } = validatedFields.data;
 
     // Check if record exists
-    const { data: existing } = await supabase
+    const { data: existing, error: existingError } = await supabase
       .from('daily_summary')
       .select('id')
       .eq('date', date)
       .eq('shift', shift)
       .single();
+
+      if (existingError && existingError.code !== 'PGRST116') {
+        throw existingError;
+      }
 
     if (existing) {
       // UPDATE existing record

@@ -87,7 +87,6 @@ export type Database = {
           daily_summary_id: string
           department: string
           id: string
-          responsible_person: string | null
           update_text: string | null
           updated_at: string | null
           updated_by: string | null
@@ -98,7 +97,6 @@ export type Database = {
           daily_summary_id: string
           department: string
           id?: string
-          responsible_person?: string | null
           update_text?: string | null
           updated_at?: string | null
           updated_by?: string | null
@@ -109,7 +107,6 @@ export type Database = {
           daily_summary_id?: string
           department?: string
           id?: string
-          responsible_person?: string | null
           update_text?: string | null
           updated_at?: string | null
           updated_by?: string | null

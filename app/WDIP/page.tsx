@@ -2,7 +2,6 @@
 
 import {
   floorCoverage,
-  findCoverageByFloor,
   type Coverage,
 } from "../lib/script-docs/floor-coverage";
 import { SetStateAction, useEffect, useMemo, useState } from "react";

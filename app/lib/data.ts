@@ -50,17 +50,15 @@ export async function fetchLatestDailySummary(): Promise<DailySummary | null> {
   }
 }
 
-export async function fetchLatestHuddleUpdates(): Promise<DashboardData | null> {
+export async function fetchLatestHuddleUpdates(): Promise<HuddleUpdate[] | null> {
   const { supabase } = await getAuthenticatedClient();
 
   try {
     const { data, error } = await supabase
       .from("huddle_updates")
       .select("*")
-      .order("date", { ascending: false })
       .order("created_at", { ascending: false })
       .limit(1)
-      .single();
 
     if (error) {
       if (error.code === "PGRST116") return null; // Handle no results

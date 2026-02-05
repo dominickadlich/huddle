@@ -7,10 +7,10 @@ export default async function DailySummaryCardWrapper() {
   if (!data) {
     return (
       <>
-        <DailySummaryCard title="Census" value="Click + to add" type="census" id={null} />
-        <DailySummaryCard title="TPN" value="Click + to add" type="tpn" id={null} />
-        <DailySummaryCard title="Hazardous" value="Click + to add" type="hazardous" id={null} />
-        <DailySummaryCard title="Staffing" value="Click + to add" type="staffing" id={null} />
+        <DailySummaryCard title="Census" value="Click to add" type="census" id={null} />
+        <DailySummaryCard title="TPN" value="Click to add" type="tpn" id={null} />
+        <DailySummaryCard title="Hazardous" value="Click to add" type="hazardous" id={null} />
+        <DailySummaryCard title="Staffing" value="Click to add" type="staffing" id={null} />
       </>
     );
   } 
@@ -18,10 +18,10 @@ export default async function DailySummaryCardWrapper() {
   
   return (
     <>
-      <DailySummaryCard title="Census" value={census} type="census" id={id}/>
-      <DailySummaryCard title="TPN" value={tpn} type="tpn" id={id} />
-      <DailySummaryCard title="Hazardous" value={hazardous} type="hazardous" id={id} />
-      <DailySummaryCard title="Staffing" value={staffing} type="staffing" id={id} />
+      <DailySummaryCard title="Census" value={census ? census : 'Click to add'} type="census" id={id}/>
+      <DailySummaryCard title="TPN" value={tpn ? tpn : 'Click to add'} type="tpn" id={id} />
+      <DailySummaryCard title="Hazardous" value={hazardous ? hazardous : 'Click to add'} type="hazardous" id={id} />
+      <DailySummaryCard title="Staffing" value={staffing ? staffing : 'Click to add'} type="staffing" id={id} />
     </>
   );
 }

@@ -17,7 +17,7 @@ import type {
 const HuddleUpdateSchema = z.object({
   daily_summary_id: z.string().uuid(),
   department: z.enum(['Distribution', 'CSR', 'IVR', 'Nonsterile', 'RX Leadership']),
-  update_text: z.string().min(1, "Update text is required").nullable().optional(),
+  update_text: z.string().optional().nullable(),
 });
 
 // ============================================
@@ -65,12 +65,16 @@ export async function upsertHuddleUpdate(
     const { daily_summary_id, department, update_text } = validatedFields.data;
 
     // Check if update exists
-    const { data: existing } = await supabase
+    const { data: existing, error: existingError } = await supabase
       .from('huddle_updates')
       .select('id')
       .eq('daily_summary_id', daily_summary_id)
       .eq('department', department)
       .single();
+
+      if (existingError && existingError.code !== 'PGRST116') {
+        throw existingError;
+      }
 
     if (existing) {
       // UPDATE existing record

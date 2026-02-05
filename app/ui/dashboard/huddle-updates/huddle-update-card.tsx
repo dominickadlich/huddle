@@ -17,8 +17,8 @@ const iconMap = {
   distribution: ArrowsPointingOutIcon,
   csr: LockClosedIcon,
   ivr: BeakerIcon,
-  non_sterile: EyeDropperIcon,
-  leadership: PresentationChartLineIcon
+  nonsterile: EyeDropperIcon,
+  rx_leadership: PresentationChartLineIcon
 };
 
 export default function HuddleUpdateCard({
@@ -27,15 +27,15 @@ export default function HuddleUpdateCard({
     value,
     type,
 }: {
-    id: string | null;
+    id: string | null | undefined;
     title: string;
-    value: number | string | null;
+    value: number | string | null | undefined;
     type:
         | "distribution"
         | "csr"
         | "ivr"
-        | "non_sterile"
-        | "leadership";
+        | "nonsterile"
+        | "rx_leadership";
 }) {
   const Icon = iconMap[type];
   const [isEditing, setIsEditing] = useState<boolean | null>(false)
@@ -102,8 +102,8 @@ export default function HuddleUpdateCard({
                         <XMarkIcon className="h-8 w-8 text-md font-semibold text-red-700 hover:text-red-500 transition-colors duration-300" />
                     </button>}
                     <div className="flex items-center justify-center gap-2 flex-1">
-                        <Icon className="h-8 w-8 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" />
-                        <h3 className="text-xl font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300">
+                        <Icon className="h-6 w-6 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" />
+                        <h3 className="text-lg font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300">
                             {title}
                         </h3>
                     </div>
@@ -138,13 +138,12 @@ export default function HuddleUpdateCard({
                         placeholder={`${title}`}
                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
                     />
-                    : <p className="text-4xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">{value}</p>
+                    : <p className="text-xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">{value}</p>
                 }
+                {/* Bottom accent line */}
+                <div className="absolute bottom-0 left-0 right-0 h-0.25 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
         </div>
-
-        {/* Bottom accent line */}
-        <div className="absolute bottom-0 left-0 right-0 h-0.25 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     </>
   );
 }

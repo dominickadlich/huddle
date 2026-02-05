@@ -24,7 +24,7 @@ const links = [
   },
   {
     name: "WDIP",
-    href: "/wdip",
+    href: "/WDIP",
     icon: ArrowUpOnSquareIcon,
   },
 ];

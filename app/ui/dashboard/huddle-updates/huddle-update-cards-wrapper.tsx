@@ -1,30 +1,55 @@
-// import { fetchLatestDailySummary, fetchLatestHuddleUpdates } from "@/app/lib/data";
-// import HuddleUpdateCard from "./huddle-update-card";
+import { fetchLatestHuddleUpdates } from "@/app/lib/data";
+import HuddleUpdateCard from "./huddle-update-card";
 
-// export default async function HuddleUpdateCardWrapper() {
-//   const data = await fetchLatestHuddleUpdates()
+type DepartmentUpdate = {
+  id: string;
+  update_text: string | null;
+} | null;
 
-//   if (!data) {
-//     return (
-//       <>
-//         <HuddleUpdateCard title="distribution" value="Click to add" type="distribution" id={null} />
-//         <HuddleUpdateCard title="csr" value="Click to add" type="csr" id={null} />
-//         <HuddleUpdateCard title="ivr" value="Click to add" type="ivr" id={null} />
-//         <HuddleUpdateCard title="non_sterile" value="Click to add" type="non_sterile" id={null} />
-//         <HuddleUpdateCard title="leadership" value="Click to add" type="leadership" id={null} />
-//       </>
-//     );
-//   } 
+export default async function HuddleUpdateCardWrapper() {
+  const data = await fetchLatestHuddleUpdates()
 
-//   const { id, distribution, csr, ivr, non_sterile, leadership } = data
+  if (!data) {
+    return (
+      <>
+        <HuddleUpdateCard title="distribution" value="Click to add" type="distribution" id={null} />
+        <HuddleUpdateCard title="csr" value="Click to add" type="csr" id={null} />
+        <HuddleUpdateCard title="ivr" value="Click to add" type="ivr" id={null} />
+        <HuddleUpdateCard title="non_sterile" value="Click to add" type="nonsterile" id={null} />
+        <HuddleUpdateCard title="leadership" value="Click to add" type="rx_leadership" id={null} />
+      </>
+    );
+  } 
+
+  if (!data || data.length === 0) {
+    return null
+  }
   
-//   return (
-//     <>
-//       <HuddleUpdateCard title="distribution" value={distribution} type="distribution" id={id}/>
-//       <HuddleUpdateCard title="csr" value={csr} type="csr" id={id} />
-//       <HuddleUpdateCard title="ivr" value={ivr} type="ivr" id={id} />
-//       <HuddleUpdateCard title="non_sterile" value={non_sterile} type="non_sterile" id={id} />
-//       <HuddleUpdateCard title="leadership" value={leadership} type="leadership" id={id} />
-//     </>
-//   );
-// }
+  
+  const updatesByDepartment = data.reduce((acc, update) => {
+    const key = update.department.toLowerCase().replace(' ', '_') as keyof typeof acc;
+    acc[key] = { 
+        id: update.id,
+        update_text: update.update_text
+    }
+    return acc;
+}, {
+    distribution: null as DepartmentUpdate,
+    csr: null as DepartmentUpdate,
+    ivr: null as DepartmentUpdate,
+    nonsterile: null as DepartmentUpdate,
+    rx_leadership: null as DepartmentUpdate,
+});
+
+const { distribution, csr, ivr, nonsterile, rx_leadership } = updatesByDepartment;
+  
+  return (
+    <>
+      <HuddleUpdateCard title="Distribution" value={distribution?.update_text ?? 'Click to add'} type="distribution" id={distribution?.id}/>
+      <HuddleUpdateCard title="CSR" value={csr?.update_text ?? 'Click to add'} type="csr" id={csr?.id} />
+      <HuddleUpdateCard title="IVR" value={ivr?.update_text ?? 'Click to add'} type="ivr" id={ivr?.id} />
+      <HuddleUpdateCard title="Non Sterile" value={nonsterile?.update_text ?? 'Click to add'} type="nonsterile" id={nonsterile?.id} />
+      <HuddleUpdateCard title="Rx Leadership" value={rx_leadership?.update_text ?? 'Click to add'} type="rx_leadership" id={rx_leadership?.id} />
+    </>
+  );
+}
