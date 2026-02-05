@@ -246,7 +246,7 @@ export async function upsertDailySummaryField(
 export async function updateDailySummaryField(
   id: string,
   field: keyof DailySummaryUpdate,
-  value: any
+  value: string | null
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
