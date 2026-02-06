@@ -3,9 +3,7 @@
 import {
   BookOpenIcon,
   PhoneIcon,
-  DocumentTextIcon,
   ArrowUpOnSquareIcon,
-  CalendarIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -61,7 +59,7 @@ export default function NavLinks() {
                   !isActive,
               })}
             />
-            <span className="hidden lg:block">{link.name}</span>
+            <span className="block">{link.name}</span>
           </Link>
         );
       })}

@@ -58,7 +58,6 @@ export async function fetchLatestHuddleUpdates(): Promise<HuddleUpdate[] | null>
       .from("huddle_updates")
       .select("*")
       .order("created_at", { ascending: false })
-      .limit(1)
 
     if (error) {
       if (error.code === "PGRST116") return null; // Handle no results

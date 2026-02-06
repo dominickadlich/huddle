@@ -7,7 +7,7 @@ import { useState } from "react";
 import Link from "next/link";
 import NavLinks from "./nav-links";
 import { signOut, useSession } from "next-auth/react"; // Add useSession
-import { SignInNavBar, SignOutNavBar } from "./auth-buttons";
+import { SignInNavBar, SignOutNavBar } from "../auth/auth-buttons";
 
 export default function NavBar({}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,7 +24,7 @@ export default function NavBar({}) {
     <header className="fixed inset-x-0 top-0 z-50">
       <nav
         aria-label="Global"
-        className="mx-4 flex items-center justify-between p-4 lg:px-8 rounded-2xl border border-indigo-500/50 bg-indigo-500/90 backdrop-blur-md shadow-lg shadow-indigo-500/20"
+        className="flex items-center justify-between p-4 lg:px-8 rounded-2xl border border-indigo-500/50 bg-indigo-500/90 backdrop-blur-md shadow-lg shadow-indigo-500/20"
       >
         {/* Logo Section */}
         <div className="flex lg:flex-1">
@@ -59,25 +59,7 @@ export default function NavBar({}) {
           {isAuthenticated ? (
             <SignOutNavBar />
           ) : (
-            // <button
-            //   onClick={handleSignOut}
-            //   className="group relative px-5 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-lg hover:shadow-white/10"
-            // >
-            //   Sign out
-            //   <span aria-hidden="true" className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1">
-            //     →
-            //   </span>
-            // </button>
             <SignInNavBar />
-            // <Link
-            //   href="/login"
-            //   className="group relative px-5 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-white/10"
-            // >
-            //   Log in
-            //   <span aria-hidden="true" className="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1">
-            //     →
-            //   </span>
-            // </Link>
           )}
         </div>
       </nav>

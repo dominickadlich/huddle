@@ -7,7 +7,9 @@ import type {
   HuddleUpdate, 
   HuddleUpdateInsert, 
   HuddleUpdateUpdate,
-  DepartmentType 
+  DepartmentType, 
+  ShiftType,
+  DailySummaryUpdate
 } from "../types/database";
 
 // ============================================
@@ -128,6 +130,71 @@ export async function upsertHuddleUpdate(
     console.error("Failed to save huddle update:", error);
     return {
       message: "Database error: Failed to save update.",
+    };
+  }
+}
+
+
+// ============================================
+// GENERIC FIELD UPSERTER
+// ============================================
+export async function upsertHuddleUpdateField(
+  department: DepartmentType,
+  value: string | null
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const { supabase, userId } = await getAuthenticatedClient();
+
+    // 3. Check if record exists for today + current shift
+    const { data: existing } = await supabase
+      .from('huddle_updates')
+      .select('id')
+      .single();
+
+    if (existing) {
+      // UPDATE 
+      const { error } = await supabase
+        .from('huddle_updates')
+        .update({
+          update_text: value,
+          updated_by: userId,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', existing.id);
+
+        if (error) throw error;
+
+      revalidatePath('/dashboard');
+      
+      return {
+        success: true,
+        message: "Daily summary updated successfully!",
+      };
+    } else {
+      // INSERT
+      const { error } = await supabase
+        .from('huddle_updates')
+        .insert({ 
+            department: department,
+            update_text: value,
+            created_by: userId,
+            updated_by: userId,
+        })
+
+        if (error) throw error;
+
+      revalidatePath('/dashboard');
+      
+      return {
+        success: true,
+        message: "Huddle Update created successfully!",
+      };
+    }
+  } catch (error) {
+    console.error("Failed to save huddle update:", error);
+    return {
+      success: false,
+      message: "Database error: Failed to save huddle update.",
     };
   }
 }

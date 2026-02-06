@@ -12,6 +12,7 @@ import {
     CheckIcon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { upsertHuddleUpdate, upsertHuddleUpdateField } from "@/app/lib/actions/huddle-updates";
 
 const iconMap = {
   distribution: ArrowsPointingOutIcon,
@@ -63,7 +64,7 @@ export default function HuddleUpdateCard({
 // TODO: Create query for individual upsert huddle update
 //   const handleSave = async () => {
 //     setMessage(null)
-//     const result = await upsertHuddleUpdate(type, inputValue) 
+//     const result = await upsertHuddleUpdateField(type, inputValue) 
 
 //     if (result) {
 //         setMessage(result.message)
@@ -147,8 +148,3 @@ export default function HuddleUpdateCard({
     </>
   );
 }
-
-
-
-// Polish
-// Toaster notification with message
