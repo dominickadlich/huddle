@@ -3,14 +3,14 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { getAuthenticatedClient } from "../supabase/auth-helpers";
+import { getOrCreateDailySummary } from "./daily-summary";
 import type { 
   HuddleUpdate, 
   HuddleUpdateInsert, 
   HuddleUpdateUpdate,
   DepartmentType, 
-  ShiftType,
-  DailySummaryUpdate
 } from "../types/database";
+import { getCurrentShift } from "../utils";
 
 // ============================================
 // ZOD VALIDATION SCHEMAS
@@ -66,6 +66,7 @@ export async function upsertHuddleUpdate(
 
     const { daily_summary_id, department, update_text } = validatedFields.data;
 
+   
     // Check if update exists
     const { data: existing, error: existingError } = await supabase
       .from('huddle_updates')
@@ -136,7 +137,7 @@ export async function upsertHuddleUpdate(
 
 
 // ============================================
-// GENERIC FIELD UPSERTER
+// GENERIC HUDDLE UPDATE FIELD UPSERTER
 // ============================================
 export async function upsertHuddleUpdateField(
   department: DepartmentType,
@@ -145,10 +146,17 @@ export async function upsertHuddleUpdateField(
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
+    const shift = getCurrentShift();
+    const date = new Date().toISOString().split('T')[0]
+
+    const summaryId = await getOrCreateDailySummary(date, shift)
+
     // 3. Check if record exists for today + current shift
     const { data: existing } = await supabase
       .from('huddle_updates')
       .select('id')
+      .eq('department', department)
+      .eq('daily_summary_id', summaryId)
       .single();
 
     if (existing) {
@@ -175,6 +183,7 @@ export async function upsertHuddleUpdateField(
       const { error } = await supabase
         .from('huddle_updates')
         .insert({ 
+            daily_summary_id: summaryId,
             department: department,
             update_text: value,
             created_by: userId,

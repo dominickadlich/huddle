@@ -12,7 +12,7 @@ import {
     CheckIcon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { upsertHuddleUpdate, upsertHuddleUpdateField } from "@/app/lib/actions/huddle-updates";
+import { upsertHuddleUpdateField } from "@/app/lib/actions/huddle-updates";
 
 const iconMap = {
   distribution: ArrowsPointingOutIcon,
@@ -21,6 +21,14 @@ const iconMap = {
   nonsterile: EyeDropperIcon,
   rx_leadership: PresentationChartLineIcon
 };
+
+const departmentMap = {
+    'distribution': 'Distribution',
+    'csr': 'CSR',
+    'ivr': 'IVR',
+    'nonsterile': 'Nonsterile',
+    'rx_leadership': 'RX Leadership'
+} as const;
 
 export default function HuddleUpdateCard({
     id,
@@ -62,14 +70,15 @@ export default function HuddleUpdateCard({
 }, [isEditing]);
 
 // TODO: Create query for individual upsert huddle update
-//   const handleSave = async () => {
-//     setMessage(null)
-//     const result = await upsertHuddleUpdateField(type, inputValue) 
+  const handleSave = async () => {
+    setMessage(null)
+    const capitalizedDepartment = departmentMap[type]
+    const result = await upsertHuddleUpdateField(capitalizedDepartment, inputValue) 
 
-//     if (result) {
-//         setMessage(result.message)
-//     }
-//   }
+    if (result) {
+        setMessage(result.message)
+    }
+  }
 
 
   return (
@@ -112,7 +121,7 @@ export default function HuddleUpdateCard({
                   <button
                     onClick={(e) => {
                         e.stopPropagation();
-                        // handleSave();
+                        handleSave();
                         setIsEditing(false);
                     }}>
                     <CheckIcon className="h-8 w-8 text-md font-semibold text-green-700 hover:text-green-500 transition-colors duration-300"/>
@@ -127,7 +136,7 @@ export default function HuddleUpdateCard({
                         onKeyDown={(e) => {
                             if (e.key === 'Escape') setIsEditing(false)
                             if (e.key === 'Enter') {
-                                // handleSave();
+                                handleSave();
                                 setIsEditing(false);
                             }
                         }}

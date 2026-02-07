@@ -3,12 +3,14 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { getAuthenticatedClient } from "../supabase/auth-helpers";
+import { fetchDailySummaryByDateAndShift } from "../data";
 import type { 
   DailySummary, 
   DailySummaryInsert, 
   DailySummaryUpdate,
   ShiftType
 } from "../types/database";
+import { getCurrentShift } from "../utils";
 
 // ============================================
 // ZOD VALIDATION SCHEMAS
@@ -162,24 +164,8 @@ export async function upsertDailySummaryField(
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
-    // 1. Get today's date (YYYY-MM-DD format)
-    const today = new Date()
-    const hour = today.getHours()
-
-    // 2. Determine current shift based on time
-    const getCurrentShift = (hour: number): ShiftType => {
-      switch (true) {
-        case (hour >= 7 && hour < 14):
-          return 'morning'
-        case (hour >= 14 && hour < 22):
-          return 'afternoon'
-        default:
-          return 'evening'
-      }
-    }
-
-    const shift = getCurrentShift(hour);
-    const date = today.toISOString().split('T')[0]
+    const shift = getCurrentShift();
+    const date = new Date().toISOString().split('T')[0]
 
     // 3. Check if record exists for today + current shift
     const { data: existing } = await supabase
@@ -308,6 +294,44 @@ export async function deleteDailySummary(id: string): Promise<{
       success: false,
       message: "Database error: Failed to delete daily summary.",
     };
+  }
+}
+
+
+// ============================================================
+// GET OR CREATE DAILY SUMMARY FOR HUDDLE UPDATE FK
+// ============================================================
+  export async function getOrCreateDailySummary(
+    date: string,
+    shift: ShiftType
+): Promise<string> {
+  try {
+    const { supabase, userId } = await getAuthenticatedClient();
+    const data = await fetchDailySummaryByDateAndShift(date, shift)
+    
+    if (!data) {
+      const { data: newSummary, error } = await supabase
+        .from('daily_summary')
+        .insert({
+          date: date,
+          shift: shift,
+          created_by: userId,
+          updated_by: userId,
+        })
+        .select('id')
+        .single()
+  
+        if (error || !newSummary) {
+          throw new Error('Failed to create daily summary');
+        }
+  
+        return newSummary.id
+      } else {
+          return data.id
+      }
+  } catch (error) {
+    console.error("Failed to get or create a daily summary:", error);
+    throw new Error('Failed to get or create daily summary');
   }
 }
 
