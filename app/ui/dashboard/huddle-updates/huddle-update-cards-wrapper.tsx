@@ -1,5 +1,6 @@
-import { fetchLatestHuddleUpdates } from "@/app/lib/data";
+import { fetchDailySummaryWithUpdates } from "@/app/lib/data";
 import HuddleUpdateCard from "./huddle-update-card";
+import { getCurrentShift } from "@/app/lib/utils";
 
 type DepartmentUpdate = {
   id: string;
@@ -7,7 +8,9 @@ type DepartmentUpdate = {
 } | null;
 
 export default async function HuddleUpdateCardWrapper() {
-  const data = await fetchLatestHuddleUpdates()
+  const today = new Date().toISOString().split('T')[0]
+  const currentShift = getCurrentShift()
+  const data = await fetchDailySummaryWithUpdates(today, currentShift)
 
   if (!data) {
     return (
@@ -20,13 +23,9 @@ export default async function HuddleUpdateCardWrapper() {
       </>
     );
   } 
-
-  if (!data || data.length === 0) {
-    return null
-  }
   
   
-  const updatesByDepartment = data.reduce((acc, update) => {
+  const updatesByDepartment = data.updates.reduce((acc, update) => {
     const key = update.department.toLowerCase().replace(' ', '_') as keyof typeof acc;
     acc[key] = { 
         id: update.id,
