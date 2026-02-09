@@ -98,8 +98,8 @@ export async function fetchDailySummaryByDateAndShift(
 }
 
 export async function fetchDailySummaryWithUpdates(
-  date: string,
-  shift: ShiftType
+  date: string | null,
+  shift: ShiftType | null,
 ): Promise<DailySummaryWithUpdates | null> {
   const { supabase } = await getAuthenticatedClient();
 

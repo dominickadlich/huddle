@@ -1,0 +1,85 @@
+"use client"
+
+import { fetchDailySummaryWithUpdates } from "@/app/lib/data";
+import { ShiftType } from "@/app/lib/types/database";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
+import { useState } from "react"
+
+export default function Page() {
+    const [selectedDate, setSelectedDate] = useState<string | null>(null);
+    const [selectedShift, setSelectedShift] = useState<ShiftType | null>(null);
+
+    // Fetch data when date/shift change
+    const data = fetchDailySummaryWithUpdates(selectedDate, selectedShift)
+
+    if (!data) {
+        return null
+    }
+
+    return (
+        <div>
+            {/* Month Selector */}
+      <div className="lg:grid lg:grid-cols-12 lg:gap-x-16">
+        <div className="mt-10 text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-9 xl:col-start-9">
+          <div className="flex items-center text-gray-900 dark:text-white">
+            <button
+              type="button"
+              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
+            >
+              <span className="sr-only">Previous month</span>
+              <ChevronLeftIcon aria-hidden="true" className="size-5" />
+            </button>
+            <div className="flex-auto text-sm font-semibold">January</div>
+            <button
+              type="button"
+              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
+            >
+              <span className="sr-only">Next month</span>
+              <ChevronRightIcon aria-hidden="true" className="size-5" />
+            </button>
+          </div>
+
+          {/* Header */}
+          <div className="mt-6 grid grid-cols-7 text-xs/6 text-gray-500 dark:text-gray-400">
+            <div>M</div>
+            <div>T</div>
+            <div>W</div>
+            <div>T</div>
+            <div>F</div>
+            <div>S</div>
+            <div>S</div>
+          </div>
+
+          {/* TODO: Caledar */}
+          {/* <div className="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow-sm ring-1 ring-gray-200 dark:bg-white/15 dark:shadow-none dark:ring-white/15">
+            {days.map((day) => (
+              <button
+                key={day.date}
+                type="button"
+                data-is-today={day.isToday ? '' : undefined}
+                data-is-selected={day.isSelected ? '' : undefined}
+                data-is-current-month={day.isCurrentMonth ? '' : undefined}
+                className="py-1.5 not-data-is-current-month:bg-gray-50 not-data-is-selected:not-data-is-current-month:not-data-is-today:text-gray-400 first:rounded-tl-lg last:rounded-br-lg hover:bg-gray-100 focus:z-10 data-is-current-month:bg-white not-data-is-selected:data-is-current-month:not-data-is-today:text-gray-900 data-is-current-month:hover:bg-gray-100 data-is-selected:font-semibold data-is-selected:text-white data-is-today:font-semibold data-is-today:not-data-is-selected:text-indigo-600 nth-36:rounded-bl-lg nth-7:rounded-tr-lg dark:not-data-is-current-month:bg-gray-900/75 dark:not-data-is-selected:not-data-is-current-month:not-data-is-today:text-gray-500 dark:hover:bg-gray-900/25 dark:data-is-current-month:bg-gray-900/90 dark:not-data-is-selected:data-is-current-month:not-data-is-today:text-white dark:data-is-current-month:hover:bg-gray-900/50 dark:data-is-selected:text-gray-900 dark:data-is-today:not-data-is-selected:text-indigo-400"
+              >
+                <time
+                  dateTime={day.date}
+                  className="mx-auto flex size-7 items-center justify-center rounded-full in-data-is-selected:not-in-data-is-today:bg-gray-900 in-data-is-selected:in-data-is-today:bg-indigo-600 dark:in-data-is-selected:not-in-data-is-today:bg-white dark:in-data-is-selected:in-data-is-today:bg-indigo-500"
+                >
+                  {day.date.split('-').pop().replace(/^0/, '')}
+                </time>
+              </button>
+            ))}
+          </div> */}
+
+          {/* Shift Buttons */}
+          <button
+            type="button"
+            className="mt-8 w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+          >
+            Add event
+          </button>
+        </div>
+        </div>
+        </div>
+    )
+}
