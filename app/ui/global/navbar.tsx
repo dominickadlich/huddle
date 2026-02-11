@@ -56,11 +56,7 @@ export default function NavBar({}) {
 
         {/* Auth Button */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {isAuthenticated ? (
-            <SignOutNavBar />
-          ) : (
-            <SignInNavBar />
-          )}
+          {isAuthenticated ? <SignOutNavBar /> : <SignInNavBar />}
         </div>
       </nav>
 

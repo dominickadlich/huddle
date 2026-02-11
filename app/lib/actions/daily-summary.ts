@@ -4,11 +4,11 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { getAuthenticatedClient } from "../supabase/auth-helpers";
 import { fetchDailySummaryByDateAndShift } from "../data";
-import type { 
-  DailySummary, 
-  DailySummaryInsert, 
+import type {
+  DailySummary,
+  DailySummaryInsert,
   DailySummaryUpdate,
-  ShiftType
+  ShiftType,
 } from "../types/database";
 import { getCurrentShift } from "../utils";
 
@@ -17,8 +17,10 @@ import { getCurrentShift } from "../utils";
 // ============================================
 
 const DailySummarySchema = z.object({
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-  shift: z.enum(['morning', 'afternoon', 'evening']),
+  date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+  shift: z.enum(["morning", "afternoon", "evening"]),
   census: z.coerce.number().int().min(0).nullable().optional(),
   tpn: z.string().nullable().optional(),
   hazardous: z.string().nullable().optional(),
@@ -50,28 +52,29 @@ export type DailySummaryState = {
   data?: DailySummary | null;
 };
 
-
 // ============================================
 // UPSERT DAILY SUMMARY (Create or Update)
 // ============================================
 
 export async function upsertDailySummary(
   prevState: DailySummaryState,
-  formData: FormData
+  formData: FormData,
 ): Promise<DailySummaryState> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
     const rawData = {
-      date: formData.get('date'),
-      shift: formData.get('shift'),
-      census: formData.get('census') ? parseInt(formData.get('census') as string) : null,
-      tpn: formData.get('tpn') || null,
-      hazardous: formData.get('hazardous') || null,
-      staffing: formData.get('staffing') || null,
-      recognition: formData.get('recognition') || null,
-      issues_safety: formData.get('issues_safety') || null,
-      announcements: formData.get('announcements') || null,
+      date: formData.get("date"),
+      shift: formData.get("shift"),
+      census: formData.get("census")
+        ? parseInt(formData.get("census") as string)
+        : null,
+      tpn: formData.get("tpn") || null,
+      hazardous: formData.get("hazardous") || null,
+      staffing: formData.get("staffing") || null,
+      recognition: formData.get("recognition") || null,
+      issues_safety: formData.get("issues_safety") || null,
+      announcements: formData.get("announcements") || null,
     };
 
     const validatedFields = DailySummarySchema.safeParse(rawData);
@@ -87,15 +90,15 @@ export async function upsertDailySummary(
 
     // Check if record exists
     const { data: existing, error: existingError } = await supabase
-      .from('daily_summary')
-      .select('id')
-      .eq('date', date)
-      .eq('shift', shift)
+      .from("daily_summary")
+      .select("id")
+      .eq("date", date)
+      .eq("shift", shift)
       .single();
 
-      if (existingError && existingError.code !== 'PGRST116') {
-        throw existingError;
-      }
+    if (existingError && existingError.code !== "PGRST116") {
+      throw existingError;
+    }
 
     if (existing) {
       // UPDATE existing record
@@ -106,16 +109,16 @@ export async function upsertDailySummary(
       };
 
       const { data, error } = await supabase
-        .from('daily_summary')
+        .from("daily_summary")
         .update(updateData)
-        .eq('id', existing.id)
+        .eq("id", existing.id)
         .select()
         .single();
 
       if (error) throw error;
 
-      revalidatePath('/dashboard');
-      
+      revalidatePath("/dashboard");
+
       return {
         message: "Daily summary updated successfully!",
         data,
@@ -131,15 +134,15 @@ export async function upsertDailySummary(
       };
 
       const { data, error } = await supabase
-        .from('daily_summary')
+        .from("daily_summary")
         .insert(insertData)
         .select()
         .single();
 
       if (error) throw error;
 
-      revalidatePath('/dashboard');
-      
+      revalidatePath("/dashboard");
+
       return {
         message: "Daily summary created successfully!",
         data,
@@ -153,64 +156,61 @@ export async function upsertDailySummary(
   }
 }
 
-
 // ============================================
 // GENERIC FIELD UPSERTER
 // ============================================
 export async function upsertDailySummaryField(
   field: keyof DailySummaryUpdate,
-  value: string | null
+  value: string | null,
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
     const shift = getCurrentShift();
-    const date = new Date().toISOString().split('T')[0]
+    const date = new Date().toISOString().split("T")[0];
 
     // 3. Check if record exists for today + current shift
     const { data: existing } = await supabase
-      .from('daily_summary')
-      .select('id')
-      .eq('date', date)
-      .eq('shift', shift)
+      .from("daily_summary")
+      .select("id")
+      .eq("date", date)
+      .eq("shift", shift)
       .single();
 
     if (existing) {
-      // UPDATE 
+      // UPDATE
       const { error } = await supabase
-        .from('daily_summary')
+        .from("daily_summary")
         .update({
           [field]: value,
           updated_by: userId,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', existing.id);
+        .eq("id", existing.id);
 
-        if (error) throw error;
+      if (error) throw error;
 
-      revalidatePath('/dashboard');
-      
+      revalidatePath("/dashboard");
+
       return {
         success: true,
         message: "Daily summary updated successfully!",
       };
     } else {
       // INSERT
-      const { error } = await supabase
-        .from('daily_summary')
-        .insert({ 
-          date,
-          shift,
-          [field]: value,
-          updated_by: userId,
-          updated_at: new Date().toISOString(),
-          created_by: userId,
-        })
+      const { error } = await supabase.from("daily_summary").insert({
+        date,
+        shift,
+        [field]: value,
+        updated_by: userId,
+        updated_at: new Date().toISOString(),
+        created_by: userId,
+      });
 
-        if (error) throw error;
+      if (error) throw error;
 
-      revalidatePath('/dashboard');
-      
+      revalidatePath("/dashboard");
+
       return {
         success: true,
         message: "Daily summary created successfully!",
@@ -232,24 +232,24 @@ export async function upsertDailySummaryField(
 export async function updateDailySummaryField(
   id: string,
   field: keyof DailySummaryUpdate,
-  value: string | null
+  value: string | null,
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
     const { error } = await supabase
-      .from('daily_summary')
-      .update({ 
+      .from("daily_summary")
+      .update({
         [field]: value,
         updated_by: userId,
         updated_at: new Date().toISOString(),
       })
-      .eq('id', id);
+      .eq("id", id);
 
     if (error) throw error;
 
-    revalidatePath('/dashboard');
-    
+    revalidatePath("/dashboard");
+
     return {
       success: true,
       message: `${String(field)} updated successfully!`,
@@ -263,27 +263,26 @@ export async function updateDailySummaryField(
   }
 }
 
-
 // ============================================
 // DELETE DAILY SUMMARY
 // ============================================
 
-export async function deleteDailySummary(id: string): Promise<{ 
-  success: boolean; 
-  message: string 
+export async function deleteDailySummary(id: string): Promise<{
+  success: boolean;
+  message: string;
 }> {
   try {
     const { supabase } = await getAuthenticatedClient();
 
     const { error } = await supabase
-      .from('daily_summary')
+      .from("daily_summary")
       .delete()
-      .eq('id', id);
+      .eq("id", id);
 
     if (error) throw error;
 
-    revalidatePath('/dashboard');
-    
+    revalidatePath("/dashboard");
+
     return {
       success: true,
       message: "Daily summary deleted successfully!",
@@ -297,44 +296,42 @@ export async function deleteDailySummary(id: string): Promise<{
   }
 }
 
-
 // ============================================================
 // GET OR CREATE DAILY SUMMARY FOR HUDDLE UPDATE FK
 // ============================================================
-  export async function getOrCreateDailySummary(
-    date: string,
-    shift: ShiftType
+export async function getOrCreateDailySummary(
+  date: string,
+  shift: ShiftType,
 ): Promise<string> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
-    const data = await fetchDailySummaryByDateAndShift(date, shift)
-    
+    const data = await fetchDailySummaryByDateAndShift(date, shift);
+
     if (!data) {
       const { data: newSummary, error } = await supabase
-        .from('daily_summary')
+        .from("daily_summary")
         .insert({
           date: date,
           shift: shift,
           created_by: userId,
           updated_by: userId,
         })
-        .select('id')
-        .single()
-  
-        if (error || !newSummary) {
-          throw new Error('Failed to create daily summary');
-        }
-  
-        return newSummary.id
-      } else {
-          return data.id
+        .select("id")
+        .single();
+
+      if (error || !newSummary) {
+        throw new Error("Failed to create daily summary");
       }
+
+      return newSummary.id;
+    } else {
+      return data.id;
+    }
   } catch (error) {
     console.error("Failed to get or create a daily summary:", error);
-    throw new Error('Failed to get or create daily summary');
+    throw new Error("Failed to get or create daily summary");
   }
 }
-
 
 // ============================================
 // USAGE EXAMPLES (for reference in frontend)

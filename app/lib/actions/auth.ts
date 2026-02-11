@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { supabaseAdmin } from "../supabase/admin";
 
@@ -8,10 +8,9 @@ export type OIDCUserProfile = {
   name?: string;
   given_name?: string;
   family_name?: string;
-}
+};
 
 export async function upsertUser(userData: OIDCUserProfile) {
-
   try {
     const { sub, email, name, given_name, family_name } = userData;
 
@@ -25,12 +24,10 @@ export async function upsertUser(userData: OIDCUserProfile) {
       updated_at: new Date().toISOString(),
     };
 
-    const { error } = await supabaseAdmin
-        .from("users")
-        .upsert(user, {
-            onConflict: "id",
-            ignoreDuplicates: false,
-        });
+    const { error } = await supabaseAdmin.from("users").upsert(user, {
+      onConflict: "id",
+      ignoreDuplicates: false,
+    });
 
     if (error) throw error;
     return true;

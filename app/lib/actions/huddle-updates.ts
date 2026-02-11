@@ -4,11 +4,11 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { getAuthenticatedClient } from "../supabase/auth-helpers";
 import { getOrCreateDailySummary } from "./daily-summary";
-import type { 
-  HuddleUpdate, 
-  HuddleUpdateInsert, 
+import type {
+  HuddleUpdate,
+  HuddleUpdateInsert,
   HuddleUpdateUpdate,
-  DepartmentType, 
+  DepartmentType,
 } from "../types/database";
 import { getCurrentShift } from "../utils";
 
@@ -18,7 +18,13 @@ import { getCurrentShift } from "../utils";
 
 const HuddleUpdateSchema = z.object({
   daily_summary_id: z.string().uuid(),
-  department: z.enum(['Distribution', 'CSR', 'IVR', 'Nonsterile', 'RX Leadership']),
+  department: z.enum([
+    "Distribution",
+    "CSR",
+    "IVR",
+    "Nonsterile",
+    "RX Leadership",
+  ]),
   update_text: z.string().optional().nullable(),
 });
 
@@ -37,22 +43,21 @@ export type HuddleUpdateState = {
   data?: HuddleUpdate | null;
 };
 
-
 // ============================================
 // UPSERT HUDDLE UPDATE (Create or Update)
 // ============================================
 
 export async function upsertHuddleUpdate(
   prevState: HuddleUpdateState,
-  formData: FormData
+  formData: FormData,
 ): Promise<HuddleUpdateState> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
     const rawData = {
-      daily_summary_id: formData.get('daily_summary_id'),
-      department: formData.get('department'),
-      update_text: formData.get('update_text') || null,
+      daily_summary_id: formData.get("daily_summary_id"),
+      department: formData.get("department"),
+      update_text: formData.get("update_text") || null,
     };
 
     const validatedFields = HuddleUpdateSchema.safeParse(rawData);
@@ -66,18 +71,17 @@ export async function upsertHuddleUpdate(
 
     const { daily_summary_id, department, update_text } = validatedFields.data;
 
-   
     // Check if update exists
     const { data: existing, error: existingError } = await supabase
-      .from('huddle_updates')
-      .select('id')
-      .eq('daily_summary_id', daily_summary_id)
-      .eq('department', department)
+      .from("huddle_updates")
+      .select("id")
+      .eq("daily_summary_id", daily_summary_id)
+      .eq("department", department)
       .single();
 
-      if (existingError && existingError.code !== 'PGRST116') {
-        throw existingError;
-      }
+    if (existingError && existingError.code !== "PGRST116") {
+      throw existingError;
+    }
 
     if (existing) {
       // UPDATE existing record
@@ -88,16 +92,16 @@ export async function upsertHuddleUpdate(
       };
 
       const { data, error } = await supabase
-        .from('huddle_updates')
+        .from("huddle_updates")
         .update(updateData)
-        .eq('id', existing.id)
+        .eq("id", existing.id)
         .select()
         .single();
 
       if (error) throw error;
 
-      revalidatePath('/dashboard');
-      
+      revalidatePath("/dashboard");
+
       return {
         message: "Department update updated successfully!",
         data,
@@ -113,15 +117,15 @@ export async function upsertHuddleUpdate(
       };
 
       const { data, error } = await supabase
-        .from('huddle_updates')
+        .from("huddle_updates")
         .insert(insertData)
         .select()
         .single();
 
       if (error) throw error;
 
-      revalidatePath('/dashboard');
-      
+      revalidatePath("/dashboard");
+
       return {
         message: "Department update created successfully!",
         data,
@@ -135,65 +139,62 @@ export async function upsertHuddleUpdate(
   }
 }
 
-
 // ============================================
 // GENERIC HUDDLE UPDATE FIELD UPSERTER
 // ============================================
 export async function upsertHuddleUpdateField(
   department: DepartmentType,
-  value: string | null
+  value: string | null,
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
     const shift = getCurrentShift();
-    const date = new Date().toISOString().split('T')[0]
+    const date = new Date().toISOString().split("T")[0];
 
-    const summaryId = await getOrCreateDailySummary(date, shift)
+    const summaryId = await getOrCreateDailySummary(date, shift);
 
     // 3. Check if record exists for today + current shift
     const { data: existing } = await supabase
-      .from('huddle_updates')
-      .select('id')
-      .eq('department', department)
-      .eq('daily_summary_id', summaryId)
+      .from("huddle_updates")
+      .select("id")
+      .eq("department", department)
+      .eq("daily_summary_id", summaryId)
       .single();
 
     if (existing) {
-      // UPDATE 
+      // UPDATE
       const { error } = await supabase
-        .from('huddle_updates')
+        .from("huddle_updates")
         .update({
           update_text: value,
           updated_by: userId,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', existing.id);
+        .eq("id", existing.id);
 
-        if (error) throw error;
+      if (error) throw error;
 
-      revalidatePath('/dashboard');
-      
+      revalidatePath("/dashboard");
+
       return {
         success: true,
         message: "Daily summary updated successfully!",
       };
     } else {
       // INSERT
-      const { error } = await supabase
-        .from('huddle_updates')
-        .insert({ 
-            daily_summary_id: summaryId,
-            department: department,
-            update_text: value,
-            created_by: userId,
-            updated_by: userId,
-        })
+      const { error } = await supabase.from("huddle_updates").insert({
+        daily_summary_id: summaryId,
+        department: department,
+        update_text: value,
+        created_by: userId,
+        updated_by: userId,
+      });
 
-        if (error) throw error;
+      if (error) throw error;
 
-      revalidatePath('/dashboard');
-      
+      revalidatePath("/dashboard");
+
       return {
         success: true,
         message: "Huddle Update created successfully!",
@@ -212,22 +213,22 @@ export async function upsertHuddleUpdateField(
 // DELETE HUDDLE UPDATE
 // ============================================
 
-export async function deleteHuddleUpdate(id: string): Promise<{ 
-  success: boolean; 
-  message: string 
+export async function deleteHuddleUpdate(id: string): Promise<{
+  success: boolean;
+  message: string;
 }> {
   try {
     const { supabase } = await getAuthenticatedClient();
 
     const { error } = await supabase
-      .from('huddle_updates')
+      .from("huddle_updates")
       .delete()
-      .eq('id', id);
+      .eq("id", id);
 
     if (error) throw error;
 
-    revalidatePath('/dashboard');
-    
+    revalidatePath("/dashboard");
+
     return {
       success: true,
       message: "Department update deleted successfully!",
@@ -248,48 +249,46 @@ export async function deleteHuddleUpdate(id: string): Promise<{
 export async function updateDepartmentText(
   dailySummaryId: string,
   department: DepartmentType,
-  updateText: string
+  updateText: string,
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
     // Check if update exists
     const { data: existing } = await supabase
-      .from('huddle_updates')
-      .select('id')
-      .eq('daily_summary_id', dailySummaryId)
-      .eq('department', department)
+      .from("huddle_updates")
+      .select("id")
+      .eq("daily_summary_id", dailySummaryId)
+      .eq("department", department)
       .single();
 
     if (existing) {
       // Update existing
       const { error } = await supabase
-        .from('huddle_updates')
-        .update({ 
+        .from("huddle_updates")
+        .update({
           update_text: updateText,
           updated_by: userId,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', existing.id);
+        .eq("id", existing.id);
 
       if (error) throw error;
     } else {
       // Create new
-      const { error } = await supabase
-        .from('huddle_updates')
-        .insert({
-          daily_summary_id: dailySummaryId,
-          department,
-          update_text: updateText,
-          created_by: userId,
-          updated_by: userId,
-        });
+      const { error } = await supabase.from("huddle_updates").insert({
+        daily_summary_id: dailySummaryId,
+        department,
+        update_text: updateText,
+        created_by: userId,
+        updated_by: userId,
+      });
 
       if (error) throw error;
     }
 
-    revalidatePath('/dashboard');
-    
+    revalidatePath("/dashboard");
+
     return {
       success: true,
       message: "Update saved successfully!",
@@ -302,7 +301,6 @@ export async function updateDepartmentText(
     };
   }
 }
-
 
 // ============================================
 // USAGE EXAMPLES (for reference in frontend)

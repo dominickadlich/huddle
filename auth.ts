@@ -3,7 +3,6 @@ import { authConfig } from "./auth.config";
 import { upsertUser } from "./app/lib/actions/auth";
 import { OIDCUserProfile } from "./app/lib/actions/auth";
 
-
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
 
@@ -41,15 +40,13 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
     },
   ],
 
-
   callbacks: {
     async signIn({ profile }) {
       if (!profile) return false;
 
       const success = await upsertUser(profile as OIDCUserProfile);
-      return success
+      return success;
     },
-
 
     async jwt({ token, account, profile }) {
       if (account && profile) {
@@ -64,7 +61,6 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       }
       return token;
     },
-
 
     async session({ session, token }) {
       if (session.user) {

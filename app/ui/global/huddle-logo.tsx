@@ -2,9 +2,7 @@ import Image from "next/image";
 
 export default function HuddleLogo() {
   return (
-    <div
-      className='flex flex-row items-center leading-none text-white'
-    >
+    <div className="flex flex-row items-center leading-none text-white">
       <Image
         src="/icon.png"
         width={25}

@@ -15,11 +15,13 @@ import type {
 // ============================================
 
 function isValidShift(shift: string): shift is ShiftType {
-  return ['morning', 'afternoon', 'evening'].includes(shift);
+  return ["morning", "afternoon", "evening"].includes(shift);
 }
 
 function isValidDepartment(department: string): department is DepartmentType {
-  return ['Distribution', 'CSR', 'IVR', 'Nonsterile', 'RX Leadership'].includes(department);
+  return ["Distribution", "CSR", "IVR", "Nonsterile", "RX Leadership"].includes(
+    department,
+  );
 }
 
 // ============================================
@@ -50,14 +52,16 @@ export async function fetchLatestDailySummary(): Promise<DailySummary | null> {
   }
 }
 
-export async function fetchLatestHuddleUpdates(): Promise<HuddleUpdate[] | null> {
+export async function fetchLatestHuddleUpdates(): Promise<
+  HuddleUpdate[] | null
+> {
   const { supabase } = await getAuthenticatedClient();
 
   try {
     const { data, error } = await supabase
       .from("huddle_updates")
       .select("*")
-      .order("created_at", { ascending: false })
+      .order("created_at", { ascending: false });
 
     if (error) {
       if (error.code === "PGRST116") return null; // Handle no results
@@ -73,7 +77,7 @@ export async function fetchLatestHuddleUpdates(): Promise<HuddleUpdate[] | null>
 
 export async function fetchDailySummaryByDateAndShift(
   date: string,
-  shift: ShiftType
+  shift: ShiftType,
 ): Promise<DailySummary | null> {
   const { supabase } = await getAuthenticatedClient();
 
@@ -106,10 +110,12 @@ export async function fetchDailySummaryWithUpdates(
   try {
     const { data, error } = await supabase
       .from("daily_summary")
-      .select(`
+      .select(
+        `
         *,
         updates:huddle_updates(*)
-      `)
+      `,
+      )
       .eq("date", date)
       .eq("shift", shift)
       .single();
@@ -134,7 +140,7 @@ export async function fetchDailySummaryWithUpdates(
 // ============================================
 
 export async function fetchUpdatesByDailySummaryId(
-  dailySummaryId: string
+  dailySummaryId: string,
 ): Promise<HuddleUpdate[]> {
   const { supabase } = await getAuthenticatedClient();
 
@@ -155,7 +161,7 @@ export async function fetchUpdatesByDailySummaryId(
 
 export async function fetchUpdateByDepartment(
   dailySummaryId: string,
-  department: DepartmentType
+  department: DepartmentType,
 ): Promise<HuddleUpdate | null> {
   const { supabase } = await getAuthenticatedClient();
 
@@ -195,22 +201,27 @@ export async function fetchLatestDashboardData(): Promise<DashboardData | null> 
     const updates = await fetchUpdatesByDailySummaryId(latestSummary.id);
 
     // Organize updates by department
-    const updatesByDept = updates.reduce((acc, update) => {
-      if (!isValidDepartment(update.department)) {
-        console.warn(`Invalid department: ${update.department}`);
+    const updatesByDept = updates.reduce(
+      (acc, update) => {
+        if (!isValidDepartment(update.department)) {
+          console.warn(`Invalid department: ${update.department}`);
+          return acc;
+        }
+
+        const key = update.department
+          .toLowerCase()
+          .replace(" ", "_") as keyof typeof acc;
+        acc[key] = update;
         return acc;
-      }
-      
-      const key = update.department.toLowerCase().replace(' ', '_') as keyof typeof acc;
-      acc[key] = update;
-      return acc;
-    }, {
-      distribution: null as HuddleUpdate | null,
-      csr: null as HuddleUpdate | null,
-      ivr: null as HuddleUpdate | null,
-      nonsterile: null as HuddleUpdate | null,
-      rx_leadership: null as HuddleUpdate | null,
-    });
+      },
+      {
+        distribution: null as HuddleUpdate | null,
+        csr: null as HuddleUpdate | null,
+        ivr: null as HuddleUpdate | null,
+        nonsterile: null as HuddleUpdate | null,
+        rx_leadership: null as HuddleUpdate | null,
+      },
+    );
 
     return {
       daily_summary: latestSummary,
@@ -224,7 +235,7 @@ export async function fetchLatestDashboardData(): Promise<DashboardData | null> 
 
 export async function fetchDashboardDataByDateAndShift(
   date: string,
-  shift: ShiftType
+  shift: ShiftType,
 ): Promise<DashboardData | null> {
   try {
     const dailySummary = await fetchDailySummaryByDateAndShift(date, shift);
@@ -232,22 +243,27 @@ export async function fetchDashboardDataByDateAndShift(
 
     const updates = await fetchUpdatesByDailySummaryId(dailySummary.id);
 
-    const updatesByDept = updates.reduce((acc, update) => {
-      if (!isValidDepartment(update.department)) {
-        console.warn(`Invalid department: ${update.department}`);
+    const updatesByDept = updates.reduce(
+      (acc, update) => {
+        if (!isValidDepartment(update.department)) {
+          console.warn(`Invalid department: ${update.department}`);
+          return acc;
+        }
+
+        const key = update.department
+          .toLowerCase()
+          .replace(" ", "_") as keyof typeof acc;
+        acc[key] = update;
         return acc;
-      }
-      
-      const key = update.department.toLowerCase().replace(' ', '_') as keyof typeof acc;
-      acc[key] = update;
-      return acc;
-    }, {
-      distribution: null as HuddleUpdate | null,
-      csr: null as HuddleUpdate | null,
-      ivr: null as HuddleUpdate | null,
-      nonsterile: null as HuddleUpdate | null,
-      rx_leadership: null as HuddleUpdate | null,
-    });
+      },
+      {
+        distribution: null as HuddleUpdate | null,
+        csr: null as HuddleUpdate | null,
+        ivr: null as HuddleUpdate | null,
+        nonsterile: null as HuddleUpdate | null,
+        rx_leadership: null as HuddleUpdate | null,
+      },
+    );
 
     return {
       daily_summary: dailySummary,
@@ -263,7 +279,9 @@ export async function fetchDashboardDataByDateAndShift(
 // HISTORICAL QUERIES
 // ============================================
 
-export async function fetchRecentDailySummaries(limit: number = 7): Promise<DailySummary[]> {
+export async function fetchRecentDailySummaries(
+  limit: number = 7,
+): Promise<DailySummary[]> {
   const { supabase } = await getAuthenticatedClient();
 
   try {
