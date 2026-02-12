@@ -17,7 +17,7 @@ export default function ShiftButtons() {
     const shifts: ShiftType[] = ["morning", "afternoon", "evening"];
 
   return (
-    <div className="flex gap-6">
+    <div className="flex grid grid-1">
       {shifts.map((shift) => (
         <button
           key={shift}
@@ -30,7 +30,7 @@ export default function ShiftButtons() {
             hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500`}
           onClick={() => handleShiftClick(shift)}
         >
-          {shift}
+          {shift.charAt(0).toUpperCase() + shift.slice(1)}
         </button>
       ))}
     </div>

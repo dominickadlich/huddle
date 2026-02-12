@@ -1,15 +1,17 @@
 'use client'
 
 import GenrateCalendarDates from "./calendar-date-generator";
-import { format, parseISO, setDate } from "date-fns";
+import { addMonths, format, parseISO, setDate, subMonths } from "date-fns";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function Calendar() {
     const router = useRouter()
     const searchParams = useSearchParams()
     const today = new Date();
     const selectedDate = searchParams.get('date')
+    const [currentMonth, setCurrentMonth] = useState<Date>(today);
 
     const handleDateClick = (date: string) => {
         const params = new URLSearchParams(searchParams)
@@ -18,27 +20,39 @@ export default function Calendar() {
     }
 
     const days = GenrateCalendarDates(
-        today,
-        selectedDate ? parseISO(selectedDate) : today
+        currentMonth,
+        selectedDate ? parseISO(selectedDate) : null
     )
+
+    function handleAddMonth() {
+      const nextMonth = addMonths(currentMonth, 1)
+      setCurrentMonth(nextMonth)
+    }
+
+    function handleSubMonth() {
+      const prevMonth = subMonths(currentMonth, 1)
+      setCurrentMonth(prevMonth)
+    }
 
   return (
     <div>
       {/* Month Selector */}
-      <div className="lg:grid lg:grid-cols-12 lg:gap-x-16">
+      <div>
         <div className="mt-10 text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-9 xl:col-start-9">
           <div className="flex items-center text-gray-900 dark:text-white">
             <button
               type="button"
               className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
+              onClick={handleSubMonth}
             >
               <span className="sr-only">Previous month</span>
               <ChevronLeftIcon aria-hidden="true" className="size-5" />
             </button>
-            <div className="flex-auto text-sm font-semibold">January</div>
+            <div className="flex-auto text-sm font-semibold">{format(currentMonth, 'MMMM yyyy')}</div>
             <button
               type="button"
               className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
+              onClick={handleAddMonth}
             >
               <span className="sr-only">Next month</span>
               <ChevronRightIcon aria-hidden="true" className="size-5" />
@@ -47,12 +61,12 @@ export default function Calendar() {
 
           {/* Header */}
           <div className="mt-6 grid grid-cols-7 text-xs/6 text-gray-500 dark:text-gray-400">
+            <div>S</div>
             <div>M</div>
             <div>T</div>
             <div>W</div>
             <div>T</div>
             <div>F</div>
-            <div>S</div>
             <div>S</div>
           </div>
           <div className="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow-sm ring-1 ring-gray-200 dark:bg-white/15 dark:shadow-none dark:ring-white/15">
