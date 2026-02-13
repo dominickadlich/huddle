@@ -1,11 +1,7 @@
 import { fetchDailySummaryWithUpdates } from "@/app/lib/data";
 import HuddleUpdateCard from "./huddle-update-card";
 import { getCurrentShift } from "@/app/lib/utils";
-
-type DepartmentUpdate = {
-  id: string;
-  update_text: string | null;
-} | null;
+import { DepartmentUpdate } from "@/app/lib/types/database"
 
 export default async function HuddleUpdateCardWrapper() {
   const today = new Date().toISOString().split("T")[0];
@@ -16,31 +12,31 @@ export default async function HuddleUpdateCardWrapper() {
     return (
       <>
         <HuddleUpdateCard
-          title="distribution"
+          title="Distribution"
           value="Click to add"
           type="distribution"
           id={null}
         />
         <HuddleUpdateCard
-          title="csr"
+          title="CSR"
           value="Click to add"
           type="csr"
           id={null}
         />
         <HuddleUpdateCard
-          title="ivr"
+          title="IVR"
           value="Click to add"
           type="ivr"
           id={null}
         />
         <HuddleUpdateCard
-          title="non_sterile"
+          title="Non-Sterile"
           value="Click to add"
           type="nonsterile"
           id={null}
         />
         <HuddleUpdateCard
-          title="leadership"
+          title="Rx Leadership"
           value="Click to add"
           type="rx_leadership"
           id={null}
@@ -93,7 +89,7 @@ export default async function HuddleUpdateCardWrapper() {
         id={ivr?.id}
       />
       <HuddleUpdateCard
-        title="Non Sterile"
+        title="Non-Sterile"
         value={nonsterile?.update_text ?? "Click to add"}
         type="nonsterile"
         id={nonsterile?.id}

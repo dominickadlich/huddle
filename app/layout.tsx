@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./ui/global.css";
+import "./global.css";
 import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import NavBar from "./ui/global/navbar";
@@ -11,19 +10,9 @@ export const metadata: Metadata = {
     default: "Pharmacy Huddle",
   },
   description:
-    "SStop juggling spreadsheets, missed messages, and scattered tools. Centralize your pharmacy operations with real-time insights, seamless communication, and data-driven workflows that keep your entire team aligned and ready to deliver exceptional patient care.",
+    "Stop juggling spreadsheets, missed messages, and scattered tools. Centralize your pharmacy operations with real-time insights, seamless communication, and data-driven workflows that keep your entire team aligned and ready to deliver exceptional patient care.",
   metadataBase: new URL("https://huddle-lime-gamma.vercel.app/"),
 };
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const inter = Inter({
   subsets: ["latin"],

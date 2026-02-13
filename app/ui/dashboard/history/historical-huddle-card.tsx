@@ -1,36 +1,42 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import { upsertDailySummaryField } from "@/app/lib/actions/daily-summary";
 import {
-  ChartBarIcon,
-  CakeIcon,
-  ExclamationTriangleIcon,
-  UserGroupIcon,
+  ArrowsPointingOutIcon,
+  LockClosedIcon,
+  BeakerIcon,
+  EyeDropperIcon,
+  PresentationChartLineIcon,
 } from "@heroicons/react/24/outline";
 
+
 const iconMap = {
-  census: ChartBarIcon,
-  tpn: CakeIcon,
-  hazardous: ExclamationTriangleIcon,
-  staffing: UserGroupIcon,
+  distribution: ArrowsPointingOutIcon,
+  csr: LockClosedIcon,
+  ivr: BeakerIcon,
+  nonsterile: EyeDropperIcon,
+  rx_leadership: PresentationChartLineIcon,
 };
 
-export default function HistoryDailySummaryCard({
-  id,
+const departmentMap = {
+  distribution: "Distribution",
+  csr: "CSR",
+  ivr: "IVR",
+  nonsterile: "Nonsterile",
+  rx_leadership: "RX Leadership",
+} as const;
+
+export default function HistoricalHuddleCard({
   title,
   value,
   type,
 }: {
-  id: string | null;
   title: string;
-  value: number | string | null;
-  type: "census" | "tpn" | "hazardous" | "staffing";
+  value: number | string | null | undefined;
+  type: "distribution" | "csr" | "ivr" | "nonsterile" | "rx_leadership";
 }) {
   const Icon = iconMap[type];
 
   return (
     <>
+    <div className="group relative overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30...">
         {/* Content */}
         <div className="relative z-10">
           {/* Header with Icon */}
@@ -49,9 +55,8 @@ export default function HistoryDailySummaryCard({
             <p className="text-xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">
               {value}
             </p>
-          {/* Bottom accent line */}
-          <div className="absolute bottom-0 left-0 right-0 h-0.25 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
+      </div>
     </>
   );
 }

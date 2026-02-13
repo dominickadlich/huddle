@@ -6,7 +6,7 @@ export function SignInButton() {
   return (
     <>
       <button
-        onClick={() => signIn("duosso")}
+        onClick={() => signIn("duosso", { callbackUrl: '/dashboard'})}
         className="group relative px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 transition-all duration-300"
       >
         Sign in with DUO
@@ -29,7 +29,7 @@ export function SignOutButton() {
 export function SignInNavBar() {
   return (
     <button
-      onClick={() => signIn("duosso")}
+      onClick={() => signIn("duosso", { callbackUrl: '/dashboard'})}
       className="group relative px-5 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-white/10"
     >
       Log in

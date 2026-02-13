@@ -38,7 +38,7 @@ export default function Calendar() {
     <div>
       {/* Month Selector */}
       <div>
-        <div className="mt-10 text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-9 xl:col-start-9">
+        <div className="text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 xl:col-start-9">
           <div className="flex items-center text-gray-900 dark:text-white">
             <button
               type="button"

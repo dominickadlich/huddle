@@ -50,3 +50,8 @@ export interface DashboardData {
     rx_leadership: HuddleUpdate | null;
   };
 }
+
+export type DepartmentUpdate = {
+  id: string;
+  update_text: string | null;
+} | null;
