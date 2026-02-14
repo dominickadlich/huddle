@@ -35,7 +35,7 @@ export default function DisplayHistoricalData({
     return (
         <>
             <div className="w-full h-full">
-                <div className="grid grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                     <HistoricalSummaryCard
                         title="Census"
                         value={census ? census : "No Data"}

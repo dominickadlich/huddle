@@ -15,14 +15,6 @@ const iconMap = {
   rx_leadership: PresentationChartLineIcon,
 };
 
-const departmentMap = {
-  distribution: "Distribution",
-  csr: "CSR",
-  ivr: "IVR",
-  nonsterile: "Nonsterile",
-  rx_leadership: "RX Leadership",
-} as const;
-
 export default function HistoricalHuddleCard({
   title,
   value,

@@ -13,7 +13,7 @@ export default function NavBar({}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Use NextAuth session instead of local state
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
 
   const handleSignOut = async () => {

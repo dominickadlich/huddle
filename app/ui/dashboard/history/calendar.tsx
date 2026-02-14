@@ -1,7 +1,7 @@
 'use client'
 
 import GenrateCalendarDates from "./calendar-date-generator";
-import { addMonths, format, parseISO, setDate, subMonths } from "date-fns";
+import { addMonths, format, parseISO, subMonths } from "date-fns";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -39,28 +39,9 @@ export default function Calendar() {
       {/* Month Selector */}
       <div>
         <div className="text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 xl:col-start-9">
-          <div className="flex items-center text-gray-900 dark:text-white">
-            <button
-              type="button"
-              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
-              onClick={handleSubMonth}
-            >
-              <span className="sr-only">Previous month</span>
-              <ChevronLeftIcon aria-hidden="true" className="size-5" />
-            </button>
-            <div className="flex-auto text-sm font-semibold">{format(currentMonth, 'MMMM yyyy')}</div>
-            <button
-              type="button"
-              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
-              onClick={handleAddMonth}
-            >
-              <span className="sr-only">Next month</span>
-              <ChevronRightIcon aria-hidden="true" className="size-5" />
-            </button>
-          </div>
 
           {/* Header */}
-          <div className="mt-6 grid grid-cols-7 text-xs/6 text-gray-500 dark:text-gray-400">
+          <div className="grid grid-cols-7 text-xs/6 text-gray-500 dark:text-gray-400">
             <div>S</div>
             <div>M</div>
             <div>T</div>
@@ -88,6 +69,25 @@ export default function Calendar() {
                 </time>
               </button>
             ))}
+          </div>
+          <div className="mt-5 flex items-center text-gray-900 dark:text-white">
+            <button
+              type="button"
+              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
+              onClick={handleSubMonth}
+            >
+              <span className="sr-only">Previous month</span>
+              <ChevronLeftIcon aria-hidden="true" className="size-5" />
+            </button>
+            <div className="flex-auto text-sm font-semibold">{format(currentMonth, 'MMMM yyyy')}</div>
+            <button
+              type="button"
+              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
+              onClick={handleAddMonth}
+            >
+              <span className="sr-only">Next month</span>
+              <ChevronRightIcon aria-hidden="true" className="size-5" />
+            </button>
           </div>
         </div>
       </div>

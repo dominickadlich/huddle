@@ -14,7 +14,7 @@ export default function DirectoryClient() {
         keys: ["location", "phone", "category"],
         threshold: 0.3,
       }),
-    [directory],
+    [],
   );
 
   function handleSearchQuery(e: { target: { value: SetStateAction<string> } }) {
