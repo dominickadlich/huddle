@@ -1,6 +1,7 @@
 -- ============================================
 -- RESET
--- WARNING: This drops ALL data - only use in development!
+-- WARNING: This drops ALL data
+-- ONLY USE IN DEVELOPMENT!!!
 -- ============================================
 
 
@@ -15,6 +16,17 @@ drop table if exists public.iv_room cascade;
 drop table if exists public.command_center cascade;
 drop table if exists public.distribution cascade;
 drop table if exists public.non_sterile cascade;
+
+
+-- ============================================
+-- TRIGGERS
+-- ============================================
+drop function if exists sync_iv_room_to_daily_summary cascade;
+drop function if exists upsert_huddle_summary cascade;
+drop function if exists sync_iv_room_summary cascade;
+drop function if exists sync_command_center_summary cascade;
+drop function if exists sync_distribution_summary cascade;
+drop function if exists sync_non_sterile_summary cascade;
 
 
 -- ============================================

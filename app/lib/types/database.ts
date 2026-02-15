@@ -1,25 +1,55 @@
 // ============================================
 // Import Supabase-generated types
 // ============================================
-import type { Database, Tables, TablesInsert, TablesUpdate } from "./supabse";
+import type { Database, Tables, TablesInsert, TablesUpdate } from "./supabase";
+
+
 
 // ============================================
 // RE-EXPORT Supabase types
 // ============================================
 export type { Database, Tables, TablesInsert, TablesUpdate };
 
-// Type aliases for tables
+
+
+// ============================================
+// Type Aliases
+// ============================================
+
+// Users
 export type User = Tables<"users">;
+
+// Daily Summary
 export type DailySummary = Tables<"daily_summary">;
-export type HuddleUpdate = Tables<"huddle_updates">;
-
-// Insert types (for creating new records)
 export type DailySummaryInsert = TablesInsert<"daily_summary">;
-export type HuddleUpdateInsert = TablesInsert<"huddle_updates">;
-
-// Update types (for partial updates)
 export type DailySummaryUpdate = TablesUpdate<"daily_summary">;
+
+// Huddle Updates
+export type HuddleUpdate = Tables<"huddle_updates">;
+export type HuddleUpdateInsert = TablesInsert<"huddle_updates">;
 export type HuddleUpdateUpdate = TablesUpdate<"huddle_updates">;
+
+// IV Room
+export type IvRoom = Tables<'iv_room'>;
+export type IvRoomInsert = TablesInsert<'iv_room'>;
+export type IvRoomUpdate = TablesUpdate<'iv_room'>;
+
+// Command Center
+export type CommandCenter = Tables<'command_center'>;
+export type CommandCenterInsert = TablesInsert<'command_center'>;
+export type CommandCenterUpdate = TablesUpdate<'command_center'>;
+
+// Distribution
+export type Distribution = Tables<'distribution'>;
+export type DistributionInsert = TablesInsert<'distribution'>;
+export type DistributionUpdate = TablesUpdate<'distribution'>;
+
+// Nonsterile
+export type NonSterile = Tables<'non_sterile'>;
+export type NonSterileInsert = TablesInsert<'non_sterile'>;
+export type NonSterileUpdate = TablesUpdate<'non_sterile'>;
+
+
 
 // ============================================
 // CUSTOM ENUMS (for app logic)
@@ -33,6 +63,8 @@ export type DepartmentType =
   | "Nonsterile"
   | "RX Leadership";
 
+
+  
 // ============================================
 // COMPOSITE TYPES (for joined queries)
 // ============================================
