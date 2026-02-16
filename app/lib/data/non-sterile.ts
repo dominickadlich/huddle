@@ -1,14 +1,14 @@
 import { createClient } from "../supabase/server";
-import type { Distribution } from "../types/database";
+import type { NonSterile } from "../types/database";
 
 // ============================================
-// Fetch Latest Distribution Data
+// Fetch Latest Nonsterile By Date
 // ============================================
-export async function fetchLatestDistribution(): Promise<Distribution | null> {
+export async function fetchLatestNonsterile(): Promise<NonSterile | null> {
     const supabase = await createClient()
 
     const { data, error } = await supabase
-        .from('distribution')
+        .from('non_sterile')
         .select('*')
         .order('date', { ascending: false })
         .order('created_at', { ascending: false })
@@ -16,32 +16,31 @@ export async function fetchLatestDistribution(): Promise<Distribution | null> {
         .single();
 
     if (error) {
-        if (error.code === 'PGRST116') return null; // No row found
+        if (error.code === 'PGRST116') return null;
         throw error;
     }
 
     return data;
 }
 
-
 // ============================================
-// Fetch Distribution By Date
+// Fetch Nonsterile By Date
 // ============================================
-export async function fetchDistributionByDate(
+export async function fetchNonsterileByDate(
     date: string,
     shift: string
-): Promise<Distribution | null> {
+): Promise<NonSterile | null> {
     const supabase = await createClient()
 
     const { data, error } = await supabase
-        .from('distribution')
+        .from('non_sterile')
         .select('*')
         .eq('date', date)
         .eq('shift', shift)
         .single()
 
     if (error) {
-        if (error.code === 'PGRST116') return null; // No rows found
+        if (error.code === 'PGRST116') return null; // No row found
         throw error
     }
 
@@ -52,18 +51,18 @@ export async function fetchDistributionByDate(
 // ============================================
 // Fetch Last 7 IV Room Data
 // ============================================
-export async function fetchRecentDistribution(
+export async function fetchRecentNonsterile(
     limit: number = 7
-): Promise<Distribution[]> {
+): Promise<NonSterile[]> {
     const supabase = await createClient()
 
     const { data, error } = await supabase
-        .from('distribution')
+        .from('non_sterile')
         .select('*')
         .order('date', { ascending: false})
         .limit(limit)
 
     if (error) throw error;
 
-    return data ?? []; 
+    return data ?? [];
 }
