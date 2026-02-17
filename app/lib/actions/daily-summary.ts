@@ -15,7 +15,6 @@ import { getCurrentShift } from "../utils";
 // ============================================
 // ZOD VALIDATION SCHEMAS
 // ============================================
-
 const DailySummarySchema = z.object({
   date: z
     .string()
@@ -34,7 +33,6 @@ const DailySummarySchema = z.object({
 // ============================================
 // STATE TYPES FOR FORM ACTIONS
 // ============================================
-
 export type DailySummaryState = {
   errors?: {
     date?: string[];
@@ -55,7 +53,6 @@ export type DailySummaryState = {
 // ============================================
 // UPSERT DAILY SUMMARY (Create or Update)
 // ============================================
-
 export async function upsertDailySummary(
   prevState: DailySummaryState,
   formData: FormData,
@@ -228,7 +225,6 @@ export async function upsertDailySummaryField(
 // ============================================
 // GENERIC FIELD UPDATER
 // ============================================
-
 export async function updateDailySummaryField(
   id: string,
   field: keyof DailySummaryUpdate,
@@ -266,7 +262,6 @@ export async function updateDailySummaryField(
 // ============================================
 // DELETE DAILY SUMMARY
 // ============================================
-
 export async function deleteDailySummary(id: string): Promise<{
   success: boolean;
   message: string;
@@ -332,20 +327,3 @@ export async function getOrCreateDailySummary(
     throw new Error("Failed to get or create daily summary");
   }
 }
-
-// ============================================
-// USAGE EXAMPLES (for reference in frontend)
-// ============================================
-
-/*
-// Example 1: Upsert entire daily summary (form submission)
-const result = await upsertDailySummary(prevState, formData);
-
-// Example 2: Update single field (click-to-edit)
-const result = await updateDailySummaryField(summaryId, 'census', 42);
-const result = await updateDailySummaryField(summaryId, 'staffing', 'Full');
-const result = await updateDailySummaryField(summaryId, 'tpn', '22 total');
-
-// Example 3: Delete a daily summary
-const result = await deleteDailySummary(summaryId);
-*/
