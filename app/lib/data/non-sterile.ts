@@ -1,10 +1,10 @@
 import { createClient } from "../supabase/server";
-import type { NonSterile } from "../types/database";
+import type { Nonsterile } from "../types/database";
 
 // ============================================
 // Fetch Latest Nonsterile By Date
 // ============================================
-export async function fetchLatestNonsterile(): Promise<NonSterile | null> {
+export async function fetchLatestNonsterile(): Promise<Nonsterile | null> {
     const supabase = await createClient()
 
     const { data, error } = await supabase
@@ -29,7 +29,7 @@ export async function fetchLatestNonsterile(): Promise<NonSterile | null> {
 export async function fetchNonsterileByDate(
     date: string,
     shift: string
-): Promise<NonSterile | null> {
+): Promise<Nonsterile | null> {
     const supabase = await createClient()
 
     const { data, error } = await supabase
@@ -53,7 +53,7 @@ export async function fetchNonsterileByDate(
 // ============================================
 export async function fetchRecentNonsterile(
     limit: number = 7
-): Promise<NonSterile[]> {
+): Promise<Nonsterile[]> {
     const supabase = await createClient()
 
     const { data, error } = await supabase
