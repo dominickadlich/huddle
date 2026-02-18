@@ -23,7 +23,7 @@ const ivRoomTextAreaFields = [
     { key: 'opportunities', title: 'Opportunities' },
 ] as const;
 
-export default function Page({ initialData }: {initialData: IvRoom}) {
+export function Page({ initialData }: {initialData: IvRoom}) {
     const [isEditMode, setIsEditMode] = useState(false);
     const [fields, setFields] = useState(initialData || {})
 
