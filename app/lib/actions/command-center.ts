@@ -1,4 +1,4 @@
-"use sever";
+"use server";
 
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
@@ -25,7 +25,7 @@ const CommandCenterBaseSchema = z.object({
     workload_cmd: z.string().nullable().optional(),
 })
 
-const CommandCenterScheme = z.object({
+const CommandCenterSchema = z.object({
     ...CommandCenterBaseSchema.shape,
     ...SharedSchema.shape
 })
@@ -33,17 +33,193 @@ const CommandCenterScheme = z.object({
 // ============================================
 // STATE TYPES FOR FORM ACTIONS
 // ============================================
-export type CommandCenterUpdateSchema = {
+export type CommandCenterUpdateState = {
     errors?: SharedErrors & {
         date?: string[];
         shift?: string[];
         hot_spots?: string[];
         ca_tpn?: string[];
         hc_tpn?: string[];
-        workload_cst: string[];
-        workload_cmd: string[];
-        _form?: string[]
+        workload_csr?: string[];
+        workload_cmd?: string[];
+        _form?: string[];
     }
     message?: string | null;
     data?: CommandCenter | null
+}
+
+
+// ============================================
+// UPSERT Command Center (Create or Update)
+// ============================================
+export async function upsertCommandCenter(
+    prevState: CommandCenterUpdateState,
+    formData: FormData
+): Promise<CommandCenterUpdateState> {
+    try {
+        const { supabase, userId } = await getAuthenticatedClient()
+
+        const rawData = {
+            date: formData.get('date'),
+            shift: formData.get('shift'),
+            hot_spots: formData.get('hot_spots') || null,
+            ca_tpn: formData.get('ca_tpn') || null,
+            hc_tpn: formData.get('hc_tpn') || null,
+            workload_csr: formData.get('workload_csr') || null,
+            workload_cmd: formData.get('workload_cmd') || null,
+            safety: formData.get('safety') || null,
+            barriers: formData.get('barriers') || null,
+            wins: formData.get('wins') || null,
+            opportunities: formData.get('opportunities') || null,
+            announcements: formData.get('announcements') || null,
+            summary_text: formData.get('summary_text') || null
+        }
+
+        const validatedFields = CommandCenterSchema.safeParse(rawData);
+
+        if (!validatedFields.success) {
+            return {
+                errors: validatedFields.error.flatten().fieldErrors,
+                message: 'Invalid fields. Please double check your input.'
+            };
+        }
+
+        const { date, shift, ...fields } = validatedFields.data;
+
+        // Check if Command Center exists
+        const { data: existing, error: existingError } = await supabase
+            .from('command_center')
+            .select('id')
+            .eq('date', date)
+            .eq('shift', shift)
+            .single()
+
+        if (existingError && existingError.code !== 'PGRST116') {
+            throw existingError;
+        }
+
+        if (existing) {
+            // UPDATE existing record
+            const updateData: CommandCenterUpdate = {
+                ...fields,
+                updated_by: userId,
+                updated_at: new Date().toISOString(),
+            };
+
+            const { data, error } = await supabase
+                .from('command_center')
+                .update(updateData)
+                .eq('id', existing.id)
+                .select()
+                .single()
+
+            if (error) throw error;
+
+            revalidatePath('/dashboard')
+
+            return {
+                message: 'Command Center Data has been updated successfully!',
+                data
+            };
+        } else {
+            // CREATE new record 
+            const insertData: CommandCenterInsert = {
+                date,
+                shift,
+                ...fields,
+                created_by: userId,
+                updated_by: userId,
+            };
+
+            const { data, error } = await supabase
+                .from('command_center')
+                .insert(insertData)
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            revalidatePath('/dashboard')
+
+            return {
+                message: 'Command Center data created successfully!',
+                data,
+            };
+        }
+    } catch (error) {
+        console.error('Failed to save Command Center data:', error);
+        return {
+            message: 'Database error: Failed to save Command Center data.'
+        }
+    }
+}
+
+
+// ============================================
+// GENERIC FIELD UPDATER
+// ============================================
+export async function updateCommandCenterField(
+  id: string,
+  field: keyof CommandCenterUpdate,
+  value: string | null,
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const { supabase, userId } = await getAuthenticatedClient();
+
+    const { error } = await supabase
+      .from("command_center")
+      .update({
+        [field]: value,
+        updated_by: userId,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", id);
+
+    if (error) throw error;
+
+    revalidatePath("/dashboard");
+
+    return {
+      success: true,
+      message: `${String(field)} updated successfully!`,
+    };
+  } catch (error) {
+    console.error(`Failed to update ${String(field)}:`, error);
+    return {
+      success: false,
+      message: `Failed to update ${String(field)}.`,
+    };
+  }
+}
+
+// ============================================
+// DELETE Command Center Data
+// ============================================
+export async function deleteCommandCenter(id: string): Promise<{
+  success: boolean;
+  message: string;
+}> {
+  try {
+    const { supabase } = await getAuthenticatedClient();
+
+    const { error } = await supabase
+      .from("command_center")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    revalidatePath("/dashboard");
+
+    return {
+      success: true,
+      message: "Command Center data deleted successfully!",
+    };
+  } catch (error) {
+    console.error("Failed to delete Command Center data:", error);
+    return {
+      success: false,
+      message: "Database error: Failed to delete Command Center data.",
+    };
+  }
 }

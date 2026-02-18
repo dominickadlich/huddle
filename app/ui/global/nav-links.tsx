@@ -4,6 +4,8 @@ import {
   BookOpenIcon,
   PhoneIcon,
   ArrowUpOnSquareIcon,
+  CalendarIcon,
+  ArrowsPointingInIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -25,6 +27,16 @@ const links = [
     href: "/WDIP",
     icon: ArrowUpOnSquareIcon,
   },
+  {
+    name: 'History',
+    href: '/dashboard/history',
+    icon: CalendarIcon
+  },
+  {
+    name: 'Mini-Huddles',
+    href: '/mini-huddle/iv-room',
+    icon: ArrowsPointingInIcon
+  }
 ];
 
 export default function NavLinks() {

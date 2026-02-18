@@ -45,9 +45,9 @@ export type DistributionInsert = TablesInsert<'distribution'>;
 export type DistributionUpdate = TablesUpdate<'distribution'>;
 
 // Nonsterile
-export type NonSterile = Tables<'non_sterile'>;
-export type NonSterileInsert = TablesInsert<'non_sterile'>;
-export type NonSterileUpdate = TablesUpdate<'non_sterile'>;
+export type Nonsterile = Tables<'non_sterile'>;
+export type NonsterileInsert = TablesInsert<'non_sterile'>;
+export type NonsterileUpdate = TablesUpdate<'non_sterile'>;
 
 
 

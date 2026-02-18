@@ -185,7 +185,7 @@ export async function upsertIVRoom(
 // ============================================
 // GENERIC FIELD UPDATER
 // ============================================
-export async function updateDailySummaryField(
+export async function updateIVRoomField(
   id: string,
   field: keyof IvRoomUpdate,
   value: string | null,
@@ -222,7 +222,7 @@ export async function updateDailySummaryField(
 // ============================================
 // DELETE IV Room Data
 // ============================================
-export async function deleteDailySummary(id: string): Promise<{
+export async function deleteIVRoom(id: string): Promise<{
   success: boolean;
   message: string;
 }> {
