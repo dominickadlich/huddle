@@ -1,30 +1,28 @@
+import { fetchLatestIVRoom } from "@/app/lib/data/iv-room";
+import { fetchLatestDailySummary } from "@/app/lib/data";
 import PageClient from "./page-client";
+import { IvRoom } from "@/app/lib/types/database";
 
-export default function Page() {
+export default async function Page() {
+    const ivRoomData = await fetchLatestIVRoom();
+    const dailySummary = await fetchLatestDailySummary();
+
+    // Handle null case - show empty state or use defaults
+    if (!ivRoomData) {
+        return (
+            <PageClient 
+                initialData={{} as IvRoom}  // Empty object cast to type
+                census={dailySummary?.census ?? null}
+                shiftLead={dailySummary?.shift_lead ?? null}
+            />
+        );
+    }
+
     return (
-        <PageClient initialData={{
-            announcements: null,
-            assignment_two: null,
-            barriers: null,
-            bell_iv: null,
-            created_at: null,
-            created_by: null,
-            date: "",
-            hazardous: null,
-            id: "",
-            inventory: null,
-            iv_support: null,
-            opportunities: null,
-            safety: null,
-            sc: null,
-            shift: "",
-            summary_text: null,
-            team_building: null,
-            tpn: null,
-            training: null,
-            updated_at: null,
-            updated_by: null,
-            wins: null
-        }} />
+        <PageClient 
+            initialData={ivRoomData} 
+            census={dailySummary?.census ?? null}
+            shiftLead={dailySummary?.shift_lead ?? null}
+        />
     )
 }

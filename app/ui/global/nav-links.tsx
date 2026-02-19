@@ -18,6 +18,16 @@ const links = [
     icon: BookOpenIcon,
   },
   {
+    name: 'History',
+    href: '/dashboard/history',
+    icon: CalendarIcon
+  },
+  {
+    name: 'Mini-Huddles',
+    href: '/mini-huddle/iv-room',
+    icon: ArrowsPointingInIcon
+  },
+  {
     name: "Directory",
     href: "/directory",
     icon: PhoneIcon,
@@ -27,16 +37,6 @@ const links = [
     href: "/WDIP",
     icon: ArrowUpOnSquareIcon,
   },
-  {
-    name: 'History',
-    href: '/dashboard/history',
-    icon: CalendarIcon
-  },
-  {
-    name: 'Mini-Huddles',
-    href: '/mini-huddle/iv-room',
-    icon: ArrowsPointingInIcon
-  }
 ];
 
 export default function NavLinks() {

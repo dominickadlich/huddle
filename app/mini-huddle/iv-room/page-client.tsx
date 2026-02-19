@@ -1,8 +1,10 @@
 'use client'
 
 import { IvRoom } from "@/app/lib/types/database";
+import GenerateSummary from "@/app/ui/mini-huddle/generate-summary";
 import Header from "@/app/ui/global/header";
 import  IVCard from "@/app/ui/mini-huddle/iv-room/iv_card";
+import TeamBuildingTextArea from "@/app/ui/mini-huddle/iv-room/team-building-text-area";
 import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/mini-huddle/shared-text-area";
 import { useState } from "react"
 
@@ -23,25 +25,43 @@ const ivRoomTextAreaFields = [
     { key: 'opportunities', title: 'Opportunities' },
 ] as const;
 
-export default function PageClient({ initialData }: {initialData: IvRoom}) {
+export default function PageClient({ 
+    initialData,
+    census,
+    shiftLead
+}: {
+    initialData: IvRoom;
+    census: number | null;
+    shiftLead: string | null;
+}) {
     const [isEditMode, setIsEditMode] = useState(false);
     const [fields, setFields] = useState(initialData || {})
+    const [showSummaryModal, setShowSummaryModal] = useState(false);
 
     return (
         <div className="mt-20">
-        <Header title="IV Room Dashboard" census={null} shiftlead={null}/>
-        <div className="mt-10 grid grid-cols-[20%_1fr] gap-6">
+        <Header title="IV Room Dashboard" census={census} shiftlead={shiftLead}/>
+        <div className="mt-10 lg:grid grid-cols-[20%_1fr] gap-6">
             <div>
-                <AnnouncementTextArea value={undefined} isEditMode={isEditMode} />
+                <AnnouncementTextArea 
+                    value={fields.announcements}
+                    isEditMode={isEditMode}
+                    onChange={(val) => setFields({...fields, announcements: val})}
+                />
             </div>
 
             <div>
                 <div className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
-                    <button
-                onClick={() => setIsEditMode(true)}
-            >
-                {isEditMode ? 'Cancel' : 'Edit'}
-            </button>
+                    <div className="grid grid-cols-2">
+                        <button onClick={() => setShowSummaryModal(true)}>
+                            Submit
+                        </button>
+                        <button
+                            onClick={() => setIsEditMode(!isEditMode)}
+                        >
+                            {isEditMode ? 'Cancel' : 'Edit'}
+                        </button>
+                    </div>
                     {ivRoomCardFields.map(({ key, title }) => (
                         <IVCard 
                             key={key}
@@ -65,8 +85,26 @@ export default function PageClient({ initialData }: {initialData: IvRoom}) {
                         />
                     ))}
                 </div>
-            </div>
+                <div className="mt-4">
+                    <TeamBuildingTextArea 
+                        value={fields.team_building}
+                        isEditMode={isEditMode}
+                        onChange={(val) => setFields({...fields, team_building: val})}
+                    />
+                </div>
+        
+
+        <GenerateSummary 
+            fields={fields}
+            open={showSummaryModal}
+            onClose={() => setShowSummaryModal(false)}
+            onSave={(summary) => {
+                setFields({...fields, summary_text: summary});
+                setShowSummaryModal(false);
+            }}
+        />
         </div>
+            </div>
         </div>
     )
 }
