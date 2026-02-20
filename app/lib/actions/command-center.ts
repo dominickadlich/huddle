@@ -8,7 +8,7 @@ import type {
     CommandCenterInsert,
     CommandCenterUpdate,
 } from '../types/database'
-import { SharedSchema, type SharedErrors } from './iv-room';
+import { SharedSchema, type SharedErrors } from '../types/huddle-schemas';
 
 // ============================================
 // ZOD VALIDATION SCHEMAS
