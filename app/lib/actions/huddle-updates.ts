@@ -10,7 +10,7 @@ import type {
   HuddleUpdateUpdate,
   DepartmentType,
 } from "../types/database";
-import { getCurrentShift } from "../utils";
+import { getCurrentShift, getLocalDate } from "../utils";
 
 // ============================================
 // ZOD VALIDATION SCHEMAS
@@ -88,7 +88,6 @@ export async function upsertHuddleUpdate(
       const updateData: HuddleUpdateUpdate = {
         update_text,
         updated_by: userId,
-        updated_at: new Date().toISOString(),
       };
 
       const { data, error } = await supabase
@@ -150,8 +149,7 @@ export async function upsertHuddleUpdateField(
     const { supabase, userId } = await getAuthenticatedClient();
 
     const shift = getCurrentShift();
-    const date = new Date().toISOString().split("T")[0];
-
+    const date = getLocalDate();
     const summaryId = await getOrCreateDailySummary(date, shift);
 
     // 3. Check if record exists for today + current shift
@@ -169,7 +167,6 @@ export async function upsertHuddleUpdateField(
         .update({
           update_text: value,
           updated_by: userId,
-          updated_at: new Date().toISOString(),
         })
         .eq("id", existing.id);
 
@@ -269,7 +266,6 @@ export async function updateDepartmentText(
         .update({
           update_text: updateText,
           updated_by: userId,
-          updated_at: new Date().toISOString(),
         })
         .eq("id", existing.id);
 

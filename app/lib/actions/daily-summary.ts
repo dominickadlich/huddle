@@ -10,7 +10,7 @@ import type {
   DailySummaryUpdate,
   ShiftType,
 } from "../types/database";
-import { getCurrentShift } from "../utils";
+import { getCurrentShift, getLocalDate } from "../utils";
 
 // ============================================
 // ZOD VALIDATION SCHEMAS
@@ -102,7 +102,6 @@ export async function upsertDailySummary(
       const updateData: DailySummaryUpdate = {
         ...fields,
         updated_by: userId,
-        updated_at: new Date().toISOString(),
       };
 
       const { data, error } = await supabase
@@ -164,7 +163,7 @@ export async function upsertDailySummaryField(
     const { supabase, userId } = await getAuthenticatedClient();
 
     const shift = getCurrentShift();
-    const date = new Date().toISOString().split("T")[0];
+    const date = getLocalDate();
 
     // 3. Check if record exists for today + current shift
     const { data: existing } = await supabase
@@ -181,7 +180,6 @@ export async function upsertDailySummaryField(
         .update({
           [field]: value,
           updated_by: userId,
-          updated_at: new Date().toISOString(),
         })
         .eq("id", existing.id);
 
@@ -238,7 +236,6 @@ export async function updateDailySummaryField(
       .update({
         [field]: value,
         updated_by: userId,
-        updated_at: new Date().toISOString(),
       })
       .eq("id", id);
 

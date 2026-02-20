@@ -8,6 +8,7 @@ begin
   set 
     tpn = NEW.tpn,
     hazardous = NEW.hazardous,
+    updated_by = NEW.updated_by,
     updated_at = now()
   where 
     date = NEW.date        -- Match same date
@@ -28,43 +29,44 @@ create trigger trigger_sync_iv_room_to_daily_summary
 -- HELPER: Upsert into huddle_updates
 -- ============================================
 create or replace function upsert_huddle_summary(
-  p_date date, -- 'p_' prefix = parameter (convention)
+  p_date date,
   p_shift text,
-  p_department text, -- Dynamic pience
-  p_summary_text text
+  p_department text,
+  p_summary_text text,
+  p_user_id text
 )
-returns void as $$ -- 'void' means it returns nothing (just does work)
+returns void as $$
 declare
   v_summary_id uuid;
 begin
-  -- Step 1: Find daily_summary id
+  -- Find OR CREATE daily_summary
   select id into v_summary_id
   from public.daily_summary
-  where date = p_date
-    and shift = p_shift;
-
-  -- Step 2: Only proceed if daily_summary exists
-  if v_summary_id is not null then
-    -- Insert if new, Update if exists
-    insert into public.huddle_updates(
-      daily_summary_id,
-      department,
-      update_text,
-      updated_at
-    )
-    values (
-      v_summary_id,
-      p_department,
-      p_summary_text,
-      now()
-    )
-    on conflict (daily_summary_id, department)
-    do update set
-      update_text = excluded.update_text,
-      updated_at = now();
+  where date = p_date and shift = p_shift;
+  
+  if v_summary_id is null then
+    insert into public.daily_summary (date, shift, created_by, updated_by)
+    values (p_date, p_shift, p_user_id, p_user_id)
+    returning id into v_summary_id;
   end if;
+  
+  -- Upsert into huddle_updates
+  insert into public.huddle_updates(
+    daily_summary_id,
+    department,
+    update_text,
+    created_by,
+    updated_by,
+    updated_at
+  )
+  values (v_summary_id, p_department, p_summary_text, p_user_id, p_user_id, now())
+  on conflict (daily_summary_id, department)
+  do update set
+    update_text = excluded.update_text,
+    updated_by = p_user_id,
+    updated_at = now();
 end;
-$$ language plpgsql;
+$$ language plpgsql security definer; 
 
 
 -- ============================================
@@ -77,7 +79,8 @@ begin
     NEW.date,
     NEW.shift,
     'IVR',
-    NEW.summary_text
+    NEW.summary_text,
+    NEW.updated_by
   );
   return NEW;
 end;
@@ -101,7 +104,8 @@ begin
     NEW.date,
     NEW.shift,
     'CSR',
-    NEW.summary_text
+    NEW.summary_text,
+    NEW.updated_by
   );
   return NEW;
 end;
@@ -123,7 +127,8 @@ begin
     NEW.date,
     NEW.shift,
     'Distribution',
-    NEW.summary_text
+    NEW.summary_text,
+    NEW.updated_by
   );
   return NEW;
 end;
@@ -145,7 +150,8 @@ begin
     NEW.date,
     NEW.shift,
     'Nonsterile',
-    NEW.summary_text
+    NEW.summary_text,
+    NEW.updated_by
   );
   return NEW;
 end;

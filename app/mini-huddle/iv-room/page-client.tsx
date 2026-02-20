@@ -7,6 +7,9 @@ import  IVCard from "@/app/ui/mini-huddle/iv-room/iv_card";
 import TeamBuildingTextArea from "@/app/ui/mini-huddle/iv-room/team-building-text-area";
 import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/mini-huddle/shared-text-area";
 import { useState } from "react"
+import { upsertIVRoom } from "@/app/lib/actions/iv-room";
+import { useRouter } from "next/navigation";
+import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
 
 const ivRoomCardFields = [
   { key: 'bell_iv', title: 'Bell IV' },
@@ -34,6 +37,7 @@ export default function PageClient({
     census: number | null;
     shiftLead: string | null;
 }) {
+    const router = useRouter();
     const [isEditMode, setIsEditMode] = useState(false);
     const [fields, setFields] = useState(initialData || {})
     const [showSummaryModal, setShowSummaryModal] = useState(false);
@@ -51,17 +55,16 @@ export default function PageClient({
             </div>
 
             <div>
+                
                 <div className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
-                    <div className="grid grid-cols-2">
-                        <button onClick={() => setShowSummaryModal(true)}>
-                            Submit
-                        </button>
-                        <button
-                            onClick={() => setIsEditMode(!isEditMode)}
-                        >
-                            {isEditMode ? 'Cancel' : 'Edit'}
-                        </button>
-                    </div>
+                   <div className="flex gap-4 mb-4">
+                    <button onClick={() => setIsEditMode(!isEditMode)}>
+                        {isEditMode ? 'Cancel' : 'Edit'}
+                    </button>
+                    <button onClick={() => setShowSummaryModal(true)}>
+                        Submit
+                    </button>
+                </div>
                     {ivRoomCardFields.map(({ key, title }) => (
                         <IVCard 
                             key={key}
@@ -98,9 +101,27 @@ export default function PageClient({
             fields={fields}
             open={showSummaryModal}
             onClose={() => setShowSummaryModal(false)}
-            onSave={(summary) => {
-                setFields({...fields, summary_text: summary});
-                setShowSummaryModal(false);
+            onSave={async (summary) => {
+                const localDate = getLocalDate()
+                const currentShift = getCurrentShift(); // Make sure this is imported!
+                
+                const dataToSave = {
+                    ...fields,
+                    summary_text: summary,
+                    date: localDate,
+                    shift: currentShift,
+                };
+
+                const result = await upsertIVRoom(dataToSave)
+
+                if (result.success) {
+                    setShowSummaryModal(false);
+                    setIsEditMode(false);
+                    router.push('/dashboard');  // ← Use router.push, not redirect
+                    router.refresh();  // ← Refresh to see new data
+                } else {
+                    alert(result.message);  // ← Show error to user
+                }
             }}
         />
         </div>

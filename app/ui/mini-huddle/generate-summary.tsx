@@ -1,7 +1,7 @@
 import { CommandCenter, Distribution, IvRoom, Nonsterile } from "@/app/lib/types/database";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function GenerateSummary({
     fields,
@@ -14,15 +14,18 @@ export default function GenerateSummary({
     onSave: (value: string) => void;
     onClose: () => void;
 }) {
-    const parts = []
+  const [editedSummary, setEditedSummary] = useState('');
 
-    if (fields.safety) parts.push(`Safety: ${fields.safety.substring(0, 50)}`)
-    if (fields.barriers) parts.push(`Barriers: ${fields.barriers.substring(0, 50)}`)  
-    if (fields.wins) parts.push(`Wins: ${fields.wins.substring(0, 50)}`)
-
-    const summary = parts.join('. ')
-
-    const [editedSummary, setEditedSummary] = useState(summary);
+    useEffect(() => {
+        if (open) {
+            const parts = [];
+            if (fields.safety) parts.push(`Safety: ${fields.safety.substring(0, 50)}`);
+            if (fields.barriers) parts.push(`Barriers: ${fields.barriers.substring(0, 50)}`);
+            if (fields.wins) parts.push(`Wins: ${fields.wins.substring(0, 50)}`);
+            
+            setEditedSummary(parts.join('. '));
+        }
+    }, [open, fields]);
 
     return (
     <div>

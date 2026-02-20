@@ -1,184 +1,53 @@
 "use server";
 
-import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { getAuthenticatedClient } from '../supabase/auth-helpers';
-import type {
-    IvRoom,
-    IvRoomInsert,
-    IvRoomUpdate,
-} from '../types/database'
+import type { IvRoomUpdate } from '../types/database'
+import { IVRoomSchema } from '../types/huddle-schemas';
 
-// ============================================
-// ZOD VALIDATION SCHEMAS
-// ============================================
-const IVRoomBaseSchema = z.object({
-    date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-    shift: z.enum(["morning", "afternoon", "evening"]),
-    bell_iv: z.string().nullable().optional(),
-    tpn: z.string().nullable().optional(),
-    hazardous: z.string().nullable().optional(),
-    sc: z.string().nullable().optional(),
-    assignment_two: z.string().nullable().optional(),
-    training: z.string().nullable().optional(),
-    iv_support: z.string().nullable().optional(),
-    inventory: z.string().nullable().optional(),
-    team_building: z.string().nullable().optional(),
-});
-
-export const SharedSchema = z.object({
-    safety: z.string().nullable().optional(),
-    barriers: z.string().nullable().optional(),
-    wins: z.string().nullable().optional(),
-    opportunities: z.string().nullable().optional(),
-    announcements: z.string().nullable().optional(),
-    summary_text: z.string().nullable().optional(),
-});
-
-const IVRoomSchema = z.object({
-    ...IVRoomBaseSchema.shape,
-    ...SharedSchema.shape
-})
-
-// ============================================
-// STATE TYPES FOR FORM ACTIONS
-// ============================================
-export type SharedErrors = {
-    safety?: string[],
-    barriers?: string[],
-    wins?: string[],
-    opportunities?: string[],
-    announcements?: string[],
-    summary_text?: string[]
-}
-
-export type IVRoomUpdateState = {
-    errors?: SharedErrors & {
-        date?: string[];
-        shift?: string[];
-        bell_iv?: string[];
-        tpn?: string[];
-        hazardous?: string[];
-        sc?: string[];
-        assignment_two?: string[];
-        training?: string[];
-        iv_support?: string[];
-        inventory?: string[],
-        team_building?: string[],
-        _form?: string[];
-    }
-    message?: string | null;
-    data?: IvRoom | null;
-}
 
 // ============================================
 // UPSERT IV Room (Create or Update)
 // ============================================
 export async function upsertIVRoom(
-    prevState: IVRoomUpdateState,
-    formData: FormData,
-): Promise<IVRoomUpdateState> {
+    data: IvRoomUpdate
+): Promise<{ success: boolean, message: string}> {
     try {
         const { supabase, userId } = await getAuthenticatedClient();
 
-        const rawData = {
-            date: formData.get("date"),
-            shift: formData.get("shift"),
-            bell_iv: formData.get('bell_iv') || null,
-            tpn: formData.get('tpn') || null,
-            hazardous: formData.get('hazardous') || null,
-            sc: formData.get('sc') || null,
-            assignment_two: formData.get('assignment_two') || null,
-            training: formData.get('training') || null,
-            iv_support: formData.get('iv_support') || null,
-            safety: formData.get('safety') || null,
-            barriers: formData.get('barriers') || null,
-            wins: formData.get('wins') || null,
-            opportunities: formData.get('opportunities') || null,
-            announcements: formData.get('announcements') || null,
-            inventory: formData.get('inventory') || null,
-            team_building: formData.get('team_building') || null,
-            summary_text: formData.get('summary_text') || null
-        }
-
-        const validatedFields = IVRoomSchema.safeParse(rawData);
-
-        if (!validatedFields.success) {
-            return {
-                errors: validatedFields.error.flatten().fieldErrors,
-                message: "Invalid fields. Please double check your input."
-            };
-        }
-
-        const { date, shift, ...fields } = validatedFields.data;
+        const validated = IVRoomSchema.parse(data);
 
         // Check if IV Room exists
-        const { data: existing, error: existingError } = await supabase
+        const { data: existing } = await supabase
             .from('iv_room')
             .select('id')
-            .eq('date', date)
-            .eq('shift', shift)
+            .eq('date', validated.date)
+            .eq('shift', validated.shift)
             .single();
-        
-        if (existingError && existingError.code !== 'PGRST116') {
-            throw existingError;
-        }
 
         if (existing) {
             // UPDATE existing record
-            const updateData: IvRoomUpdate = {
-                ...fields,
+            const {  error } = await supabase.from('iv_room').update({
+                ...validated,
                 updated_by: userId,
-                updated_at: new Date().toISOString(),
-            };
-
-            const { data, error } = await supabase
-                .from('iv_room')
-                .update(updateData)
-                .eq('id', existing.id)
-                .select()
-                .single();
+            }).eq('id', existing.id);
 
             if (error) throw error;
-
-            revalidatePath('/dashboard');
-
-            return {
-                message: "IV Room Data has been updated successfully!",
-                data,
-            };
         } else {
-            // CREATE new record
-            const insertData: IvRoomInsert = {
-                date,
-                shift,
-                ...fields,
+            const { error } = await supabase.from('iv_room').insert({
+                ...validated,
                 created_by: userId,
                 updated_by: userId,
-            };
+            });
 
-            const { data, error } = await supabase
-                .from('iv_room')
-                .insert(insertData)
-                .select()
-                .single();
-            
             if (error) throw error;
-
-            revalidatePath('/dashboard')
-
-            return {
-                message: 'IV Room data created successfully!',
-                data,
-            };
         }
+        revalidatePath('/mini-huddle/iv-room');
+        revalidatePath('/dashboard');
+        return { success: true, message: 'Saved Successfully!' }
     } catch (error) {
-        console.error('Failed to save IV Room data:', error);
-        return {
-            message: 'Database error: Failed to save IV Room data.'
-        }
+        console.error('Failed to save IV Room:', error)
+        return { success: false, message: 'Failed to save' }
     }
 }
 
