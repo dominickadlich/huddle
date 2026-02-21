@@ -31,10 +31,16 @@ export default async function DailySummaryCardWrapper() {
           type="staffing"
           id={null}
         />
+        <DailySummaryCard
+          title="Shift Lead"
+          value="Click to add"
+          type="shift_lead"
+          id={null}
+        />
       </>
     );
   }
-  const { id, census, tpn, hazardous, staffing } = data;
+  const { id, census, tpn, hazardous, staffing, shift_lead } = data;
 
   return (
     <>
@@ -60,6 +66,12 @@ export default async function DailySummaryCardWrapper() {
         title="Staffing"
         value={staffing ? staffing : "Click to add"}
         type="staffing"
+        id={id}
+      />
+      <DailySummaryCard
+        title="Shift Lead"
+        value={shift_lead ? shift_lead : "Click to add"}
+        type="shift_lead"
         id={id}
       />
     </>

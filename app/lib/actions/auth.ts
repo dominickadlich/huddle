@@ -21,7 +21,6 @@ export async function upsertUser(userData: OIDCUserProfile) {
       first_name: given_name || "",
       last_name: family_name || "",
       last_sign_in: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
     };
 
     const { error } = await supabaseAdmin.from("users").upsert(user, {

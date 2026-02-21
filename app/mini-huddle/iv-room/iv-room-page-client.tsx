@@ -26,9 +26,10 @@ const ivRoomTextAreaFields = [
     { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
     { key: 'wins', title: 'Team Wins & Recognition'},
     { key: 'opportunities', title: 'Opportunities' },
+    { key: 'inventory', title: 'Inventory' },
 ] as const;
 
-export default function PageClient({ 
+export default function IVRoomPageClient({ 
     initialData,
     census,
     shiftLead
@@ -76,7 +77,7 @@ export default function PageClient({
                         />
                     ))}
                 </div>
-                <div className="mt-10 grid grid-cols-1 gap-4">
+                <div className="mt-4 grid grid-cols-1 gap-4">
                     {ivRoomTextAreaFields.map(({ key, title }) => (
                         <SharedTextArea 
                             key={key}
@@ -87,14 +88,12 @@ export default function PageClient({
                             onChange={(val) => setFields({...fields, [key]: val})}  
                         />
                     ))}
-                </div>
-                <div className="mt-4">
                     <TeamBuildingTextArea 
                         value={fields.team_building}
                         isEditMode={isEditMode}
                         onChange={(val) => setFields({...fields, team_building: val})}
-                    />
-                </div>
+                        />
+                        </div>
         
 
         <GenerateSummary 

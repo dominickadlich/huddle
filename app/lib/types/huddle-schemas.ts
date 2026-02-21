@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { IvRoom } from './database';
+import { CommandCenter, Distribution, IvRoom } from './database';
 
 // ============================================
-// ZOD VALIDATION SCHEMAS
+// IV ROOM - ZOD VALIDATION SCHEMAS
 // ============================================
 export const IVRoomBaseSchema = z.object({
     date: z
@@ -35,7 +35,7 @@ export const IVRoomSchema = z.object({
 })
 
 // ============================================
-// STATE TYPES FOR FORM ACTIONS
+// IV ROOM - STATE TYPES FOR FORM ACTIONS
 // ============================================
 export type SharedErrors = {
     safety?: string[],
@@ -63,4 +63,78 @@ export type IVRoomUpdateState = {
     }
     message?: string | null;
     data?: IvRoom | null;
+}
+
+
+// ============================================
+// COMMAND CENTER - ZOD VALIDATION SCHEMAS
+// ============================================
+export const CommandCenterBaseSchema = z.object({
+    date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+    shift: z.enum(["morning", "afternoon", "evening"]),
+    hot_spots: z.string().nullable().optional(),
+    ca_tpn: z.string().nullable().optional(),
+    hc_tpn: z.string().nullable().optional(),
+    workload_csr: z.string().nullable().optional(),
+    workload_cmd: z.string().nullable().optional(),
+})
+
+export const CommandCenterSchema = z.object({
+    ...CommandCenterBaseSchema.shape,
+    ...SharedSchema.shape
+})
+
+// ============================================
+// COMMAND CENTER - STATE TYPES FOR FORM ACTIONS
+// ============================================
+export type CommandCenterUpdateState = {
+    errors?: SharedErrors & {
+        date?: string[];
+        shift?: string[];
+        hot_spots?: string[];
+        ca_tpn?: string[];
+        hc_tpn?: string[];
+        workload_csr?: string[];
+        workload_cmd?: string[];
+        _form?: string[];
+    }
+    message?: string | null;
+    data?: CommandCenter | null
+}
+
+
+// ============================================
+// DISTRIBUTION - ZOD VALIDATION SCHEMAS
+// ============================================
+export const DistributionBaseSchema = z.object({
+    date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+    shift: z.enum(["morning", "afternoon", "evening"]),
+    hot_spots: z.string().nullable().optional(),
+    ca_tpn: z.string().nullable().optional(),
+    hc_tpn: z.string().nullable().optional(),
+})
+
+export const DistributionSchema = z.object({
+    ...DistributionBaseSchema.shape,
+    ...SharedSchema.shape
+})
+
+// ============================================
+// DISTRIBUTION - STATE TYPES FOR FORM ACTIONS
+// ============================================
+export type DistributionUpdateState = {
+    errors?: SharedErrors & {
+        date?: string[];
+        shift?: string[];
+        hot_spots?: string[];
+        ca_tpn?: string[];
+        hc_tpn?: string[];
+        _form?: string[];
+    }
+    message?: string | null;
+    data?: Distribution | null
 }

@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       gridTemplateColumns: {
         "13": "repeat(13, minmax(0, 1fr))",
+        // "3": "repeat(3, minmax(0, 1fr))",
       },
       colors: {
         "huddle-violet": "#8b5cf6",

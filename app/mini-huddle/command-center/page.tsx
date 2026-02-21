@@ -1,17 +1,17 @@
-import { fetchLatestIVRoom } from "@/app/lib/data/iv-room";
+import { fetchLatestCommandCenter } from "@/app/lib/data/command-center";
 import { fetchLatestDailySummary } from "@/app/lib/data";
-import IVRoomPageClient from "./iv-room-page-client";
-import { IvRoom } from "@/app/lib/types/database";
+import CommandCenterPageClient from "./command-center-page-client";
+import { CommandCenter } from "@/app/lib/types/database";
 
 export default async function Page() {
-    const ivRoomData = await fetchLatestIVRoom();
+    const commandCenterData = await fetchLatestCommandCenter();
     const dailySummary = await fetchLatestDailySummary();
 
     // Handle null case - show empty state or use defaults
-    if (!ivRoomData) {
+    if (!commandCenterData) {
         return (
-            <IVRoomPageClient 
-                initialData={{} as IvRoom}  // Empty object cast to type
+            <CommandCenterPageClient 
+                initialData={{} as CommandCenter}  // Empty object cast to type
                 census={dailySummary?.census ?? null}
                 shiftLead={dailySummary?.shift_lead ?? null}
             />
@@ -19,8 +19,8 @@ export default async function Page() {
     }
 
     return (
-        <IVRoomPageClient 
-            initialData={ivRoomData} 
+        <CommandCenterPageClient 
+            initialData={commandCenterData} 
             census={dailySummary?.census ?? null}
             shiftLead={dailySummary?.shift_lead ?? null}
         />

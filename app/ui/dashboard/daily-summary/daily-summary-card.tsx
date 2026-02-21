@@ -10,6 +10,7 @@ import {
   PencilIcon,
   CheckIcon,
   XMarkIcon,
+  ClipboardIcon,
 } from "@heroicons/react/24/outline";
 
 const iconMap = {
@@ -17,6 +18,7 @@ const iconMap = {
   tpn: CakeIcon,
   hazardous: ExclamationTriangleIcon,
   staffing: UserGroupIcon,
+  shift_lead: ClipboardIcon,
 };
 
 export default function DailySummaryCard({
@@ -28,7 +30,7 @@ export default function DailySummaryCard({
   id: string | null;
   title: string;
   value: number | string | null;
-  type: "census" | "tpn" | "hazardous" | "staffing";
+  type: "census" | "tpn" | "hazardous" | "staffing" | "shift_lead";
 }) {
   const Icon = iconMap[type];
   const [isEditing, setIsEditing] = useState<boolean | null>(false);

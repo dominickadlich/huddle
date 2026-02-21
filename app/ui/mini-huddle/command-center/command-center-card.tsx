@@ -1,25 +1,21 @@
 import {
-    BellIcon,
-    CakeIcon,
-    ExclamationTriangleIcon,
-    UserPlusIcon,
-    NumberedListIcon,
-    UsersIcon,
-    UserGroupIcon,
+  FireIcon,
+  CakeIcon,
+  LockClosedIcon,
+  ClipboardDocumentCheckIcon,
+  HeartIcon,
 } from "@heroicons/react/24/outline";
 
 
 const iconMap = {
-  bell_iv: BellIcon,
-  tpn: CakeIcon,
-  hazardous: ExclamationTriangleIcon,
-  assignment_two: UserPlusIcon,
-  sc: NumberedListIcon,
-  training: UsersIcon,
-  iv_support: UserGroupIcon,
+  hot_spots: FireIcon,
+  ca_tpn: CakeIcon,
+  hc_tpn: HeartIcon,
+  workload_csr: LockClosedIcon,
+  workload_cmd: ClipboardDocumentCheckIcon,
 };
 
-export default function IVCard({
+export default function CommandCenterCard({
   title,
   value,
   type,
@@ -28,7 +24,7 @@ export default function IVCard({
 }: {
   title: string;
   value: number | string | null | undefined;
-  type: 'bell_iv' | 'tpn' | 'hazardous' | 'assignment_two' | 'sc' | 'training' | 'iv_support';
+  type: 'hot_spots' | 'ca_tpn' | 'hc_tpn' | 'workload_csr' | 'workload_cmd';
   isEditMode: boolean
   onChange?: (value: string) => void;
 }) {

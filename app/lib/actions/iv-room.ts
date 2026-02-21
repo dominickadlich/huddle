@@ -67,7 +67,6 @@ export async function updateIVRoomField(
       .update({
         [field]: value,
         updated_by: userId,
-        updated_at: new Date().toISOString(),
       })
       .eq("id", id);
 

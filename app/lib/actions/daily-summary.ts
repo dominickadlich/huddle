@@ -198,7 +198,6 @@ export async function upsertDailySummaryField(
         shift,
         [field]: value,
         updated_by: userId,
-        updated_at: new Date().toISOString(),
         created_by: userId,
       });
 

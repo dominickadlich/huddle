@@ -88,7 +88,6 @@ export async function upsertNonsterile(
             const updateData: NonsterileUpdate = {
                 ...fields,
                 updated_by: userId,
-                updated_at: new Date().toISOString(),
             };
 
             const { data, error } = await supabase
@@ -156,7 +155,6 @@ export async function updateNonsterileField(
       .update({
         [field]: value,
         updated_by: userId,
-        updated_at: new Date().toISOString(),
       })
       .eq("id", id);
 

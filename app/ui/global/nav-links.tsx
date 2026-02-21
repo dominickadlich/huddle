@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  BookOpenIcon,
   PhoneIcon,
   ArrowUpOnSquareIcon,
   CalendarIcon,
   ArrowsPointingInIcon,
+  PresentationChartLineIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -13,9 +13,9 @@ import Link from "next/link";
 
 const links = [
   {
-    name: "Huddle",
+    name: "Dashboard",
     href: "/dashboard",
-    icon: BookOpenIcon,
+    icon: PresentationChartLineIcon,
   },
   {
     name: 'History',
