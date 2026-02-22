@@ -1,12 +1,10 @@
-import { fetchDailySummaryWithUpdates } from "@/app/lib/data";
+import { fetchLatestDailySummaryWithUpdates } from "@/app/lib/data";
 import HuddleUpdateCard from "./huddle-update-card";
 import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
 import { DepartmentUpdate } from "@/app/lib/types/database"
 
 export default async function HuddleUpdateCardWrapper() {
-  const today = getLocalDate();
-  const currentShift = getCurrentShift();
-  const data = await fetchDailySummaryWithUpdates(today, currentShift);
+  const data = await fetchLatestDailySummaryWithUpdates();
 
   if (!data) {
     return (

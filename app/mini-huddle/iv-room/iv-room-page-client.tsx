@@ -12,21 +12,21 @@ import { useRouter } from "next/navigation";
 import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
 
 const ivRoomCardFields = [
-  { key: 'bell_iv', title: 'Bell IV' },
-  { key: 'tpn', title: 'TPN + Batch' },
-  { key: 'hazardous', title: 'Haz' },
-  { key: 'sc', title: 'SC' },
-  { key: 'assignment_two', title: 'Asgmt 2' },
-  { key: 'training', title: 'Training' },
-  { key: 'iv_support', title: 'IV Support' },
+    { key: 'opportunities', title: 'Bladder Instills' }, // CHANGE IN DATABASE
+    { key: 'tpn', title: 'TPN + Batch' },
+    { key: 'hazardous', title: 'Haz' },
+    { key: 'sc', title: 'SC' },
+    { key: 'assignment_two', title: 'Asgmt 2' },
+    { key: 'training', title: 'Training' },
+    { key: 'iv_support', title: 'IV Support' },
+    { key: 'bell_iv', title: 'Monthly Clean' }, // CHANGE IN DATABASE
 ] as const;
 
 const ivRoomTextAreaFields = [
     { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
     { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
-    { key: 'wins', title: 'Team Wins & Recognition'},
-    { key: 'opportunities', title: 'Opportunities' },
     { key: 'inventory', title: 'Inventory' },
+    { key: 'wins', title: 'Team Wins & Recognition'},
 ] as const;
 
 export default function IVRoomPageClient({ 
@@ -57,7 +57,6 @@ export default function IVRoomPageClient({
 
             <div>
                 
-                <div className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
                    <div className="flex gap-4 mb-4">
                     <button onClick={() => setIsEditMode(!isEditMode)}>
                         {isEditMode ? 'Cancel' : 'Edit'}
@@ -66,6 +65,7 @@ export default function IVRoomPageClient({
                         Submit
                     </button>
                 </div>
+                <div className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
                     {ivRoomCardFields.map(({ key, title }) => (
                         <IVCard 
                             key={key}

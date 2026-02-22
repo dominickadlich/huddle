@@ -1,22 +1,24 @@
 import {
-    BellIcon,
     CakeIcon,
     ExclamationTriangleIcon,
     UserPlusIcon,
     NumberedListIcon,
     UsersIcon,
     UserGroupIcon,
+    SparklesIcon,
+    FunnelIcon,
 } from "@heroicons/react/24/outline";
 
 
 const iconMap = {
-  bell_iv: BellIcon,
+  bell_iv: SparklesIcon,
   tpn: CakeIcon,
   hazardous: ExclamationTriangleIcon,
   assignment_two: UserPlusIcon,
   sc: NumberedListIcon,
   training: UsersIcon,
   iv_support: UserGroupIcon,
+  opportunities: FunnelIcon,
 };
 
 export default function IVCard({
@@ -28,7 +30,7 @@ export default function IVCard({
 }: {
   title: string;
   value: number | string | null | undefined;
-  type: 'bell_iv' | 'tpn' | 'hazardous' | 'assignment_two' | 'sc' | 'training' | 'iv_support';
+  type: 'bell_iv' | 'tpn' | 'hazardous' | 'assignment_two' | 'sc' | 'training' | 'iv_support' | 'opportunities';
   isEditMode: boolean
   onChange?: (value: string) => void;
 }) {

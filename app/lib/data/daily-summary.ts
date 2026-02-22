@@ -85,6 +85,39 @@ export async function fetchDailySummaryByDateAndShift(
 }
 
 
+
+// ============================================
+// Fetch Latest Daily Summary w/ Updates
+// ============================================
+export async function fetchLatestDailySummaryWithUpdates(): Promise<DailySummaryWithUpdates | null> {
+  const { supabase } = await getAuthenticatedClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("daily_summary")
+      .select(
+        `
+        *,
+        updates:huddle_updates(*)
+      `,
+      )
+      .order("date", { ascending: false })
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error) {
+      if (error.code === "PGRST116") return null; // Handle no results
+      throw error;
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch latest daily summary with updates:", error);
+    throw new Error("Failed to fetch latest daily summary with updates");
+  }
+}
+
 // ============================================
 // Fetch Latest Daily Summary w/ Updates
 // ============================================

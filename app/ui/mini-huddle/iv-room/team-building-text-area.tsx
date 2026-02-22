@@ -38,7 +38,7 @@ export default function TeamBuildingTextArea({
                 />
               )
             : (
-                <p className="text-xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">
+                <p className="text-base text-white whitespace-pre-wrap">
                     {value ?? 'No Data'}
                 </p>
               )

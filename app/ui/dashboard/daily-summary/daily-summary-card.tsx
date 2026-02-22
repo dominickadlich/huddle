@@ -146,6 +146,3 @@ export default function DailySummaryCard({
     </>
   );
 }
-
-// Polish
-// Toaster notification with message
