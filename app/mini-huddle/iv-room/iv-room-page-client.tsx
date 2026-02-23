@@ -42,6 +42,8 @@ export default function IVRoomPageClient({
     const [isEditMode, setIsEditMode] = useState(false);
     const [fields, setFields] = useState(initialData || {})
     const [showSummaryModal, setShowSummaryModal] = useState(false);
+    const clientDate = getLocalDate()
+    const clientShift = getCurrentShift(); 
 
     return (
         <div className="mt-20">
@@ -101,14 +103,12 @@ export default function IVRoomPageClient({
             open={showSummaryModal}
             onClose={() => setShowSummaryModal(false)}
             onSave={async (summary) => {
-                const localDate = getLocalDate()
-                const currentShift = getCurrentShift(); // Make sure this is imported!
                 
                 const dataToSave = {
                     ...fields,
                     summary_text: summary,
-                    date: localDate,
-                    shift: currentShift,
+                    date: clientDate,
+                    shift: clientShift,
                 };
 
                 const result = await upsertIVRoom(dataToSave)

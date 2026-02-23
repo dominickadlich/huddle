@@ -38,6 +38,8 @@ export default function CommandCenterPageClient({
     const [isEditMode, setIsEditMode] = useState(false);
     const [fields, setFields] = useState(initialData || {})
     const [showSummaryModal, setShowSummaryModal] = useState(false);
+    const clientDate = getLocalDate()
+    const clientShift = getCurrentShift(); 
 
     return (
         <div className="mt-20">
@@ -98,8 +100,8 @@ export default function CommandCenterPageClient({
                 const dataToSave = {
                     ...fields,
                     summary_text: summary,
-                    date: localDate,
-                    shift: currentShift,
+                    date: clientDate,
+                    shift: clientShift,
                 };
 
                 const result = await upsertCommandCenter(dataToSave)
