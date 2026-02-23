@@ -9,6 +9,7 @@ import type {
   HuddleUpdateInsert,
   HuddleUpdateUpdate,
   DepartmentType,
+  ShiftType,
 } from "../types/database";
 import { getCurrentShift, getLocalDate } from "../utils";
 
@@ -144,12 +145,12 @@ export async function upsertHuddleUpdate(
 export async function upsertHuddleUpdateField(
   department: DepartmentType,
   value: string | null,
+  date: string,
+  shift: ShiftType
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
-    const shift = getCurrentShift();
-    const date = getLocalDate();
     const summaryId = await getOrCreateDailySummary(date, shift);
 
     // 3. Check if record exists for today + current shift

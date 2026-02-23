@@ -12,6 +12,7 @@ import {
   XMarkIcon,
   ClipboardIcon,
 } from "@heroicons/react/24/outline";
+import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
 
 const iconMap = {
   census: ChartBarIcon,
@@ -56,8 +57,10 @@ export default function DailySummaryCard({
   }, [isEditing]);
 
   const handleSave = async () => {
+    const clientDate = getLocalDate();
+    const clientShift = getCurrentShift();
     setMessage(null);
-    const result = await upsertDailySummaryField(type, inputValue);
+    const result = await upsertDailySummaryField(type, inputValue, clientDate, clientShift);
 
     if (result) {
       setMessage(result.message);

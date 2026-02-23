@@ -13,6 +13,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { upsertHuddleUpdateField } from "@/app/lib/actions/huddle-updates";
+import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
 
 const iconMap = {
   distribution: ArrowsPointingOutIcon,
@@ -66,11 +67,15 @@ export default function HuddleUpdateCard({
 
   // TODO: Create query for individual upsert huddle update
   const handleSave = async () => {
+    const clientDate = getLocalDate();
+    const clientShift = getCurrentShift();
     setMessage(null);
     const capitalizedDepartment = departmentMap[type];
     const result = await upsertHuddleUpdateField(
       capitalizedDepartment,
       inputValue,
+      clientDate,
+      clientShift
     );
 
     if (result) {

@@ -158,12 +158,11 @@ export async function upsertDailySummary(
 export async function upsertDailySummaryField(
   field: keyof DailySummaryUpdate,
   value: string | null,
+  date: string,
+  shift: ShiftType
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
-
-    const shift = getCurrentShift();
-    const date = getLocalDate();
 
     // 3. Check if record exists for today + current shift
     const { data: existing } = await supabase
