@@ -10,6 +10,7 @@ import { useState } from "react"
 import { upsertIVRoom } from "@/app/lib/actions/iv-room";
 import { useRouter } from "next/navigation";
 import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
+import { EditButton, SubmitButton } from "@/app/ui/global/buttons";
 
 const ivRoomCardFields = [
     { key: 'opportunities', title: 'Bladder Instills' }, // CHANGE IN DATABASE
@@ -59,13 +60,15 @@ export default function IVRoomPageClient({
 
             <div>
                 
-                   <div className="flex gap-4 mb-4">
-                    <button onClick={() => setIsEditMode(!isEditMode)}>
+                <div className="flex justify-end gap-4 mb-4">
+                    <EditButton 
+                    onClick={() => setIsEditMode(!isEditMode)}
+                    >
                         {isEditMode ? 'Cancel' : 'Edit'}
-                    </button>
-                    <button onClick={() => setShowSummaryModal(true)}>
-                        Submit
-                    </button>
+                    </EditButton>           
+                    {isEditMode && 
+                        <SubmitButton onClick={() => setShowSummaryModal(true)} />
+                    }
                 </div>
                 <div className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
                     {ivRoomCardFields.map(({ key, title }) => (

@@ -9,6 +9,7 @@ import { useState } from "react"
 import { upsertCommandCenter } from "@/app/lib/actions/command-center";
 import { useRouter } from "next/navigation";
 import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
+import { EditButton, SubmitButton } from "@/app/ui/global/buttons";
 
 const commandCenterCardFields = [
   { key: 'hot_spots', title: 'Hot Spots' },
@@ -16,7 +17,6 @@ const commandCenterCardFields = [
   { key: 'hc_tpn', title: 'HC TPNs' },
   { key: 'workload_csr', title: 'Workload CSR' },
   { key: 'workload_cmd', title: 'Workload CMD' },
-  
 ] as const;
 
 const ivRoomTextAreaFields = [
@@ -54,14 +54,15 @@ export default function CommandCenterPageClient({
             </div>
 
             <div>
-                
-                   <div className="flex gap-4 mb-4">
-                    <button onClick={() => setIsEditMode(!isEditMode)}>
+                <div className="flex justify-end gap-4 mb-4">
+                    <EditButton 
+                    onClick={() => setIsEditMode(!isEditMode)}
+                    >
                         {isEditMode ? 'Cancel' : 'Edit'}
-                    </button>
-                    <button onClick={() => setShowSummaryModal(true)}>
-                        Submit
-                    </button>
+                    </EditButton>           
+                    {isEditMode && 
+                        <SubmitButton onClick={() => setShowSummaryModal(true)} />
+                    }
                 </div>
                 <div className='grid grid-cols-5 gap-4'>
                     {commandCenterCardFields.map(({ key, title }) => (
