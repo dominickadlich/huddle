@@ -58,7 +58,7 @@ export default function DisplayHistoricalData({
                     />
                 </div>
 
-                <div className="mt-10 grid grid-cols-1 gap-6">
+                <div className="mt-4 grid grid-cols-1 gap-4">
                     <HistoricalHuddleCard
                         title="Distribution"
                         value={distribution?.update_text ?? "No Data"}

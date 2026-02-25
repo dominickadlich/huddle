@@ -9,7 +9,7 @@ import { useState } from "react"
 import { upsertDistribution } from "@/app/lib/actions/distribution";
 import { useRouter } from "next/navigation";
 import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
-import { EditButton, SubmitButton } from "@/app/ui/global/buttons";
+import { CancelButton, EditButton, SubmitButton } from "@/app/ui/global/buttons";
 
 const distributionCardFields = [
   { key: 'hot_spots', title: 'Hot Spots' },
@@ -53,14 +53,15 @@ export default function DistributionPageClient({
             </div>
 
             <div>
-                <div className="flex justify-end gap-4 mb-4">
-                    <EditButton 
-                    onClick={() => setIsEditMode(!isEditMode)}
-                    >
-                        {isEditMode ? 'Cancel' : 'Edit'}
-                    </EditButton>           
-                    {isEditMode && 
-                        <SubmitButton onClick={() => setShowSummaryModal(true)} />
+                <div className="flex gap-4 mb-4">        
+                    {isEditMode 
+                        ? ( 
+                            <>
+                                <CancelButton onClick={() => setIsEditMode(false)}/>
+                                <SubmitButton onClick={() => setShowSummaryModal(true)} />
+                            </> 
+                            )
+                        : <EditButton onClick={() => setIsEditMode(true)}/>
                     }
                 </div>
                 <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>

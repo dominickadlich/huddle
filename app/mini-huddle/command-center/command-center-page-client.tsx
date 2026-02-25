@@ -9,7 +9,7 @@ import { useState } from "react"
 import { upsertCommandCenter } from "@/app/lib/actions/command-center";
 import { useRouter } from "next/navigation";
 import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
-import { EditButton, SubmitButton } from "@/app/ui/global/buttons";
+import { CancelButton, EditButton, SubmitButton } from "@/app/ui/global/buttons";
 
 const commandCenterCardFields = [
   { key: 'hot_spots', title: 'Hot Spots' },
@@ -54,14 +54,15 @@ export default function CommandCenterPageClient({
             </div>
 
             <div>
-                <div className="flex justify-end gap-4 mb-4">
-                    <EditButton 
-                    onClick={() => setIsEditMode(!isEditMode)}
-                    >
-                        {isEditMode ? 'Cancel' : 'Edit'}
-                    </EditButton>           
-                    {isEditMode && 
-                        <SubmitButton onClick={() => setShowSummaryModal(true)} />
+                <div className="flex gap-4 mb-4">        
+                    {isEditMode 
+                        ? ( 
+                            <>
+                                <CancelButton onClick={() => setIsEditMode(false)}/>
+                                <SubmitButton onClick={() => setShowSummaryModal(true)} />
+                            </> 
+                            )
+                        : <EditButton onClick={() => setIsEditMode(true)}/>
                     }
                 </div>
                 <div className='grid grid-cols-5 gap-4'>

@@ -19,11 +19,11 @@ export default function GenerateSummary({
     useEffect(() => {
         if (open) {
             const parts = [];
-            if (fields.safety) parts.push(`Safety: ${fields.safety.substring(0, 50)}`);
-            if (fields.barriers) parts.push(`Barriers: ${fields.barriers.substring(0, 50)}`);
-            if (fields.wins) parts.push(`Wins: ${fields.wins.substring(0, 50)}`);
+            if (fields.safety) parts.push(`Safety: ${fields.safety.substring(0, 500)}`);
+            if (fields.barriers) parts.push(`Barriers: ${fields.barriers.substring(0, 500)}`);
+            if (fields.wins) parts.push(`Wins: ${fields.wins.substring(0, 500)}`);
             
-            setEditedSummary(parts.join('. '));
+            setEditedSummary(parts.join('.\n'));
         }
     }, [open, fields]);
 

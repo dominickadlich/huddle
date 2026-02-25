@@ -55,7 +55,9 @@ export default function NavLinks() {
     <>
       {links.map((link) => {
         const LinkIcon = link.icon;
-        const isActive = pathname.startsWith(link.href);
+        const isActive = link.isDropDown
+        ? pathname.startsWith(link.href)
+        : pathname === link.href;
 
         if (link.isDropDown && link.dropDownItems) {
           return(
