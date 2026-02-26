@@ -13,7 +13,7 @@ const iconMap = {
   barriers: WrenchScrewdriverIcon,
   safety: ExclamationCircleIcon,
   wins: TrophyIcon,
-  opportunities: LightBulbIcon,
+  opportunities: ArrowTrendingDownIcon, // TODO: Remove opportunities from DB
   inventory: ArrowTrendingDownIcon
 };
 
