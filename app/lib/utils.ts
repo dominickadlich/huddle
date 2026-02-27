@@ -21,3 +21,11 @@ export const getLocalDate = () => {
     const day = String(now.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;  // Local YYYY-MM-DD
 };
+
+export const getLocalDateFormatted = () => {
+    const now = new Date();
+    const year = now.getFullYear() % 100;
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${month}/${day}/${year}`;  // Local YYYY-MM-DD
+};

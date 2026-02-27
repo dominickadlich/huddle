@@ -1,7 +1,8 @@
+import { getLocalDate, getLocalDateFormatted } from "@/app/lib/utils";
 import { format } from "date-fns";
 
 export function DateCard() {
-    const formatDate = format(new Date(), 'MM/dd/yy')
+    const formatDate = getLocalDateFormatted()
 
     return (
         <h1 className="text-4xl font-bold text-white bg-transparent focus:outline-none">
