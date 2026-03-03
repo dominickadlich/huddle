@@ -55,7 +55,7 @@ export function AnnouncementTextArea({
                 />
               )
             : (
-                <p className="whitespace-pre-wrap text-xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">
+                <p className="whitespace-pre-wrap leading-loose text-xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">
                     {value ?? 'No Data'}
                 </p>
               )
