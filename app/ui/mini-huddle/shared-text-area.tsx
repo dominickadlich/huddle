@@ -1,15 +1,14 @@
 import {
   ArrowTrendingDownIcon,
   ExclamationCircleIcon,
-    LightBulbIcon,
-    MegaphoneIcon,
-    TrophyIcon,
-    WrenchScrewdriverIcon,
-
+  MegaphoneIcon,
+  TrophyIcon,
+  WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
+import { HeroIcon } from "./mini-huddle-card";
 
 
-const iconMap = {
+const iconMap: Record<string, HeroIcon> = {
   barriers: WrenchScrewdriverIcon,
   safety: ExclamationCircleIcon,
   wins: TrophyIcon,
@@ -22,7 +21,7 @@ export function AnnouncementTextArea({
   isEditMode,
   onChange,
 }: {
-  value: string | null | undefined;
+  value: string | number | null | undefined;
   isEditMode: boolean;
   onChange?: (value: string) => void;
 }) {
@@ -75,11 +74,12 @@ export default function SharedTextArea({
 }: {
   title: string;
   value: number | string | null | undefined;
-  name: 'barriers' | 'safety' | 'wins' | 'opportunities' | 'inventory'
+  name: string
   isEditMode: boolean
   onChange?: (value: string) => void;
 }) {
-  const Icon = iconMap[name];
+
+  const Icon = iconMap[name] ?? ExclamationCircleIcon;
 
   return (
     <>

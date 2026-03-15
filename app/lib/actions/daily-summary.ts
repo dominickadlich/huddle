@@ -24,6 +24,7 @@ const DailySummarySchema = z.object({
   tpn: z.string().nullable().optional(),
   hazardous: z.string().nullable().optional(),
   staffing: z.string().nullable().optional(),
+  shift_lead: z.string().nullable().optional(),
   // Weekend fields (optional)
   recognition: z.string().nullable().optional(),
   issues_safety: z.string().nullable().optional(),
@@ -54,101 +55,54 @@ export type DailySummaryState = {
 // UPSERT DAILY SUMMARY (Create or Update)
 // ============================================
 export async function upsertDailySummary(
-  prevState: DailySummaryState,
-  formData: FormData,
-): Promise<DailySummaryState> {
-  try {
+  data: DailySummaryUpdate
+): Promise<{ success: boolean, message: string }> {
+  try { 
     const { supabase, userId } = await getAuthenticatedClient();
 
-    const rawData = {
-      date: formData.get("date"),
-      shift: formData.get("shift"),
-      census: formData.get("census")
-        ? parseInt(formData.get("census") as string)
-        : null,
-      tpn: formData.get("tpn") || null,
-      hazardous: formData.get("hazardous") || null,
-      staffing: formData.get("staffing") || null,
-      recognition: formData.get("recognition") || null,
-      issues_safety: formData.get("issues_safety") || null,
-      announcements: formData.get("announcements") || null,
-    };
 
-    const validatedFields = DailySummarySchema.safeParse(rawData);
-
-    if (!validatedFields.success) {
-      return {
-        errors: validatedFields.error.flatten().fieldErrors,
-        message: "Invalid fields. Please check your input.",
-      };
-    }
-
-    const { date, shift, ...fields } = validatedFields.data;
+    const validated = DailySummarySchema.parse(data);
 
     // Check if record exists
-    const { data: existing, error: existingError } = await supabase
+    const { data: existing } = await supabase
       .from("daily_summary")
       .select("id")
-      .eq("date", date)
-      .eq("shift", shift)
+      .eq("date", validated.date)
+      .eq("shift", validated.shift)
       .single();
-
-    if (existingError && existingError.code !== "PGRST116") {
-      throw existingError;
-    }
 
     if (existing) {
       // UPDATE existing record
-      const updateData: DailySummaryUpdate = {
-        ...fields,
-        updated_by: userId,
-      };
-
-      const { data, error } = await supabase
-        .from("daily_summary")
-        .update(updateData)
-        .eq("id", existing.id)
-        .select()
-        .single();
+      const { error } = await supabase
+        .from('daily_summary')
+        .update({
+          ...validated,
+          updated_by: userId,
+        })
+        .eq('id', existing.id);
 
       if (error) throw error;
-
-      revalidatePath("/dashboard");
-
-      return {
-        message: "Daily summary updated successfully!",
-        data,
-      };
     } else {
       // CREATE new record
-      const insertData: DailySummaryInsert = {
-        date,
-        shift,
-        ...fields,
-        created_by: userId,
-        updated_by: userId,
-      };
-
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("daily_summary")
-        .insert(insertData)
-        .select()
-        .single();
+        .insert({
+          ...validated,
+          created_by: userId,
+          updated_by: userId,
+        })
 
       if (error) throw error;
+    }
 
       revalidatePath("/dashboard");
-
       return {
+        success: true,
         message: "Daily summary created successfully!",
-        data,
-      };
-    }
+      }
   } catch (error) {
     console.error("Failed to save daily summary:", error);
-    return {
-      message: "Database error: Failed to save daily summary.",
-    };
+    return { success: false, message: "Failed to save Daily Summary.",};
   }
 }
 

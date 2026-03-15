@@ -1,25 +1,53 @@
-import { FaceSmileIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowsPointingOutIcon,
+  LockClosedIcon,
+  BeakerIcon,
+  EyeDropperIcon,
+  PresentationChartLineIcon,
+} from "@heroicons/react/24/outline";
 
-export default function TeamBuildingTextArea({
-    value,
-    isEditMode,
-    onChange
+const iconMap = {
+  distribution: ArrowsPointingOutIcon,
+  csr: LockClosedIcon,
+  ivr: BeakerIcon,
+  nonsterile: EyeDropperIcon,
+  rx_leadership: PresentationChartLineIcon,
+};
+
+const departmentMap = {
+  distribution: "Distribution",
+  csr: "CSR",
+  ivr: "IVR",
+  nonsterile: "Nonsterile",
+  rx_leadership: "RX Leadership",
+} as const;
+
+export default function HuddleCard({
+  title,
+  value,
+  name,
+  isEditMode,
+  onChange
 }: {
-    value: string | null | undefined;
-    isEditMode: boolean;
-    onChange?: (value: string) => void;
+  title: string;
+  value: number | string | null | undefined;
+  name: "distribution" | "csr" | "ivr" | "nonsterile" | "rx_leadership";
+  isEditMode: boolean;
+  onChange?: (value: string) => void;
 }) {
+     const Icon = iconMap[name];     
+
     return (
-        <>
-    <div className="group relative h-full overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
+    <>
+    <div className="group relative overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
         {/* Content */}
         <div className="relative z-10">
           {/* Header */}
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-700/50 group-hover:border-indigo-500/30 transition-colors duration-300">
             <div className="flex items-center justify-center gap-2 flex-1">
-              <FaceSmileIcon className="h-6 w-6 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" />
+              <Icon className="h-6 w-6 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" />
               <h3 className="text-lg font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300">
-                Team Building
+                {title}
               </h3>
             </div>
           </div>
@@ -30,7 +58,7 @@ export default function TeamBuildingTextArea({
             {isEditMode
             ? (
                 <textarea
-                  name="team_building"
+                  name={name}
                   value={value ?? ''}
                   onChange={(e) => onChange?.(e.target.value)}
                   rows={2}
@@ -38,7 +66,7 @@ export default function TeamBuildingTextArea({
                 />
               )
             : (
-                <p className="text-base text-white whitespace-pre-wrap">
+                <p className="text-base text-white whitespace-pre-wrap"> 
                     {value ?? 'No Data'}
                 </p>
               )
@@ -46,5 +74,5 @@ export default function TeamBuildingTextArea({
         </div>
       </div>
     </>
-    )
+  );
 }

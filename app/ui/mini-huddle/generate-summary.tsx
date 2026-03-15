@@ -1,32 +1,19 @@
-import { CommandCenter, Distribution, IvRoom, Nonsterile } from "@/app/lib/types/database";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import { useState, useEffect } from "react";
 
 export default function GenerateSummary({
-    fields,
     open,
     onSave,
     onClose,
+    onChange,
+    editedSummary
 }: {
-    fields: IvRoom | Distribution | CommandCenter | Nonsterile;
     open: boolean;
     onSave: (value: string) => void;
     onClose: () => void;
+    onChange?: (value: string) => void;
+    editedSummary: string;
 }) {
-  const [editedSummary, setEditedSummary] = useState('');
-
-    useEffect(() => {
-        if (open) {
-            const parts = [];
-            if (fields.safety) parts.push(`Safety: ${fields.safety.substring(0, 500)}`);
-            if (fields.barriers) parts.push(`Barriers: ${fields.barriers.substring(0, 500)}`);
-            if (fields.wins) parts.push(`Wins: ${fields.wins.substring(0, 500)}`);
-            
-            setEditedSummary(parts.join('.\n'));
-        }
-    }, [open, fields]);
-
     return (
     <div>
       <Dialog open={open} onClose={onClose} className="relative z-10">
@@ -57,8 +44,8 @@ export default function GenerateSummary({
               <div className="flex justify-center items-center min-h-[2rem]">
                 <textarea
                     name="summary_text"
+                    onChange={(e) => onChange?.(e.target.value)}
                     value={editedSummary}
-                    onChange={(e) => setEditedSummary(e.target.value)}
                     rows={6}
                     className="w-full p-2 text-white bg-gray-900/50 border border-gray-600 rounded-md focus:outline-none focus:border-indigo-500"
                 />
@@ -68,7 +55,7 @@ export default function GenerateSummary({
                 <button
                   type="button"
                   onClick={() => {
-                    onSave(editedSummary);
+                    onSave(editedSummary)
                     onClose()
                     }}
                   className="inline-flex w-full justify-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 col-start-2"

@@ -1,6 +1,7 @@
 // ============================================
 // Import Supabase-generated types
 // ============================================
+import { fetchDailySummaryWithUpdates } from "../data";
 import type { Database, Tables, TablesInsert, TablesUpdate } from "./supabase";
 
 
@@ -63,6 +64,12 @@ export type DepartmentType =
   | "Nonsterile"
   | "RX Leadership";
 
+// export type DepartmentType =
+//   | "Distribution"
+//   | "Command Center"
+//   | "IV Room"
+//   | "Non Sterile"
+//   | "RX Leadership";
 
   
 // ============================================

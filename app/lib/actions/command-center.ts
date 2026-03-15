@@ -29,10 +29,13 @@ export async function upsertCommandCenter(
 
         if (existing) {
             // UPDATE existing record
-            const {  error } = await supabase.from('command_center').update({
+            const {  error } = await supabase
+              .from('command_center')
+              .update({
                 ...validated,
                 updated_by: userId,
-            }).eq('id', existing.id);
+              })
+              .eq('id', existing.id);
 
             if (error) throw error;
         } else {

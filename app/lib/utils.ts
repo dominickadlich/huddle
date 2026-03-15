@@ -29,3 +29,13 @@ export const getLocalDateFormatted = () => {
     const day = String(now.getDate()).padStart(2, '0');
     return `${month}/${day}/${year}`;  // Local YYYY-MM-DD
 };
+
+export function formatDate(date: string | null): string {
+  if (!date) return 'No data'
+  const localDate = new Date(date)
+  return localDate.toLocaleDateString('en-US', {
+    month: '2-digit',
+    day: '2-digit',
+    year: 'numeric'
+  })
+}

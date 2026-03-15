@@ -49,92 +49,54 @@ export type HuddleUpdateState = {
 // ============================================
 
 export async function upsertHuddleUpdate(
-  prevState: HuddleUpdateState,
-  formData: FormData,
-): Promise<HuddleUpdateState> {
+  data: HuddleUpdateUpdate
+): Promise<{ success: boolean, message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
-    const rawData = {
-      daily_summary_id: formData.get("daily_summary_id"),
-      department: formData.get("department"),
-      update_text: formData.get("update_text") || null,
-    };
-
-    const validatedFields = HuddleUpdateSchema.safeParse(rawData);
-
-    if (!validatedFields.success) {
-      return {
-        errors: validatedFields.error.flatten().fieldErrors,
-        message: "Invalid fields. Please check your input.",
-      };
-    }
-
-    const { daily_summary_id, department, update_text } = validatedFields.data;
+    const validated = HuddleUpdateSchema.parse(data);
 
     // Check if update exists
-    const { data: existing, error: existingError } = await supabase
+    const { data: existing } = await supabase
       .from("huddle_updates")
       .select("id")
-      .eq("daily_summary_id", daily_summary_id)
-      .eq("department", department)
+      .eq("daily_summary_id", validated.daily_summary_id)
+      .eq("department", validated.department)
       .single();
-
-    if (existingError && existingError.code !== "PGRST116") {
-      throw existingError;
-    }
 
     if (existing) {
       // UPDATE existing record
-      const updateData: HuddleUpdateUpdate = {
-        update_text,
-        updated_by: userId,
-      };
-
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("huddle_updates")
-        .update(updateData)
+        .update({
+          ...validated,
+          updated_by: userId
+        })
         .eq("id", existing.id)
-        .select()
-        .single();
 
       if (error) throw error;
-
-      revalidatePath("/dashboard");
-
-      return {
-        message: "Department update updated successfully!",
-        data,
-      };
     } else {
       // CREATE new record
-      const insertData: HuddleUpdateInsert = {
-        daily_summary_id,
-        department,
-        update_text,
-        created_by: userId,
-        updated_by: userId,
-      };
-
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("huddle_updates")
-        .insert(insertData)
-        .select()
-        .single();
+        .insert({
+          ...validated,
+          created_by: userId,
+          updated_by: userId
+        })
 
       if (error) throw error;
+    }
 
       revalidatePath("/dashboard");
-
       return {
+        success: true,
         message: "Department update created successfully!",
-        data,
       };
-    }
   } catch (error) {
     console.error("Failed to save huddle update:", error);
-    return {
-      message: "Database error: Failed to save update.",
+    return { success: false,
+      message: "Failed to save Huddle Update.",
     };
   }
 }

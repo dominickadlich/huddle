@@ -1,46 +1,42 @@
-import { Metadata } from "next";
-import { Suspense } from "react";
-import DailySummaryCardWrapper from "../ui/dashboard/daily-summary/daily-summary-cards-wrapper";
-import { DailySummaryCardsSkeleton } from "../ui/dashboard/daily-summary/daily-summary-card-skeleton";
-import { HuddleUpdateCardsSkeleton } from "../ui/dashboard/huddle-updates/huddle-update-card-skeleton";
-import HuddleUpdateCardWrapper from "../ui/dashboard/huddle-updates/huddle-update-cards-wrapper";
-import { DateCard } from "../ui/global/header";
+import { fetchLatestDailySummary, fetchLatestDailySummaryWithUpdates, fetchLatestHuddleUpdates } from "../lib/data";
+import { DailySummaryWithUpdates, DashboardData, DepartmentUpdate, HuddleUpdate } from "../lib/types/database";
+import DashboardPageClient from "./dashboard-page-client";
 
-export const metadata: Metadata = {
-  title: "Dashboard",
-};
+function toDashboardData(data: DailySummaryWithUpdates): DashboardData {
+  const updatesByDepartment = data.updates.reduce((acc, item) => {
+    acc[item.department] = item;
+    return acc;
+  }, {} as Record<string, HuddleUpdate>);
 
-export default function Page() {
+  return {
+    daily_summary: data,
+    updates: {
+      distribution: updatesByDepartment["Distribution"] ?? null,
+      ivr: updatesByDepartment["IVR"] ?? null,
+      csr: updatesByDepartment["CSR"] ?? null,
+      rx_leadership: updatesByDepartment["RX Leadership"] ?? null,
+      nonsterile: updatesByDepartment["Nonsterile"] ?? null,
+    }
+  };
+}
+
+export default async function Page() {
+  const dashboardData = await fetchLatestDailySummaryWithUpdates();
+
+  if (!dashboardData) {
+    return (
+      <DashboardPageClient 
+        initialData={{} as DashboardData}
+      />
+    )
+  }
+
+  const initialData = toDashboardData(dashboardData)
+  console.log(initialData)
+
   return (
-    <div className="mt-20">
-      <div className="flex justify-between items-center pb-6 mb-8 border-b-2 border-indigo-500/30">
-          {/* Left */}
-          <h1 className="text-4xl font-bold">Huddle Dashboard</h1>
-          
-          {/* Right */}
-          <DateCard />
-        </div>
-      <div className="grid grid-cols-1 lg:grid-cols-[20%_80%] gap-6">
-        {/* Left panel - Daily Summary */}
-        <div className="flex flex-col">
-          <div className="grid gap-6 flex-1">
-            {/* Cards stacked vertically */}
-            <Suspense fallback={<DailySummaryCardsSkeleton />}>
-              <DailySummaryCardWrapper />
-            </Suspense>
-          </div>
-        </div>
-
-        {/* Right panel - Huddle Updates */}
-        <div className="flex flex-col">
-          <div className="grid gap-6 flex-1">
-            {/* Cards in 2 columns */}
-            <Suspense fallback={<HuddleUpdateCardsSkeleton />}>
-              <HuddleUpdateCardWrapper />
-            </Suspense>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    <DashboardPageClient 
+      initialData={initialData}
+    />
+  )
 }

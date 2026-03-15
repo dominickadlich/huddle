@@ -12,7 +12,8 @@
     "parse-coverage": "tsx app/scripts/parse-coverage.ts",
     "parse-directory": "tsx app/scripts/parse-directory.ts",
     "parse-docs-index": "tsx app/scripts/parse-docs-index.ts",
-    "parse-schedule": "tsx app/scripts/parse-schedule.ts"
+    "parse-schedule": "tsx app/scripts/parse-schedule.ts",
+    "generate-supabase-types": "npx supabase gen types typescript --project-id 'cewvtjqzaktrwdqgdzsa' --schema public > app/lib/types/supabase.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
