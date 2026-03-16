@@ -9,7 +9,7 @@ export const IVRoomBaseSchema = z.object({
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
     shift: z.enum(["morning", "afternoon", "evening"]),
-    bell_iv: z.string().nullable().optional(),
+    monthly_clean: z.string().nullable().optional(),
     tpn: z.string().nullable().optional(),
     hazardous: z.string().nullable().optional(),
     sc: z.string().nullable().optional(),
@@ -18,6 +18,7 @@ export const IVRoomBaseSchema = z.object({
     iv_support: z.string().nullable().optional(),
     inventory: z.string().nullable().optional(),
     team_building: z.string().nullable().optional(),
+    bladder_instills: z.string().nullable().optional(),
 });
 
 export const SharedSchema = z.object({
@@ -57,8 +58,10 @@ export type IVRoomUpdateState = {
         assignment_two?: string[];
         training?: string[];
         iv_support?: string[];
-        inventory?: string[],
-        team_building?: string[],
+        inventory?: string[];
+        team_building?: string[];
+        bladder_instills?: string[];
+        monthly_clean?: string[];
         _form?: string[];
     }
     message?: string | null;
@@ -79,6 +82,10 @@ export const CommandCenterBaseSchema = z.object({
     hc_tpn: z.string().nullable().optional(),
     workload_csr: z.string().nullable().optional(),
     workload_cmd: z.string().nullable().optional(),
+    five_oh_three_b: z.string().nullable().optional(),
+    dispense_prep: z.string().nullable().optional(),
+    dispense_check: z.string().nullable().optional(),
+    inventory: z.string().nullable().optional(),
 })
 
 export const CommandCenterSchema = z.object({
@@ -98,6 +105,9 @@ export type CommandCenterUpdateState = {
         hc_tpn?: string[];
         workload_csr?: string[];
         workload_cmd?: string[];
+        five_oh_three_b: string[];
+        dispense_prep: string[];
+        dispense_check: string[];
         _form?: string[];
     }
     message?: string | null;
@@ -116,6 +126,7 @@ export const DistributionBaseSchema = z.object({
     hot_spots: z.string().nullable().optional(),
     ca_tpn: z.string().nullable().optional(),
     hc_tpn: z.string().nullable().optional(),
+    five_oh_three_b: z.string().nullable().optional(),
 })
 
 export const DistributionSchema = z.object({
@@ -133,6 +144,7 @@ export type DistributionUpdateState = {
         hot_spots?: string[];
         ca_tpn?: string[];
         hc_tpn?: string[];
+        five_oh_three_b: string[];
         _form?: string[];
     }
     message?: string | null;

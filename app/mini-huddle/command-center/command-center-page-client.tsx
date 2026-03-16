@@ -19,7 +19,7 @@ export default function CommandCenterClient({
             initialData={initialData}
             census={census}
             shiftLead={shiftLead}        
-            grid_cols={5} 
+            grid_cols={4} 
         />
     )
 }

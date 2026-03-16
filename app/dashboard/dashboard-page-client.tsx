@@ -132,7 +132,7 @@ export default function DashboardPageClient({
                         Last Update: {formatDate(initialData?.daily_summary?.updated_at ?? 'No data')}
                     </div>
                 </div>
-                 <div className='grid grid-cols-5 gap-4'>
+                 <div className='grid grid-cols-1 lg:grid-cols-5 gap-4'>
                     {dashboardCardFields.map(({ key, title }) => (
                         <SummaryCard 
                             key={key}
@@ -162,11 +162,14 @@ export default function DashboardPageClient({
                             isEditMode={isEditMode}
                             onChange={(val) => 
                                 setFields({
-                                    ...fields,
+                                    ...fields, // Spread fields
                                     updates: {
-                                        ...fields?.updates,
-                                        [key]: val
-                                    } 
+                                        ...fields?.updates, // Spread fields.updates
+                                        [key]: {
+                                            ...fields?.updates[key],
+                                            update_text: val // Override one department with new update text
+                                        }
+                                    }
                                 }
                             )}  
                         />

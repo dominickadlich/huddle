@@ -19,7 +19,7 @@ export default function DistributionClient({
             initialData={initialData}
             census={census}
             shiftLead={shiftLead}
-            grid_cols={3}
+            grid_cols={4}
         />
     )
 }
