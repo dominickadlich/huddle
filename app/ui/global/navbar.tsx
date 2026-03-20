@@ -51,7 +51,9 @@ export default function NavBar({}) {
 
         {/* Desktop Nav Links */}
         <div className="hidden lg:flex lg:gap-x-8">
-          <NavLinks />
+          <NavLinks 
+            isMobile={false}
+          />
         </div>
 
         {/* Auth Button */}
@@ -91,7 +93,10 @@ export default function NavBar({}) {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-700/50">
               <div className="space-y-2 py-6">
-                <NavLinks />
+                <NavLinks
+                  isMobile={true}
+                  onNavigate={() => setMobileMenuOpen(false)}
+                />
               </div>
               <div className="py-6">
                 {isAuthenticated ? (

@@ -7,6 +7,9 @@ import {
   ArrowsPointingInIcon,
   PresentationChartLineIcon,
   ChevronDownIcon,
+  BeakerIcon,
+  ArrowsPointingOutIcon,
+  LockClosedIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -30,9 +33,9 @@ const links = [
     icon: ArrowsPointingInIcon,
     isDropDown: true,
     dropDownItems: [
-      { name: 'IV Room', href: '/mini-huddle/iv-room'},
-      { name: 'Command Center', href: '/mini-huddle/command-center'},
-      { name: 'Distribution', href: '/mini-huddle/distribution'},
+      { name: 'IV Room', href: '/mini-huddle/iv-room', icon: BeakerIcon},
+      { name: 'Command Center', href: '/mini-huddle/command-center', icon: LockClosedIcon},
+      { name: 'Distribution', href: '/mini-huddle/distribution', icon: ArrowsPointingOutIcon},
       // { name: 'Non-Sterile', href: 'nonsterile'},
     ]
   },
@@ -48,7 +51,13 @@ const links = [
   },
 ];
 
-export default function NavLinks() {
+export default function NavLinks({
+  onNavigate,
+  isMobile
+}: {
+  onNavigate?: () => void;
+  isMobile: boolean;
+}) {
   const pathname = usePathname();
 
   return (
@@ -60,6 +69,21 @@ export default function NavLinks() {
         : pathname === link.href;
 
         if (link.isDropDown && link.dropDownItems) {
+          if (isMobile) {
+            return link.dropDownItems.map((item) => {
+              const ItemIcon = item.icon
+              return (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={onNavigate}
+                className="group relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-300"
+              >
+                <ItemIcon className="h-5 w-5" />
+                {item.name}
+              </Link>
+              )})
+          }
           return(
             <Menu key={link.name} as="div" className="relative">
               <MenuButton
@@ -100,6 +124,7 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
+            onClick={onNavigate}
             className={clsx(
               "group relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-300",
               {
