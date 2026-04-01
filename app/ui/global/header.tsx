@@ -51,18 +51,16 @@ export default function Header({
     shiftlead: string | null;
 }) {
     return (
-  <div className="lg:flex justify-between items-center pb-6 mb-8 border-b-2 border-indigo-500/30">
+  <div className="flex flex-col items-center lg:flex-row lg:justify-between pb-6 mb-8 border-b-2 border-indigo-500/30 gap-2">
     {/* Left */}
     <h1 className="text-2xl lg:text-4xl font-bold">{title}</h1>
-    
-    {/* Center - grouped metrics with divider */}
-    <div className="flex gap-8">
+
+    {/* Center - grouped metrics */}
+    <div className="flex flex-col items-center lg:flex-row gap-2 lg:gap-8">
       <CensusCard census={census} />
-      <div className="pl-8">  {/* Padding on second item */}
-        <ShiftLeadCard shiftlead={shiftlead} />
-      </div>
+      <ShiftLeadCard shiftlead={shiftlead} />
     </div>
-    
+
     {/* Right */}
     <DateCard />
   </div>

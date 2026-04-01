@@ -62,12 +62,59 @@ export default function DashboardPageClient({
                 <DateCard />
             </div>
 
-        <div className="mt-10 lg:grid grid-cols-[20%_1fr] gap-6">
-            <div>
-                <AnnouncementTextArea 
+        <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6">
+            {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
+            <div className="order-1 lg:col-start-2 lg:row-start-1 flex justify-between gap-4">
+                <div className="flex gap-4">
+                    {isEditMode
+                        ? (
+                            <>
+                                <CancelButton onClick={() => setIsEditMode(false)}/>
+                                <SubmitButton onClick={async () => {
+                                    const dsDataToSave = {
+                                        ...fields.daily_summary,
+                                        date: clientDate,
+                                        shift: clientShift
+                                    };
+
+                                    const result = await Promise.all([
+                                        upsertDailySummary(dsDataToSave),
+                                        ...huddleUpdateFields.map((field) => (
+                                            upsertHuddleUpdateField(
+                                                field.department,
+                                                fields.updates[field.key as keyof typeof fields.updates]?.update_text ?? null,
+                                                getLocalDate(),
+                                                getCurrentShift()
+                                            )
+                                        ))
+                                    ])
+
+                                    if (result.every((r) => r.success)) {
+                                        setIsEditMode(false)
+                                        router.refresh()
+                                    } else {
+                                        alert(`
+                                            Daily Summary Error: ${result[0].message ?? ''}
+                                            Huddle Update Error: ${result.filter((r) => r.success === false).map((m) => m.message).join('\n')}
+                                        `)
+                                    }
+                                }} />
+                            </>
+                          )
+                        : <EditButton onClick={() => setIsEditMode(true)}/>
+                    }
+                </div>
+                <div className="flex items-center px-4 text-sm text-gray-400">
+                    Last Update: {formatDate(initialData?.daily_summary?.updated_at ?? 'No data')}
+                </div>
+            </div>
+
+            {/* Announcements — order-2 on mobile, spans full left column on desktop */}
+            <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+                <AnnouncementTextArea
                     value={fields?.daily_summary.announcements}
                     isEditMode={isEditMode}
-                    onChange={(val) => 
+                    onChange={(val) =>
                         setFields({
                             ...fields,
                             daily_summary: {
@@ -78,100 +125,49 @@ export default function DashboardPageClient({
                     }
                 />
             </div>
-        
 
-            <div>
-                <div className="flex justify-between gap-4 mb-4"> 
-                    <div className="flex gap-4">
-                        {isEditMode 
-                            ? ( 
-                                <>
-                                    <CancelButton onClick={() => setIsEditMode(false)}/>
-                                    <SubmitButton onClick={async () => {
-                                        const dsDataToSave = {
-                                            ...fields.daily_summary,
-                                            date: clientDate,
-                                            shift: clientShift
-                                        };
-
-                                        const huDataToSave = {
-                                            ...fields.updates,
-                                            date: clientDate,
-                                            shift: clientShift
-                                        };
-
-                                        const result = await Promise.all([
-                                            upsertDailySummary(dsDataToSave),
-                                            ...huddleUpdateFields.map((field) => (
-                                                upsertHuddleUpdateField(
-                                                    field.department,
-                                                    fields.updates[field.key as keyof typeof fields.updates]?.update_text ?? null,
-                                                    getLocalDate(),
-                                                    getCurrentShift()
-                                                )
-                                            ))  
-                                        ])
-
-                                        if (result.every((r) => r.success)) {
-                                            setIsEditMode(false)
-                                            router.refresh()
-                                        } else {
-                                            alert(`
-                                                Daily Summary Error: ${result[0].message ?? ''}
-                                                Huddle Update Error: ${result.filter((r) => r.success === false).map((m) => m.message).join('\n')}   
-                                            `)
-                                        }
-
-                                    }} />
-                                </> 
-                                )
-                            : <EditButton onClick={() => setIsEditMode(true)}/>
-                        }
-                    </div>
-                    <div className="flex items-center px-4 text-sm text-gray-400">
-                        Last Update: {formatDate(initialData?.daily_summary?.updated_at ?? 'No data')}
-                    </div>
-                </div>
-                 <div className='grid grid-cols-1 lg:grid-cols-5 gap-4'>
+            {/* Cards + huddle updates — order-3 on mobile, right column row 2 on desktop */}
+            <div className="order-3 lg:col-start-2 lg:row-start-2">
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
                     {dashboardCardFields.map(({ key, title }) => (
-                        <SummaryCard 
+                        <SummaryCard
                             key={key}
                             title={title}
                             value={fields?.daily_summary[key]}
                             type={key}
                             isEditMode={isEditMode}
-                            onChange={(val) => 
+                            onChange={(val) =>
                                 setFields({
                                     ...fields,
                                     daily_summary: {
                                         ...fields?.daily_summary,
                                         [key]: val
-                                    } 
-                                }
-                            )}       
+                                    }
+                                })
+                            }
                         />
                     ))}
                 </div>
                 <div className="mt-4 grid grid-cols-1 gap-4">
                     {huddleUpdateFields.map(({ key, title }) => (
-                        <HuddleCard 
+                        <HuddleCard
                             key={key}
                             name={key}
                             title={title}
                             value={fields?.updates[key]?.update_text}
                             isEditMode={isEditMode}
-                            onChange={(val) => 
+                            onChange={(val) =>
                                 setFields({
-                                    ...fields, // Spread fields
+                                    ...fields,
                                     updates: {
-                                        ...fields?.updates, // Spread fields.updates
+                                        ...fields?.updates,
                                         [key]: {
                                             ...fields?.updates[key],
-                                            update_text: val // Override one department with new update text
+                                            update_text: val
                                         }
                                     }
-                                }
-                            )}  
+                                })
+                            }
                         />
                     ))}
                 </div>

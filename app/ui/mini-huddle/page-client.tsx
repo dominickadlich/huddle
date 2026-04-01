@@ -58,87 +58,89 @@ export default function MiniHuddlePageClient({
     return (
         <div className="mt-20">
         <Header title={`${title} Dashboard`} census={census} shiftlead={shiftLead}/>
-        <div className="mt-10 lg:grid grid-cols-[20%_1fr] gap-6">
-            <div>
-                <AnnouncementTextArea 
+        <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6">
+            {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
+            <div className="order-1 lg:col-start-2 lg:row-start-1 flex justify-between gap-4">
+                <div className="flex gap-4">
+                    {isEditMode
+                        ? (
+                            <>
+                                <CancelButton onClick={() => setIsEditMode(false)}/>
+                                <SubmitButton onClick={() => setShowSummaryModal(true)} />
+                            </>
+                          )
+                        : <EditButton onClick={() => setIsEditMode(true)}/>
+                    }
+                </div>
+                <div className="flex items-center px-4 text-sm text-gray-400">
+                    Last Update: {formatDate(initialData.updated_at)}
+                </div>
+            </div>
+
+            {/* Announcements — order-2 on mobile, spans full left column on desktop */}
+            <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+                <AnnouncementTextArea
                     value={fields.announcements}
                     isEditMode={isEditMode}
                     onChange={(val) => setFields({...fields, announcements: val})}
                 />
             </div>
 
-            <div>
-                <div className="flex justify-between gap-4 mb-4"> 
-                    <div className="flex gap-4">
-                        {isEditMode 
-                            ? ( 
-                                <>
-                                    <CancelButton onClick={() => setIsEditMode(false)}/>
-                                    <SubmitButton onClick={() => setShowSummaryModal(true)} />
-                                </> 
-                                )
-                            : <EditButton onClick={() => setIsEditMode(true)}/>
-                        }
-                    </div>
-                    <div className="flex items-center px-4 text-sm text-gray-400">
-                        Last Update: {formatDate(initialData.updated_at)}
-                    </div>
-                </div>
+            {/* Cards + text fields — order-3 on mobile, right column row 2 on desktop */}
+            <div className="order-3 lg:col-start-2 lg:row-start-2">
                 <div className={`grid grid-cols-1 ${gridColsMap[grid_cols]} gap-4`}>
                     {cardFields.map(({ key, title }) => (
-                        <MiniHuddleCard 
+                        <MiniHuddleCard
                             key={key}
                             title={title}
                             value={fields[key]}
                             type={key}
                             isEditMode={isEditMode}
-                            onChange={(val) => setFields({ ...fields, [key]: val })} 
-                            iconMap={iconMap}                        
+                            onChange={(val) => setFields({ ...fields, [key]: val })}
+                            iconMap={iconMap}
                         />
                     ))}
                 </div>
                 <div className="mt-4 grid grid-cols-1 gap-4">
                     {textFields.map(({ key, title }) => (
-                        <SharedTextArea 
+                        <SharedTextArea
                             key={key}
                             name={key}
                             title={title}
                             value={fields[key]}
                             isEditMode={isEditMode}
-                            onChange={(val) => setFields({...fields, [key]: val})}  
+                            onChange={(val) => setFields({...fields, [key]: val})}
                         />
                     ))}
                 </div>
-        
 
-        <GenerateSummary 
-            open={showSummaryModal}
-            onClose={() => setShowSummaryModal(false)}
-            onChange={(editedSummary) => setEditedSummary(editedSummary)}
-            editedSummary={editedSummary}
-            onSave={async (summary) => {
+                <GenerateSummary
+                    open={showSummaryModal}
+                    onClose={() => setShowSummaryModal(false)}
+                    onChange={(editedSummary) => setEditedSummary(editedSummary)}
+                    editedSummary={editedSummary}
+                    onSave={async (summary) => {
+                        const dataToSave = {
+                            ...fields,
+                            summary_text: summary,
+                            date: clientDate,
+                            shift: clientShift,
+                        };
 
-                const dataToSave = {
-                    ...fields,
-                    summary_text: summary,
-                    date: clientDate,
-                    shift: clientShift,
-                };
+                        const result = await upsertFn(dataToSave);
 
-                const result = await upsertFn(dataToSave);
-
-                if (result?.success) {
-                    setShowSummaryModal(false);
-                    setIsEditMode(false);
-                    router.push('/dashboard'); // ← Use router.push, not redirect
-                    router.refresh(); // ← Refresh to see new data
-                } else {
-                    alert(result?.message); // ← Show error to user
-                }
-            }} 
-            />
-        </div>
+                        if (result?.success) {
+                            setShowSummaryModal(false);
+                            setIsEditMode(false);
+                            router.push('/dashboard');
+                            router.refresh();
+                        } else {
+                            alert(result?.message);
+                        }
+                    }}
+                />
             </div>
+        </div>
         </div>
     )
 }

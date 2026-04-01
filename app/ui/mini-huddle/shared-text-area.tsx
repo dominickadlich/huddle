@@ -6,6 +6,7 @@ import {
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import { HeroIcon } from "./mini-huddle-card";
+import { useIsMobile } from "@/app/lib/hooks/use-is-mobile";
 
 
 const iconMap: Record<string, HeroIcon> = {
@@ -25,6 +26,9 @@ export function AnnouncementTextArea({
   isEditMode: boolean;
   onChange?: (value: string) => void;
 }) {
+  const isMobile = useIsMobile();
+  const rows = isMobile ? 8 : 25;
+
   return (
     <>
     <div className="group relative h-full overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
@@ -49,7 +53,7 @@ export function AnnouncementTextArea({
                   name="announcements"
                   value={value ?? ''}
                   onChange={(e) => onChange?.(e.target.value)}
-                  rows={25}
+                  rows={rows}
                   className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-white text-gray-900 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               )
