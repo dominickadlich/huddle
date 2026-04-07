@@ -15,9 +15,9 @@ export default function Page() {
           <p className="mt-8 text-lg font-medium text-pretty sm:text-xl/8 text-gray-400">
             Daily Operations Dashboard for Central Pharmacy
           </p>
-          <div className="mt-10 flex items-center gap-x-6">
+          {/* <div className="mt-10 flex items-center gap-x-6">
             <SignInButton />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="relative lg:col-span-5 xl:absolute xl:inset-0 xl:left-1/2">
