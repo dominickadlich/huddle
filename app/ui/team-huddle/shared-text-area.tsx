@@ -1,11 +1,12 @@
 import {
   ArrowTrendingDownIcon,
   ExclamationCircleIcon,
+  FaceSmileIcon,
   MegaphoneIcon,
   TrophyIcon,
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
-import { HeroIcon } from "./mini-huddle-card";
+import { HeroIcon } from "./team-huddle-card";
 import { useIsMobile } from "@/app/lib/hooks/use-is-mobile";
 
 
@@ -14,7 +15,8 @@ const iconMap: Record<string, HeroIcon> = {
   safety: ExclamationCircleIcon,
   wins: TrophyIcon,
   opportunities: ArrowTrendingDownIcon, // TODO: Remove opportunities from DB
-  inventory: ArrowTrendingDownIcon
+  inventory: ArrowTrendingDownIcon,
+  team_building: FaceSmileIcon
 };
 
 export function AnnouncementTextArea({

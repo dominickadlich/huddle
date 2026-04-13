@@ -8,7 +8,7 @@ import { DateCard } from "../ui/global/header"
 import { CancelButton, EditButton, SubmitButton } from "../ui/global/buttons"
 import HuddleCard from "../ui/dashboard/v2/huddle-card"
 import SummaryCard from "../ui/dashboard/v2/summary-card"
-import { AnnouncementTextArea } from "../ui/mini-huddle/shared-text-area"
+import { AnnouncementTextArea } from "../ui/team-huddle/shared-text-area"
 import { upsertDailySummary } from "../lib/actions/daily-summary"
 import { upsertHuddleUpdateField } from "../lib/actions/huddle-updates"
 

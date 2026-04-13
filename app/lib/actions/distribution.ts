@@ -44,7 +44,7 @@ export async function upsertDistribution(
 
             if (error) throw error;
         }
-        revalidatePath('/mini-huddle/distribution');
+        revalidatePath('/team-huddle/distribution');
         revalidatePath('/dashboard');
         return { success: true, message: 'Saved Successfully!' }
     } catch (error) {

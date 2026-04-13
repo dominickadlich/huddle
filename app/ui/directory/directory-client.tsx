@@ -93,33 +93,29 @@ export default function DirectoryClient() {
                   {extensions.map((extension) => (
                     <div
                       key={extension.phone + extension.category}
-                      className="group relative overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10"
+                      className="relative overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm"
                     >
-                      {/* Gradient overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                       {/* Content */}
                       <div className="relative z-10 flex items-center pl-2">
                         {/* Name Section */}
                         <div className="flex items-center justify-start w-90 px-3">
-                          <h3 className="text-lg font-semibold text-white group-hover:text-indigo-300 transition-colors duration-300 truncate">
+                          <h3 className="text-lg font-semibold text-white truncate">
                             {extension.location}
                           </h3>
                         </div>
 
                         {/* Divider */}
-                        <div className="h-12 w-px bg-gradient-to-b from-transparent via-gray-700 to-transparent group-hover:via-indigo-500/50 transition-colors duration-300" />
+                        <div className="h-12 w-px bg-gradient-to-b from-transparent via-gray-700 to-transparent" />
 
                         {/* Extension Number */}
                         <div className="flex-1 flex items-center justify-center">
-                          <p className="text-lg font-medium text-gray-300 group-hover:text-white transition-colors duration-300">
+                          <p className="text-lg font-medium text-gray-300">
                             {extension.phone}
                           </p>
                         </div>
                       </div>
 
-                      {/* Bottom accent line */}
-                      <div className="absolute bottom-0 left-0 right-0 h-0.25 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
                   ))}
                 </div>

@@ -1,6 +1,6 @@
 export type HeroIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
-export default function MiniHuddleCard({
+export default function TeamHuddleCard({
   title,
   value,
   type,

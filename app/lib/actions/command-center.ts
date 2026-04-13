@@ -47,7 +47,7 @@ export async function upsertCommandCenter(
 
             if (error) throw error;
         }
-        revalidatePath('/mini-huddle/command-center');
+        revalidatePath('/team-huddle/command-center');
         revalidatePath('/dashboard');
         return { success: true, message: 'Saved Successfully!' }
     } catch (error) {

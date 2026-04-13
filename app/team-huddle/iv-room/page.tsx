@@ -1,5 +1,5 @@
 import { fetchLatestIVRoom } from "@/app/lib/data/iv-room";
-import { fetchLatestDailySummary } from "@/app/lib/data";
+import { fetchLatestDailySummary, fetchLatestHuddleUpdates } from "@/app/lib/data";
 import IVRoomPageClient from "./iv-room-page-client";
 import { IvRoom } from "@/app/lib/types/database";
 import IVCLient from "./iv-room-page-client";
@@ -7,6 +7,7 @@ import IVCLient from "./iv-room-page-client";
 export default async function Page() {
     const ivRoomData = await fetchLatestIVRoom();
     const dailySummary = await fetchLatestDailySummary();
+    const huddleUpdate = await fetchLatestHuddleUpdates();
 
     // Handle null case - show empty state or use defaults
     if (!ivRoomData) {
@@ -15,15 +16,17 @@ export default async function Page() {
                 initialData={{} as IvRoom}  // Empty object cast to type
                 census={dailySummary?.census ?? null}
                 shiftLead={dailySummary?.shift_lead ?? null}
+                huddleUpdates={huddleUpdate ?? null}
             />
         );
     }
 
     return (
         <IVCLient 
-            initialData={ivRoomData} 
+            initialData={ivRoomData}
             census={dailySummary?.census ?? null}
-            shiftLead={dailySummary?.shift_lead ?? null}
+            shiftLead={dailySummary?.shift_lead ?? null} 
+            huddleUpdates={huddleUpdate ?? null}        
         />
     )
 }

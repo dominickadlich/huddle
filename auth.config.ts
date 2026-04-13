@@ -14,7 +14,7 @@ export const authConfig = {
         "/directory",
         "/docs",
         "/WDIP",
-        "/mini-huddle"
+        "/team-huddle"
       ];
 
       const isProtectedRoute = protectedRoutes.some((route) =>

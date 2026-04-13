@@ -28,7 +28,7 @@ import { upsertIVRoom } from "../actions/iv-room";
 
 
 export const commandCenterConfig = {
-    title: "Command Center",
+    title: "CM/CSR/PP",
     cardFields: [
         { key: 'hot_spots', title: 'Hot Spots' },
         { key: 'ca_tpn', title: 'CA TPNs' },
@@ -101,6 +101,7 @@ export const ivRoomConfig = {
         { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
         { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
         { key: 'wins', title: 'Team Wins & Recognition'},
+        { key: 'team_building', title: "Team Building"}
     ] as const,
 
     iconMap: {

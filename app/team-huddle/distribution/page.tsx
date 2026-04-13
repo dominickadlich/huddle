@@ -1,5 +1,5 @@
 import { fetchLatestDistribution } from "@/app/lib/data/distribution";
-import { fetchLatestDailySummary } from "@/app/lib/data";
+import { fetchLatestDailySummary, fetchLatestHuddleUpdates } from "@/app/lib/data";
 import DistributionPageClient from "./distribution-page-client";
 import { Distribution } from "@/app/lib/types/database";
 import DistributionClient from "./distribution-page-client";
@@ -7,6 +7,7 @@ import DistributionClient from "./distribution-page-client";
 export default async function Page() {
     const distributionData = await fetchLatestDistribution();
     const dailySummary = await fetchLatestDailySummary();
+    const huddleUpdate = await fetchLatestHuddleUpdates();
 
     // Handle null case - show empty state or use defaults
     if (!distributionData) {
@@ -15,6 +16,7 @@ export default async function Page() {
                 initialData={{} as Distribution}  // Empty object cast to type
                 census={dailySummary?.census ?? null}
                 shiftLead={dailySummary?.shift_lead ?? null}
+                huddleUpdates={huddleUpdate ?? null}
             />
         );
     }
@@ -24,6 +26,7 @@ export default async function Page() {
             initialData={distributionData} 
             census={dailySummary?.census ?? null}
             shiftLead={dailySummary?.shift_lead ?? null}
+            huddleUpdates={huddleUpdate ?? null}
         />
     )
 }

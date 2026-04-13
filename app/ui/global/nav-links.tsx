@@ -28,14 +28,14 @@ const links = [
     icon: CalendarIcon
   },
   {
-    name: 'Mini-Huddles',
-    href: '/mini-huddle',
+    name: 'Team-Huddles',
+    href: '/team-huddle',
     icon: ArrowsPointingInIcon,
     isDropDown: true,
     dropDownItems: [
-      { name: 'IV Room', href: '/mini-huddle/iv-room', icon: BeakerIcon},
-      { name: 'Command Center', href: '/mini-huddle/command-center', icon: LockClosedIcon},
-      { name: 'Distribution', href: '/mini-huddle/distribution', icon: ArrowsPointingOutIcon},
+      { name: 'IV Room', href: '/team-huddle/iv-room', icon: BeakerIcon},
+      { name: 'CM/CSR/PP', href: '/team-huddle/command-center', icon: LockClosedIcon},
+      { name: 'Distribution', href: '/team-huddle/distribution', icon: ArrowsPointingOutIcon},
       // { name: 'Non-Sterile', href: 'nonsterile'},
     ]
   },

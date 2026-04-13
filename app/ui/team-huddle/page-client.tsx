@@ -1,14 +1,16 @@
 'use client'
 
-import { CommandCenter, Distribution, IvRoom, Nonsterile, ShiftType } from "@/app/lib/types/database";
-import GenerateSummary from "@/app/ui/mini-huddle/generate-summary";
+import { CommandCenter, Distribution, HuddleUpdate, IvRoom, Nonsterile, ShiftType } from "@/app/lib/types/database";
+import GenerateSummary from "@/app/ui/team-huddle/generate-summary";
 import Header from "@/app/ui/global/header";
-import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/mini-huddle/shared-text-area";
+import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/team-huddle/shared-text-area";
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 import { formatDate, getCurrentShift, getLocalDate } from "@/app/lib/utils";
 import { CancelButton, EditButton, SubmitButton } from "@/app/ui/global/buttons";
-import MiniHuddleCard, { HeroIcon } from "./mini-huddle-card";
+import teamHuddleCard, { HeroIcon } from "./team-huddle-card";
+import TeamHuddleCard from "./team-huddle-card";
+import HuddleCard from "@/app/ui/dashboard/v2/huddle-card";
 
 const gridColsMap: Record<number, string> = {
         3: 'lg:grid-cols-3',
@@ -27,6 +29,7 @@ export default function MiniHuddlePageClient({
     upsertFn,
     iconMap,
     grid_cols,
+    huddleUpdates,
 }: {
     title: string;
     initialData: CommandCenter | Distribution | IvRoom | Nonsterile;
@@ -36,7 +39,8 @@ export default function MiniHuddlePageClient({
     shiftLead: string | null;
     upsertFn: (dataToSave: Record<string, string | number | null | undefined> ) => Promise<{ success: boolean, message: string}>;
     iconMap: Record<string, HeroIcon>;
-    grid_cols: number
+    grid_cols: number,
+    huddleUpdates: HuddleUpdate[] | null,
 }) {
     const router = useRouter();
     const [isEditMode, setIsEditMode] = useState(false);
@@ -50,6 +54,7 @@ export default function MiniHuddlePageClient({
         const parts = [];
             if (fields.safety) parts.push(`Safety: ${fields.safety.toString()}`);
             if (fields.barriers) parts.push(`Barriers: ${fields.barriers.toString()}`);
+            if (fields.inventory) parts.push(`Inventory: ${fields.inventory.toString()}`)
             if (fields.wins) parts.push(`Wins: ${fields.wins.toString()}`);
         
         setEditedSummary(parts.join('.\n'));
@@ -90,7 +95,7 @@ export default function MiniHuddlePageClient({
             <div className="order-3 lg:col-start-2 lg:row-start-2">
                 <div className={`grid grid-cols-1 ${gridColsMap[grid_cols]} gap-4`}>
                     {cardFields.map(({ key, title }) => (
-                        <MiniHuddleCard
+                        <TeamHuddleCard
                             key={key}
                             title={title}
                             value={fields[key]}
@@ -101,6 +106,9 @@ export default function MiniHuddlePageClient({
                         />
                     ))}
                 </div>
+                
+                
+
                 <div className="mt-4 grid grid-cols-1 gap-4">
                     {textFields.map(({ key, title }) => (
                         <SharedTextArea
@@ -113,6 +121,17 @@ export default function MiniHuddlePageClient({
                         />
                     ))}
                 </div>
+
+                {huddleUpdates && (
+                    <div className="mt-4 grid grid-cols-1 gap-4">
+                        <HuddleCard
+                            name="rx_leadership"
+                            title="RX Leadership"
+                            value={huddleUpdates.find(u => u.department === 'RX Leadership')?.update_text}
+                            isEditMode={false}
+                        />
+                    </div>
+                )}
 
                 <GenerateSummary
                     open={showSummaryModal}

@@ -42,7 +42,7 @@ export async function upsertIVRoom(
 
             if (error) throw error;
         }
-        revalidatePath('/mini-huddle/iv-room');
+        revalidatePath('/team-huddle/iv-room');
         revalidatePath('/dashboard');
         return { success: true, message: 'Saved Successfully!' }
     } catch (error) {
