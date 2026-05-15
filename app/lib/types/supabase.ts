@@ -172,7 +172,8 @@ export type Database = {
           hc_tpn: string | null
           hot_spots: string | null
           id: string
-          opportunities: string | null
+          // opportunities: string | null
+          inventory: string | null
           safety: string | null
           shift: string
           summary_text: string | null
@@ -190,7 +191,7 @@ export type Database = {
           hc_tpn?: string | null
           hot_spots?: string | null
           id?: string
-          opportunities?: string | null
+          inventory?: string | null
           safety?: string | null
           shift?: string
           summary_text?: string | null
@@ -208,7 +209,7 @@ export type Database = {
           hc_tpn?: string | null
           hot_spots?: string | null
           id?: string
-          opportunities?: string | null
+          inventory?: string | null
           safety?: string | null
           shift?: string
           summary_text?: string | null

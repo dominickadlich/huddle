@@ -70,7 +70,8 @@ export const distributionConfig = {
     textFields: [
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Missing or Failing Equipment, Supplies, etc.)' },
-        { key: 'opportunities', title: 'Inventory'}, // Change in Datatbase!
+        // { key: 'opportunities', title: 'Inventory'}, // Change in Datatbase!
+        { key: 'inventory', title: 'Inventory'}, // Change in Datatbase!
         { key: 'wins', title: 'Team Wins & Recognition'},
     ] as const,
     
