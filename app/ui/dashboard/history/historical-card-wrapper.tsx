@@ -22,12 +22,12 @@ export default function DisplayHistoricalData({
             distribution: null as DepartmentUpdate,
             csr: null as DepartmentUpdate,
             ivr: null as DepartmentUpdate,
-            nonsterile: null as DepartmentUpdate,
+            // nonsterile: null as DepartmentUpdate,
             rx_leadership: null as DepartmentUpdate,
         },
     );
 
-    const { distribution, csr, ivr, nonsterile, rx_leadership } =
+    const { distribution, csr, ivr, rx_leadership } =
     updatesByDepartment;
 
     const { census, tpn, hazardous, staffing } = data;
@@ -74,11 +74,11 @@ export default function DisplayHistoricalData({
                         value={ivr?.update_text ?? "No Data"}
                         type="ivr"
                     />
-                    <HistoricalHuddleCard
+                    {/* <HistoricalHuddleCard
                         title="Non-Sterile"
                         value={nonsterile?.update_text ?? "No Data"}
                         type="nonsterile"
-                    />
+                    /> */}
                     <HistoricalHuddleCard
                         title="Rx Leadership"
                         value={rx_leadership?.update_text ?? "No Data"}

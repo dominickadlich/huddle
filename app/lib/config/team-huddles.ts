@@ -71,7 +71,7 @@ export const distributionConfig = {
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Missing or Failing Equipment, Supplies, etc.)' },
         // { key: 'opportunities', title: 'Inventory'}, // Change in Datatbase!
-        { key: 'inventory', title: 'Inventory'}, // Change in Datatbase!
+        { key: 'inventory', title: 'Inventory'}, // Changed in Datatbase!
         { key: 'wins', title: 'Team Wins & Recognition'},
     ] as const,
     
@@ -102,7 +102,7 @@ export const ivRoomConfig = {
         { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
         { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
         { key: 'wins', title: 'Team Wins & Recognition'},
-        { key: 'team_building', title: "Team Building"}
+        // { key: 'team_building', title: "Team Building"}
     ] as const,
 
     iconMap: {
