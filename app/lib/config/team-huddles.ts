@@ -17,10 +17,10 @@ import {
     NumberedListIcon,
     UsersIcon,
     UserGroupIcon,
-    FunnelIcon,
     EyeDropperIcon,
     CheckCircleIcon,
     DocumentCheckIcon,
+    WrenchIcon,
 } from "@heroicons/react/24/outline";
 import { upsertCommandCenter } from "../actions/command-center";
 import { upsertDistribution } from "../actions/distribution";
@@ -87,7 +87,7 @@ export const distributionConfig = {
 export const ivRoomConfig = {
     title: "IV Room",
     cardFields: [
-        { key: 'bladder_instills', title: 'Bladder Instills' }, 
+        { key: 'unique_work', title: 'Unique Work' }, 
         { key: 'tpn', title: 'TPN + Batch' },
         { key: 'hazardous', title: 'Haz' },
         { key: 'sc', title: 'SC' },
@@ -113,7 +113,7 @@ export const ivRoomConfig = {
         sc: NumberedListIcon,
         training: UsersIcon,
         iv_support: UserGroupIcon,
-        bladder_instills: FunnelIcon,
+        unique_work: WrenchIcon,
     },
     upsertFn: upsertIVRoom
 }

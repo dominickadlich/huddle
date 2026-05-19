@@ -18,7 +18,7 @@ export const IVRoomBaseSchema = z.object({
     iv_support: z.string().nullable().optional(),
     inventory: z.string().nullable().optional(),
     team_building: z.string().nullable().optional(),
-    bladder_instills: z.string().nullable().optional(),
+    unique_work: z.string().nullable().optional(),
 });
 
 export const SharedSchema = z.object({
@@ -60,7 +60,7 @@ export type IVRoomUpdateState = {
         iv_support?: string[];
         inventory?: string[];
         team_building?: string[];
-        bladder_instills?: string[];
+        unique_work?: string[];
         monthly_clean?: string[];
         _form?: string[];
     }
