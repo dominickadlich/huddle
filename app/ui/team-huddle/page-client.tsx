@@ -57,7 +57,7 @@ export default function MiniHuddlePageClient({
             if (fields.inventory) parts.push(`Inventory: ${fields.inventory.toString()}`)
             if (fields.wins) parts.push(`Wins: ${fields.wins.toString()}`);
         
-        setEditedSummary(parts.join('.\n'));
+        setEditedSummary(parts.join('\n'));
     }, [fields])
 
     return (
