@@ -11,10 +11,10 @@ function toDashboardData(data: DailySummaryWithUpdates): DashboardData {
   return {
     daily_summary: data,
     updates: {
+      rx_leadership: updatesByDepartment["RX Leadership"] ?? null,
       distribution: updatesByDepartment["Distribution"] ?? null,
       ivr: updatesByDepartment["IVR"] ?? null,
       csr: updatesByDepartment["CSR"] ?? null,
-      rx_leadership: updatesByDepartment["RX Leadership"] ?? null,
       nonsterile: updatesByDepartment["Nonsterile"] ?? null,
     }
   };

@@ -49,6 +49,8 @@ export default function MiniHuddlePageClient({
     const clientDate = getLocalDate()
     const clientShift = getCurrentShift();
     const [editedSummary, setEditedSummary] = useState<string>('');
+    const [isMisclick, setIsMisclick] = useState(false); // For accidental nav link click
+    const [storedHref, setStoredHref] = useState<string | null>(null) // For accidental nav link click
 
     useEffect(() => {
         const parts = [];

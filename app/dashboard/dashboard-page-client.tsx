@@ -21,10 +21,10 @@ const dashboardCardFields = [
 ] as const;
 
 const huddleUpdateFields = [
+    { key: "rx_leadership", title: "RX Leadership", department: "RX Leadership" },
     { key: "distribution", title: "Distribution", department: "Distribution" },
     { key: "ivr", title: "IV Room", department: "IVR"},
-    { key: "csr" , title: "Command Center", department: "CSR" },
-    { key: "rx_leadership", title: "RX Leadership", department: "RX Leadership" },
+    { key: "csr" , title: "CM/CSR/PP", department: "CSR" },
     // { key: "nonsterile", title: "Non Sterile" department: "Nonsterile"},
 ] as const;
 

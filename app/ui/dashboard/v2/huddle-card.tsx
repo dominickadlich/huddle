@@ -66,9 +66,24 @@ export default function HuddleCard({
                 />
               )
             : (
-                <p className="text-base text-white whitespace-pre-wrap"> 
-                    {value ?? 'No Data'}
-                </p>
+                <div className="text-gray-200 w-full">
+                  {value
+                    ? String(value).split('\n').map((line, i) => {
+                        const colonIndex = line.indexOf(':');
+                        return (
+                          <p key={i} className={i > 0 ? 'mt-4' : ''}>
+                            {colonIndex !== -1 ? (
+                              <>
+                                <span className="font-bold underline underline-offset-2 text-gray-100">{line.slice(0, colonIndex + 1)}</span>
+                                {line.slice(colonIndex + 1)}
+                              </>
+                            ) : line}
+                          </p>
+                        );
+                      })
+                    : <p>No Data</p>
+                  }
+                </div>
               )
             }
         </div>

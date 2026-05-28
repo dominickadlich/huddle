@@ -60,12 +60,17 @@ export default function DisplayHistoricalData({
 
                 <div className="mt-4 grid grid-cols-1 gap-4">
                     <HistoricalHuddleCard
+                        title="Rx Leadership"
+                        value={rx_leadership?.update_text ?? "No Data"}
+                        type="rx_leadership"
+                    />
+                    <HistoricalHuddleCard
                         title="Distribution"
                         value={distribution?.update_text ?? "No Data"}
                         type="distribution"
                     />
                     <HistoricalHuddleCard
-                        title="CSR"
+                        title="CM/CSR/PP"
                         value={csr?.update_text ?? "No Data"}
                         type="csr"
                     />
@@ -79,11 +84,6 @@ export default function DisplayHistoricalData({
                         value={nonsterile?.update_text ?? "No Data"}
                         type="nonsterile"
                     /> */}
-                    <HistoricalHuddleCard
-                        title="Rx Leadership"
-                        value={rx_leadership?.update_text ?? "No Data"}
-                        type="rx_leadership"
-                    />
                 </div>
             </div>
         </>

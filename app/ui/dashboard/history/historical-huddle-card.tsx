@@ -43,11 +43,24 @@ export default function HistoricalHuddleCard({
         </div>
 
         {/* Value Display */}
-        <div className="flex justify-center items-center min-h-[2rem]">
-            <p className="text-xl font-bold text-white transition-colors duration-300">
-              {value}
-            </p>
-        </div>
+        <div className="text-gray-200 w-full">
+                  {value
+                    ? String(value).split('\n').map((line, i) => {
+                        const colonIndex = line.indexOf(':');
+                        return (
+                          <p key={i} className={i > 0 ? 'mt-4' : ''}>
+                            {colonIndex !== -1 ? (
+                              <>
+                                <span className="font-bold underline underline-offset-2 text-gray-100">{line.slice(0, colonIndex + 1)}</span>
+                                {line.slice(colonIndex + 1)}
+                              </>
+                            ) : line}
+                          </p>
+                        );
+                      })
+                    : <p>No Data</p>
+                  }
+                </div>
       </div>
     </>
   );
