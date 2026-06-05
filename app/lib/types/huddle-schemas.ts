@@ -82,6 +82,7 @@ export const CommandCenterBaseSchema = z.object({
     hc_tpn: z.string().nullable().optional(),
     workload_csr: z.string().nullable().optional(),
     workload_cmd: z.string().nullable().optional(),
+    workload_pp: z.string().nullable().optional(),
     five_oh_three_b: z.string().nullable().optional(),
     dispense_prep: z.string().nullable().optional(),
     dispense_check: z.string().nullable().optional(),
@@ -105,6 +106,7 @@ export type CommandCenterUpdateState = {
         hc_tpn?: string[];
         workload_csr?: string[];
         workload_cmd?: string[];
+        workload_pp?: string[];
         five_oh_three_b: string[];
         dispense_prep: string[];
         dispense_check: string[];

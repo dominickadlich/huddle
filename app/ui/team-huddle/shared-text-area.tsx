@@ -2,6 +2,7 @@ import {
   ArrowTrendingDownIcon,
   ExclamationCircleIcon,
   FaceSmileIcon,
+  LightBulbIcon,
   MegaphoneIcon,
   TrophyIcon,
   WrenchScrewdriverIcon,
@@ -14,7 +15,7 @@ const iconMap: Record<string, HeroIcon> = {
   barriers: WrenchScrewdriverIcon,
   safety: ExclamationCircleIcon,
   wins: TrophyIcon,
-  opportunities: ArrowTrendingDownIcon, // TODO: Remove opportunities from DB
+  opportunities: LightBulbIcon, // TODO: Remove opportunities from DB
   inventory: ArrowTrendingDownIcon,
   team_building: FaceSmileIcon
 };

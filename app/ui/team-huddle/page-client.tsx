@@ -4,13 +4,14 @@ import { CommandCenter, Distribution, HuddleUpdate, IvRoom, Nonsterile, ShiftTyp
 import GenerateSummary from "@/app/ui/team-huddle/generate-summary";
 import Header from "@/app/ui/global/header";
 import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/team-huddle/shared-text-area";
-import { useEffect, useState } from "react"
+import { useEffect, useState, createContext } from "react"
 import { useRouter } from "next/navigation";
 import { formatDate, getCurrentShift, getLocalDate } from "@/app/lib/utils";
 import { CancelButton, EditButton, SubmitButton } from "@/app/ui/global/buttons";
 import teamHuddleCard, { HeroIcon } from "./team-huddle-card";
 import TeamHuddleCard from "./team-huddle-card";
 import HuddleCard from "@/app/ui/dashboard/v2/huddle-card";
+
 
 const gridColsMap: Record<number, string> = {
         3: 'lg:grid-cols-3',
@@ -49,8 +50,7 @@ export default function MiniHuddlePageClient({
     const clientDate = getLocalDate()
     const clientShift = getCurrentShift();
     const [editedSummary, setEditedSummary] = useState<string>('');
-    const [isMisclick, setIsMisclick] = useState(false); // For accidental nav link click
-    const [storedHref, setStoredHref] = useState<string | null>(null) // For accidental nav link click
+    
 
     useEffect(() => {
         const parts = [];

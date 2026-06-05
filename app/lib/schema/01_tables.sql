@@ -131,6 +131,7 @@ create table public.command_center (
   -- Workload descriptions
   workload_csr text,
   workload_cmd text,
+  workload_pp text,
 
   -- Shared fields
   safety text,
@@ -171,6 +172,7 @@ create table public.distribution (
   safety text,
   wins text,
   opportunities text,
+  inventory text,
   announcements text,
 
   -- Trigger fields

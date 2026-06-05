@@ -21,6 +21,7 @@ import {
     CheckCircleIcon,
     DocumentCheckIcon,
     WrenchIcon,
+    BeakerIcon
 } from "@heroicons/react/24/outline";
 import { upsertCommandCenter } from "../actions/command-center";
 import { upsertDistribution } from "../actions/distribution";
@@ -35,9 +36,10 @@ export const commandCenterConfig = {
         { key: 'hc_tpn', title: 'HC TPNs' },
         { key: 'workload_csr', title: 'Workload CSR' },
         { key: 'workload_cmd', title: 'Workload CMD' },
+        { key: "workload_pp", title: "Workload PP" },
         { key: 'five_oh_three_b', title: '503b' },
         { key: "dispense_prep", title: "Dispense Prep" },
-        { key: "dispense_check", title: "Dispense Check" },
+        // { key: "dispense_check", title: "Dispense Check" },
     ] as const,
     textFields: [
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
@@ -51,6 +53,7 @@ export const commandCenterConfig = {
         hc_tpn: HeartIcon,
         workload_csr: LockClosedIcon,
         workload_cmd: ClipboardDocumentCheckIcon,
+        workload_pp: BeakerIcon,
         five_oh_three_b: EyeDropperIcon,
         dispense_prep: DocumentCheckIcon,
         dispense_check: CheckCircleIcon,
@@ -70,8 +73,8 @@ export const distributionConfig = {
     textFields: [
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Missing or Failing Equipment, Supplies, etc.)' },
-        // { key: 'opportunities', title: 'Inventory'}, // Change in Datatbase!
-        { key: 'inventory', title: 'Inventory'}, // Changed in Datatbase!
+        { key: 'inventory', title: 'Inventory'}, 
+        { key: 'opportunities', title: 'Opportunities'},
         { key: 'wins', title: 'Team Wins & Recognition'},
     ] as const,
     
