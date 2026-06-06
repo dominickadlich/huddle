@@ -4,13 +4,14 @@ import { CommandCenter, Distribution, HuddleUpdate, IvRoom, Nonsterile, ShiftTyp
 import GenerateSummary from "@/app/ui/team-huddle/generate-summary";
 import Header from "@/app/ui/global/header";
 import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/team-huddle/shared-text-area";
-import { useEffect, useState, createContext } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useRouter } from "next/navigation";
 import { formatDate, getCurrentShift, getLocalDate } from "@/app/lib/utils";
 import { CancelButton, EditButton, SubmitButton } from "@/app/ui/global/buttons";
 import teamHuddleCard, { HeroIcon } from "./team-huddle-card";
 import TeamHuddleCard from "./team-huddle-card";
 import HuddleCard from "@/app/ui/dashboard/v2/huddle-card";
+import { EditModeContext } from "@/app/lib/context/EditModeContext";
 
 
 const gridColsMap: Record<number, string> = {
@@ -44,13 +45,21 @@ export default function MiniHuddlePageClient({
     huddleUpdates: HuddleUpdate[] | null,
 }) {
     const router = useRouter();
-    const [isEditMode, setIsEditMode] = useState(false);
     const [fields, setFields] = useState<Record<string, string | number | null | undefined>>(initialData || {})
     const [showSummaryModal, setShowSummaryModal] = useState(false);
     const clientDate = getLocalDate()
     const clientShift = getCurrentShift();
     const [editedSummary, setEditedSummary] = useState<string>('');
     
+    const { 
+        isEditMode, 
+        setIsEditMode,
+        misclickWarning, 
+        setMisclickWarning,
+        pendingHref, 
+        setPendingHref,
+     } = useContext(EditModeContext)
+
 
     useEffect(() => {
         const parts = [];

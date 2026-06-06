@@ -15,6 +15,8 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { useContext } from "react";
+import { EditModeContext } from "@/app/lib/context/EditModeContext";
 
 
 const links = [
@@ -61,6 +63,16 @@ export default function NavLinks({
 }) {
   const pathname = usePathname();
 
+  const { 
+          isEditMode, 
+          setIsEditMode,
+          misclickWarning, 
+          setMisclickWarning,
+          pendingHref, 
+          setPendingHref,
+       } = useContext(EditModeContext)
+
+
   return (
     <>
       {links.map((link) => {
@@ -77,7 +89,15 @@ export default function NavLinks({
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={onNavigate}
+                onNavigate={
+                  isEditMode
+                  ? (e) => {
+                      e.preventDefault()
+                      setPendingHref(item.href)
+                      setMisclickWarning(true)
+                    }
+                  : undefined
+                }
                 className="group relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-300"
               >
                 <ItemIcon className="h-5 w-5" />
@@ -111,6 +131,15 @@ export default function NavLinks({
                       <Link
                         href={item.href}
                         className="block px-4 py-2 text-sm text-white/90 hover:bg-white/20 hover:text-white rounded-md"
+                        onNavigate={
+                          isEditMode
+                          ? (e) => {
+                              e.preventDefault()
+                              setPendingHref(item.href)
+                              setMisclickWarning(true)
+                            }
+                          : undefined
+                        }
                       >
                         {item.name}
                       </Link>
@@ -125,7 +154,15 @@ export default function NavLinks({
           <Link
             key={link.name}
             href={link.href}
-            onClick={onNavigate}
+            onNavigate={
+              isEditMode
+              ? (e) => {
+                  e.preventDefault()
+                  setPendingHref(link.href)
+                  setMisclickWarning(true)
+                }
+              : undefined
+            }
             className={clsx(
               "group relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-300",
               {
