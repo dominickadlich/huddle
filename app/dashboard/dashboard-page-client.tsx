@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { type DashboardData } from "../lib/types/database"
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
 import { formatDate, getCurrentShift, getLocalDate } from "../lib/utils"
 import { DateCard } from "../ui/global/header"
 import { CancelButton, EditButton, SubmitButton } from "../ui/global/buttons"
@@ -11,6 +11,7 @@ import SummaryCard from "../ui/dashboard/v2/summary-card"
 import { AnnouncementTextArea } from "../ui/team-huddle/shared-text-area"
 import { upsertDailySummary } from "../lib/actions/daily-summary"
 import { upsertHuddleUpdateField } from "../lib/actions/huddle-updates"
+import StaticSearch from "../ui/static-search"
 
 const dashboardCardFields = [
     { key: "census", title: "Census" },
@@ -39,6 +40,12 @@ export default function DashboardPageClient({
     const clientDate =  getLocalDate()
     const clientShift = getCurrentShift();
 
+    // const [searchQuery, setSearchQuery] = useState<string>('')
+
+    // function handleSearchQuery(e: { target: { value: SetStateAction<string> } }) {
+    //     setSearchQuery(e.target.value);
+    // }
+
 
     if (!fields) {
         return (
@@ -54,9 +61,16 @@ export default function DashboardPageClient({
 
     return (
         <div className="mt-20">
-            <div className="flex justify-between items-center pb-6 mb-8 border-b-2 border-indigo-500/30">
+            <div className="flex justify-between items-center pb-6 mb-8 border-b-2 border-indigo-500/30 gap-6">
                 {/* Left */}
                 <h1 className="text-4xl font-bold">Huddle Dashboard</h1>
+                
+                {/* Center */}
+                {/* <StaticSearch 
+                    placeholder={"Global Search"} 
+                    onChange={handleSearchQuery} 
+                    value={searchQuery}
+                /> */}
                 
                 {/* Right */}
                 <DateCard />
