@@ -67,8 +67,8 @@ export default function MiniHuddlePageClient({
             if (fields.safety) parts.push(`Safety: ${fields.safety.toString()}`);
             if (fields.barriers) parts.push(`Barriers: ${fields.barriers.toString()}`);
             if (fields.inventory) parts.push(`Inventory: ${fields.inventory.toString()}`)
-            if (fields.wins) parts.push(`Wins: ${fields.wins.toString()}`);
             if (fields.opportunities) parts.push(`Opportunities: ${fields.opportunities.toString()}`);
+            if (fields.wins) parts.push(`Wins: ${fields.wins.toString()}`);
 
         setEditedSummary(parts.join('\n'));
     }, [fields])
