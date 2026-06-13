@@ -99,7 +99,8 @@ export default function NavBar({}) {
                 />
               </div>
               <div className="py-6">
-                {isAuthenticated ? (
+                {isAuthenticated ? <SignOutNavBar /> : <SignInNavBar />}
+                {/* {isAuthenticated ? (
                   <button
                     onClick={handleSignOut}
                     className="group -mx-3 flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-white/10 transition-all duration-300 border border-transparent hover:border-indigo-500/30"
@@ -124,8 +125,8 @@ export default function NavBar({}) {
                     >
                       →
                     </span>
-                  </Link>
-                )}
+                  </Link> */}
+                {/* )} */}
               </div>
             </div>
           </div>

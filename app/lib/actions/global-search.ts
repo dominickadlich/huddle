@@ -1,12 +1,33 @@
-// import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient"
+import { getAuthenticatedClient } from "../supabase/auth-helpers";
 
-// const supabase = SupabaseAuthClient()
 
-// const { data, error } = await supabase.rpc('global_search', { search_term: input });
+export async function globalSearch(input: string,): Promise <{ 
+    success: boolean,
+    message: string,
+    data: Array<{
+        department: string,
+        date: string,
+        summary: string
+    }> | null
+}> {
+    try {
+        const { supabase } = await getAuthenticatedClient();
 
-// SELECT 'iv_room' as department, date, summary FROM iv_room WHERE summary ILIKE '%vancomycin%'
-// UNION ALL
-// SELECT 'distribution' as department, date, summary FROM distribution WHERE summary ILIKE '%vancomycin%'
-// UNION ALL
-// SELECT 'command_center' as department, date, summary FROM command_center WHERE summary ILIKE '%vancomycin%'
-// ORDER BY date DESC
+        const { data, error } = await supabase.rpc('global_search', { search_term: input });
+
+        if (error) throw error;
+
+        return {
+            success: true,
+            message: `Returned ${data.length} results for ${input}`,
+            data
+        }
+    } catch (error) {
+        console.error(`Failed to return results for ${input}`)
+        return {
+            success: false,
+            message: "Database error. Retry Query with different input",
+            data: null
+        }
+    }
+}
