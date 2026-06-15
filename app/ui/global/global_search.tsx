@@ -1,5 +1,6 @@
 'use client'
 
+import { globalSearch } from "@/app/lib/actions/global-search";
 import { useState, useEffect } from "react";
 
 interface ResultData {
@@ -22,9 +23,26 @@ export default function GloabalSearch({
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [results, setResults] = useState<ResultData[] | null>(null)
 
+    // setTimeout example:
+    // setTimeout(() => { console.log("some message")}, 5000)
+
     useEffect(() => {
+        if (value === '') return
         
-    })
+        const timeout = setTimeout(() => {
+            const search = async () => {
+                setIsLoading(true)
+                const result = await globalSearch(value)
+                setResults(result.data)
+                setIsLoading(false)
+            }
+            search()
+        }, 500)
+
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [value])
 
     return(
         <>
