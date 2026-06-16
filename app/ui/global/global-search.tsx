@@ -1,7 +1,8 @@
 'use client'
 
 import { globalSearch } from "@/app/lib/actions/global-search";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
+import StaticSearch from "../static-search";
 
 interface ResultData {
     department: string,
@@ -9,22 +10,15 @@ interface ResultData {
     summary: string
 }
 
-export default function GloabalSearch({
-    resultData
-}: {
-    resultData: Promise<{
-        department?: string,
-        date?: string,
-        summary?: string
-    }>
-}) {
+export default function GloabalSearch() {
     const [showModal, setShowModal] = useState<boolean>(false)
     const [value, setValue] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [results, setResults] = useState<ResultData[] | null>(null)
 
-    // setTimeout example:
-    // setTimeout(() => { console.log("some message")}, 5000)
+    function handleSetValue(e: { target: { value: SetStateAction<string> } }) {
+        setValue(e.target.value);
+    }
 
     useEffect(() => {
         if (value === '') return
@@ -47,7 +41,12 @@ export default function GloabalSearch({
     return(
         <>
         <div>
-
+            <StaticSearch 
+                placeholder={""} 
+                onChange={handleSetValue}
+                value={value}
+                onFocus={() => setShowModal(true)}
+            />
         </div>
         </>
     )
