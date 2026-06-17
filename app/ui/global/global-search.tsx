@@ -3,8 +3,9 @@
 import { globalSearch } from "@/app/lib/actions/global-search";
 import { useState, useEffect, SetStateAction } from "react";
 import StaticSearch from "../static-search";
+import SearchModal from "./search-modal";
 
-interface ResultData {
+export interface ResultData {
     department: string,
     date: string,
     summary: string
@@ -42,10 +43,18 @@ export default function GloabalSearch() {
         <>
         <div>
             <StaticSearch 
-                placeholder={""} 
+                placeholder={"Search recent huddle summaries"}
                 onChange={handleSetValue}
                 value={value}
                 onFocus={() => setShowModal(true)}
+            />
+            <SearchModal 
+                showModal={showModal}
+                onClose={() => setShowModal(false)}
+                onChange={handleSetValue}
+                value={value} 
+                isLoading={isLoading} 
+                results={results}                
             />
         </div>
         </>

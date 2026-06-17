@@ -12,6 +12,7 @@ import { AnnouncementTextArea } from "../ui/team-huddle/shared-text-area"
 import { upsertDailySummary } from "../lib/actions/daily-summary"
 import { upsertHuddleUpdateField } from "../lib/actions/huddle-updates"
 import StaticSearch from "../ui/static-search"
+import GloabalSearch from "../ui/global/global-search"
 
 const dashboardCardFields = [
     { key: "census", title: "Census" },
@@ -71,6 +72,7 @@ export default function DashboardPageClient({
                     onChange={handleSearchQuery} 
                     value={searchQuery}
                 /> */}
+                {/* <GloabalSearch /> */}
                 
                 {/* Right */}
                 <DateCard />
