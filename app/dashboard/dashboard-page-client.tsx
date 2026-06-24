@@ -1,8 +1,9 @@
 'use client'
 
 import { useRouter } from "next/navigation"
-import { type DashboardData } from "../lib/types/database"
-import { SetStateAction, useState } from "react"
+import { HuddleUpdate, type DashboardData } from "../lib/types/database"
+import CategoryCard, { type TransposedOutput } from "../ui/dashboard/v3/huddle-card-v3"
+import { SetStateAction, useEffect, useState } from "react"
 import { formatDate, getCurrentShift, getLocalDate } from "../lib/utils"
 import { DateCard } from "../ui/global/header"
 import { CancelButton, EditButton, SubmitButton } from "../ui/global/buttons"
@@ -13,6 +14,8 @@ import { upsertDailySummary } from "../lib/actions/daily-summary"
 import { upsertHuddleUpdateField } from "../lib/actions/huddle-updates"
 import StaticSearch from "../ui/static-search"
 import GloabalSearch from "../ui/global/global-search"
+import { getHuddleCategoriesAction } from "../lib/actions/dashboard"
+import { transposeLoop, CATEGORIES } from "../ui/dashboard/v3/huddle-card-v3"
 
 const dashboardCardFields = [
     { key: "census", title: "Census" },
@@ -24,11 +27,12 @@ const dashboardCardFields = [
 
 const huddleUpdateFields = [
     { key: "rx_leadership", title: "RX Leadership", department: "RX Leadership" },
-    { key: "distribution", title: "Distribution", department: "Distribution" },
-    { key: "ivr", title: "IV Room", department: "IVR"},
-    { key: "csr" , title: "CM/CSR/PP", department: "CSR" },
+    // { key: "distribution", title: "Distribution", department: "Distribution" },
+    // { key: "ivr", title: "IV Room", department: "IVR"},
+    // { key: "csr" , title: "CM/CSR/PP", department: "CSR" },
     // { key: "nonsterile", title: "Non Sterile" department: "Nonsterile"},
 ] as const;
+
 
 export default function DashboardPageClient({
     initialData,
@@ -38,6 +42,7 @@ export default function DashboardPageClient({
     const router = useRouter();
     const [isEditMode, setIsEditMode] = useState(false);
     const [fields, setFields] = useState<DashboardData | null>(initialData ?? null);
+    const [categories, setCategories] = useState<Partial<TransposedOutput> | null>(null)
     const clientDate =  getLocalDate()
     const clientShift = getCurrentShift();
 
@@ -46,6 +51,25 @@ export default function DashboardPageClient({
     // function handleSearchQuery(e: { target: { value: SetStateAction<string> } }) {
     //     setSearchQuery(e.target.value);
     // }
+
+    // Fetch safety, barriers, inventory, wins, etc.
+    useEffect(() => {
+        const fetch_categories = async () => {
+            try {
+               const huddle_categories = await getHuddleCategoriesAction(clientDate, 'morning')
+               console.log(huddle_categories)
+               console.log(clientDate)
+               if (huddle_categories.data) {
+                   const transposed_categories = transposeLoop({data: huddle_categories.data})
+                   setCategories(transposed_categories)
+               }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        fetch_categories();
+    }, [])
 
 
     if (!fields) {
@@ -164,6 +188,8 @@ export default function DashboardPageClient({
                         />
                     ))}
                 </div>
+
+                {/* V2 huddle card displaying info by department */}
                 <div className="mt-4 grid grid-cols-1 gap-4">
                     {huddleUpdateFields.map(({ key, title }) => (
                         <HuddleCard
@@ -178,14 +204,27 @@ export default function DashboardPageClient({
                                     updates: {
                                         ...fields?.updates,
                                         [key]: {
-                                            ...fields?.updates[key],
+                                            ...fields.updates[key],
                                             update_text: val
-                                        }
+                                        } as HuddleUpdate
                                     }
                                 })
                             }
                         />
                     ))}
+                </div>
+
+                <div className="mt-4 grid grid-cols-1 gap-4">
+                    {categories
+                        ? CATEGORIES.map((category) => (
+                            <CategoryCard
+                                key={category}
+                                title={category}
+                                findings={categories?.[category] ?? []}                          
+                            />
+                        ))
+                        : <p>No Data</p>
+                    }
                 </div>
             </div>
         </div>
