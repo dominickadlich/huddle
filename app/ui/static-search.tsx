@@ -7,11 +7,9 @@ export default function StaticSearch({
   placeholder,
   onChange,
   value,
-  onFocus
 }: {
   placeholder: string;
   onChange: (e: { target: { value: SetStateAction<string> } }) => void;
-  onFocus?: () => void;
   value: string;
 }) {
   return (
@@ -31,8 +29,6 @@ export default function StaticSearch({
         placeholder={placeholder}
         onChange={onChange}
         value={value}
-        // if onFocus exists, call it. Otherwise do nothing."
-        onFocus={() => onFocus?.()}
       />
     </div>
   );

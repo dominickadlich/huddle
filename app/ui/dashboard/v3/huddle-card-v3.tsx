@@ -87,7 +87,7 @@ export default function CategoryCard({
                             {finding.text}
                         </p>
                     ))
-                    : <p>No Data</p>}
+                    : <p>Nothing reported today!</p>}
                 </div>
             </div>
         </div>

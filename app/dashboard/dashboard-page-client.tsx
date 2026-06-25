@@ -223,7 +223,7 @@ export default function DashboardPageClient({
                                 findings={categories?.[category] ?? []}                          
                             />
                         ))
-                        : <p>No Data</p>
+                        : <p className="text-gray-400 text-sm">Awaiting morning huddle</p>
                     }
                 </div>
             </div>

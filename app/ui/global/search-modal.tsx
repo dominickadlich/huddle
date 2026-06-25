@@ -1,9 +1,10 @@
 "use client"
 
-import React, { SetStateAction } from "react"
+import React, { SetStateAction, useEffect } from "react"
 import type { ResultData } from "./global-search"
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react"
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
+import { useRef } from "react"
 
 export default function SearchModal({
     showModal,
@@ -20,6 +21,21 @@ export default function SearchModal({
     isLoading: boolean,
     results: ResultData[] | null,
 }) {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (showModal === true) {
+                inputRef.current?.focus()
+            }
+        }, 100)
+
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [showModal])
+    
+
     return(
         <div>
             <Dialog open={showModal} onClose={onClose} className="relative z-10">
@@ -46,7 +62,7 @@ export default function SearchModal({
                                     onChange={onChange}
                                     value={value}
                                     className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6"
-                                    autoFocus={true}
+                                    ref={inputRef}
                                 />
                                 </div>
                             {/* </div> */}
