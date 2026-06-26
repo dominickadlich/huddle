@@ -96,7 +96,7 @@ export default function DashboardPageClient({
                     onChange={handleSearchQuery} 
                     value={searchQuery}
                 /> */}
-                {/* <GloabalSearch /> */}
+                <GloabalSearch />
                 
                 {/* Right */}
                 <DateCard />
