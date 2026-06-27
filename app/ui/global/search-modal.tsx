@@ -6,6 +6,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/re
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import { useRef } from "react"
 import Link from "next/link"
+import { formatDate } from "@/app/lib/utils"
 
 export default function SearchModal({
     showModal,
@@ -78,9 +79,11 @@ export default function SearchModal({
                         {results && results.length > 0 &&
                           results.map((result) => (
                             <div key={result.date + result.summary} className="mt-4 border p-6 border-gray-700/50 hover:border-gray-400">
-                                <Link href={`/dashboard/history?date=${result.date}&shift=morning`} className="grid grid-cols-2">
-                                    <div className="">{result.date}</div>
-                                    <div className="truncate">{result.summary}</div>
+                                <Link href={`/dashboard/history?date=${result.date}&shift=morning`} className="grid grid-cols-1">
+                                    <div>
+                                        <div className="mb-2">{formatDate(`${result.date}T00:00:00`)}</div>
+                                        <div className="">{result.summary}</div>
+                                    </div>
                                 </Link>
                             </div>
                           ))
