@@ -8,6 +8,24 @@ import { useRef } from "react"
 import Link from "next/link"
 import { formatDate } from "@/app/lib/utils"
 
+export function highlightMatch(text: string, query: string): React.ReactNode {
+  if (!query) return text
+
+  // escape regex special chars so user input like ( . * can't break the pattern
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const parts = text.split(new RegExp(`(${escaped})`, 'i'))
+
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      <mark key={i} className="bg-indigo-200/60 text-inherit rounded px-0.5">
+        {part}
+      </mark>
+    ) : (
+      part
+    )
+  )
+}
+
 export default function SearchModal({
     showModal,
     onClose,
@@ -82,7 +100,7 @@ export default function SearchModal({
                                 <Link href={`/dashboard/history?date=${result.date}&shift=morning`} className="grid grid-cols-1">
                                     <div>
                                         <div className="mb-2">{formatDate(`${result.date}T00:00:00`)}</div>
-                                        <div className="">{result.summary}</div>
+                                        <div className="">{highlightMatch(result.summary, value)}</div>
                                     </div>
                                 </Link>
                             </div>
