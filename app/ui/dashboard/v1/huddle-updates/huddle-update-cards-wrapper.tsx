@@ -1,6 +1,6 @@
 import { fetchLatestDailySummaryWithUpdates } from "@/app/lib/data";
 import HuddleUpdateCard from "./huddle-update-card";
-import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
+import { getCurrentShift, getLocalDate } from "@/app/lib/utils/utils";
 import { DepartmentUpdate } from "@/app/lib/types/database"
 
 export default async function HuddleUpdateCardWrapper() {

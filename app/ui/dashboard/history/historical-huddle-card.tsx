@@ -5,6 +5,7 @@ import {
   EyeDropperIcon,
   PresentationChartLineIcon,
 } from "@heroicons/react/24/outline";
+import { highlightMatch } from "@/app/lib/utils/highlight";
 
 
 const iconMap = {
@@ -19,10 +20,12 @@ export default function HistoricalHuddleCard({
   title,
   value,
   type,
+  query
 }: {
   title: string;
   value: number | string | null | undefined;
   type: "distribution" | "csr" | "ivr" | "nonsterile" | "rx_leadership";
+  query: string
 }) {
   const Icon = iconMap[type];
 
@@ -52,9 +55,9 @@ export default function HistoricalHuddleCard({
                             {colonIndex !== -1 ? (
                               <>
                                 <span className="font-bold underline underline-offset-2 text-gray-100">{line.slice(0, colonIndex + 1)}</span>
-                                {line.slice(colonIndex + 1)}
+                                {highlightMatch(line.slice(colonIndex + 1), query)}
                               </>
-                            ) : line}
+                            ) : highlightMatch(line, query)}
                           </p>
                         );
                       })

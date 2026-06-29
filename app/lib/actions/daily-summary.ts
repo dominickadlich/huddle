@@ -10,7 +10,7 @@ import type {
   DailySummaryUpdate,
   ShiftType,
 } from "../types/database";
-import { getCurrentShift, getLocalDate } from "../utils";
+import { getCurrentShift, getLocalDate } from "../utils/utils";
 
 // ============================================
 // ZOD VALIDATION SCHEMAS

@@ -3,9 +3,11 @@ import HistoricalHuddleCard from "./historical-huddle-card";
 import HistoricalSummaryCard from "./historical-summary-card";
 
 export default function DisplayHistoricalData({
-    data
+    data,
+    query
 }: {
     data: DailySummaryWithUpdates
+    query: string
 }) {
     const updatesByDepartment = data.updates.reduce(
         (acc, update) => {
@@ -63,21 +65,26 @@ export default function DisplayHistoricalData({
                         title="Rx Leadership"
                         value={rx_leadership?.update_text ?? "No Data"}
                         type="rx_leadership"
+
+                        query={query}
                     />
                     <HistoricalHuddleCard
                         title="Distribution"
                         value={distribution?.update_text ?? "No Data"}
                         type="distribution"
+                        query={query}
                     />
                     <HistoricalHuddleCard
                         title="CM/CSR/PP"
                         value={csr?.update_text ?? "No Data"}
                         type="csr"
+                        query={query}
                     />
                     <HistoricalHuddleCard
                         title="IVR"
                         value={ivr?.update_text ?? "No Data"}
                         type="ivr"
+                        query={query}
                     />
                     {/* <HistoricalHuddleCard
                         title="Non-Sterile"

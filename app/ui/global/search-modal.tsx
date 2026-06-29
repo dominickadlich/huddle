@@ -6,25 +6,8 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/re
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import { useRef } from "react"
 import Link from "next/link"
-import { formatDate } from "@/app/lib/utils"
-
-export function highlightMatch(text: string, query: string): React.ReactNode {
-  if (!query) return text
-
-  // escape regex special chars so user input like ( . * can't break the pattern
-  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const parts = text.split(new RegExp(`(${escaped})`, 'i'))
-
-  return parts.map((part, i) =>
-    part.toLowerCase() === query.toLowerCase() ? (
-      <mark key={i} className="bg-indigo-200/60 text-inherit rounded px-0.5">
-        {part}
-      </mark>
-    ) : (
-      part
-    )
-  )
-}
+import { formatDate } from "@/app/lib/utils/utils"
+import { highlightMatch } from "@/app/lib/utils/highlight"
 
 export default function SearchModal({
     showModal,
@@ -96,8 +79,8 @@ export default function SearchModal({
                         }
                         {results && results.length > 0 &&
                           results.map((result) => (
-                            <div key={result.date + result.summary} className="mt-4 border p-6 border-gray-700/50 hover:border-gray-400">
-                                <Link href={`/dashboard/history?date=${result.date}&shift=morning`} className="grid grid-cols-1">
+                            <div key={formatDate(result.date) + result.summary} className="mt-4 border p-6 border-gray-700/50 hover:border-gray-400">
+                                <Link href={`/dashboard/history?date=${result.date}&shift=morning&q=${encodeURIComponent(value)}`} className="grid grid-cols-1">
                                     <div>
                                         <div className="mb-2">{formatDate(`${result.date}T00:00:00`)}</div>
                                         <div className="">{highlightMatch(result.summary, value)}</div>

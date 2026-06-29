@@ -6,7 +6,7 @@ import Header from "@/app/ui/global/header";
 import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/team-huddle/shared-text-area";
 import { useEffect, useState, useContext } from "react"
 import { useRouter } from "next/navigation";
-import { formatDate, getCurrentShift, getLocalDate } from "@/app/lib/utils";
+import { formatDate, getCurrentShift, getLocalDate } from "@/app/lib/utils/utils";
 import { CancelButton, EditButton, SubmitButton } from "@/app/ui/global/buttons";
 import teamHuddleCard, { HeroIcon } from "./team-huddle-card";
 import TeamHuddleCard from "./team-huddle-card";

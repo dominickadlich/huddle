@@ -12,7 +12,7 @@ import {
   XMarkIcon,
   ClipboardIcon,
 } from "@heroicons/react/24/outline";
-import { getCurrentShift, getLocalDate } from "@/app/lib/utils";
+import { getCurrentShift, getLocalDate } from "@/app/lib/utils/utils";
 
 const iconMap = {
   census: ChartBarIcon,

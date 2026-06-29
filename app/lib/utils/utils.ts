@@ -1,4 +1,4 @@
-import { ShiftType } from "./types/database";
+import { ShiftType } from "../types/database";
 
 export function getCurrentShift(): ShiftType {
   const hour = new Date().getHours();
@@ -39,3 +39,5 @@ export function formatDate(date: string | null): string {
     year: 'numeric'
   })
 }
+
+

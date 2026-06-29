@@ -10,9 +10,10 @@ export default async function HistoryPage({
     searchParams: Promise<{
         date?: string
         shift?: ShiftType
+        q?: string
     }>
 }) {
-    const { date, shift } = await searchParams;
+    const { date, shift, q } = await searchParams;
 
     const data = date && shift
         ? await fetchDailySummaryWithUpdates(date, shift)
@@ -27,7 +28,7 @@ export default async function HistoryPage({
 
             <div>
                 {data
-                    ? (<DisplayHistoricalData data={data} />)
+                    ? (<DisplayHistoricalData data={data} query={q ?? ''} />)
                     : (<div>Select a date and shift</div>)
                 }
             </div>
