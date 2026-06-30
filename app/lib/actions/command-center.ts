@@ -16,6 +16,7 @@ export async function upsertCommandCenter(
 ): Promise<{ success: boolean, message: string}> {
     try {
         const { supabase, userId } = await getAuthenticatedClient();
+        // const { data: { user } } = await supabase.auth.getUser(); console.log(user)
 
         const validated = CommandCenterSchema.parse(data);
 
