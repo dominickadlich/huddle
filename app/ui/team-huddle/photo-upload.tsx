@@ -1,6 +1,8 @@
 import { PhotoIcon } from "@heroicons/react/24/outline"
 
 export default function UploadPhoto() {
+  const id = crypto.randomUUID()
+  
     return (
         <div className="col-span-full">
               <label htmlFor="cover-photo" className="block text-sm/6 font-medium text-white">

@@ -1,0 +1,49 @@
+'use server'
+
+import { UUID } from "crypto"
+import { getAuthenticatedClient } from "../supabase/auth-helpers"
+
+export async function uploadHuddleImage({
+    formData,
+    storage_path,
+    id,
+    huddle_id,
+}: {
+    formData: FormData
+    storage_path: string
+    id: UUID,
+    huddle_id: string,
+}) {
+    const file = formData.get("file-upload")
+    if (!file) throw new Error("No file provided")
+
+    try {
+        const { supabase, userId } = await getAuthenticatedClient();
+
+        const { data, error } = await supabase.storage
+            .from('huddle_pics')
+            .upload(storage_path, file)
+
+        if (error) throw error;
+
+        const {  } = await supabase
+        .from("team_huddle_images")
+        .insert({
+            storage_path: storage_path,
+            id: id,
+            huddle_id: huddle_id,
+            uploaded_by: userId
+        })
+
+        return {
+            success: true,
+            message: 'Uploaded image successfully!',
+        }
+    } catch (error) {
+        console.error(`Failed to upload image`)
+        return {
+            success: false,
+            message: 'Failed to upload image to database',
+        }
+    }
+}
