@@ -95,7 +95,7 @@ export default function NavBar({}) {
               <div className="space-y-2 py-6">
                 <NavLinks
                   isMobile={true}
-                  onNavigate={() => setMobileMenuOpen(false)}
+                  onClick={() => setMobileMenuOpen(false)}
                 />
               </div>
               <div className="py-6">

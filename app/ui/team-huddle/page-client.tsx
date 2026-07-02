@@ -13,6 +13,7 @@ import TeamHuddleCard from "./team-huddle-card";
 import HuddleCard from "@/app/ui/dashboard/v2/huddle-card";
 import { EditModeContext } from "@/app/lib/context/EditModeContext";
 import MisclickPopUp from "./misclick-modal";
+import UploadPhoto from "./photo-upload";
 
 
 const gridColsMap: Record<number, string> = {
@@ -97,6 +98,10 @@ export default function MiniHuddlePageClient({
 
             {/* Announcements — order-2 on mobile, spans full left column on desktop */}
             <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+                {/* <UploadPhoto 
+                    huddle_id={""}
+                    department={""}
+                /> */}
                 <AnnouncementTextArea
                     value={fields.announcements}
                     isEditMode={isEditMode}

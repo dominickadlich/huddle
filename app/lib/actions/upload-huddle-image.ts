@@ -11,7 +11,7 @@ export async function uploadHuddleImage({
 }: {
     formData: FormData
     storage_path: string
-    id: UUID,
+    id: string,
     huddle_id: string,
 }) {
     const file = formData.get("file-upload")
@@ -26,7 +26,7 @@ export async function uploadHuddleImage({
 
         if (error) throw error;
 
-        const {  } = await supabase
+        const { error: insertError } = await supabase
         .from("team_huddle_images")
         .insert({
             storage_path: storage_path,
@@ -34,6 +34,8 @@ export async function uploadHuddleImage({
             huddle_id: huddle_id,
             uploaded_by: userId
         })
+
+        if (insertError) throw insertError;
 
         return {
             success: true,

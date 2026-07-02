@@ -56,10 +56,12 @@ const links = [
 
 export default function NavLinks({
   onNavigate,
-  isMobile
+  isMobile,
+  onClick,
 }: {
   onNavigate?: () => void;
   isMobile: boolean;
+  onClick?: () => void
 }) {
   const pathname = usePathname();
 
@@ -87,6 +89,7 @@ export default function NavLinks({
               const ItemIcon = item.icon
               return (
               <Link
+                onClick={onClick}
                 key={item.name}
                 href={item.href}
                 onNavigate={
@@ -129,6 +132,7 @@ export default function NavLinks({
                   {link.dropDownItems.map((item) => (
                     <MenuItem key={item.name}>
                       <Link
+                        onClick={onClick}
                         href={item.href}
                         className="block px-4 py-2 text-sm text-white/90 hover:bg-white/20 hover:text-white rounded-md"
                         onNavigate={
@@ -152,6 +156,7 @@ export default function NavLinks({
 
         return (
           <Link
+            onClick={onClick}
             key={link.name}
             href={link.href}
             onNavigate={
