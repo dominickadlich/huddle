@@ -23,6 +23,7 @@ export default function IVCLient({
             shiftLead={shiftLead}
             grid_cols={4}
             huddleUpdates={huddleUpdates}
+            // department={ivRoomConfig.department}
         />
     )
 }

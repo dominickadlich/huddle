@@ -23,6 +23,7 @@ export default function CommandCenterClient({
             shiftLead={shiftLead}        
             grid_cols={4} 
             huddleUpdates={huddleUpdates}
+            // department={commandCenterConfig.department}
         />
     )
 }

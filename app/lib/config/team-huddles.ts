@@ -30,6 +30,7 @@ import { upsertIVRoom } from "../actions/iv-room";
 
 export const commandCenterConfig = {
     title: "CM/CSR/PP",
+    department: "CSR",
     cardFields: [
         { key: 'hot_spots', title: 'Hot Spots' },
         { key: 'ca_tpn', title: 'CA TPNs' },
@@ -63,6 +64,7 @@ export const commandCenterConfig = {
 
 export const distributionConfig = {
     title: "Distribution",
+    department: "Distribution",
     cardFields: [
         { key: 'hot_spots', title: 'Hot Spots' },
         { key: 'ca_tpn', title: 'CA TPNs' },
@@ -89,6 +91,7 @@ export const distributionConfig = {
 
 export const ivRoomConfig = {
     title: "IV Room",
+    department: "IVR",
     cardFields: [
         { key: 'unique_work', title: 'Unique Work' }, 
         { key: 'tpn', title: 'TPN + Batch' },

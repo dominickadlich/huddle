@@ -24,7 +24,10 @@ export async function uploadHuddleImage({
             .from('huddle_pics')
             .upload(storage_path, file)
 
-        if (error) throw error;
+        if (error) {
+            console.error(`Storage upload failed: ${error.message}`)
+            throw error;
+        }
 
         const { error: insertError } = await supabase
         .from("team_huddle_images")
@@ -35,14 +38,16 @@ export async function uploadHuddleImage({
             uploaded_by: userId
         })
 
-        if (insertError) throw insertError;
+        if (insertError) {
+            console.error(`DB Insertion failed: ${insertError.message}`)
+            throw insertError;
+        }
 
         return {
             success: true,
             message: 'Uploaded image successfully!',
         }
     } catch (error) {
-        console.error(`Failed to upload image`)
         return {
             success: false,
             message: 'Failed to upload image to database',

@@ -23,6 +23,7 @@ export default function DistributionClient({
             shiftLead={shiftLead}
             grid_cols={4}
             huddleUpdates={huddleUpdates}
+            // department={distributionConfig.department}
         />
     )
 }

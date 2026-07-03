@@ -34,6 +34,7 @@ export default function MiniHuddlePageClient({
     iconMap,
     grid_cols,
     huddleUpdates,
+    department,
 }: {
     title: string;
     initialData: CommandCenter | Distribution | IvRoom | Nonsterile;
@@ -45,6 +46,7 @@ export default function MiniHuddlePageClient({
     iconMap: Record<string, HeroIcon>;
     grid_cols: number,
     huddleUpdates: HuddleUpdate[] | null,
+    department: string
 }) {
     const router = useRouter();
     const [fields, setFields] = useState<Record<string, string | number | null | undefined>>(initialData || {})
@@ -74,6 +76,8 @@ export default function MiniHuddlePageClient({
         setEditedSummary(parts.join('\n'));
     }, [fields])
 
+    const huddle_id = huddleUpdates?.find(u => u.department === department)?.id
+
     return (
         <div className="mt-20">
         <Header title={`${title} Dashboard`} census={census} shiftlead={shiftLead}/>
@@ -98,10 +102,14 @@ export default function MiniHuddlePageClient({
 
             {/* Announcements — order-2 on mobile, spans full left column on desktop */}
             <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
-                {/* <UploadPhoto 
-                    huddle_id={""}
-                    department={""}
-                /> */}
+                {isEditMode && huddle_id
+                    ? <UploadPhoto 
+                        huddle_id={huddle_id}
+                        department={department}
+                        />
+                    : null
+                }
+                    
                 <AnnouncementTextArea
                     value={fields.announcements}
                     isEditMode={isEditMode}

@@ -36,6 +36,7 @@ export default function UploadPhoto({
                             const fileName = file.name.split('.')
                             const ext = fileName.at(-1)
                             const storage_path = `${department}/${id}.${ext}`
+                            console.log({ id, storage_path, huddle_id })
                             uploadHuddleImage({formData, storage_path, id, huddle_id})
                           }
                         }}
