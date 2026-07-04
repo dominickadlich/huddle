@@ -13,8 +13,8 @@ import TeamHuddleCard from "./team-huddle-card";
 import HuddleCard from "@/app/ui/dashboard/v2/huddle-card";
 import { EditModeContext } from "@/app/lib/context/EditModeContext";
 import MisclickPopUp from "./misclick-modal";
-import UploadPhoto from "./photo-upload";
-import { getHuddleImage } from "@/app/lib/actions/get-huddle-image";
+import UploadPhoto from "./photos/photo-upload";
+import DisplayPhoto from "./photos/display-photo";
 
 
 const gridColsMap: Record<number, string> = {
@@ -121,6 +121,12 @@ export default function MiniHuddlePageClient({
                         isEditMode={isEditMode}
                         onChange={(val) => setFields({...fields, announcements: val})}
                     />
+                   { huddle_id 
+                    ? <DisplayPhoto 
+                            huddle_id={huddle_id}
+                            department={department}
+                        />
+                    : null}
                 </div>
             </div>
 
