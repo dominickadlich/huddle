@@ -14,6 +14,7 @@ import HuddleCard from "@/app/ui/dashboard/v2/huddle-card";
 import { EditModeContext } from "@/app/lib/context/EditModeContext";
 import MisclickPopUp from "./misclick-modal";
 import UploadPhoto from "./photo-upload";
+import { getHuddleImage } from "@/app/lib/actions/get-huddle-image";
 
 
 const gridColsMap: Record<number, string> = {
@@ -76,7 +77,11 @@ export default function MiniHuddlePageClient({
         setEditedSummary(parts.join('\n'));
     }, [fields])
 
+    
     const huddle_id = huddleUpdates?.find(u => u.department === department)?.id
+
+    
+
 
     return (
         <div className="mt-20">
@@ -109,12 +114,14 @@ export default function MiniHuddlePageClient({
                         />
                     : null
                 }
-                    
-                <AnnouncementTextArea
-                    value={fields.announcements}
-                    isEditMode={isEditMode}
-                    onChange={(val) => setFields({...fields, announcements: val})}
-                />
+                
+                <div>
+                    <AnnouncementTextArea
+                        value={fields.announcements}
+                        isEditMode={isEditMode}
+                        onChange={(val) => setFields({...fields, announcements: val})}
+                    />
+                </div>
             </div>
 
             {/* Cards + text fields — order-3 on mobile, right column row 2 on desktop */}
