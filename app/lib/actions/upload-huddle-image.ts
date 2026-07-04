@@ -1,6 +1,5 @@
 'use server'
 
-import { UUID } from "crypto"
 import { getAuthenticatedClient } from "../supabase/auth-helpers"
 
 export async function uploadHuddleImage({
