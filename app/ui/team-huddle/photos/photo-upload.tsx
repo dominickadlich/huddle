@@ -12,7 +12,7 @@ export default function UploadPhoto({
   department: string;
 }) {
     return (
-        <div className="col-span-full">
+        <div className="mt-4 col-span-full">
               <div className="mb-4 flex justify-center rounded-lg border border-dashed border-white/25 px-6 py-10">
                 <div className="text-center">
                   <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-500" />

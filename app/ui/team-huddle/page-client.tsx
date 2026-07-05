@@ -79,9 +79,7 @@ export default function MiniHuddlePageClient({
 
     
     const huddle_id = huddleUpdates?.find(u => u.department === department)?.id
-
-    
-
+    console.log(`Huddle ID: ${huddle_id}`)
 
     return (
         <div className="mt-20">
@@ -107,26 +105,17 @@ export default function MiniHuddlePageClient({
 
             {/* Announcements — order-2 on mobile, spans full left column on desktop */}
             <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
-                {isEditMode && huddle_id
-                    ? <UploadPhoto 
-                        huddle_id={huddle_id}
-                        department={department}
-                        />
-                    : null
-                }
-                
                 <div>
                     <AnnouncementTextArea
                         value={fields.announcements}
                         isEditMode={isEditMode}
                         onChange={(val) => setFields({...fields, announcements: val})}
                     />
-                   { huddle_id 
-                    ? <DisplayPhoto 
-                            huddle_id={huddle_id}
-                            department={department}
-                        />
-                    : null}
+                    {huddle_id && (
+                        isEditMode
+                        ? <UploadPhoto huddle_id={huddle_id} department={department} />
+                        : <DisplayPhoto huddle_id={huddle_id} department={department} />
+                    )}
                 </div>
             </div>
 

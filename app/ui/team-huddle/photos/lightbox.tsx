@@ -78,11 +78,13 @@ export default function PhotoLightbox({
                 </button>
 
                 <div className='group relative'>
-                <img 
-                    src={currentPhoto.url}
-                    alt={currentPhoto.created_at}
-                    className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl"
-                />
+                  { currentPhoto &&
+                    <img 
+                        src={currentPhoto.url}
+                        alt={currentPhoto.created_at}
+                        className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl"
+                    />
+                  }
                 <button
                   type='button'
                   onClick={() => goToNext()}

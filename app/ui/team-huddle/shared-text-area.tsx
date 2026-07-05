@@ -30,11 +30,11 @@ export function AnnouncementTextArea({
   onChange?: (value: string) => void;
 }) {
   const isMobile = useIsMobile();
-  const rows = isMobile ? 8 : 25;
+  const rows = isMobile ? 8 : 10;
 
   return (
     <>
-    <div className="group relative h-full overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
+    <div className="min-h-88 group relative overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
         {/* Content */}
         <div className="relative z-10">
           {/* Header */}
@@ -62,7 +62,7 @@ export function AnnouncementTextArea({
               )
             : (
                 <p className="whitespace-pre-wrap leading-loose text-xl font-bold text-white transition-colors duration-300">
-                    {value ?? 'No Data'}
+                    {value ?? 'Nothing reported today!'}
                 </p>
               )
             }
