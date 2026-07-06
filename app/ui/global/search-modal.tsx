@@ -8,6 +8,7 @@ import { useRef } from "react"
 import Link from "next/link"
 import { formatDate } from "@/app/lib/utils/utils"
 import { highlightMatch } from "@/app/lib/utils/highlight"
+import Spinner from "./spinner"
 
 export default function SearchModal({
     showModal,
@@ -69,10 +70,7 @@ export default function SearchModal({
                         </div>
                     <div className="grid grid-cols-1 max-h-84 overflow-y-auto">
                         {isLoading && 
-                        <button type="button" className="flex justify-center mt-4 bg-indigo-500 ..." disabled>
-                            <svg className="mr-3 size-5 animate-spin ..." viewBox="0 0 24 24" />
-                            Processing…
-                        </button>
+                            <Spinner />
                         }
                         {!isLoading && results?.length === 0 && hasSearched &&
                             <p className="flex justify-center mt-4">No Results</p>
