@@ -54,8 +54,8 @@ export default function DisplayPhoto({
                                 src={url.url}
                                 alt={`${department} photo, created on:${formatDate(url.created_at)}`}
                                 onClick={() =>  {
-                                    setLightboxOpen(true)
                                     setSelectedIndex(i)
+                                    setLightboxOpen(true)
                                 }}
                             />
                     ))

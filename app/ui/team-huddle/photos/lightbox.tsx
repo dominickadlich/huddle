@@ -54,6 +54,12 @@ export default function PhotoLightbox({
 
   }, [open])
 
+  useEffect(() => {
+    if (open) {
+        setCurrentIndex(initialPhotoIndex)
+    }
+  }, [open])
+
   return (
     <div>
       <Dialog open={open} onClose={onClose} className="relative z-10">
@@ -66,7 +72,7 @@ export default function PhotoLightbox({
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <DialogPanel
               transition
-              className="relative transform transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+              className="mt-20 relative transform transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95"
             >
                 <button
                   type="button"

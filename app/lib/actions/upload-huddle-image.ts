@@ -39,6 +39,14 @@ export async function uploadHuddleImage({
 
         if (insertError) {
             console.error(`DB Insertion failed: ${insertError.message}`)
+            try {
+                const { error: removeError } = await supabase.storage.from('huddle_pics').remove([storage_path])
+
+                if (removeError) throw removeError;
+            } catch (error) {
+                console.error(`Failed to clean up orphaned file at ${storage_path}: ${error}`)
+            }
+
             throw insertError;
         }
 
@@ -49,7 +57,7 @@ export async function uploadHuddleImage({
     } catch (error) {
         return {
             success: false,
-            message: 'Failed to upload image to database',
+            message: 'Upload failed. Please try a smaller file or contact support.',
         }
     }
 }
