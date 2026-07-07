@@ -99,7 +99,7 @@ export default function DirectoryClient() {
                       {/* Content */}
                       <div className="relative z-10 flex items-center pl-2">
                         {/* Name Section */}
-                        <div className="flex items-center justify-start w-90 px-3">
+                        <div className="flex items-center justify-start px-3 md:w-90">
                           <h3 className="text-lg font-semibold text-white truncate">
                             {extension.location}
                           </h3>
@@ -109,7 +109,7 @@ export default function DirectoryClient() {
                         <div className="h-12 w-px bg-gradient-to-b from-transparent via-gray-700 to-transparent" />
 
                         {/* Extension Number */}
-                        <div className="flex-1 flex items-center justify-center">
+                        <div className="flex-1 flex items-center md:justify-center justify-end pr-4">
                           <p className="text-lg font-medium text-gray-300">
                             {extension.phone}
                           </p>

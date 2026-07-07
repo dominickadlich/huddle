@@ -162,3 +162,51 @@ create trigger trigger_sync_non_sterile_summary
   on public.non_sterile
   for each row
   execute function sync_non_sterile_summary();
+
+
+-- ============================================
+-- TRIGGER:  team_eight to huddle_updates
+-- ============================================
+create or replace function sync_team_eight_summary()
+returns trigger as $$
+begin
+  perform upsert_huddle_summary(
+    NEW.date,
+    NEW.shift,
+    'T8',
+    NEW.summary_text,
+    NEW.updated_by
+  );
+  return NEW;
+end;
+$$ language plpgsql;
+
+create trigger trigger_sync_team_eight_summary
+  after insert or update of summary_text
+  on public.team_eight
+  for each row
+  execute function sync_team_eight_summary();
+
+
+-- ============================================
+-- TRIGGER:  or_pharmacy to huddle_updates
+-- ============================================
+create or replace function sync_or_pharmacy_summary()
+returns trigger as $$
+begin
+  perform upsert_huddle_summary(
+    NEW.date,
+    NEW.shift,
+    'ORP',
+    NEW.summary_text,
+    NEW.updated_by
+  );
+  return NEW;
+end;
+$$ language plpgsql;
+
+create trigger trigger_sync_or_pharmacy_summary
+  after insert or update of summary_text
+  on public.or_pharmacy
+  for each row
+  execute function sync_or_pharmacy_summary();

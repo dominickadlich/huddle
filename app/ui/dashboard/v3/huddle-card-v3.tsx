@@ -1,4 +1,3 @@
-import { getHuddleCategoriesAction } from "@/app/lib/actions/dashboard";
 import { ArrowTrendingDownIcon, ExclamationCircleIcon, FaceSmileIcon, LightBulbIcon, TrophyIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/outline";
 
 interface HuddleRow {

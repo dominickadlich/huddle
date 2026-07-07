@@ -56,7 +56,9 @@ create table public.huddle_updates (
     'CSR',
     'IVR',
     'Nonsterile',
-    'RX Leadership'
+    'RX Leadership',
+    'ORP',
+    'T8'
   )),
 
   -- Actual update content from team huddle
@@ -217,6 +219,79 @@ create table public.non_sterile (
 );
 
 
+-- ============================================
+-- TABLE 8: team_eight
+-- ============================================
+create table public.team_eight (
+  id uuid primary key default gen_random_uuid(),
+  date date not null,
+  shift text not null check (shift in ('morning', 'afternoon', 'evening')),
+
+  -- Core metrics (top grid)
+  eight_a text,
+  eight_b text,
+  iv_one text,
+  iv_two text,
+
+  -- Full-width fields (bottom section)
+  safety text,
+  barriers text,
+  wins text,
+  announcements text,
+  opportunities text,
+  inventory text,
+
+  -- Trigger field
+  summary_text text,
+
+  -- Audit fields
+  created_at timestamp with time zone default now(),
+  created_by text references public.users(id),
+  updated_at timestamp with time zone default now(),
+  updated_by text references public.users(id),
+
+  -- Prevent duplicate entries
+  unique(date, shift)
+);
+
+
+-- ============================================
+-- TABLE 9: or_pharmacy
+-- ============================================
+create table public.or_pharmacy (
+  id uuid primary key default gen_random_uuid(),
+  date date not null,
+  shift text not null check (shift in ('morning', 'afternoon', 'evening')),
+
+  -- Core metrics (top grid)
+  assignment_one text,
+  assignment_two text,
+  orft text,
+  training text,
+  support text,
+  monthly_clean text,
+
+  -- Full-width fields (bottom section)
+  safety text,
+  barriers text,
+  wins text,
+  announcements text,
+  opportunities text,
+  inventory text,
+
+  -- Trigger field
+  summary_text text,
+
+  -- Audit fields
+  created_at timestamp with time zone default now(),
+  created_by text references public.users(id),
+  updated_at timestamp with time zone default now(),
+  updated_by text references public.users(id),
+
+  -- Prevent duplicate entries
+  unique(date, shift)
+);
+
 
 -- ============================================
 -- INDEXES (for query performance)
@@ -227,7 +302,9 @@ create index idx_huddle_updates_department on public.huddle_updates(department);
 create index idx_iv_room_date_shift on public.iv_room(date, shift);
 create index idx_command_center_date_shift on public.command_center(date, shift);
 create index idx_distribution_date_shift on public.distribution(date, shift);
-create index idx_non_sterile_date_shift on public.non_sterile(date, shift);
+-- create index idx_non_sterile_date_shift on public.non_sterile(date, shift);
+create index idx_or_pharmacy_date_shift on public.or_pharmacy(date, shift);
+create index idx_team_eight_date_shift on public.team_eight(date, shift);
 
 -- ============================================
 -- ENABLE ROW LEVEL SECURITY
@@ -238,4 +315,6 @@ alter table public.huddle_updates enable row level security;
 alter table public.iv_room enable row level security;
 alter table public.command_center enable row level security;
 alter table public.distribution enable row level security;
-alter table public.non_sterile enable row level security;
+-- alter table public.non_sterile enable row level security;
+alter table public.or_pharmacy enable row level security;
+alter table public.team_eight enable row level security;

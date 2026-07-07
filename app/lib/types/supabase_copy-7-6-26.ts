@@ -22,13 +22,9 @@ export type Database = {
           created_at: string | null
           created_by: string | null
           date: string
-          dispense_check: string | null
-          dispense_prep: string | null
-          five_oh_three_b: string | null
           hc_tpn: string | null
           hot_spots: string | null
           id: string
-          inventory: string | null
           opportunities: string | null
           safety: string | null
           shift: string
@@ -38,7 +34,6 @@ export type Database = {
           wins: string | null
           workload_cmd: string | null
           workload_csr: string | null
-          workload_pp: string | null
         }
         Insert: {
           announcements?: string | null
@@ -47,13 +42,9 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           date: string
-          dispense_check?: string | null
-          dispense_prep?: string | null
-          five_oh_three_b?: string | null
           hc_tpn?: string | null
           hot_spots?: string | null
           id?: string
-          inventory?: string | null
           opportunities?: string | null
           safety?: string | null
           shift?: string
@@ -63,7 +54,6 @@ export type Database = {
           wins?: string | null
           workload_cmd?: string | null
           workload_csr?: string | null
-          workload_pp?: string | null
         }
         Update: {
           announcements?: string | null
@@ -72,13 +62,9 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           date?: string
-          dispense_check?: string | null
-          dispense_prep?: string | null
-          five_oh_three_b?: string | null
           hc_tpn?: string | null
           hot_spots?: string | null
           id?: string
-          inventory?: string | null
           opportunities?: string | null
           safety?: string | null
           shift?: string
@@ -88,7 +74,6 @@ export type Database = {
           wins?: string | null
           workload_cmd?: string | null
           workload_csr?: string | null
-          workload_pp?: string | null
         }
         Relationships: [
           {
@@ -184,12 +169,11 @@ export type Database = {
           created_at: string | null
           created_by: string | null
           date: string
-          five_oh_three_b: string | null
           hc_tpn: string | null
           hot_spots: string | null
           id: string
+          // opportunities: string | null
           inventory: string | null
-          opportunities: string | null
           safety: string | null
           shift: string
           summary_text: string | null
@@ -204,12 +188,10 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           date: string
-          five_oh_three_b?: string | null
           hc_tpn?: string | null
           hot_spots?: string | null
           id?: string
           inventory?: string | null
-          opportunities?: string | null
           safety?: string | null
           shift?: string
           summary_text?: string | null
@@ -224,12 +206,10 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           date?: string
-          five_oh_three_b?: string | null
           hc_tpn?: string | null
           hot_spots?: string | null
           id?: string
           inventory?: string | null
-          opportunities?: string | null
           safety?: string | null
           shift?: string
           summary_text?: string | null
@@ -314,6 +294,7 @@ export type Database = {
           announcements: string | null
           assignment_two: string | null
           barriers: string | null
+          bell_iv: string | null
           created_at: string | null
           created_by: string | null
           date: string
@@ -321,7 +302,7 @@ export type Database = {
           id: string
           inventory: string | null
           iv_support: string | null
-          monthly_clean: string | null
+          opportunities: string | null
           safety: string | null
           sc: string | null
           shift: string
@@ -329,7 +310,6 @@ export type Database = {
           team_building: string | null
           tpn: string | null
           training: string | null
-          unique_work: string | null
           updated_at: string | null
           updated_by: string | null
           wins: string | null
@@ -338,6 +318,7 @@ export type Database = {
           announcements?: string | null
           assignment_two?: string | null
           barriers?: string | null
+          bell_iv?: string | null
           created_at?: string | null
           created_by?: string | null
           date: string
@@ -345,7 +326,7 @@ export type Database = {
           id?: string
           inventory?: string | null
           iv_support?: string | null
-          monthly_clean?: string | null
+          opportunities?: string | null
           safety?: string | null
           sc?: string | null
           shift: string
@@ -353,7 +334,6 @@ export type Database = {
           team_building?: string | null
           tpn?: string | null
           training?: string | null
-          unique_work?: string | null
           updated_at?: string | null
           updated_by?: string | null
           wins?: string | null
@@ -362,6 +342,7 @@ export type Database = {
           announcements?: string | null
           assignment_two?: string | null
           barriers?: string | null
+          bell_iv?: string | null
           created_at?: string | null
           created_by?: string | null
           date?: string
@@ -369,7 +350,7 @@ export type Database = {
           id?: string
           inventory?: string | null
           iv_support?: string | null
-          monthly_clean?: string | null
+          opportunities?: string | null
           safety?: string | null
           sc?: string | null
           shift?: string
@@ -377,7 +358,6 @@ export type Database = {
           team_building?: string | null
           tpn?: string | null
           training?: string | null
-          unique_work?: string | null
           updated_at?: string | null
           updated_by?: string | null
           wins?: string | null
@@ -462,207 +442,6 @@ export type Database = {
           },
         ]
       }
-      or_pharmacy: {
-        Row: {
-          announcements: string | null
-          assignment_one: string | null
-          assignment_two: string | null
-          barriers: string | null
-          created_at: string | null
-          created_by: string | null
-          date: string
-          id: string
-          inventory: string | null
-          monthly_clean: string | null
-          opportunities: string | null
-          orft: string | null
-          safety: string | null
-          shift: string
-          summary_text: string | null
-          support: string | null
-          training: string | null
-          updated_at: string | null
-          updated_by: string | null
-          wins: string | null
-        }
-        Insert: {
-          announcements?: string | null
-          assignment_one?: string | null
-          assignment_two?: string | null
-          barriers?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          date: string
-          id?: string
-          inventory?: string | null
-          monthly_clean?: string | null
-          opportunities?: string | null
-          orft?: string | null
-          safety?: string | null
-          shift: string
-          summary_text?: string | null
-          support?: string | null
-          training?: string | null
-          updated_at?: string | null
-          updated_by?: string | null
-          wins?: string | null
-        }
-        Update: {
-          announcements?: string | null
-          assignment_one?: string | null
-          assignment_two?: string | null
-          barriers?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          date?: string
-          id?: string
-          inventory?: string | null
-          monthly_clean?: string | null
-          opportunities?: string | null
-          orft?: string | null
-          safety?: string | null
-          shift?: string
-          summary_text?: string | null
-          support?: string | null
-          training?: string | null
-          updated_at?: string | null
-          updated_by?: string | null
-          wins?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "or_pharmacy_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "or_pharmacy_updated_by_fkey"
-            columns: ["updated_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      team_eight: {
-        Row: {
-          announcements: string | null
-          barriers: string | null
-          created_at: string | null
-          created_by: string | null
-          date: string
-          eight_a: string | null
-          eight_b: string | null
-          id: string
-          inventory: string | null
-          iv_one: string | null
-          iv_two: string | null
-          opportunities: string | null
-          safety: string | null
-          shift: string
-          summary_text: string | null
-          updated_at: string | null
-          updated_by: string | null
-          wins: string | null
-        }
-        Insert: {
-          announcements?: string | null
-          barriers?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          date: string
-          eight_a?: string | null
-          eight_b?: string | null
-          id?: string
-          inventory?: string | null
-          iv_one?: string | null
-          iv_two?: string | null
-          opportunities?: string | null
-          safety?: string | null
-          shift: string
-          summary_text?: string | null
-          updated_at?: string | null
-          updated_by?: string | null
-          wins?: string | null
-        }
-        Update: {
-          announcements?: string | null
-          barriers?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          date?: string
-          eight_a?: string | null
-          eight_b?: string | null
-          id?: string
-          inventory?: string | null
-          iv_one?: string | null
-          iv_two?: string | null
-          opportunities?: string | null
-          safety?: string | null
-          shift?: string
-          summary_text?: string | null
-          updated_at?: string | null
-          updated_by?: string | null
-          wins?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "team_eight_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "team_eight_updated_by_fkey"
-            columns: ["updated_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      team_huddle_images: {
-        Row: {
-          created_at: string
-          huddle_id: string
-          id: string
-          storage_path: string
-          uploaded_by: string
-        }
-        Insert: {
-          created_at?: string
-          huddle_id: string
-          id?: string
-          storage_path: string
-          uploaded_by: string
-        }
-        Update: {
-          created_at?: string
-          huddle_id?: string
-          id?: string
-          storage_path?: string
-          uploaded_by?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "team_huddle_images_huddle_id_fkey"
-            columns: ["huddle_id"]
-            isOneToOne: false
-            referencedRelation: "huddle_updates"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "team_huddle_images_uploaded_by_fkey"
-            columns: ["uploaded_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       users: {
         Row: {
           created_at: string | null
@@ -701,44 +480,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      global_search: {
-        Args: { search_term: string }
-        Returns: {
-          date: string
-          department: string
-          summary: string
-        }[]
+      upsert_huddle_summary: {
+        Args: {
+          p_date: string
+          p_department: string
+          p_shift: string
+          p_summary_text: string
+        }
+        Returns: undefined
       }
-      huddle_categories: {
-        Args: { p_date: string; p_shift: string }
-        Returns: {
-          barriers: string
-          department: string
-          inventory: string
-          safety: string
-          wins: string
-        }[]
-      }
-      upsert_huddle_summary:
-        | {
-            Args: {
-              p_date: string
-              p_department: string
-              p_shift: string
-              p_summary_text: string
-            }
-            Returns: undefined
-          }
-        | {
-            Args: {
-              p_date: string
-              p_department: string
-              p_shift: string
-              p_summary_text: string
-              p_user_id: string
-            }
-            Returns: undefined
-          }
     }
     Enums: {
       [_ in never]: never

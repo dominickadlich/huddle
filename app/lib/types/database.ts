@@ -50,6 +50,15 @@ export type Nonsterile = Tables<'non_sterile'>;
 export type NonsterileInsert = TablesInsert<'non_sterile'>;
 export type NonsterileUpdate = TablesUpdate<'non_sterile'>;
 
+// OR Pharmacy
+export type ORPharmacy = Tables<'or_pharmacy'>;
+export type ORPharmacyInsert = TablesInsert<'or_pharmacy'>;
+export type ORPharmacyUpdate = TablesUpdate<'or_pharmacy'>;
+
+// Team Eight
+export type TeamEight = Tables<'team_eight'>;
+export type TeamEightInsert = TablesInsert<'team_eight'>;
+export type TeamEightUpdate = TablesUpdate<'team_eight'>;
 
 
 // ============================================
@@ -62,6 +71,8 @@ export type DepartmentType =
   | "CSR"
   | "IVR"
   | "Nonsterile"
+  | "ORP"
+  | "T8"
   | "RX Leadership";
 
 // export type DepartmentType =
@@ -86,6 +97,8 @@ export interface DashboardData {
     csr: HuddleUpdate | null;
     ivr: HuddleUpdate | null;
     nonsterile: HuddleUpdate | null;
+    or_pharmacy: HuddleUpdate | null;
+    team_eight: HuddleUpdate | null;
     rx_leadership: HuddleUpdate | null;
   };
 }

@@ -25,6 +25,8 @@ const HuddleUpdateSchema = z.object({
     "IVR",
     "Nonsterile",
     "RX Leadership",
+    "ORP",
+    "T8"
   ]),
   update_text: z.string().optional().nullable(),
 });

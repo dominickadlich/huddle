@@ -28,6 +28,7 @@ export const SharedSchema = z.object({
     opportunities: z.string().nullable().optional(),
     announcements: z.string().nullable().optional(),
     summary_text: z.string().nullable().optional(),
+    inventory: z.string().nullable().optional(),
 });
 
 export const IVRoomSchema = z.object({
@@ -42,6 +43,7 @@ export type SharedErrors = {
     safety?: string[],
     barriers?: string[],
     wins?: string[],
+    inventory: string[],
     opportunities?: string[],
     announcements?: string[],
     summary_text?: string[]
@@ -86,7 +88,7 @@ export const CommandCenterBaseSchema = z.object({
     five_oh_three_b: z.string().nullable().optional(),
     dispense_prep: z.string().nullable().optional(),
     dispense_check: z.string().nullable().optional(),
-    inventory: z.string().nullable().optional(),
+    // inventory: z.string().nullable().optional(),
 })
 
 export const CommandCenterSchema = z.object({
@@ -152,3 +154,45 @@ export type DistributionUpdateState = {
     message?: string | null;
     data?: Distribution | null
 }
+
+
+// ============================================
+// OR Pharmacy - ZOD VALIDATION SCHEMAS
+// ============================================
+export const ORPharmacyBaseSchema = z.object({
+    date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+    shift: z.enum(["morning", "afternoon", "evening"]),
+    assignment_one: z.string().nullable().optional(),
+    assignment_two: z.string().nullable().optional(),
+    orft: z.string().nullable().optional(),
+    training: z.string().nullable().optional(),
+    support: z.string().nullable().optional(),
+    monthly_clean: z.string().nullable().optional(),
+})
+
+export const ORPharmacySchema = z.object({
+    ...ORPharmacyBaseSchema.shape,
+    ...SharedSchema.shape
+})
+
+
+// ============================================
+// Team Eight - ZOD VALIDATION SCHEMAS
+// ============================================
+export const TeamEightBaseSchema = z.object({
+    date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+    shift: z.enum(["morning", "afternoon", "evening"]),
+    eight_a: z.string().nullable().optional(),
+    eight_b: z.string().nullable().optional(),
+    iv_one: z.string().nullable().optional(),
+    iv_two: z.string().nullable().optional(),
+})
+
+export const TeamEightSchema = z.object({
+    ...TeamEightBaseSchema.shape,
+    ...SharedSchema.shape
+})

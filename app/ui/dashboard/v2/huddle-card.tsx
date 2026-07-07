@@ -4,6 +4,8 @@ import {
   BeakerIcon,
   EyeDropperIcon,
   PresentationChartLineIcon,
+  ScissorsIcon,
+  ClipboardDocumentCheckIcon,
 } from "@heroicons/react/24/outline";
 
 const iconMap = {
@@ -12,6 +14,8 @@ const iconMap = {
   ivr: BeakerIcon,
   nonsterile: EyeDropperIcon,
   rx_leadership: PresentationChartLineIcon,
+  team_eight: ClipboardDocumentCheckIcon,
+  or_pharmacy: ScissorsIcon
 };
 
 const departmentMap = {
@@ -20,6 +24,8 @@ const departmentMap = {
   ivr: "IVR",
   nonsterile: "Nonsterile",
   rx_leadership: "RX Leadership",
+  team_eight: "T8",
+  or_pharmacy: "ORP",
 } as const;
 
 export default function HuddleCard({
@@ -31,7 +37,7 @@ export default function HuddleCard({
 }: {
   title: string;
   value: number | string | null | undefined;
-  name: "distribution" | "csr" | "ivr" | "nonsterile" | "rx_leadership";
+  name: "distribution" | "csr" | "ivr" | "nonsterile" | "rx_leadership" | "team_eight" | "or_pharmacy";
   isEditMode: boolean;
   onChange?: (value: string) => void;
 }) {

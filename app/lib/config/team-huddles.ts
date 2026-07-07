@@ -16,16 +16,22 @@ import {
     UserPlusIcon,
     NumberedListIcon,
     UsersIcon,
+    UserIcon,
     UserGroupIcon,
     EyeDropperIcon,
     CheckCircleIcon,
     DocumentCheckIcon,
     WrenchIcon,
-    BeakerIcon
+    BeakerIcon,
+    BellIcon,
+    BuildingOffice2Icon,
+    ShoppingCartIcon
 } from "@heroicons/react/24/outline";
 import { upsertCommandCenter } from "../actions/command-center";
 import { upsertDistribution } from "../actions/distribution";
 import { upsertIVRoom } from "../actions/iv-room";
+import { upsertORPharmacy } from "../actions/or-pharmacy";
+import { upsertTeamEight } from "../actions/team-eight";
 
 
 export const commandCenterConfig = {
@@ -122,4 +128,62 @@ export const ivRoomConfig = {
         unique_work: WrenchIcon,
     },
     upsertFn: upsertIVRoom
+}
+
+
+export const orPharmacyConfig = {
+    title: "OR Pharmacy",
+    department: "ORP",
+    cardFields: [
+        { key: 'assignment_one', title: 'Asgmt 1' }, 
+        { key: 'assignment_two', title: 'Asgmt 2' },
+        { key: 'orft', title: 'ORFT' },
+        { key: 'training', title: 'Training' },
+        { key: 'support', title: 'Support/Shift Coverage' },
+        { key: 'monthly_clean', title: 'Monthly Clean' },
+    ] as const,
+
+    textFields: [
+        { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
+        { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
+        { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
+        { key: 'wins', title: 'Team Wins & Recognition'},
+    ] as const,
+
+    iconMap: {
+        assignment_one: BellIcon,
+        assignment_two: BuildingOffice2Icon,
+        orft: ShoppingCartIcon,
+        training: UsersIcon,
+        support: UserGroupIcon,
+        monthly_clean: SparklesIcon,
+    },
+    upsertFn: upsertORPharmacy
+}
+
+
+export const teamEightConfig = {
+    title: "Team 8",
+    department: "T8",
+    cardFields: [
+        { key: 'eight_a', title: '8A' }, 
+        { key: 'eight_b', title: '8B' },
+        { key: 'iv_one', title: 'IV 1' },
+        { key: 'iv_two', title: 'IV 2' },
+    ] as const,
+
+    textFields: [
+        { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
+        { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
+        { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
+        { key: 'wins', title: 'Team Wins & Recognition'},
+    ] as const,
+
+    iconMap: {
+        eight_a: BellIcon,
+        eight_b: BuildingOffice2Icon,
+        iv_one: UserIcon,
+        iv_two: UsersIcon,
+    },
+    upsertFn: upsertTeamEight
 }

@@ -30,7 +30,9 @@ const huddleUpdateFields = [
     // { key: "distribution", title: "Distribution", department: "Distribution" },
     // { key: "ivr", title: "IV Room", department: "IVR"},
     // { key: "csr" , title: "CM/CSR/PP", department: "CSR" },
-    // { key: "nonsterile", title: "Non Sterile" department: "Nonsterile"},
+    // { key: "nonsterile", title: "Non Sterile", department: "Nonsterile"},
+    // { key: "team_eight", title: "Team Eight", department: "T8"},
+    // { key: "or_pharmacy", title: "OR Pharmacy", department: "ORP"},
 ] as const;
 
 
@@ -57,7 +59,7 @@ export default function DashboardPageClient({
         const fetch_categories = async () => {
             try {
                const huddle_categories = await getHuddleCategoriesAction(clientDate, 'morning')
-               console.log(huddle_categories)
+               console.log(`Huddle Categories: ${huddle_categories}`)
                console.log(clientDate)
                if (huddle_categories.data) {
                    const transposed_categories = transposeLoop({data: huddle_categories.data})

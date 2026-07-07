@@ -10,7 +10,6 @@ import {
     HuddleUpdate,
     ShiftType
 } from "../types/database";
-import { getAuthenticatedClient } from "../supabase/auth-helpers";
 
 
 
@@ -22,9 +21,46 @@ function isValidShift(shift: string): shift is ShiftType {
 }
 
 function isValidDepartment(department: string): department is DepartmentType {
-  return ["Distribution", "CSR", "IVR", "Nonsterile", "RX Leadership"].includes(
+  return ["Distribution", "CSR", "IVR", "Nonsterile", "RX Leadership", "ORP", "T8"].includes(
     department,
   );
+}
+
+const DEPT_TO_SLUG: Record<DepartmentType, keyof DashboardData["updates"]> = {
+  Distribution: "distribution",
+  CSR: "csr",
+  IVR: "ivr",
+  Nonsterile: "nonsterile",
+  ORP: "or_pharmacy",
+  T8: "team_eight",
+  "RX Leadership": "rx_leadership",
+};
+
+function groupUpdatesByDepartment(updates: HuddleUpdate[]): DashboardData["updates"] {
+// Organize updates by department
+    const updatesByDept = updates.reduce(
+      (acc, update) => {
+        if (!isValidDepartment(update.department)) {
+          console.warn(`Invalid department: ${update.department}`);
+          return acc;
+        }
+
+        const key = DEPT_TO_SLUG[update.department]
+        acc[key] = update;
+        return acc;
+      },
+      {
+        distribution: null as HuddleUpdate | null,
+        csr: null as HuddleUpdate | null,
+        ivr: null as HuddleUpdate | null,
+        nonsterile: null as HuddleUpdate | null,
+        rx_leadership: null as HuddleUpdate | null,
+        or_pharmacy: null as HuddleUpdate | null,
+        team_eight: null as HuddleUpdate | null
+      },
+    );
+
+    return updatesByDept
 }
 
 
@@ -42,28 +78,7 @@ export async function fetchLatestDashboardData(): Promise<DashboardData | null> 
 
     const updates = await fetchUpdatesByDailySummaryId(latestSummary.id);
 
-    // Organize updates by department
-    const updatesByDept = updates.reduce(
-      (acc, update) => {
-        if (!isValidDepartment(update.department)) {
-          console.warn(`Invalid department: ${update.department}`);
-          return acc;
-        }
-
-        const key = update.department
-          .toLowerCase()
-          .replace(" ", "_") as keyof typeof acc;
-        acc[key] = update;
-        return acc;
-      },
-      {
-        distribution: null as HuddleUpdate | null,
-        csr: null as HuddleUpdate | null,
-        ivr: null as HuddleUpdate | null,
-        nonsterile: null as HuddleUpdate | null,
-        rx_leadership: null as HuddleUpdate | null,
-      },
-    );
+    const updatesByDept = groupUpdatesByDepartment(updates)
 
     return {
       daily_summary: latestSummary,
@@ -89,27 +104,7 @@ export async function fetchDashboardDataByDateAndShift(
 
     const updates = await fetchUpdatesByDailySummaryId(dailySummary.id);
 
-    const updatesByDept = updates.reduce(
-      (acc, update) => {
-        if (!isValidDepartment(update.department)) {
-          console.warn(`Invalid department: ${update.department}`);
-          return acc;
-        }
-
-        const key = update.department
-          .toLowerCase()
-          .replace(" ", "_") as keyof typeof acc;
-        acc[key] = update;
-        return acc;
-      },
-      {
-        distribution: null as HuddleUpdate | null,
-        csr: null as HuddleUpdate | null,
-        ivr: null as HuddleUpdate | null,
-        nonsterile: null as HuddleUpdate | null,
-        rx_leadership: null as HuddleUpdate | null,
-      },
-    );
+    const updatesByDept = groupUpdatesByDepartment(updates)
 
     return {
       daily_summary: dailySummary,

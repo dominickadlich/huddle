@@ -10,6 +10,7 @@ import {
   BeakerIcon,
   ArrowsPointingOutIcon,
   LockClosedIcon,
+  ScissorsIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -39,6 +40,8 @@ const links = [
       { name: 'IV Room', href: '/team-huddle/iv-room', icon: BeakerIcon},
       { name: 'CM/CSR/PP', href: '/team-huddle/command-center', icon: LockClosedIcon},
       { name: 'Distribution', href: '/team-huddle/distribution', icon: ArrowsPointingOutIcon},
+      { name: 'OR', href: '/team-huddle/or-pharmacy', icon: ScissorsIcon},
+      { name: 'Team 8', href: '/team-huddle/team-eight', icon: ScissorsIcon},
       // { name: 'Non-Sterile', href: 'nonsterile'},
     ]
   },
@@ -80,13 +83,14 @@ export default function NavLinks({
       {links.map((link) => {
         const LinkIcon = link.icon;
         const isActive = link.isDropDown
-        ? pathname.startsWith(link.href)
-        : pathname === link.href;
+          ? pathname.startsWith(link.href)
+          : pathname === link.href;
 
         if (link.isDropDown && link.dropDownItems) {
           if (isMobile) {
             return link.dropDownItems.map((item) => {
               const ItemIcon = item.icon
+              const isActiveDropDown = pathname === item.href
               return (
               <Link
                 onClick={onClick}
@@ -101,7 +105,18 @@ export default function NavLinks({
                     }
                   : undefined
                 }
-                className="group relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-300"
+                className={clsx(
+                  "group relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-300",
+                  {
+                    // Active state - glassmorphic with glow
+                    "bg-white/20 text-white shadow-lg shadow-white/10 border border-white/30":
+                      isActiveDropDown,
+                    // Inactive state - subtle hover
+                    "text-white/90 hover:bg-white/10 hover:text-white border border-transparent hover:border-white/20":
+                      !isActiveDropDown,
+                  },
+                )
+              }
               >
                 <ItemIcon className="h-5 w-5" />
                 {item.name}
