@@ -38,14 +38,14 @@ export const commandCenterConfig = {
     title: "CM/CSR/PP",
     department: "CSR",
     cardFields: [
-        { key: 'hot_spots', title: 'Hot Spots' },
-        { key: 'ca_tpn', title: 'CA TPNs' },
-        { key: 'hc_tpn', title: 'HC TPNs' },
         { key: 'workload_csr', title: 'Workload CSR' },
         { key: 'workload_cmd', title: 'Workload CMD' },
         { key: "workload_pp", title: "Workload PP" },
+        { key: 'hot_spots', title: 'Hot Spots' },
         { key: 'five_oh_three_b', title: '503b' },
-        { key: "dispense_prep", title: "Dispense Prep" },
+        // { key: 'ca_tpn', title: 'CA TPNs' },
+        // { key: 'hc_tpn', title: 'HC TPNs' },
+        // { key: "dispense_prep", title: "Dispense Prep" },
         // { key: "dispense_check", title: "Dispense Check" },
     ] as const,
     textFields: [

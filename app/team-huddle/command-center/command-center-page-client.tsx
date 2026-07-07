@@ -21,7 +21,7 @@ export default function CommandCenterClient({
             initialData={initialData}
             census={census}
             shiftLead={shiftLead}        
-            grid_cols={4} 
+            grid_cols={5} 
             huddleUpdates={huddleUpdates}
             // department={commandCenterConfig.department}
         />

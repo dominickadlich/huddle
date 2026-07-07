@@ -13,7 +13,6 @@ export interface HuddleRow {
 
 export async function getHuddleCategoriesAction(
     date: string,
-    shift: string
 ): Promise <{ 
     success: boolean,
     message: string,
@@ -24,18 +23,17 @@ export async function getHuddleCategoriesAction(
 
         const { data, error } = await supabase.rpc('huddle_categories', {
             p_date: date,
-            p_shift: shift
         });
 
         if (error) throw error;
 
         return {
             success: true,
-            message: `Returned ${data.length} results for ${date} (${shift} shift)`,
+            message: `Returned ${data.length} results for ${date}`,
             data: data as HuddleRow[]
         }
     } catch (error) {
-        console.error(`Failed to return results for ${date} - ${shift}`, error)
+        console.error(`Failed to return results for ${date}`, error)
         return {
             success: false,
             message: "Database error. Retry Query with different input",

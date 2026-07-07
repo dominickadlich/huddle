@@ -41,8 +41,8 @@ const links = [
       { name: 'IV Room', href: '/team-huddle/iv-room', icon: BeakerIcon},
       { name: 'CM/CSR/PP', href: '/team-huddle/command-center', icon: LockClosedIcon},
       { name: 'Distribution', href: '/team-huddle/distribution', icon: ArrowsPointingOutIcon},
-      // { name: 'OR', href: '/team-huddle/or-pharmacy', icon: ScissorsIcon},
-      // { name: 'Team 8', href: '/team-huddle/team-eight', icon: ClipboardDocumentCheckIcon},
+      { name: 'OR', href: '/team-huddle/or-pharmacy', icon: ScissorsIcon},
+      { name: 'Team 8', href: '/team-huddle/team-eight', icon: ClipboardDocumentCheckIcon},
       // { name: 'Non-Sterile', href: 'nonsterile'},
     ]
   },

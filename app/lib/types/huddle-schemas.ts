@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CommandCenter, Distribution, IvRoom } from './database';
+import { CommandCenter, Distribution, IvRoom, ORPharmacy, TeamEight } from './database';
 
 // ============================================
 // IV ROOM - ZOD VALIDATION SCHEMAS
@@ -177,6 +177,25 @@ export const ORPharmacySchema = z.object({
     ...SharedSchema.shape
 })
 
+// ============================================
+// OR Pharmacy - STATE TYPES FOR FORM ACTIONS
+// ============================================
+export type ORPharmacyUpdateState = {
+    errors?: SharedErrors & {
+        date?: string[];
+        shift?: string[];
+        assignment_one?: string[];
+        assignment_two?: string[];
+        orft?: string[];
+        training?: string[];
+        support?: string[];
+        monthly_clean?: string[];
+        _form?: string[];
+    }
+    message?: string | null;
+    data?: ORPharmacy | null
+}
+
 
 // ============================================
 // Team Eight - ZOD VALIDATION SCHEMAS
@@ -196,3 +215,20 @@ export const TeamEightSchema = z.object({
     ...TeamEightBaseSchema.shape,
     ...SharedSchema.shape
 })
+
+// ============================================
+// Team Eight - STATE TYPES FOR FORM ACTIONS
+// ============================================
+export type TeamEightUpdateState = {
+    errors?: SharedErrors & {
+        date?: string[];
+        shift?: string[];
+        eight_a?: string[];
+        eight_b?: string[];
+        iv_one?: string[];
+        iv_two?: string[];
+        _form?: string[];
+    }
+    message?: string | null;
+    data?: TeamEight | null
+}

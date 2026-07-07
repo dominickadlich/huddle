@@ -47,19 +47,14 @@ export default function DashboardPageClient({
     const [categories, setCategories] = useState<Partial<TransposedOutput> | null>(null)
     const clientDate =  getLocalDate()
     const clientShift = getCurrentShift();
-
-    // const [searchQuery, setSearchQuery] = useState<string>('')
-
-    // function handleSearchQuery(e: { target: { value: SetStateAction<string> } }) {
-    //     setSearchQuery(e.target.value);
-    // }
+    
 
     // Fetch safety, barriers, inventory, wins, etc.
     useEffect(() => {
         const fetch_categories = async () => {
             try {
-               const huddle_categories = await getHuddleCategoriesAction(clientDate, 'morning')
-               console.log(`Huddle Categories: ${huddle_categories}`)
+               const huddle_categories = await getHuddleCategoriesAction(clientDate)
+               console.log("Huddle Categories:", huddle_categories)
                console.log(clientDate)
                if (huddle_categories.data) {
                    const transposed_categories = transposeLoop({data: huddle_categories.data})

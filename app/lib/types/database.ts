@@ -75,13 +75,6 @@ export type DepartmentType =
   | "T8"
   | "RX Leadership";
 
-// export type DepartmentType =
-//   | "Distribution"
-//   | "Command Center"
-//   | "IV Room"
-//   | "Non Sterile"
-//   | "RX Leadership";
-
   
 // ============================================
 // COMPOSITE TYPES (for joined queries)
