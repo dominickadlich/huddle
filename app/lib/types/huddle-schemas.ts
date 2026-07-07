@@ -43,7 +43,7 @@ export type SharedErrors = {
     safety?: string[],
     barriers?: string[],
     wins?: string[],
-    inventory: string[],
+    inventory?: string[],
     opportunities?: string[],
     announcements?: string[],
     summary_text?: string[]
