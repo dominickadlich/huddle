@@ -55,6 +55,7 @@ export default function MiniHuddlePageClient({
     const clientDate = getLocalDate()
     const clientShift = getCurrentShift();
     const [editedSummary, setEditedSummary] = useState<string>('');
+    const [lastUpdate, setLastUpdate] = useState<string>('')
     
     const { 
         isEditMode, 
@@ -76,6 +77,10 @@ export default function MiniHuddlePageClient({
 
         setEditedSummary(parts.join('\n'));
     }, [fields])
+
+    useEffect(() => {
+        setLastUpdate(formatDate(initialData.updated_at))
+    }, [initialData.updated_at])
 
     
     const huddle_id = huddleUpdates?.find(u => u.department === department)?.id
@@ -99,7 +104,7 @@ export default function MiniHuddlePageClient({
                     }
                 </div>
                 <div className="flex items-center px-4 text-sm text-gray-400">
-                    Last Update: {formatDate(initialData.updated_at)}
+                    Last Update: {lastUpdate}
                 </div>
             </div>
 
@@ -111,11 +116,10 @@ export default function MiniHuddlePageClient({
                         isEditMode={isEditMode}
                         onChange={(val) => setFields({...fields, announcements: val})}
                     />
-                    {huddle_id && (
-                        isEditMode
-                        ? <UploadPhoto huddle_id={huddle_id} department={department} />
-                        : <DisplayPhoto huddle_id={huddle_id} department={department} />
-                    )}
+                    {isEditMode
+                        ? <UploadPhoto department={department} />
+                        : <DisplayPhoto department={department} />
+                    }
                 </div>
             </div>
 

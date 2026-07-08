@@ -6,10 +6,8 @@ import { SetStateAction, useState } from "react";
 import Spinner from "../../global/spinner";
 
 export default function UploadPhoto({
-  huddle_id,
   department,
 }: {
-  huddle_id: string;
   department: string;
 }) {
   const [uploadImageMessage, setUploadImageMessage] = useState<string | null>(null)
@@ -62,7 +60,7 @@ export default function UploadPhoto({
     const id = crypto.randomUUID()
     formData.append("file-upload", file)
     const storage_path = `${department}/${id}.${ext}`
-    const promise = await uploadHuddleImage({formData, storage_path, id, huddle_id})
+    const promise = await uploadHuddleImage({formData, storage_path, id, department })
     setUploadImageMessage(promise.message)
     setSuccessState(promise.success)
     setIsLoading(false)

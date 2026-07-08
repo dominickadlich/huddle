@@ -6,12 +6,12 @@ export async function uploadHuddleImage({
     formData,
     storage_path,
     id,
-    huddle_id,
+    department
 }: {
     formData: FormData
     storage_path: string
     id: string,
-    huddle_id: string,
+    department: string
 }) {
     const file = formData.get("file-upload")
     if (!file) throw new Error("No file provided")
@@ -33,8 +33,8 @@ export async function uploadHuddleImage({
         .insert({
             storage_path: storage_path,
             id: id,
-            huddle_id: huddle_id,
-            uploaded_by: userId
+            uploaded_by: userId,
+            department: department
         })
 
         if (insertError) {

@@ -7,10 +7,8 @@ import PhotoLightbox from "./lightbox"
 import { CameraIcon } from "@heroicons/react/24/outline"
 
 export default function DisplayPhoto({
-    huddle_id,
     department
 }: {
-    huddle_id: string
     department: string
 }) {
     const [signedUrls, setSignedUrls] = useState<{ url: string, created_at: string }[] | undefined>()
@@ -19,13 +17,13 @@ export default function DisplayPhoto({
     
     useEffect(() => {
         (async () => {
-            const promise = await getHuddleImage({huddle_id})
+            const promise = await getHuddleImage({department})
             if (promise.success === true) {
                 setSignedUrls(promise.signedUrls)
             }
         })
         () // Call the async function immediately
-    }, [huddle_id])
+    }, [department])
     
     
     return (
