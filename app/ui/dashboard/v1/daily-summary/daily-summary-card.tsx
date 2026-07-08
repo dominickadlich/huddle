@@ -60,7 +60,7 @@ export default function DailySummaryCard({
     const clientDate = getLocalDate();
     const clientShift = getCurrentShift();
     setMessage(null);
-    const result = await upsertDailySummaryField(type, inputValue, clientDate, clientShift);
+    const result = await upsertDailySummaryField(type, inputValue, clientDate);
 
     if (result) {
       setMessage(result.message);
