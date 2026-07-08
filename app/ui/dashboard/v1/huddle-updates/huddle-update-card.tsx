@@ -74,8 +74,8 @@ export default function HuddleUpdateCard({
     const result = await upsertHuddleUpdateField(
       capitalizedDepartment,
       inputValue,
-      clientDate,
-      clientShift
+      // clientDate,
+      // clientShift
     );
 
     if (result) {

@@ -118,7 +118,7 @@ export default function SharedTextArea({
               )
             : (
                 <p className="text-base text-white whitespace-pre-wrap"> 
-                    {value ?? 'No Data'}
+                    {value ?? 'Nothing reported today!'}
                 </p>
               )
             }

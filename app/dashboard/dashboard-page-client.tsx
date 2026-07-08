@@ -19,10 +19,10 @@ import { transposeLoop, CATEGORIES } from "../ui/dashboard/v3/huddle-card-v3"
 
 const dashboardCardFields = [
     { key: "census", title: "Census" },
-    { key: "tpn" , title: "TPN" },
-    { key: "hazardous" , title: "Hazardous" },
     { key: "staffing", title: "Staffing" },
     { key: "shift_lead", title: "Shift Lead" },
+    { key: "tpn" , title: "TPN" },
+    { key: "hazardous" , title: "Hazardous" },
 ] as const;
 
 const huddleUpdateFields = [
@@ -120,8 +120,8 @@ export default function DashboardPageClient({
                                             upsertHuddleUpdateField(
                                                 field.department,
                                                 fields.updates[field.key as keyof typeof fields.updates]?.update_text ?? null,
-                                                getLocalDate(),
-                                                getCurrentShift()
+                                                // getLocalDate(),
+                                                // getCurrentShift()
                                             )
                                         ))
                                     ])

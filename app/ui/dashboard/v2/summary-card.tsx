@@ -47,7 +47,7 @@ export default function SummaryCard({
 
         {/* Value Display */}
         <div className="flex justify-center items-center min-h-[2rem]">
-            {isEditMode
+            {isEditMode && type !== 'tpn' && type !== 'hazardous'
             ? (
                 <input 
                     type="text"

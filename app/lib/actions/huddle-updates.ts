@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { getAuthenticatedClient } from "../supabase/auth-helpers";
-import { getOrCreateDailySummary } from "./daily-summary";
+import { fetchLatestDailySummary } from "../data";
 import type {
   HuddleUpdate,
   HuddleUpdateInsert,
@@ -109,13 +109,17 @@ export async function upsertHuddleUpdate(
 export async function upsertHuddleUpdateField(
   department: DepartmentType,
   value: string | null,
-  date: string,
-  shift: ShiftType
+  // date: string,
+  // shift: ShiftType
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
-    const summaryId = await getOrCreateDailySummary(date, shift);
+    const summary = await fetchLatestDailySummary();
+    if (!summary) {
+      return { success: false, message: "No daily summary exists yet." };
+    }
+    const summaryId = summary.id;
 
     // 3. Check if record exists for today + current shift
     const { data: existing } = await supabase
@@ -123,7 +127,7 @@ export async function upsertHuddleUpdateField(
       .select("id")
       .eq("department", department)
       .eq("daily_summary_id", summaryId)
-      .single();
+      .maybeSingle()
 
     if (existing) {
       // UPDATE
@@ -141,7 +145,7 @@ export async function upsertHuddleUpdateField(
 
       return {
         success: true,
-        message: "Daily summary updated successfully!",
+        message: "Huddle updated successfully!",
       };
     } else {
       // INSERT
@@ -263,6 +267,10 @@ export async function updateDepartmentText(
   }
 }
 
+
+function getDailySummary() {
+  throw new Error("Function not implemented.");
+}
 // ============================================
 // USAGE EXAMPLES (for reference in frontend)
 // ============================================

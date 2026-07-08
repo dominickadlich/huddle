@@ -113,7 +113,7 @@ export async function upsertDailySummaryField(
   field: keyof DailySummaryUpdate,
   value: string | null,
   date: string,
-  shift: ShiftType
+  // shift: ShiftType
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
@@ -122,9 +122,10 @@ export async function upsertDailySummaryField(
     const { data: existing } = await supabase
       .from("daily_summary")
       .select("id")
-      .eq("date", date)
-      .eq("shift", shift)
-      .single();
+      .order("date", { ascending: false })
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single()
 
     if (existing) {
       // UPDATE
@@ -148,7 +149,7 @@ export async function upsertDailySummaryField(
       // INSERT
       const { error } = await supabase.from("daily_summary").insert({
         date,
-        shift,
+        // shift,
         [field]: value,
         updated_by: userId,
         created_by: userId,
@@ -240,39 +241,40 @@ export async function deleteDailySummary(id: string): Promise<{
   }
 }
 
-// ============================================================
-// GET OR CREATE DAILY SUMMARY FOR HUDDLE UPDATE FK
-// ============================================================
-export async function getOrCreateDailySummary(
-  date: string,
-  shift: ShiftType,
-): Promise<string> {
-  try {
-    const { supabase, userId } = await getAuthenticatedClient();
-    const data = await fetchDailySummaryByDateAndShift(date, shift);
 
-    if (!data) {
-      const { data: newSummary, error } = await supabase
-        .from("daily_summary")
-        .insert({
-          date: date,
-          shift: shift,
-          created_by: userId,
-          updated_by: userId,
-        })
-        .select("id")
-        .single();
+// // ============================================================
+// // GET OR CREATE DAILY SUMMARY FOR HUDDLE UPDATE FK
+// // ============================================================
+// export async function getOrCreateDailySummary(
+//   date: string,
+//   shift: ShiftType,
+// ): Promise<string> {
+//   try {
+//     const { supabase, userId } = await getAuthenticatedClient();
+//     const data = await fetchDailySummaryByDateAndShift(date, shift);
 
-      if (error || !newSummary) {
-        throw new Error("Failed to create daily summary");
-      }
+//     if (!data) {
+//       const { data: newSummary, error } = await supabase
+//         .from("daily_summary")
+//         .insert({
+//           date: date,
+//           shift: shift,
+//           created_by: userId,
+//           updated_by: userId,
+//         })
+//         .select("id")
+//         .single();
 
-      return newSummary.id;
-    } else {
-      return data.id;
-    }
-  } catch (error) {
-    console.error("Failed to get or create a daily summary:", error);
-    throw new Error("Failed to get or create daily summary");
-  }
-}
+//       if (error || !newSummary) {
+//         throw new Error("Failed to create daily summary");
+//       }
+
+//       return newSummary.id;
+//     } else {
+//       return data.id;
+//     }
+//   } catch (error) {
+//     console.error("Failed to get or create a daily summary:", error);
+//     throw new Error("Failed to get or create daily summary");
+//   }
+// }
