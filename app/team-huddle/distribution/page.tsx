@@ -1,6 +1,5 @@
 import { fetchLatestDistribution } from "@/app/lib/data/distribution";
 import { fetchLatestDailySummary, fetchLatestHuddleUpdates } from "@/app/lib/data";
-import DistributionPageClient from "./distribution-page-client";
 import { Distribution } from "@/app/lib/types/database";
 import DistributionClient from "./distribution-page-client";
 

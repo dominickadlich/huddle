@@ -1,7 +1,6 @@
 // ============================================
 // Import Supabase-generated types
 // ============================================
-import { fetchDailySummaryWithUpdates } from "../data";
 import type { Database, Tables, TablesInsert, TablesUpdate } from "./supabase";
 
 

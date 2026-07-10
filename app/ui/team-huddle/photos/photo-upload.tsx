@@ -2,7 +2,7 @@
 
 import { uploadHuddleImage } from "@/app/lib/actions/upload-huddle-image"
 import { PhotoIcon } from "@heroicons/react/24/outline"
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import Spinner from "../../global/spinner";
 
 export default function UploadPhoto({

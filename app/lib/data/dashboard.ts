@@ -4,7 +4,6 @@ import {
     fetchUpdatesByDailySummaryId
 } from ".";
 import { 
-    DailySummary,
     DashboardData,
     DepartmentType,
     HuddleUpdate,

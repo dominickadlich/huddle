@@ -1,5 +1,5 @@
 import { fetchLatestDailySummary, fetchLatestHuddleUpdates } from "@/app/lib/data";
-import { ORPharmacy, TeamEight } from "@/app/lib/types/database";
+import { TeamEight } from "@/app/lib/types/database";
 import { fetchLatestTeamEight } from "@/app/lib/data/team-eight";
 import TeamEightPageClient from "./team-eight-page-client";
 

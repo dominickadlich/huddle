@@ -1,6 +1,5 @@
 "use client";
 
-import { SignInButton } from "./ui/auth/auth-buttons";
 import Image from "next/image";
 
 export default function Page() {

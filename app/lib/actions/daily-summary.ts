@@ -6,11 +6,9 @@ import { getAuthenticatedClient } from "../supabase/auth-helpers";
 import { fetchDailySummaryByDateAndShift } from "../data";
 import type {
   DailySummary,
-  DailySummaryInsert,
   DailySummaryUpdate,
   ShiftType,
 } from "../types/database";
-import { getCurrentShift, getLocalDate } from "../utils/utils";
 
 // ============================================
 // ZOD VALIDATION SCHEMAS

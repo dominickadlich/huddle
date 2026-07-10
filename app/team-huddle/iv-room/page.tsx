@@ -1,6 +1,5 @@
 import { fetchLatestIVRoom } from "@/app/lib/data/iv-room";
 import { fetchLatestDailySummary, fetchLatestHuddleUpdates } from "@/app/lib/data";
-import IVRoomPageClient from "./iv-room-page-client";
 import { IvRoom } from "@/app/lib/types/database";
 import IVCLient from "./iv-room-page-client";
 

@@ -1,4 +1,4 @@
-import { ArrowTrendingDownIcon, ExclamationCircleIcon, FaceSmileIcon, LightBulbIcon, TrophyIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/outline";
+import { ArrowTrendingDownIcon, ExclamationCircleIcon, TrophyIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/outline";
 
 interface HuddleRow {
     department: string;

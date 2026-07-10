@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import { HuddleUpdate, type DashboardData } from "../lib/types/database"
 import CategoryCard, { type TransposedOutput } from "../ui/dashboard/v3/huddle-card-v3"
-import { SetStateAction, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { formatDate, getCurrentShift, getLocalDate } from "../lib/utils/utils"
 import { DateCard } from "../ui/global/header"
 import { CancelButton, EditButton, SubmitButton } from "../ui/global/buttons"
@@ -12,7 +12,6 @@ import SummaryCard from "../ui/dashboard/v2/summary-card"
 import { AnnouncementTextArea } from "../ui/team-huddle/shared-text-area"
 import { upsertDailySummary } from "../lib/actions/daily-summary"
 import { upsertHuddleUpdateField } from "../lib/actions/huddle-updates"
-import StaticSearch from "../ui/static-search"
 import GloabalSearch from "../ui/global/global-search"
 import { getHuddleCategoriesAction } from "../lib/actions/dashboard"
 import { transposeLoop, CATEGORIES } from "../ui/dashboard/v3/huddle-card-v3"
@@ -47,6 +46,7 @@ export default function DashboardPageClient({
     const [categories, setCategories] = useState<Partial<TransposedOutput> | null>(null)
     const clientDate =  getLocalDate()
     const clientShift = getCurrentShift();
+
     
 
     // Fetch safety, barriers, inventory, wins, etc.
@@ -88,11 +88,6 @@ export default function DashboardPageClient({
                 <h1 className="text-4xl font-bold">Huddle Dashboard</h1>
                 
                 {/* Center */}
-                {/* <StaticSearch 
-                    placeholder={"Global Search"} 
-                    onChange={handleSearchQuery} 
-                    value={searchQuery}
-                /> */}
                 <GloabalSearch />
                 
                 {/* Right */}

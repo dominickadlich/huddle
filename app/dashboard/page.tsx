@@ -1,5 +1,5 @@
-import { fetchLatestDailySummary, fetchLatestDailySummaryWithUpdates, fetchLatestHuddleUpdates } from "../lib/data";
-import { DailySummaryWithUpdates, DashboardData, DepartmentUpdate, HuddleUpdate } from "../lib/types/database";
+import { fetchLatestDailySummaryWithUpdates } from "../lib/data";
+import { DailySummaryWithUpdates, DashboardData, HuddleUpdate } from "../lib/types/database";
 import DashboardPageClient from "./dashboard-page-client";
 
 function toDashboardData(data: DailySummaryWithUpdates): DashboardData {

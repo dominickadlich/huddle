@@ -8,7 +8,7 @@ import { useEffect, useState, useContext } from "react"
 import { useRouter } from "next/navigation";
 import { formatDate, getCurrentShift, getLocalDate } from "@/app/lib/utils/utils";
 import { CancelButton, EditButton, SubmitButton } from "@/app/ui/global/buttons";
-import teamHuddleCard, { HeroIcon } from "./team-huddle-card";
+import { HeroIcon } from "./team-huddle-card";
 import TeamHuddleCard from "./team-huddle-card";
 import HuddleCard from "@/app/ui/dashboard/v2/huddle-card";
 import { EditModeContext } from "@/app/lib/context/EditModeContext";

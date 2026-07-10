@@ -1,5 +1,4 @@
-import { getLocalDate, getLocalDateFormatted } from "@/app/lib/utils/utils";
-import { format } from "date-fns";
+import { getLocalDateFormatted } from "@/app/lib/utils/utils";
 
 export function DateCard() {
     const formatDate = getLocalDateFormatted()
