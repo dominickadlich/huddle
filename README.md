@@ -14,20 +14,20 @@ Huddle Dashboard gives pharmacy leadership a live, structured view of daily oper
 
 - **Frontend:** TypeScript, React, Next.js
 - **Styling:** Tailwind CSS
-- **Data:** SQL
+- **Backend:** Supabase
 
 ## Status
 
-Currently in **active pilot** at The University of Kansas Health System, following formal IT governance review and approval.
+Currently in **active pilot** following formal IT governance review and approval.
 
 ## Why This Project Matters
 
 This wasn't a tutorial project — it was built end-to-end by identifying a real operational gap, designing a solution, writing the code, and successfully navigating a large academic health system's IT approval process to reach real users. It reflects the intersection of clinical domain expertise and hands-on software development.
 
-## Screenshots / Demo
+## Screenshots
 
-*(Add a screenshot or short screen-recording GIF here — this is the single highest-impact addition you can make to this README.)*
+<img width="1453" height="723" alt="Screenshot 2026-07-22 at 9 36 28 PM" src="https://github.com/user-attachments/assets/dc143c99-09c2-42ed-8a73-bc78bdeb5dff" />
 
 ## License
 
-*(Add license here, or note "Proprietary — internal deployment" if not open source.)*
+Proprietary — internal deployment
