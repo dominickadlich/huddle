@@ -26,6 +26,8 @@ This wasn't a tutorial project — it was built end-to-end by identifying a real
 
 ## Screenshots
 
+**Values redacted for institutional confidentiality.**
+
 <img width="1453" height="723" alt="Screenshot 2026-07-22 at 9 36 28 PM" src="https://github.com/user-attachments/assets/dc143c99-09c2-42ed-8a73-bc78bdeb5dff" />
 
 ## License
