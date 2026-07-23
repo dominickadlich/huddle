@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pharmacy Huddle Dashboard
 
-## Getting Started
+A full-stack clinical operations tool built to solve a real workflow problem at a 1,000-bed academic medical center — designed, developed, and deployed independently, then navigated through institutional IT approval into active pilot with departmental leadership.
 
-First, run the development server:
+## The Problem
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Pharmacy huddles relied on manual, ad hoc tracking of departmental updates, staffing notes, and operational issues — representing an estimated **$36k in annual time cost** across the department. There was no centralized, structured way to capture and surface this information for clinical leadership.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## The Solution
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Huddle Dashboard gives pharmacy leadership a live, structured view of daily operations — replacing scattered notes and verbal handoffs with a single source of truth that's fast to update and easy to scan during time-boxed huddles.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
 
-## Learn More
+- **Frontend:** TypeScript, React, Next.js
+- **Styling:** Tailwind CSS
+- **Data:** SQL
 
-To learn more about Next.js, take a look at the following resources:
+## Status
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Currently in **active pilot** at The University of Kansas Health System, following formal IT governance review and approval.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Why This Project Matters
 
-## Deploy on Vercel
+This wasn't a tutorial project — it was built end-to-end by identifying a real operational gap, designing a solution, writing the code, and successfully navigating a large academic health system's IT approval process to reach real users. It reflects the intersection of clinical domain expertise and hands-on software development.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Screenshots / Demo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*(Add a screenshot or short screen-recording GIF here — this is the single highest-impact addition you can make to this README.)*
+
+## License
+
+*(Add license here, or note "Proprietary — internal deployment" if not open source.)*
