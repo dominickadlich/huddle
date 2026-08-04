@@ -14,7 +14,9 @@ import HuddleCard from "@/app/ui/dashboard/v2/huddle-card";
 import { EditModeContext } from "@/app/lib/context/EditModeContext";
 import MisclickPopUp from "./misclick-modal";
 import UploadPhoto from "./photos/photo-upload";
-import DisplayPhoto from "./photos/display-photo";
+import DisplayPhoto from "./photos/load-photo";
+import TeamBuildingTextArea from "./iv-room/team-building-text-area";
+import ActivitiesChecklist from "./iv-room/activities";
 
 
 const gridColsMap: Record<number, string> = {
@@ -36,6 +38,9 @@ export default function MiniHuddlePageClient({
     grid_cols,
     huddleUpdates,
     department,
+    extraContent,
+    showTeamBuilding,
+    showActivities,
 }: {
     title: string;
     initialData: CommandCenter | Distribution | IvRoom | Nonsterile;
@@ -48,6 +53,9 @@ export default function MiniHuddlePageClient({
     grid_cols: number,
     huddleUpdates: HuddleUpdate[] | null,
     department: string
+    extraContent?: React.ReactNode,
+    showTeamBuilding?: boolean,
+    showActivities?: boolean
 }) {
     const router = useRouter();
     const [fields, setFields] = useState<Record<string, string | number | null | undefined>>(initialData || {})
@@ -65,6 +73,8 @@ export default function MiniHuddlePageClient({
         pendingHref, 
         setPendingHref,
      } = useContext(EditModeContext)
+
+     const effectiveCols = (isEditMode && extraContent) ? grid_cols + 1 : grid_cols;
 
 
     useEffect(() => {
@@ -120,12 +130,24 @@ export default function MiniHuddlePageClient({
                         ? <UploadPhoto department={department} />
                         : <DisplayPhoto department={department} />
                     }
+                    {showTeamBuilding && (
+                        <TeamBuildingTextArea
+                            value={fields.team_building as string | null | undefined}
+                            isEditMode={isEditMode}
+                            onChange={(val) => setFields({ ...fields, team_building: val })}
+                        />
+                    )}
                 </div>
             </div>
 
             {/* Cards + text fields — order-3 on mobile, right column row 2 on desktop */}
             <div className="order-3 lg:col-start-2 lg:row-start-2">
-                <div className={`grid grid-cols-1 ${gridColsMap[grid_cols]} gap-4`}>
+                <div className={`grid grid-cols-1 ${gridColsMap[effectiveCols]} gap-4`}>
+                    {(isEditMode && extraContent) && (
+                        <div className="row-span-2">
+                            {extraContent}
+                        </div>
+                    )}
                     {cardFields.map(({ key, title }) => (
                         <TeamHuddleCard
                             key={key}
@@ -139,7 +161,8 @@ export default function MiniHuddlePageClient({
                     ))}
                 </div>
                 
-                
+                {/* Activities Checklist for IV Room */}
+                {isEditMode && showActivities && <ActivitiesChecklist />}
 
                 <div className="mt-4 grid grid-cols-1 gap-4">
                     {textFields.map(({ key, title }) => (

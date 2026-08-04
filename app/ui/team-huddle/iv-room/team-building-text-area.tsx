@@ -1,25 +1,35 @@
 import { FaceSmileIcon } from "@heroicons/react/24/outline";
 
+const titleByDay = [
+  {day: "Tuesday", title: "Trivia Tuesday"},
+  {day: "Wednesday", title: "Wisdom Wednesday"},
+  {day: "Thursday", title: "Thursday Thinnker"}
+]
+
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const dayName = days[new Date().getDay()];
+
 export default function TeamBuildingTextArea({
     value,
     isEditMode,
     onChange
 }: {
-    value: string | null | undefined;
+    value:  | string | null | undefined;
     isEditMode: boolean;
     onChange?: (value: string) => void;
 }) {
+  const todayTitle = titleByDay.find((entry) => entry.day === dayName)?.title
     return (
         <>
-    <div className="group relative h-full overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
+    <div className="mt-4 group relative h-full overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
         {/* Content */}
         <div className="relative z-10">
           {/* Header */}
-          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-700/50 group-hover:border-indigo-500/30 transition-colors duration-300">
+          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-700/50 transition-colors duration-300">
             <div className="flex items-center justify-center gap-2 flex-1">
-              <FaceSmileIcon className="h-6 w-6 text-md font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300" />
-              <h3 className="text-lg font-semibold text-gray-300 group-hover:text-indigo-300 transition-colors duration-300">
-                Team Building
+              <FaceSmileIcon className="h-6 w-6 text-md font-semibold text-gray-300 transition-colors duration-300" />
+              <h3 className="text-lg font-semibold text-gray-300 transition-colors duration-300">
+                { todayTitle ?? "Team Building" }
               </h3>
             </div>
           </div>

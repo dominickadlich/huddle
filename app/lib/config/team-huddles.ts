@@ -101,9 +101,9 @@ export const ivRoomConfig = {
     cardFields: [
         { key: 'unique_work', title: 'Unique Work' }, 
         { key: 'tpn', title: 'TPN + Batch' },
-        { key: 'hazardous', title: 'Haz' },
+        { key: 'hazardous', title: 'Haz + PAPR' },
         { key: 'sc', title: 'SC' },
-        { key: 'assignment_two', title: 'Asgmt 2' },
+        { key: 'assignment_two', title: 'Asmt 2 + TPN Batching' },
         { key: 'training', title: 'Training' },
         { key: 'iv_support', title: 'IV Support' },
         { key: 'monthly_clean', title: 'Monthly Clean' },

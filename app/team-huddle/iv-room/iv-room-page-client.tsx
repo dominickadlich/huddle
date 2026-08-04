@@ -2,6 +2,7 @@
 
 import { ivRoomConfig } from "@/app/lib/config/team-huddles";
 import { HuddleUpdate, IvRoom } from "@/app/lib/types/database";
+import RollCall from "@/app/ui/team-huddle/iv-room/roll-call";
 import MiniHuddlePageClient from "@/app/ui/team-huddle/page-client";
 
 export default function IVCLient({
@@ -24,6 +25,9 @@ export default function IVCLient({
             grid_cols={4}
             huddleUpdates={huddleUpdates}
             // department={ivRoomConfig.department}
+            extraContent={<RollCall />}
+            showTeamBuilding={true}
+            showActivities={true}
         />
     )
 }
