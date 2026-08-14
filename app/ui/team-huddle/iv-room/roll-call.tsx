@@ -1,24 +1,24 @@
 import { UserIcon } from "@heroicons/react/24/outline";
 
 const callList = [
-    "0600 IVRM (2)",
-    "0700 IVRM (2)",
+    "0600",
+    "0700",
     "TPN",
     "IVDP",
-    "IV RPh (2)",
+    "IV RPh",
     "SC",
     "CHM",
-    "CA RPh (2)",
+    "CA RPh",
 ]
 
 export default function RollCall() {
    return (
     <>
-        <div className="group relative overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
+        <div className="group relative overflow-hidden rounded-2xl backdrop-blur-sm p-2">
             {/* Content */}
-            <div className="relative z-10">
+            {/* <div className="relative z-10"> */}
             {/* Header */}
-            <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-700/50 transition-colors duration-300">
+            {/* <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-700/50 transition-colors duration-300">
                 <div className="flex items-center justify-center gap-2 flex-1">
                 <UserIcon className="h-6 w-6 text-md font-semibold text-gray-300  transition-colors duration-300" />
                 <h3 className="text-lg font-semibold text-gray-300  transition-colors duration-300">
@@ -26,15 +26,18 @@ export default function RollCall() {
                 </h3>
                 </div>
             </div>
-            </div>
+            </div> */}
 
             {/* Value Display */}
-            <div className="flex flex-col items-start gap-1 min-h-[2rem]">
+            <div className="flex">
+                <p className="text-xl text-white whitespace-nowrap">Roll Call:</p>
+            <div className="flex grow divide-x divide-gray-700 ">
                 {callList.map((roll) => (
-                    <p key={roll} className="text-xl font-bold text-white  transition-colors duration-300">
+                    <p key={roll} className="grow px-3 text-xl text-white text-center transition-colors duration-300">
                         {roll}
                     </p>
                 ))}
+            </div>
             </div>
         </div>
         </>

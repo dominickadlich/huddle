@@ -17,6 +17,7 @@ import UploadPhoto from "./photos/photo-upload";
 import DisplayPhoto from "./photos/load-photo";
 import TeamBuildingTextArea from "./iv-room/team-building-text-area";
 import ActivitiesChecklist from "./iv-room/activities";
+import Calendar from "../dashboard/history/calendar";
 
 
 const gridColsMap: Record<number, string> = {
@@ -74,7 +75,7 @@ export default function MiniHuddlePageClient({
         setPendingHref,
      } = useContext(EditModeContext)
 
-     const effectiveCols = (isEditMode && extraContent) ? grid_cols + 1 : grid_cols;
+    //  const effectiveCols = (isEditMode && extraContent) ? grid_cols + 1 : grid_cols;
 
 
     useEffect(() => {
@@ -101,8 +102,13 @@ export default function MiniHuddlePageClient({
         <Header title={`${title} Dashboard`} census={census} shiftlead={shiftLead}/>
         <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6">
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
-            <div className="order-1 lg:col-start-2 lg:row-start-1 flex justify-between gap-4">
-                <div className="flex gap-4">
+            {/* <div className="order-1 lg:col-start-2 lg:row-start-1 flex items-center justify-between gap-4"> */}
+            <div
+                className={`order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 ${
+                    extraContent ? "grid grid-cols-[1fr_3fr_1fr]" : "flex justify-between"
+                }`}
+            >
+                <div className="flex items-center gap-4">
                     {isEditMode
                         ? (
                             <>
@@ -113,7 +119,14 @@ export default function MiniHuddlePageClient({
                         : <EditButton onClick={() => setIsEditMode(true)}/>
                     }
                 </div>
-                <div className="flex items-center px-4 text-sm text-gray-400">
+
+                {(extraContent) && (
+                    <div className="">
+                        {extraContent}
+                    </div>
+                )}
+
+                <div className="justify-self-end whitespace-nowrap px-4 text-sm text-gray-400">
                     Last Update: {lastUpdate}
                 </div>
             </div>
@@ -137,17 +150,15 @@ export default function MiniHuddlePageClient({
                             onChange={(val) => setFields({ ...fields, team_building: val })}
                         />
                     )}
+                    {/* <div className="mt-6">
+                        <Calendar />
+                    </div> */}
                 </div>
             </div>
 
             {/* Cards + text fields — order-3 on mobile, right column row 2 on desktop */}
             <div className="order-3 lg:col-start-2 lg:row-start-2">
-                <div className={`grid grid-cols-1 ${gridColsMap[effectiveCols]} gap-4`}>
-                    {(isEditMode && extraContent) && (
-                        <div className="row-span-2">
-                            {extraContent}
-                        </div>
-                    )}
+                <div className={`grid grid-cols-1 ${gridColsMap[grid_cols]} gap-4`}>
                     {cardFields.map(({ key, title }) => (
                         <TeamHuddleCard
                             key={key}
@@ -162,7 +173,7 @@ export default function MiniHuddlePageClient({
                 </div>
                 
                 {/* Activities Checklist for IV Room */}
-                {isEditMode && showActivities && <ActivitiesChecklist />}
+                {showActivities && <ActivitiesChecklist />}
 
                 <div className="mt-4 grid grid-cols-1 gap-4">
                     {textFields.map(({ key, title }) => (
