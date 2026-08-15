@@ -59,8 +59,8 @@ export default function MiniHuddlePageClient({
     extraContent?: React.ReactNode,
     showTeamBuilding?: boolean,
     showActivities?: boolean,
-    viewDate: string;
-    mode: 'live' | 'future' | 'past';
+    viewDate?: string;
+    mode?: 'live' | 'future' | 'past';
 }) {
     const router = useRouter();
     const [fields, setFields] = useState<Record<string, string | number | null | undefined>>(initialData || {})
