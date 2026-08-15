@@ -34,6 +34,8 @@ import { upsertORPharmacy } from "../actions/or-pharmacy";
 import { upsertTeamEight } from "../actions/team-eight";
 
 
+export const DEFAULT_SHIFT = "morning"; // stopgap until shift is fully removed
+
 export const commandCenterConfig = {
     title: "CM/CSR/PP",
     department: "CSR",

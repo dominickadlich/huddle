@@ -61,7 +61,7 @@ export function AnnouncementTextArea({
                 />
               )
             : (
-                <p className="whitespace-pre-wrap leading-loose text-xl font-bold text-white transition-colors duration-300">
+                <p className="whitespace-pre-wrap leading-loose text-lg text-white transition-colors duration-300">
                     {value ?? 'Nothing reported today!'}
                 </p>
               )
@@ -105,7 +105,7 @@ export default function SharedTextArea({
         </div>
 
         {/* Value Display */}
-        <div className="flex justify-center items-center min-h-[2rem]">
+        <div className="flex justify-items-start items-center min-h-[2rem]">
             {isEditMode
             ? (
                 <textarea

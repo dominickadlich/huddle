@@ -94,7 +94,11 @@ export default function DashboardPageClient({
                 <DateCard />
             </div>
 
-        <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6">
+        {/* Extra div in case I want to remove the left side bar. Would replace div directly below it */}
+        <div className="mt-10 flex flex-col gap-6">
+
+
+        {/* <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6"> */}
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
             <div className="order-1 lg:col-start-2 lg:row-start-1 flex justify-between gap-4">
                 <div className="flex gap-4">
@@ -142,7 +146,7 @@ export default function DashboardPageClient({
             </div>
 
             {/* Announcements — order-2 on mobile, spans full left column on desktop */}
-            <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+            {/* <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
                 <AnnouncementTextArea
                     value={fields?.daily_summary.announcements}
                     isEditMode={isEditMode}
@@ -156,7 +160,7 @@ export default function DashboardPageClient({
                         })
                     }
                 />
-            </div>
+            </div> */}
 
             {/* Cards + huddle updates — order-3 on mobile, right column row 2 on desktop */}
             <div className="order-3 lg:col-start-2 lg:row-start-2">

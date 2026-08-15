@@ -45,7 +45,7 @@ export default function TeamHuddleCard({
                 />
               )
             : (
-                <p className="text-xl font-bold text-white  transition-colors duration-300">
+                <p className="text-xl font-bold text-white transition-colors duration-300">
                     {value ?? 'No Data'}
                 </p>
               )

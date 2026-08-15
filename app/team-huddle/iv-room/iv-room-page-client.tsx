@@ -10,14 +10,19 @@ export default function IVCLient({
     census,
     shiftLead,
     huddleUpdates,
+    viewDate,
+    mode,
 }: {
     initialData: IvRoom,
     census: number | null,
     shiftLead: string | null,
     huddleUpdates: HuddleUpdate[] | null,
+    viewDate: string;
+    mode: 'live' | 'future' | 'past';
 }) {
     return(
         <MiniHuddlePageClient
+            key={viewDate}
             {...ivRoomConfig}
             initialData={initialData}
             census={census}
@@ -28,6 +33,8 @@ export default function IVCLient({
             extraContent={<RollCall />}
             showTeamBuilding={true}
             showActivities={true}
+            viewDate={viewDate}
+            mode={mode}
         />
     )
 }

@@ -42,6 +42,8 @@ export default function MiniHuddlePageClient({
     extraContent,
     showTeamBuilding,
     showActivities,
+    viewDate,
+    mode,
 }: {
     title: string;
     initialData: CommandCenter | Distribution | IvRoom | Nonsterile;
@@ -56,7 +58,9 @@ export default function MiniHuddlePageClient({
     department: string
     extraContent?: React.ReactNode,
     showTeamBuilding?: boolean,
-    showActivities?: boolean
+    showActivities?: boolean,
+    viewDate: string;
+    mode: 'live' | 'future' | 'past';
 }) {
     const router = useRouter();
     const [fields, setFields] = useState<Record<string, string | number | null | undefined>>(initialData || {})
@@ -150,9 +154,9 @@ export default function MiniHuddlePageClient({
                             onChange={(val) => setFields({ ...fields, team_building: val })}
                         />
                     )}
-                    {/* <div className="mt-6">
+                    <div className="mt-6">
                         <Calendar />
-                    </div> */}
+                    </div>
                 </div>
             </div>
 

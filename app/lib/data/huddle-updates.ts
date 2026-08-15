@@ -85,3 +85,27 @@ export async function fetchUpdateByDepartment(
   }
 }
 
+
+export async function fetchHuddleUpdatesByDate(
+    date: string,
+    shift: string
+): Promise<HuddleUpdate[] | null> {
+    const { supabase } = await getAuthenticatedClient();
+
+    const { data: summary } = await supabase
+        .from('daily_summary')
+        .select('id')
+        .eq('date', date)
+        .eq('shift', shift)
+        .maybeSingle();
+
+    if (!summary) return null;
+
+    const { data, error } = await supabase
+        .from('huddle_updates')
+        .select('*')
+        .eq('daily_summary_id', summary.id);
+
+    if (error) throw error;
+    return data ?? [];
+}

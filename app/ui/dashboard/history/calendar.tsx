@@ -3,12 +3,13 @@
 import GenrateCalendarDates from "./calendar-date-generator";
 import { addMonths, format, parseISO, subMonths } from "date-fns";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function Calendar() {
     const router = useRouter()
     const searchParams = useSearchParams()
+    const pathname = usePathname();
     const today = new Date();
     const selectedDate = searchParams.get('date')
     const [currentMonth, setCurrentMonth] = useState<Date>(today);
@@ -16,7 +17,8 @@ export default function Calendar() {
     const handleDateClick = (date: string) => {
         const params = new URLSearchParams(searchParams)
         params.set('date', date)
-        router.push(`/dashboard/history?${params.toString()}`)
+        // router.push(`/dashboard/history?${params.toString()}`)
+        router.push(`${pathname}?${params.toString()}`);
     }
 
     const days = GenrateCalendarDates(
