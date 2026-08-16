@@ -48,6 +48,29 @@ export async function fetchIVRoomByDate(
     return data;
 }
 
+
+// ============================================
+// Fetch Most Recent Data 
+// ============================================
+export async function fetchIVRoomLiveWithFallback(
+    today: string,
+    shift: string
+): Promise<IvRoom | null> {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+        .from('iv_room')
+        .select('*')
+        .lte('date', today)
+        .eq('shift', shift)
+        .order('date', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+    if (error) throw error;
+    return data;
+}
+
 // ============================================
 // Fetch Last 7 IV Room Data
 // ============================================
