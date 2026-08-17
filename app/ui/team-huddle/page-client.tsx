@@ -122,6 +122,15 @@ export default function MiniHuddlePageClient({
                           )
                         : <EditButton onClick={() => setIsEditMode(true)}/>
                     }
+                    {mode !== 'live' && (
+                        <div className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
+                            mode === 'future' 
+                                ? 'bg-amber-500/10 text-amber-600 border border-amber-500/20' 
+                                : 'bg-amber-500/10 text-amber-600 border border-amber-500/20'
+                        }`}>
+                            ⚠️ Viewing {viewDate} 
+                        </div>
+                    )}
                 </div>
 
                 {(extraContent) && (

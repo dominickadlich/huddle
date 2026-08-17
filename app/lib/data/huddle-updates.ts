@@ -56,6 +56,34 @@ export async function fetchLatestHuddleUpdates(): Promise<
 }
 
 
+export async function fetchHuddleUpdatesLiveWithFallback(
+    today: string,
+    shift: string
+): Promise<HuddleUpdate[] | null> {
+    const { supabase } = await getAuthenticatedClient();
+
+    const { data: summary, error: summaryError } = await supabase
+        .from('daily_summary')
+        .select('id')
+        .lte('date', today)
+        .eq('shift', shift)
+        .order('date', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+    if (summaryError) throw summaryError;
+    if(!summary) return null;
+
+    const { data, error } = await supabase
+      .from('huddle_updates')
+      .select('*')
+      .eq('daily_summary_id', summary.id);
+
+    if (error) throw error;
+    return data ?? [];
+}
+
+
 // ============================================
 // Fetch Huddle Updates By Department
 // ============================================

@@ -34,7 +34,7 @@
 
 
 import { fetchIVRoomByDate, fetchIVRoomLiveWithFallback } from "@/app/lib/data/iv-room";
-import { fetchDailySummaryByDateAndShift, fetchHuddleUpdatesByDate } from "@/app/lib/data";
+import { fetchDailySummaryByDateAndShift, fetchDailySummaryLiveWithFallback, fetchHuddleUpdatesByDate, fetchHuddleUpdatesLiveWithFallback } from "@/app/lib/data";
 import { getLocalDate } from "@/app/lib/utils/utils";
 import { DEFAULT_SHIFT } from "@/app/lib/config/team-huddles";
 import { IvRoom } from "@/app/lib/types/database";
@@ -50,14 +50,17 @@ export default async function Page({
     const targetDate = date ?? today;
     const shift = DEFAULT_SHIFT;
 
-    const ivRoomData = date
-    ? await fetchIVRoomByDate(targetDate, shift) 
-    : await fetchIVRoomLiveWithFallback(today, shift);
-
-    const [dailySummary, huddleUpdates] = await Promise.all([
-        fetchDailySummaryByDateAndShift(targetDate, shift),
-        fetchHuddleUpdatesByDate(targetDate, shift),
-    ]);
+    const [ivRoomData, dailySummary, huddleUpdates] = date
+        ? await Promise.all([
+                fetchIVRoomByDate(targetDate, shift),
+                fetchDailySummaryByDateAndShift(targetDate, shift),
+                fetchHuddleUpdatesByDate(targetDate, shift),
+            ]) 
+        : await Promise.all([
+                fetchIVRoomLiveWithFallback(today, shift),
+                fetchDailySummaryLiveWithFallback(today, shift),
+                fetchHuddleUpdatesLiveWithFallback(today, shift),
+            ])
 
     const mode: 'live' | 'future' | 'past' =
         targetDate === today ? 'live' : targetDate > today ? 'future' : 'past';
@@ -66,6 +69,7 @@ export default async function Page({
 
     return (
         <IVCLient
+            key={targetDate}
             initialData={ivRoomData ?? ({} as IvRoom)}
             census={dailySummary?.census ?? null}
             shiftLead={dailySummary?.shift_lead ?? null}

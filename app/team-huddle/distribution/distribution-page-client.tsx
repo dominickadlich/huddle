@@ -9,21 +9,27 @@ export default function DistributionClient({
     census,
     shiftLead,
     huddleUpdates,
+    viewDate,
+    mode,
 }: {
     initialData: Distribution,
     census: number | null,
     shiftLead: string | null,
     huddleUpdates: HuddleUpdate[] | null,
+    viewDate: string,
+    mode: 'live' | 'future' | 'past',
 }) {
     return (
-        <MiniHuddlePageClient 
+        <MiniHuddlePageClient
+            key={viewDate}
             {...distributionConfig}
             initialData={initialData}
             census={census}
             shiftLead={shiftLead}
             grid_cols={4}
             huddleUpdates={huddleUpdates}
-            // department={distributionConfig.department}
+            viewDate={viewDate}
+            mode={mode}
         />
     )
 }

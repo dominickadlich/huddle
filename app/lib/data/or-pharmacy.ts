@@ -48,6 +48,28 @@ export async function fetchORPharmacyByDate(
     return data;
 }
 
+// ============================================
+// Fetch Most Recent Data 
+// ============================================
+export async function fetchORPharmacyLiveWithFallback(
+    today: string,
+    shift: string
+): Promise<ORPharmacy | null> {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+        .from('or_pharmacy')
+        .select('*')
+        .lte('date', today)
+        .eq('shift', shift)
+        .order('date', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+    if (error) throw error;
+    return data;
+}
+
 
 // ============================================
 // Fetch Last 7 IV Room Data

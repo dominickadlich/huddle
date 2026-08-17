@@ -8,22 +8,28 @@ export default function CommandCenterClient({
     initialData,
     census,
     shiftLead,
-    huddleUpdates
+    huddleUpdates,
+    viewDate,
+    mode,
 }: {
     initialData: CommandCenter,
     census: number | null,
     shiftLead: string | null,
     huddleUpdates: HuddleUpdate[] | null,
+    viewDate: string,
+    mode: 'live' | 'future' | 'past',
 }) {
     return(
         <MiniHuddlePageClient
+            key={viewDate}
             {...commandCenterConfig}
             initialData={initialData}
             census={census}
             shiftLead={shiftLead}        
             grid_cols={5} 
             huddleUpdates={huddleUpdates}
-            // department={commandCenterConfig.department}
+            viewDate={viewDate}
+            mode={mode}
         />
     )
 }

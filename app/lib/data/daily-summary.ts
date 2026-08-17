@@ -85,6 +85,27 @@ export async function fetchDailySummaryByDateAndShift(
 }
 
 
+// ============================================
+// Fetch Most Recent Data 
+// ============================================
+export async function fetchDailySummaryLiveWithFallback(
+    today: string,
+    shift: string
+): Promise<DailySummary | null> {
+    const { supabase } = await getAuthenticatedClient();
+
+    const { data, error } = await supabase
+        .from('daily_summary')
+        .select('*')
+        .lte('date', today)
+        .eq('shift', shift)
+        .order('date', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+    if (error) throw error;
+    return data;
+}
 
 // ============================================
 // Fetch Latest Daily Summary w/ Updates

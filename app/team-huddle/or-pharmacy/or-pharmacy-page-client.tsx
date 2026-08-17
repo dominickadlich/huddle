@@ -9,21 +9,28 @@ export default function ORPharmacyClient({
     initialData,
     census,
     shiftLead,
-    huddleUpdates
+    huddleUpdates,
+    viewDate,
+    mode,
 }: {
     initialData: ORPharmacy,
     census: number | null,
     shiftLead: string | null,
     huddleUpdates: HuddleUpdate[] | null,
+    viewDate: string,
+    mode: 'live' | 'future' | 'past',
 }) {
     return (
-        <MiniHuddlePageClient 
+        <MiniHuddlePageClient
+            key={viewDate}
             {...orPharmacyConfig}
             initialData={initialData}
             census={census}
             shiftLead={shiftLead}
             grid_cols={3}
             huddleUpdates={huddleUpdates}
+            viewDate={viewDate}
+            mode={mode}
         />
     )
 }
