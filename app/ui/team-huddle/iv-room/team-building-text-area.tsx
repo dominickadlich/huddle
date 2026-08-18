@@ -43,7 +43,7 @@ export default function TeamBuildingTextArea({
                   name="team_building"
                   value={value ?? ''}
                   onChange={(e) => onChange?.(e.target.value)}
-                  rows={2}
+                  rows={4}
                   className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-white text-gray-900 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               )

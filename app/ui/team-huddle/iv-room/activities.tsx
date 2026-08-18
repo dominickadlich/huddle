@@ -1,9 +1,14 @@
 import { StarIcon } from "@heroicons/react/24/outline"
+import { useState } from "react";
 
 export function ActivitiesCheckbox({ 
-    area
+    area,
+    checked,
+    onChange,
 }: {
-    area: string
+    area: string,
+    checked: boolean,
+    onChange: (area: string) => void,
 }) {
     return (
         <fieldset>
@@ -16,6 +21,8 @@ export function ActivitiesCheckbox({
                         id={area}
                         name={area}
                         type="checkbox"
+                        checked={checked}
+                        onChange={() => onChange(area)}
                         aria-describedby={`${area}-description`}
                         className="col-start-1 row-start-1 appearance-none rounded-sm border border-white/10 bg-white/5 checked:border-indigo-500 checked:bg-indigo-500 indeterminate:border-indigo-500 indeterminate:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:border-white/5 disabled:bg-white/10 disabled:checked:bg-white/10 forced-colors:appearance-auto"
                     />
@@ -52,7 +59,13 @@ export function ActivitiesCheckbox({
     )
 }
 
-export default function ActivitiesChecklist() {
+export default function ActivitiesChecklist({
+    isEditMode,
+}: {
+    isEditMode: boolean
+}) {
+    const [checkedAreas, setCheckedAreas] = useState<Record<string, boolean>>({});
+    
     const areas = [
         "Bell IVRM",
         "Bell DP",
@@ -77,13 +90,47 @@ export default function ActivitiesChecklist() {
           </div>
         </div>
     
-    <div className="mt-4 grid grid-cols-5 justify-items-center">
+    {/* <div className="mt-4 grid grid-cols-5 justify-items-center">
         {areas.map((area) => (
             <ActivitiesCheckbox 
                 key={area} 
                 area={area}
             />
-        ))}
+        ))} */}
+
+
+    <div className="mt-4 grid grid-cols-5 justify-items-center">
+        {isEditMode
+        ?   areas.map((area) => (
+                <ActivitiesCheckbox 
+                    key={area}
+                    area={area} 
+                    checked={checkedAreas[area] ?? false} 
+                    onChange={(area) =>
+                        setCheckedAreas((prev) => ({...prev, [area]: !prev[area] }))
+                    }
+                />
+            ))
+        :   areas.map((area) => (
+                <div key={area} className="flex items-center gap-4">
+                    <span className="relative inline-flex size-3">
+                        {/* Glow layer — bigger, blurred, sits behind */}
+                        <span
+                            className={`absolute -inset-0.5 rounded-full blur opacity-40
+                                ${checkedAreas[area] ? 'bg-teal-400' : 'bg-orange-400'}
+                            `}
+                        />
+                        {/* Solid dot — crisp, on top */}
+                        <span
+                            className={`relative inline-flex size-3 rounded-full 
+                                ${checkedAreas[area] ? 'bg-teal-500' : 'bg-orange-500'}
+                            `}
+                        />
+                    </span>
+                    <p className="font-medium text-white">{area}</p>
+                </div>
+            ))
+        }
     </div>
     </div>
     </>

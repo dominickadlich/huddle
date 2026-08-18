@@ -5,7 +5,7 @@ import GenerateSummary from "@/app/ui/team-huddle/generate-summary";
 import Header from "@/app/ui/global/header";
 import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/team-huddle/shared-text-area";
 import { useEffect, useState, useContext } from "react"
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { formatDate, getCurrentShift, getLocalDate } from "@/app/lib/utils/utils";
 import { CancelButton, EditButton, SubmitButton } from "@/app/ui/global/buttons";
 import { HeroIcon } from "./team-huddle-card";
@@ -18,6 +18,7 @@ import DisplayPhoto from "./photos/load-photo";
 import TeamBuildingTextArea from "./iv-room/team-building-text-area";
 import ActivitiesChecklist from "./iv-room/activities";
 import Calendar from "../dashboard/history/calendar";
+import { DEFAULT_SHIFT } from "@/app/lib/config/team-huddles";
 
 
 const gridColsMap: Record<number, string> = {
@@ -66,9 +67,10 @@ export default function MiniHuddlePageClient({
     const [fields, setFields] = useState<Record<string, string | number | null | undefined>>(initialData || {})
     const [showSummaryModal, setShowSummaryModal] = useState(false);
     const clientDate = getLocalDate()
-    const clientShift = getCurrentShift();
+    // const clientShift = getCurrentShift();
     const [editedSummary, setEditedSummary] = useState<string>('');
     const [lastUpdate, setLastUpdate] = useState<string>('')
+    const pathname = usePathname()
     
     const { 
         isEditMode, 
@@ -80,6 +82,12 @@ export default function MiniHuddlePageClient({
      } = useContext(EditModeContext)
 
     //  const effectiveCols = (isEditMode && extraContent) ? grid_cols + 1 : grid_cols;
+    
+    useEffect(() => {
+        if (mode === 'past' && isEditMode) {
+            setIsEditMode(false);
+        }
+    }, [mode]);
 
 
     useEffect(() => {
@@ -93,13 +101,11 @@ export default function MiniHuddlePageClient({
         setEditedSummary(parts.join('\n'));
     }, [fields])
 
+
     useEffect(() => {
         setLastUpdate(formatDate(initialData.updated_at))
     }, [initialData.updated_at])
 
-    
-    const huddle_id = huddleUpdates?.find(u => u.department === department)?.id
-    console.log(`Huddle ID: ${huddle_id}`)
 
     return (
         <div className="mt-20">
@@ -120,14 +126,12 @@ export default function MiniHuddlePageClient({
                                 <SubmitButton onClick={() => setShowSummaryModal(true)} />
                             </>
                           )
-                        : <EditButton onClick={() => setIsEditMode(true)}/>
+                        : mode !== 'past' 
+                            ? <EditButton onClick={() => setIsEditMode(true)}/> 
+                            : null
                     }
                     {mode !== 'live' && (
-                        <div className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
-                            mode === 'future' 
-                                ? 'bg-amber-500/10 text-amber-600 border border-amber-500/20' 
-                                : 'bg-amber-500/10 text-amber-600 border border-amber-500/20'
-                        }`}>
+                        <div className='rounded-lg px-3 py-1.5 text-sm font-medium bg-amber-500/10 text-amber-600 border border-amber-500/20'>
                             ⚠️ Viewing {viewDate} 
                         </div>
                     )}
@@ -186,7 +190,7 @@ export default function MiniHuddlePageClient({
                 </div>
                 
                 {/* Activities Checklist for IV Room */}
-                {showActivities && <ActivitiesChecklist />}
+                {showActivities && <ActivitiesChecklist isEditMode={isEditMode} />}
 
                 <div className="mt-4 grid grid-cols-1 gap-4">
                     {textFields.map(({ key, title }) => (
@@ -220,11 +224,13 @@ export default function MiniHuddlePageClient({
                     onChange={(editedSummary) => setEditedSummary(editedSummary)}
                     editedSummary={editedSummary}
                     onSave={async (summary) => {
+                        const effectiveDate = viewDate ?? clientDate;
+                        
                         const dataToSave = {
                             ...fields,
                             summary_text: summary,
-                            date: clientDate,
-                            shift: clientShift,
+                            date: effectiveDate,
+                            shift: DEFAULT_SHIFT,
                         };
 
                         const result = await upsertFn(dataToSave);
@@ -232,7 +238,7 @@ export default function MiniHuddlePageClient({
                         if (result?.success) {
                             setShowSummaryModal(false);
                             setIsEditMode(false);
-                            router.push('/dashboard');
+                            router.push(effectiveDate > clientDate ? `${pathname}?date=${effectiveDate}` : '/dashboard');
                             router.refresh();
                         } else {
                             alert(result?.message);
