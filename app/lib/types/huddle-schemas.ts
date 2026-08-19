@@ -19,6 +19,11 @@ export const IVRoomBaseSchema = z.object({
     inventory: z.string().nullable().optional(),
     team_building: z.string().nullable().optional(),
     unique_work: z.string().nullable().optional(),
+    bell_ivrm_activities: z.boolean().nullable().optional(),
+    bell_dp_activities: z.boolean().nullable().optional(),
+    tpn_activities: z.boolean().nullable().optional(),
+    sc_activities: z.boolean().nullable().optional(),
+    chm_activities: z.boolean().nullable().optional(),
 });
 
 export const SharedSchema = z.object({

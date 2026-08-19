@@ -52,7 +52,7 @@ export default function MiniHuddlePageClient({
     textFields: readonly { key: string, title: string}[];
     census: number | null;
     shiftLead: string | null;
-    upsertFn: (dataToSave: Record<string, string | number | null | undefined> ) => Promise<{ success: boolean, message: string}>;
+    upsertFn: (dataToSave: Record<string, string | number | boolean | null | undefined>) => Promise<{ success: boolean, message: string}>;
     iconMap: Record<string, HeroIcon>;
     grid_cols: number,
     huddleUpdates: HuddleUpdate[] | null,
@@ -64,7 +64,7 @@ export default function MiniHuddlePageClient({
     mode?: 'live' | 'future' | 'past';
 }) {
     const router = useRouter();
-    const [fields, setFields] = useState<Record<string, string | number | null | undefined>>(initialData || {})
+    const [fields, setFields] = useState<Record<string, string | number | boolean | null | undefined>>(initialData || {})
     const [showSummaryModal, setShowSummaryModal] = useState(false);
     const clientDate = getLocalDate()
     // const clientShift = getCurrentShift();
@@ -152,7 +152,7 @@ export default function MiniHuddlePageClient({
             <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
                 <div>
                     <AnnouncementTextArea
-                        value={fields.announcements}
+                        value={fields.announcements as string | number | null | undefined}
                         isEditMode={isEditMode}
                         onChange={(val) => setFields({...fields, announcements: val})}
                     />
@@ -180,7 +180,7 @@ export default function MiniHuddlePageClient({
                         <TeamHuddleCard
                             key={key}
                             title={title}
-                            value={fields[key]}
+                            value={fields[key] as string | number | null | undefined}
                             type={key}
                             isEditMode={isEditMode}
                             onChange={(val) => setFields({ ...fields, [key]: val })}
@@ -190,7 +190,13 @@ export default function MiniHuddlePageClient({
                 </div>
                 
                 {/* Activities Checklist for IV Room */}
-                {showActivities && <ActivitiesChecklist isEditMode={isEditMode} />}
+                {showActivities && (
+                    <ActivitiesChecklist 
+                        isEditMode={isEditMode}
+                        activities={fields}
+                        onChange={(column, value) => setFields({ ...fields, [column]: value })}
+                    />
+                )}
 
                 <div className="mt-4 grid grid-cols-1 gap-4">
                     {textFields.map(({ key, title }) => (
@@ -198,7 +204,7 @@ export default function MiniHuddlePageClient({
                             key={key}
                             name={key}
                             title={title}
-                            value={fields[key]}
+                            value={fields[key] as string | number | null | undefined}
                             isEditMode={isEditMode}
                             onChange={(val) => setFields({...fields, [key]: val})}
                         />

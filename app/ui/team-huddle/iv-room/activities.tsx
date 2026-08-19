@@ -1,3 +1,4 @@
+import { IvRoomUpdate } from "@/app/lib/types/database";
 import { StarIcon } from "@heroicons/react/24/outline"
 import { useState } from "react";
 
@@ -61,10 +62,20 @@ export function ActivitiesCheckbox({
 
 export default function ActivitiesChecklist({
     isEditMode,
+    activities,
+    onChange,
 }: {
-    isEditMode: boolean
+    isEditMode: boolean;
+    activities: Record<string, string | number | boolean | null | undefined>; // keyed by column name
+    onChange: (column: string, value: boolean) => void;
 }) {
-    const [checkedAreas, setCheckedAreas] = useState<Record<string, boolean>>({});
+    const AREA_TO_COLUMN: Record<string, string> = {
+        "Bell IVRM": "bell_ivrm_activities",
+        "Bell DP": "bell_dp_activities",
+        "TPN": "tpn_activities",
+        "SC": "sc_activities",
+        "CHM": "chm_activities",
+    };
     
     const areas = [
         "Bell IVRM",
@@ -89,47 +100,35 @@ export default function ActivitiesChecklist({
             </div>
           </div>
         </div>
-    
-    {/* <div className="mt-4 grid grid-cols-5 justify-items-center">
-        {areas.map((area) => (
-            <ActivitiesCheckbox 
-                key={area} 
-                area={area}
-            />
-        ))} */}
 
 
     <div className="mt-4 grid grid-cols-5 justify-items-center">
         {isEditMode
-        ?   areas.map((area) => (
-                <ActivitiesCheckbox 
-                    key={area}
-                    area={area} 
-                    checked={checkedAreas[area] ?? false} 
-                    onChange={(area) =>
-                        setCheckedAreas((prev) => ({...prev, [area]: !prev[area] }))
-                    }
-                />
-            ))
-        :   areas.map((area) => (
+        ?   areas.map((area) => {
+                const column = AREA_TO_COLUMN[area];
+                const checked = !!activities[column];
+                return (
+                    <ActivitiesCheckbox 
+                        key={area}
+                        area={area} 
+                        checked={checked} 
+                        onChange={() => onChange(column, !activities[column])}
+                    />
+                )
+            })
+        :   areas.map((area) => {
+                const column = AREA_TO_COLUMN[area];
+                const checked = !!activities[column];
+                return (
                 <div key={area} className="flex items-center gap-4">
                     <span className="relative inline-flex size-3">
-                        {/* Glow layer — bigger, blurred, sits behind */}
-                        <span
-                            className={`absolute -inset-0.5 rounded-full blur opacity-40
-                                ${checkedAreas[area] ? 'bg-teal-400' : 'bg-orange-400'}
-                            `}
-                        />
-                        {/* Solid dot — crisp, on top */}
-                        <span
-                            className={`relative inline-flex size-3 rounded-full 
-                                ${checkedAreas[area] ? 'bg-teal-500' : 'bg-orange-500'}
-                            `}
-                        />
+                        <span className={`absolute -inset-0.5 rounded-full blur opacity-40 ${checked ? 'bg-teal-400' : 'bg-orange-400'}`} />
+                        <span className={`relative inline-flex size-3 rounded-full ${checked ? 'bg-teal-500' : 'bg-orange-500'}`} />
                     </span>
                     <p className="font-medium text-white">{area}</p>
                 </div>
-            ))
+                )
+            })
         }
     </div>
     </div>

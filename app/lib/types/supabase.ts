@@ -314,6 +314,9 @@ export type Database = {
           announcements: string | null
           assignment_two: string | null
           barriers: string | null
+          bell_dp_activities: boolean | null
+          bell_ivrm_activities: boolean | null
+          chm_activities: boolean | null
           created_at: string | null
           created_by: string | null
           date: string
@@ -324,10 +327,12 @@ export type Database = {
           monthly_clean: string | null
           safety: string | null
           sc: string | null
+          sc_activities: boolean | null
           shift: string
           summary_text: string | null
           team_building: string | null
           tpn: string | null
+          tpn_activities: boolean | null
           training: string | null
           unique_work: string | null
           updated_at: string | null
@@ -338,6 +343,9 @@ export type Database = {
           announcements?: string | null
           assignment_two?: string | null
           barriers?: string | null
+          bell_dp_activities?: boolean | null
+          bell_ivrm_activities?: boolean | null
+          chm_activities?: boolean | null
           created_at?: string | null
           created_by?: string | null
           date: string
@@ -348,10 +356,12 @@ export type Database = {
           monthly_clean?: string | null
           safety?: string | null
           sc?: string | null
+          sc_activities?: boolean | null
           shift: string
           summary_text?: string | null
           team_building?: string | null
           tpn?: string | null
+          tpn_activities?: boolean | null
           training?: string | null
           unique_work?: string | null
           updated_at?: string | null
@@ -362,6 +372,9 @@ export type Database = {
           announcements?: string | null
           assignment_two?: string | null
           barriers?: string | null
+          bell_dp_activities?: boolean | null
+          bell_ivrm_activities?: boolean | null
+          chm_activities?: boolean | null
           created_at?: string | null
           created_by?: string | null
           date?: string
@@ -372,10 +385,12 @@ export type Database = {
           monthly_clean?: string | null
           safety?: string | null
           sc?: string | null
+          sc_activities?: boolean | null
           shift?: string
           summary_text?: string | null
           team_building?: string | null
           tpn?: string | null
+          tpn_activities?: boolean | null
           training?: string | null
           unique_work?: string | null
           updated_at?: string | null
@@ -627,33 +642,26 @@ export type Database = {
       team_huddle_images: {
         Row: {
           created_at: string
-          huddle_id: string
+          department: string
           id: string
           storage_path: string
           uploaded_by: string
         }
         Insert: {
           created_at?: string
-          huddle_id: string
+          department: string
           id?: string
           storage_path: string
           uploaded_by: string
         }
         Update: {
           created_at?: string
-          huddle_id?: string
+          department?: string
           id?: string
           storage_path?: string
           uploaded_by?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "team_huddle_images_huddle_id_fkey"
-            columns: ["huddle_id"]
-            isOneToOne: false
-            referencedRelation: "huddle_updates"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "team_huddle_images_uploaded_by_fkey"
             columns: ["uploaded_by"]
@@ -709,16 +717,37 @@ export type Database = {
           summary: string
         }[]
       }
-      huddle_categories: {
-        Args: { p_date: string; p_shift: string }
-        Returns: {
-          barriers: string
-          department: string
-          inventory: string
-          safety: string
-          wins: string
-        }[]
-      }
+      huddle_categories:
+        | {
+            Args: never
+            Returns: {
+              barriers: string
+              department: string
+              inventory: string
+              safety: string
+              wins: string
+            }[]
+          }
+        | {
+            Args: { p_date: string }
+            Returns: {
+              barriers: string
+              department: string
+              inventory: string
+              safety: string
+              wins: string
+            }[]
+          }
+        | {
+            Args: { p_date: string; p_shift: string }
+            Returns: {
+              barriers: string
+              department: string
+              inventory: string
+              safety: string
+              wins: string
+            }[]
+          }
       upsert_huddle_summary:
         | {
             Args: {
