@@ -109,7 +109,7 @@ export default function MiniHuddlePageClient({
 
     return (
         <div className="mt-20">
-        <Header title={`${title} Dashboard`} census={census} shiftlead={shiftLead}/>
+        <Header title={title} census={census} shiftlead={shiftLead}/>
         <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6">
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
             {/* <div className="order-1 lg:col-start-2 lg:row-start-1 flex items-center justify-between gap-4"> */}
@@ -165,6 +165,7 @@ export default function MiniHuddlePageClient({
                             value={fields.team_building as string | null | undefined}
                             isEditMode={isEditMode}
                             onChange={(val) => setFields({ ...fields, team_building: val })}
+                            viewDate={viewDate ?? getLocalDate()}
                         />
                     )}
                     <div className="mt-6">

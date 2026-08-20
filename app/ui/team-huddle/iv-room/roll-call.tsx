@@ -8,6 +8,7 @@ const callList = [
     "IV RPh",
     "SC",
     "CHM",
+    "8B",
     "CA RPh",
 ]
 

@@ -12,13 +12,19 @@ const dayName = days[new Date().getDay()];
 export default function TeamBuildingTextArea({
     value,
     isEditMode,
-    onChange
+    onChange,
+    viewDate,
 }: {
     value:  | string | null | undefined;
     isEditMode: boolean;
     onChange?: (value: string) => void;
+    viewDate: string 
 }) {
-  const todayTitle = titleByDay.find((entry) => entry.day === dayName)?.title
+  const [year, month, day] = viewDate.split('-').map(Number);
+  const localDate = new Date(year, month - 1, day); // constructed in local time, no UTC parsing
+  const dayName = days[localDate.getDay()];
+  const todayTitle = titleByDay.find((entry) => entry.day === dayName)?.title;
+
     return (
         <>
     <div className="mt-4 group relative h-full overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">

@@ -98,11 +98,11 @@ export const distributionConfig = {
 }
 
 export const ivRoomConfig = {
-    title: "IV Room",
+    title: "Sterile Compounding",
     department: "IVR",
     cardFields: [
         { key: 'unique_work', title: 'Unique Work' }, 
-        { key: 'tpn', title: 'TPN + Batch' },
+        { key: 'tpn', title: 'TPN' },
         { key: 'hazardous', title: 'Haz + PAPR' },
         { key: 'sc', title: 'SC' },
         { key: 'assignment_two', title: 'Asmt 2 + TPN Batching' },

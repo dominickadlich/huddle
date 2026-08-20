@@ -43,7 +43,27 @@ export default function Calendar() {
         <div className="text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 xl:col-start-9">
 
           {/* Header */}
-          <div className="grid grid-cols-7 text-xs/6 text-gray-400">
+          <div className="mt-5 flex items-center text-white">
+            <button
+              type="button"
+              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-500 hover:text-white"
+              onClick={handleSubMonth}
+            >
+              <span className="sr-only">Previous month</span>
+              <ChevronLeftIcon aria-hidden="true" className="size-5" />
+            </button>
+            <div className="flex-auto text-sm font-semibold">{format(currentMonth, 'MMMM yyyy')}</div>
+            <button
+              type="button"
+              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-500 hover:text-white"
+              onClick={handleAddMonth}
+            >
+              <span className="sr-only">Next month</span>
+              <ChevronRightIcon aria-hidden="true" className="size-5" />
+            </button>
+          </div>
+          
+          <div className="mt-4 grid grid-cols-7 text-xs/6 text-gray-400">
             <div>S</div>
             <div>M</div>
             <div>T</div>
@@ -72,25 +92,7 @@ export default function Calendar() {
               </button>
             ))}
           </div>
-          <div className="mt-5 flex items-center text-white">
-            <button
-              type="button"
-              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-500 hover:text-white"
-              onClick={handleSubMonth}
-            >
-              <span className="sr-only">Previous month</span>
-              <ChevronLeftIcon aria-hidden="true" className="size-5" />
-            </button>
-            <div className="flex-auto text-sm font-semibold">{format(currentMonth, 'MMMM yyyy')}</div>
-            <button
-              type="button"
-              className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-500 hover:text-white"
-              onClick={handleAddMonth}
-            >
-              <span className="sr-only">Next month</span>
-              <ChevronRightIcon aria-hidden="true" className="size-5" />
-            </button>
-          </div>
+          
         </div>
       </div>
     </div>
