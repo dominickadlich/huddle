@@ -3,7 +3,7 @@ import { FaceSmileIcon } from "@heroicons/react/24/outline";
 const titleByDay = [
   {day: "Tuesday", title: "Trivia Tuesday"},
   {day: "Wednesday", title: "Wisdom Wednesday"},
-  {day: "Thursday", title: "Thursday Thinnker"}
+  {day: "Thursday", title: "Thursday Thinker"}
 ]
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
