@@ -85,6 +85,7 @@ export function AnnouncementTextArea({
         >
           {isEditMode ? (
             <textarea
+              spellCheck="true"
               name="announcements"
               value={value ?? ''}
               onChange={(e) => onChange?.(e.target.value)}
@@ -146,6 +147,7 @@ export default function SharedTextArea({
             {isEditMode
             ? (
                 <textarea
+                  spellCheck="true"
                   name={name}
                   value={value ?? ''}
                   onChange={(e) => onChange?.(e.target.value)}

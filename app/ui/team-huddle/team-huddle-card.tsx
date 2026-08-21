@@ -37,7 +37,8 @@ export default function TeamHuddleCard({
         <div className="flex justify-center items-center min-h-[2rem]">
             {isEditMode
             ? (
-                <input 
+                <input
+                    spellCheck="true"
                     type="text"
                     value={value ?? ''}
                     onChange={(e) => onChange?.(e.target.value)}

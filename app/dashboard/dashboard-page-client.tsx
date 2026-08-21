@@ -15,6 +15,7 @@ import { upsertHuddleUpdateField } from "../lib/actions/huddle-updates"
 import GloabalSearch from "../ui/global/global-search"
 import { getHuddleCategoriesAction } from "../lib/actions/dashboard"
 import { transposeLoop, CATEGORIES } from "../ui/dashboard/v3/huddle-card-v3"
+import { DEFAULT_SHIFT } from "../lib/config/team-huddles"
 
 const dashboardCardFields = [
     { key: "census", title: "Census" },
@@ -45,7 +46,7 @@ export default function DashboardPageClient({
     const [fields, setFields] = useState<DashboardData | null>(initialData ?? null);
     const [categories, setCategories] = useState<Partial<TransposedOutput> | null>(null)
     const clientDate =  getLocalDate()
-    const clientShift = getCurrentShift();
+    // const clientShift = getCurrentShift();
 
     
 
@@ -110,7 +111,7 @@ export default function DashboardPageClient({
                                     const dsDataToSave = {
                                         ...fields.daily_summary,
                                         date: clientDate,
-                                        shift: clientShift
+                                        shift: DEFAULT_SHIFT
                                     };
 
                                     const result = await Promise.all([

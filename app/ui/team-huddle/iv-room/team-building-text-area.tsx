@@ -46,6 +46,7 @@ export default function TeamBuildingTextArea({
             {isEditMode
             ? (
                 <textarea
+                  spellCheck="true"
                   name="team_building"
                   value={value ?? ''}
                   onChange={(e) => onChange?.(e.target.value)}
