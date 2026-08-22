@@ -62,11 +62,17 @@ export default async function Page({
                 fetchHuddleUpdatesLiveWithFallback(today, shift),
             ])
 
+    console.log(ivRoomData)
+
     const mode: 'live' | 'future' | 'past' =
         targetDate === today ? 'live' : targetDate > today ? 'future' : 'past';
 
+    console.log(`Target Date: ${targetDate}`)
+    console.log(`Today: ${today}`)
+    console.log(`Mode: ${mode}`)
+    console.log(`Shift: ${shift}`)
     
-
+    
     return (
         <IVCLient
             key={targetDate}
