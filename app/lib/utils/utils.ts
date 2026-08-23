@@ -31,12 +31,23 @@ export const getLocalDate = () => {
     }).format(new Date());
 };
 
+// export const getLocalDateFormatted = () => {
+//     const now = new Date();
+//     const year = now.getFullYear() % 100;
+//     const month = String(now.getMonth() + 1).padStart(2, '0');
+//     const day = String(now.getDate()).padStart(2, '0');
+//     return `${month}/${day}/${year}`;  // Local YYYY-MM-DD
+// };
+
 export const getLocalDateFormatted = () => {
-    const now = new Date();
-    const year = now.getFullYear() % 100;
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    return `${month}/${day}/${year}`;  // Local YYYY-MM-DD
+    const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Chicago',
+        year: '2-digit',
+        month: '2-digit',
+        day: '2-digit',
+    }).formatToParts(new Date());
+    const get = (type: string) => parts.find(p => p.type === type)?.value ?? '';
+    return `${get('month')}/${get('day')}/${get('year')}`;
 };
 
 export function formatDate(date: string | null): string {
