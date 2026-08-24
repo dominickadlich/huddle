@@ -54,6 +54,7 @@ export function formatDate(date: string | null): string {
   if (!date) return 'No data'
   const localDate = new Date(date)
   return localDate.toLocaleDateString('en-US', {
+    timeZone: 'America/Chicago',
     month: '2-digit',
     day: '2-digit',
     year: 'numeric'
