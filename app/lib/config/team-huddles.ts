@@ -113,8 +113,8 @@ export const ivRoomConfig = {
 
     textFields: [
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
-        { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
-        { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
+        { key: 'barriers', title: 'Barriers (Medkeeper, Dispense Prep, Equipment)' },
+        { key: 'inventory', title: 'Inventory (Ingredients, Supplies)' },
         { key: 'wins', title: 'Team Wins & Recognition'},
         // { key: 'team_building', title: "Team Building"}
     ] as const,

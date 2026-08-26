@@ -95,7 +95,7 @@ export default function ActivitiesChecklist({
             <div className="flex items-center justify-center gap-2 flex-1">
               <StarIcon className="h-6 w-6 text-md font-semibold text-gray-300 transition-colors duration-300" />
               <h3 className="text-lg font-semibold text-gray-300 transition-colors duration-300">
-                PK Activities
+                MK Activities
               </h3>
             </div>
           </div>
