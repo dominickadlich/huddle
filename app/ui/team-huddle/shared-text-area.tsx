@@ -22,6 +22,12 @@ const iconMap: Record<string, HeroIcon> = {
   team_building: FaceSmileIcon
 };
 
+function displayValue(value: string | number | null | undefined): string {
+  if (value === null || value === undefined) return 'Nothing reported today!';
+  const str = String(value).trim();
+  return str === '' ? 'Nothing reported today!' : String(value);
+}
+
 export function AnnouncementTextArea({
   value,
   isEditMode,
@@ -94,7 +100,7 @@ export function AnnouncementTextArea({
             />
           ) : (
             <p className="whitespace-pre-wrap leading-loose text-lg text-white transition-colors duration-300">
-              {value ?? 'Nothing reported today!'}
+              {displayValue(value)}
             </p>
           )}
         </div>
@@ -157,7 +163,7 @@ export default function SharedTextArea({
               )
             : (
                 <p className="text-base text-white whitespace-pre-wrap"> 
-                    {value ?? 'Nothing reported today!'}
+                    {displayValue(value)}
                 </p>
               )
             }

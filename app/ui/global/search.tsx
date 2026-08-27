@@ -2,8 +2,16 @@
 
 import { globalSearch } from "@/app/lib/actions/global-search";
 import { useState, useEffect, SetStateAction, useRef } from "react";
-import SearchModal from "./search-modal";
+import SearchModal, { SearchResult } from "./search-modal";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
+interface SearchAction {
+    (input: string): Promise<{
+        success: boolean,
+        message: string,
+        data: SearchResult[] | null
+    }>
+}
 
 export interface ResultData {
     department: string,
@@ -11,7 +19,13 @@ export interface ResultData {
     summary: string
 }
 
-export default function GloabalSearch() {
+export default function Search({
+    searchAction,
+    placeholder = "Search huddle history"
+}: {
+    searchAction: SearchAction,
+    placeholder?: string
+}) {
     const [showModal, setShowModal] = useState<boolean>(false)
     const [value, setValue] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -26,7 +40,6 @@ export default function GloabalSearch() {
     useEffect(() => {
         const timeout = setTimeout(() => {
             if (showModal === false) {
-                console.log('blurRef.current:', blurRef.current)
                 blurRef.current?.blur()
             }
         }, 250)
@@ -42,7 +55,7 @@ export default function GloabalSearch() {
         const timeout = setTimeout(() => {
             const search = async () => {
                 setIsLoading(true)
-                const result = await globalSearch(value)
+                const result = await searchAction(value)
                 setResults(result.data)
                 setHasSearched(true)
                 setIsLoading(false)
@@ -53,7 +66,7 @@ export default function GloabalSearch() {
         return () => {
             clearTimeout(timeout)
         }
-    }, [value])
+    }, [value, searchAction])
 
     return(
         <>

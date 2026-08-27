@@ -19,6 +19,8 @@ import TeamBuildingTextArea from "./iv-room/team-building-text-area";
 import ActivitiesChecklist from "./iv-room/activities";
 import Calendar from "../dashboard/history/calendar";
 import { DEFAULT_SHIFT } from "@/app/lib/config/team-huddles";
+import Search from "../global/search";
+import { ivRoomSearch } from "@/app/lib/actions/iv-room-search";
 
 
 const gridColsMap: Record<number, string> = {
@@ -114,7 +116,7 @@ export default function MiniHuddlePageClient({
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
             {/* <div className="order-1 lg:col-start-2 lg:row-start-1 flex items-center justify-between gap-4"> */}
             <div
-                className={`order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 ${
+                className={`order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 p-4  ${
                     extraContent ? "grid grid-cols-[1fr_3fr_1fr]" : "flex justify-between"
                 }`}
             >
@@ -137,16 +139,18 @@ export default function MiniHuddlePageClient({
                     )}
                 </div>
 
+                {/* <Search searchAction={ivRoomSearch} placeholder="Search IV Room Huddle History"/> */}
                 {(extraContent) && (
-                    <div className="">
-                        {extraContent}
-                    </div>
-                )}
+                        <div className="">
+                            {extraContent}
+                        </div>
+                    )}
 
                 <div className="justify-self-end whitespace-nowrap px-4 text-sm text-gray-400">
                     Last Update: {lastUpdate}
                 </div>
             </div>
+
 
             {/* Announcements — order-2 on mobile, spans full left column on desktop */}
             <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
@@ -173,9 +177,18 @@ export default function MiniHuddlePageClient({
                     </div>
                 </div>
             </div>
+            
 
             {/* Cards + text fields — order-3 on mobile, right column row 2 on desktop */}
             <div className="order-3 lg:col-start-2 lg:row-start-2">
+                {/* <div className="mt-4 mb-4">
+                    {(extraContent) && (
+                        <div className="">
+                            {extraContent}
+                        </div>
+                    )}
+                </div> */}
+
                 <div className={`grid grid-cols-1 ${gridColsMap[grid_cols]} gap-4`}>
                     {cardFields.map(({ key, title }) => (
                         <TeamHuddleCard

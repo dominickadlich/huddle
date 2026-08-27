@@ -1,7 +1,7 @@
 "use client"
 
 import React, { SetStateAction, useEffect } from "react"
-import type { ResultData } from "./global-search"
+import type { ResultData } from "./search"
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react"
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import { useRef } from "react"
@@ -9,6 +9,38 @@ import Link from "next/link"
 import { formatDate } from "@/app/lib/utils/utils"
 import { highlightMatch } from "@/app/lib/utils/highlight"
 import Spinner from "./spinner"
+import { IVRoomSearchResult } from "@/app/lib/actions/iv-room-search"
+
+const DEPT_SEARCH_ROUTE: Record<string, string> = {
+  "IV Room": "iv-room",
+  "Command Center": "command-center",
+  "Distribution": "distribution",
+  "Non-Sterile": "non-sterile",
+  "OR Pharmacy": "or-pharmacy",
+  "Team Eight": "team-eight",
+};
+
+export type SearchResult = ResultData | IVRoomSearchResult
+
+function isDepartmentResult(result: SearchResult): result is IVRoomSearchResult {
+    return 'field_label' in result
+}
+
+function getResultHref(result: SearchResult, searchValue: string): string {
+    const query = encodeURIComponent(searchValue)
+
+    if (isDepartmentResult(result)) {
+        const slug = DEPT_SEARCH_ROUTE[result.department]
+
+        if (!slug) {
+            console.error(`No route mapping for department: ${result.department}`)
+            return '/dashboard'
+        }
+        return `/team-huddle/${slug}?date=${result.date}&field=${encodeURIComponent(result.field_label)}&q=${query}`
+    }
+
+    return `/dashboard/history?date=${result.date}&shift=morning&q=${query}`
+}
 
 export default function SearchModal({
     showModal,
@@ -25,7 +57,7 @@ export default function SearchModal({
     value: string,
     isLoading: boolean,
     hasSearched: boolean,
-    results: ResultData[] | null,
+    results: SearchResult[] | null,
 }) {
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -40,7 +72,6 @@ export default function SearchModal({
             clearTimeout(timeout)
         }
     }, [showModal])
-    
 
     return(
         <div>
@@ -78,11 +109,14 @@ export default function SearchModal({
                         {results && results.length > 0 &&
                           results.map((result) => (
                             <div key={formatDate(result.date) + result.summary} className="mt-4 border p-6 border-gray-700/50 hover:border-gray-400">
-                                <Link href={`/dashboard/history?date=${result.date}&shift=morning&q=${encodeURIComponent(value)}`} className="grid grid-cols-1">
+                                <Link href={getResultHref(result, value)} className="grid grid-cols-1">
                                     <div>
-                                        <div className="mb-2">{formatDate(`${result.date}T00:00:00`)}</div>
-                                        <div className="">{highlightMatch(result.summary, value)}</div>
+                                        <span className="mb-2">{formatDate(`${result.date}T00:00:00`)}</span>
+                                        {isDepartmentResult(result) &&
+                                            <span className="text-xs text-gray-400">{result.field_label}</span>
+                                        }
                                     </div>
+                                    <div className="">{highlightMatch(result.summary, value)}</div>
                                 </Link>
                             </div>
                           ))

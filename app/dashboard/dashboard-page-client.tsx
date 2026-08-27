@@ -9,13 +9,14 @@ import { DateCard } from "../ui/global/header"
 import { CancelButton, EditButton, SubmitButton } from "../ui/global/buttons"
 import HuddleCard from "../ui/dashboard/v2/huddle-card"
 import SummaryCard from "../ui/dashboard/v2/summary-card"
-import { AnnouncementTextArea } from "../ui/team-huddle/shared-text-area"
+// import { AnnouncementTextArea } from "../ui/team-huddle/shared-text-area"
 import { upsertDailySummary } from "../lib/actions/daily-summary"
 import { upsertHuddleUpdateField } from "../lib/actions/huddle-updates"
-import GloabalSearch from "../ui/global/global-search"
 import { getHuddleCategoriesAction } from "../lib/actions/dashboard"
 import { transposeLoop, CATEGORIES } from "../ui/dashboard/v3/huddle-card-v3"
 import { DEFAULT_SHIFT } from "../lib/config/team-huddles"
+import Search from "../ui/global/search"
+import { globalSearch } from "../lib/actions/global-search"
 
 const dashboardCardFields = [
     { key: "census", title: "Census" },
@@ -89,7 +90,7 @@ export default function DashboardPageClient({
                 <h1 className="text-4xl font-bold">Huddle Dashboard</h1>
                 
                 {/* Center */}
-                <GloabalSearch />
+                <Search searchAction={globalSearch}/>
                 
                 {/* Right */}
                 <DateCard />

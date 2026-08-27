@@ -9,7 +9,7 @@ const callList = [
     "SC",
     "CHM",
     "8B",
-    "CA RPh",
+    "CAIV",
 ]
 
 export default function RollCall() {

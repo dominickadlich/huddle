@@ -20,7 +20,6 @@ export default function IVCLient({
     viewDate: string;
     mode: 'live' | 'future' | 'past';
 }) {
-    
     return(
         <MiniHuddlePageClient
             key={viewDate}
