@@ -1,4 +1,5 @@
 import { getLocalDateFormatted } from "@/app/lib/utils/utils";
+import Search, { SearchAction } from "./search";
 
 export function DateCard() {
     const formatDate = getLocalDateFormatted()
@@ -17,8 +18,8 @@ export function ShiftLeadCard({
 }) {
     return (
         <div className="flex items-center gap-2">
-        <span className="text-gray-400 text-2xl lg:text-4xl">Shift Lead:</span>
-        <span className="text-xl lg:text-3xl text-white">
+        <span className="text-gray-400 text-4xl lg:text-4xl">Shift Lead:</span>
+        <span className="text-3xl lg:text-3xl text-white">
             {shiftlead ?? 'N/A'}
         </span>
         </div>
@@ -32,8 +33,8 @@ export function CensusCard({
 }) {
     return (
         <div className="flex items-center gap-2">
-        <span className="text-gray-400 text-2xl lg:text-4xl">Census:</span>
-        <span className="text-xl lg:text-3xl text-white">
+        <span className="text-gray-400 text-4xl lg:text-4xl">Census:</span>
+        <span className="text-3xl lg:text-3xl text-white">
             {census ?? 'N/A'}
         </span>
         </div>
@@ -43,11 +44,15 @@ export function CensusCard({
 export default function Header({
     title,
     census,
-    shiftlead
+    shiftlead,
+    // searchAction,
+    // placeholder,
 }: {
     title: string;
     census: number | null;
     shiftlead: string | null;
+    // searchAction: SearchAction;
+    // placeholder?: string
 }) {
     return (
   <div className="lg:flex justify-between items-center pb-6 mb-8 border-b-2 border-indigo-500/30">
@@ -59,6 +64,8 @@ export default function Header({
       <CensusCard census={census} />
       <ShiftLeadCard shiftlead={shiftlead} />
     </div>
+
+    {/* <Search searchAction={searchAction} placeholder={placeholder}/> */}
     
     {/* Right */}
     <DateCard />

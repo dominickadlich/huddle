@@ -2,7 +2,7 @@
 
 import { CommandCenter, Distribution, HuddleUpdate, IvRoom, Nonsterile, ShiftType } from "@/app/lib/types/database";
 import GenerateSummary from "@/app/ui/team-huddle/generate-summary";
-import Header from "@/app/ui/global/header";
+import Header, { CensusCard, ShiftLeadCard } from "@/app/ui/global/header";
 import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/team-huddle/shared-text-area";
 import { useEffect, useState, useContext } from "react"
 import { usePathname, useRouter } from "next/navigation";
@@ -111,12 +111,12 @@ export default function MiniHuddlePageClient({
 
     return (
         <div className="mt-20">
-        <Header title={title} census={census} shiftlead={shiftLead}/>
+        <Header title={title} census={census} shiftlead={shiftLead} />
         <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6">
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
             {/* <div className="order-1 lg:col-start-2 lg:row-start-1 flex items-center justify-between gap-4"> */}
             <div
-                className={`order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 p-4  ${
+                className={`order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 p-4 content-center ${
                     extraContent ? "grid grid-cols-[1fr_3fr_1fr]" : "flex justify-between"
                 }`}
             >
@@ -139,12 +139,17 @@ export default function MiniHuddlePageClient({
                     )}
                 </div>
 
-                {/* <Search searchAction={ivRoomSearch} placeholder="Search IV Room Huddle History"/> */}
                 {(extraContent) && (
                         <div className="">
                             {extraContent}
                         </div>
                     )}
+
+                {/* Center - grouped metrics with divider */}
+                {/* <div className="flex flex-col lg:flex-row gap-2 mt-2 mb-2 lg:gap-8">
+                    <CensusCard census={census} />
+                    <ShiftLeadCard shiftlead={shiftLead} />
+                </div> */}
 
                 <div className="justify-self-end whitespace-nowrap px-4 text-sm text-gray-400">
                     Last Update: {lastUpdate}

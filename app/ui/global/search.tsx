@@ -5,7 +5,7 @@ import { useState, useEffect, SetStateAction, useRef } from "react";
 import SearchModal, { SearchResult } from "./search-modal";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-interface SearchAction {
+export interface SearchAction {
     (input: string): Promise<{
         success: boolean,
         message: string,
