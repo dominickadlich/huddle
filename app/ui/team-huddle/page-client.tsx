@@ -19,7 +19,7 @@ import TeamBuildingTextArea from "./iv-room/team-building-text-area";
 import ActivitiesChecklist from "./iv-room/activities";
 import Calendar from "../dashboard/history/calendar";
 import { DEFAULT_SHIFT } from "@/app/lib/config/team-huddles";
-import Search from "../global/search";
+import Search, { SearchAction } from "../global/search";
 import { ivRoomSearch } from "@/app/lib/actions/iv-room-search";
 
 
@@ -47,6 +47,8 @@ export default function MiniHuddlePageClient({
     showActivities,
     viewDate,
     mode,
+    searchAction,
+    placeholder,
 }: {
     title: string;
     initialData: CommandCenter | Distribution | IvRoom | Nonsterile;
@@ -64,6 +66,8 @@ export default function MiniHuddlePageClient({
     showActivities?: boolean,
     viewDate?: string;
     mode?: 'live' | 'future' | 'past';
+    searchAction: SearchAction,
+    placeholder?: string,
 }) {
     const router = useRouter();
     const [fields, setFields] = useState<Record<string, string | number | boolean | null | undefined>>(initialData || {})
@@ -111,15 +115,10 @@ export default function MiniHuddlePageClient({
 
     return (
         <div className="mt-20">
-        <Header title={title} census={census} shiftlead={shiftLead} />
+        <Header title={title} searchAction={searchAction} placeholder={placeholder} />
         <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6">
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
-            {/* <div className="order-1 lg:col-start-2 lg:row-start-1 flex items-center justify-between gap-4"> */}
-            <div
-                className={`order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 p-4 content-center ${
-                    extraContent ? "grid grid-cols-[1fr_3fr_1fr]" : "flex justify-between"
-                }`}
-            >
+            <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-[1fr_3fr_1fr]">
                 <div className="flex items-center gap-4">
                     {isEditMode
                         ? (
@@ -139,19 +138,19 @@ export default function MiniHuddlePageClient({
                     )}
                 </div>
 
-                {(extraContent) && (
+                {/* {(extraContent) && (
                         <div className="">
                             {extraContent}
                         </div>
-                    )}
+                    )} */}
 
                 {/* Center - grouped metrics with divider */}
-                {/* <div className="flex flex-col lg:flex-row gap-2 mt-2 mb-2 lg:gap-8">
+                <div className="flex flex-col lg:flex-row lg:gap-8">
                     <CensusCard census={census} />
                     <ShiftLeadCard shiftlead={shiftLead} />
-                </div> */}
+                </div>
 
-                <div className="justify-self-end whitespace-nowrap px-4 text-sm text-gray-400">
+                <div className="mt-2 justify-self-end whitespace-nowrap px-4 text-sm text-gray-400">
                     Last Update: {lastUpdate}
                 </div>
             </div>
@@ -186,13 +185,13 @@ export default function MiniHuddlePageClient({
 
             {/* Cards + text fields — order-3 on mobile, right column row 2 on desktop */}
             <div className="order-3 lg:col-start-2 lg:row-start-2">
-                {/* <div className="mt-4 mb-4">
+                <div className="mb-4 pt-4 border-t border-gray-700/50">
                     {(extraContent) && (
                         <div className="">
                             {extraContent}
                         </div>
                     )}
-                </div> */}
+                </div>
 
                 <div className={`grid grid-cols-1 ${gridColsMap[grid_cols]} gap-4`}>
                     {cardFields.map(({ key, title }) => (

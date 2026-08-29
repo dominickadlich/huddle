@@ -31,10 +31,10 @@ export default function RollCall() {
 
             {/* Value Display */}
             <div className="flex">
-                <p className="text-xl text-white whitespace-nowrap">Roll Call:</p>
+                {/* <p className="text-xl text-white whitespace-nowrap">Roll Call:</p> */}
             <div className="flex grow divide-x divide-gray-700 ">
                 {callList.map((roll) => (
-                    <p key={roll} className="grow px-3 text-xl text-white text-center transition-colors duration-300">
+                    <p key={roll} className="grow text-xl text-white text-center transition-colors duration-300">
                         {roll}
                     </p>
                 ))}

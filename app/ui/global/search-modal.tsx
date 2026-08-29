@@ -50,6 +50,7 @@ export default function SearchModal({
     isLoading,
     hasSearched,
     results,
+    placeholder,
 }: {
     showModal: boolean,
     onClose: () => void,
@@ -58,6 +59,7 @@ export default function SearchModal({
     isLoading: boolean,
     hasSearched: boolean,
     results: SearchResult[] | null,
+    placeholder?: string
 }) {
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -92,7 +94,7 @@ export default function SearchModal({
                             id="search"
                             name="search"
                             type="text"
-                            placeholder={"Search huddle history"}
+                            placeholder={placeholder}
                             onChange={onChange}
                             value={value}
                             className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6"

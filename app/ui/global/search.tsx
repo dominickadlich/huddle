@@ -21,7 +21,7 @@ export interface ResultData {
 
 export default function Search({
     searchAction,
-    placeholder = "Search huddle history"
+    placeholder = "Search huddle history",
 }: {
     searchAction: SearchAction,
     placeholder?: string
@@ -84,7 +84,7 @@ export default function Search({
                 <input
                     id="search"
                     className="peer block w-full rounded-2xl border border-gray-400/50 bg-gray-800/30 py-2 pl-16 pr-4 text-white placeholder:text-gray-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-gray-800/50 hover:border-gray-600/50"
-                    placeholder="Search huddle history"
+                    placeholder={placeholder}
                     onClick={() => setShowModal(true)}
                     ref={blurRef}
                 />

@@ -18,8 +18,8 @@ export function ShiftLeadCard({
 }) {
     return (
         <div className="flex items-center gap-2">
-        <span className="text-gray-400 text-4xl lg:text-4xl">Shift Lead:</span>
-        <span className="text-3xl lg:text-3xl text-white">
+        <span className="text-gray-400 text-xl lg:text-3xl">Shift Lead:</span>
+        <span className="text-xl lg:text-3xl text-white">
             {shiftlead ?? 'N/A'}
         </span>
         </div>
@@ -33,8 +33,8 @@ export function CensusCard({
 }) {
     return (
         <div className="flex items-center gap-2">
-        <span className="text-gray-400 text-4xl lg:text-4xl">Census:</span>
-        <span className="text-3xl lg:text-3xl text-white">
+        <span className="text-gray-400 text-xl lg:text-3xl">Census:</span>
+        <span className="text-xl lg:text-3xl text-white">
             {census ?? 'N/A'}
         </span>
         </div>
@@ -43,16 +43,16 @@ export function CensusCard({
 
 export default function Header({
     title,
-    census,
-    shiftlead,
-    // searchAction,
-    // placeholder,
+    // census,
+    // shiftlead,
+    searchAction,
+    placeholder,
 }: {
     title: string;
-    census: number | null;
-    shiftlead: string | null;
-    // searchAction: SearchAction;
-    // placeholder?: string
+    // census: number | null;
+    // shiftlead: string | null;
+    searchAction: SearchAction;
+    placeholder?: string
 }) {
     return (
   <div className="lg:flex justify-between items-center pb-6 mb-8 border-b-2 border-indigo-500/30">
@@ -60,12 +60,12 @@ export default function Header({
     <h1 className="text-2xl lg:text-4xl font-bold">{title}</h1>
     
     {/* Center - grouped metrics with divider */}
-    <div className="flex flex-col lg:flex-row gap-2 mt-2 mb-2 lg:gap-8">
+    {/* <div className="flex flex-col lg:flex-row gap-2 mt-2 mb-2 lg:gap-8">
       <CensusCard census={census} />
       <ShiftLeadCard shiftlead={shiftlead} />
-    </div>
+    </div> */}
 
-    {/* <Search searchAction={searchAction} placeholder={placeholder}/> */}
+    <Search searchAction={searchAction} placeholder={placeholder}/>
     
     {/* Right */}
     <DateCard />

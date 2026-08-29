@@ -1,5 +1,6 @@
 'use client'
 
+import { ivRoomSearch } from "@/app/lib/actions/iv-room-search";
 import { ivRoomConfig } from "@/app/lib/config/team-huddles";
 import { HuddleUpdate, IvRoom } from "@/app/lib/types/database";
 import RollCall from "@/app/ui/team-huddle/iv-room/roll-call";
@@ -22,7 +23,9 @@ export default function IVCLient({
 }) {
     return(
         <MiniHuddlePageClient
-            key={viewDate}
+            key={viewDate}    
+            searchAction={ivRoomSearch}
+            placeholder="Search sterile compounding"
             {...ivRoomConfig}
             initialData={initialData}
             census={census}
@@ -34,7 +37,6 @@ export default function IVCLient({
             showTeamBuilding={true}
             showActivities={true}
             viewDate={viewDate}
-            mode={mode}
-        />
+            mode={mode}        />
     )
 }
