@@ -1,6 +1,7 @@
 'use client'
 
 import { commandCenterConfig } from "@/app/lib/config/team-huddles"
+import { commandCenterSearch } from "@/app/lib/department_search/command_center_search"
 import { HuddleUpdate, CommandCenter } from "@/app/lib/types/database"
 import MiniHuddlePageClient from "@/app/ui/team-huddle/page-client"
 
@@ -22,6 +23,8 @@ export default function CommandCenterClient({
     return(
         <MiniHuddlePageClient
             key={viewDate}
+            searchAction={commandCenterSearch}
+            placeholder="Search CM/CSR/PP huddle history"
             {...commandCenterConfig}
             initialData={initialData}
             census={census}

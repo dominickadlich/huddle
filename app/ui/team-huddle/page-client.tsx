@@ -20,7 +20,7 @@ import ActivitiesChecklist from "./iv-room/activities";
 import Calendar from "../dashboard/history/calendar";
 import { DEFAULT_SHIFT } from "@/app/lib/config/team-huddles";
 import Search, { SearchAction } from "../global/search";
-import { ivRoomSearch } from "@/app/lib/actions/iv-room-search";
+import { ivRoomSearch } from "@/app/lib/department_search/iv-room-search";
 
 
 const gridColsMap: Record<number, string> = {

@@ -1,6 +1,7 @@
 'use client'
 
 import { distributionConfig } from "@/app/lib/config/team-huddles";
+import { distributionSearch } from "@/app/lib/department_search/distribution_search";
 import { HuddleUpdate, Distribution } from "@/app/lib/types/database";
 import MiniHuddlePageClient from "@/app/ui/team-huddle/page-client";
 
@@ -22,6 +23,8 @@ export default function DistributionClient({
     return (
         <MiniHuddlePageClient
             key={viewDate}
+            searchAction={distributionSearch}
+            placeholder="Search distribution huddle history"
             {...distributionConfig}
             initialData={initialData}
             census={census}
@@ -29,7 +32,6 @@ export default function DistributionClient({
             grid_cols={4}
             huddleUpdates={huddleUpdates}
             viewDate={viewDate}
-            mode={mode}
-        />
+            mode={mode}        />
     )
 }

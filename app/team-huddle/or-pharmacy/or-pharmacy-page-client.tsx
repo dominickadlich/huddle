@@ -1,6 +1,7 @@
 'use client'
 
 import { orPharmacyConfig } from "@/app/lib/config/team-huddles";
+import { orPharmacySearch } from "@/app/lib/department_search/or_pharmacy_search";
 import { HuddleUpdate, ORPharmacy } from "@/app/lib/types/database";
 import MiniHuddlePageClient from "@/app/ui/team-huddle/page-client";
 
@@ -23,6 +24,8 @@ export default function ORPharmacyClient({
     return (
         <MiniHuddlePageClient
             key={viewDate}
+            searchAction={orPharmacySearch}
+            placeholder="Search OR Pharmacy huddle history"
             {...orPharmacyConfig}
             initialData={initialData}
             census={census}

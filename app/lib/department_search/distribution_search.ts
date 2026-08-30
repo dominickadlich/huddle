@@ -2,22 +2,22 @@
 
 import { getAuthenticatedClient } from "../supabase/auth-helpers"
 
-export interface IVRoomSearchResult {
+export interface DepartmentSearchResult {
     department: string,
     date: string, 
     summary: string,
     field_label: string,
 }
 
-export async function ivRoomSearch(input: string): Promise<{
+export async function distributionSearch(input: string): Promise<{
     success: boolean,
     message: string,
-    data: IVRoomSearchResult[] | null
+    data: DepartmentSearchResult[] | null
 }> {
     try {
         const { supabase } = await getAuthenticatedClient()
 
-        const { data, error } = await supabase.rpc('iv_room_search', { search_term: input });
+        const { data, error } = await supabase.rpc('distribution_search', { search_term: input });
 
         if (error) throw error;
 

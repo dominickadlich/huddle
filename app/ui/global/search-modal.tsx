@@ -9,7 +9,7 @@ import Link from "next/link"
 import { formatDate } from "@/app/lib/utils/utils"
 import { highlightMatch } from "@/app/lib/utils/highlight"
 import Spinner from "./spinner"
-import { IVRoomSearchResult } from "@/app/lib/actions/iv-room-search"
+import { DepartmentSearchResult } from "@/app/lib/department_search/distribution_search"
 
 const DEPT_SEARCH_ROUTE: Record<string, string> = {
   "IV Room": "iv-room",
@@ -20,9 +20,9 @@ const DEPT_SEARCH_ROUTE: Record<string, string> = {
   "Team Eight": "team-eight",
 };
 
-export type SearchResult = ResultData | IVRoomSearchResult
+export type SearchResult = ResultData | DepartmentSearchResult
 
-function isDepartmentResult(result: SearchResult): result is IVRoomSearchResult {
+function isDepartmentResult(result: SearchResult): result is DepartmentSearchResult {
     return 'field_label' in result
 }
 
