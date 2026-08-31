@@ -22,7 +22,7 @@ const iconMap: Record<string, HeroIcon> = {
   team_building: FaceSmileIcon
 };
 
-function displayValue(value: string | number | null | undefined): string {
+export function displayValue(value: string | number | null | undefined): string {
   if (value === null || value === undefined) return 'Nothing reported today!';
   const str = String(value).trim();
   return str === '' ? 'Nothing reported today!' : String(value);

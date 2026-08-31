@@ -1,3 +1,5 @@
+import { displayValue } from "./shared-text-area";
+
 export type HeroIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
 export default function TeamHuddleCard({
@@ -47,7 +49,7 @@ export default function TeamHuddleCard({
               )
             : (
                 <p className="text-xl font-bold text-white transition-colors duration-300">
-                    {value ?? 'No Data'}
+                    {displayValue(value)}
                 </p>
               )
             }
