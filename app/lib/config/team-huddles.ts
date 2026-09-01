@@ -39,6 +39,7 @@ export const DEFAULT_SHIFT = "morning"; // stopgap until shift is fully removed
 export const commandCenterConfig = {
     title: "CM/CSR/PP",
     department: "CSR",
+    tableName: "command_center",
     cardFields: [
         { key: 'workload_csr', title: 'Workload CSR' },
         { key: 'workload_cmd', title: 'Workload CMD' },
@@ -73,6 +74,7 @@ export const commandCenterConfig = {
 export const distributionConfig = {
     title: "Distribution",
     department: "Distribution",
+    tableName: "distribution",
     cardFields: [
         { key: 'hot_spots', title: 'Hot Spots' },
         { key: 'ca_tpn', title: 'CA TPNs' },
@@ -100,6 +102,7 @@ export const distributionConfig = {
 export const ivRoomConfig = {
     title: "Sterile Compounding",
     department: "IVR",
+    tableName: "iv_room",
     cardFields: [
         { key: 'unique_work', title: 'Unique Work' }, 
         { key: 'tpn', title: 'TPN' },
@@ -136,6 +139,7 @@ export const ivRoomConfig = {
 export const orPharmacyConfig = {
     title: "OR Pharmacy",
     department: "ORP",
+    tableName: "or_pharmacy",
     cardFields: [
         { key: 'assignment_one', title: 'Asgmt 1' }, 
         { key: 'assignment_two', title: 'Asgmt 2' },
@@ -167,6 +171,7 @@ export const orPharmacyConfig = {
 export const teamEightConfig = {
     title: "Team 8",
     department: "T8",
+    tableName: "team_eight",
     cardFields: [
         { key: 'eight_a', title: '8A' }, 
         { key: 'eight_b', title: '8B' },

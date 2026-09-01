@@ -19,8 +19,8 @@ import TeamBuildingTextArea from "./iv-room/team-building-text-area";
 import ActivitiesChecklist from "./iv-room/activities";
 import Calendar from "../dashboard/history/calendar";
 import { DEFAULT_SHIFT } from "@/app/lib/config/team-huddles";
-import Search, { SearchAction } from "../global/search";
-import { ivRoomSearch } from "@/app/lib/department_search/iv-room-search";
+import { SearchAction } from "../global/search";
+import AuditSummaryCard from "./audit/audit-summary-card";
 
 
 const gridColsMap: Record<number, string> = {
@@ -49,6 +49,7 @@ export default function MiniHuddlePageClient({
     mode,
     searchAction,
     placeholder,
+    tableName,
 }: {
     title: string;
     initialData: CommandCenter | Distribution | IvRoom | Nonsterile;
@@ -61,6 +62,7 @@ export default function MiniHuddlePageClient({
     grid_cols: number,
     huddleUpdates: HuddleUpdate[] | null,
     department: string
+    tableName: string
     extraContent?: React.ReactNode,
     showTeamBuilding?: boolean,
     showActivities?: boolean,
@@ -112,6 +114,9 @@ export default function MiniHuddlePageClient({
         setLastUpdate(formatDate(initialData.updated_at))
     }, [initialData.updated_at])
 
+
+
+    console.log(`Department: ${department}`)
 
     return (
         <div className="mt-20">
@@ -178,6 +183,12 @@ export default function MiniHuddlePageClient({
                     )}
                     <div className="mt-6">
                         <Calendar />
+                    </div>
+
+                    <div className="mt-6">
+                        <AuditSummaryCard 
+                            tableName={tableName}
+                        />
                     </div>
                 </div>
             </div>

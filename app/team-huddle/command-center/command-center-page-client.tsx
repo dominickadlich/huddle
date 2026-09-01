@@ -28,11 +28,11 @@ export default function CommandCenterClient({
             {...commandCenterConfig}
             initialData={initialData}
             census={census}
-            shiftLead={shiftLead}        
-            grid_cols={5} 
+            shiftLead={shiftLead}
+            grid_cols={5}
             huddleUpdates={huddleUpdates}
             viewDate={viewDate}
-            mode={mode}
+            mode={mode}        
         />
     )
 }
