@@ -52,7 +52,7 @@ export default function AuditModal({
                         transition
                         className="relative transform overflow-hidden rounded-lg bg-gray-800 px-4 pt-4 pb-4 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-2xl sm:p-6 data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                     >
-                        <h2 className="text-lg font-medium text-white mb-4">Today's Changes</h2>
+                        <h2 className="text-lg font-medium text-white mb-4">Recent Changes</h2>
 
                         <div className="grid grid-cols-1 gap-3 max-h-96 overflow-y-auto">
                             {rows.length === 0 && (

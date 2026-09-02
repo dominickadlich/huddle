@@ -210,3 +210,28 @@ create trigger trigger_sync_or_pharmacy_summary
   on public.or_pharmacy
   for each row
   execute function sync_or_pharmacy_summary();
+
+
+
+-- ============================================
+-- TRIGGER:  overnight to huddle_updates
+-- ============================================
+create or replace function sync_overnight_summary()
+returns trigger as $$
+begin
+  perform upsert_huddle_summary(
+    NEW.date,
+    NEW.shift,
+    'ON',
+    NEW.summary_text,
+    NEW.updated_by
+  );
+  return NEW;
+end;
+$$ language plpgsql;
+
+create trigger trigger_sync_overnight_summary
+  after insert or update of summary_text
+  on public.overnight
+  for each row
+  execute function sync_overnight_summary();

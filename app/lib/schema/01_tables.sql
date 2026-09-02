@@ -294,6 +294,44 @@ create table public.or_pharmacy (
 
 
 -- ============================================
+-- TABLE 10: overnight
+-- ============================================
+create table public.overnight (
+  id uuid primary key default gen_random_uuid(),
+  date date not null,
+  shift text not null check (shift in ('morning', 'afternoon', 'evening')),
+
+  -- Core metrics (top grid)
+  -- assignment_one text,
+  -- assignment_two text,
+  -- orft text,
+  -- training text,
+  -- support text,
+  -- monthly_clean text,
+
+  -- Full-width fields (bottom section)
+  safety text,
+  barriers text,
+  wins text,
+  announcements text,
+  opportunities text,
+  inventory text,
+
+  -- Trigger field
+  summary_text text,
+
+  -- Audit fields
+  created_at timestamp with time zone default now(),
+  created_by text references public.users(id),
+  updated_at timestamp with time zone default now(),
+  updated_by text references public.users(id),
+
+  -- Prevent duplicate entries
+  unique(date, shift)
+);
+
+
+-- ============================================
 -- INDEXES (for query performance)
 -- ============================================
 create index idx_daily_summary_date_shift on public.daily_summary(date, shift);
@@ -305,6 +343,7 @@ create index idx_distribution_date_shift on public.distribution(date, shift);
 -- create index idx_non_sterile_date_shift on public.non_sterile(date, shift);
 create index idx_or_pharmacy_date_shift on public.or_pharmacy(date, shift);
 create index idx_team_eight_date_shift on public.team_eight(date, shift);
+create index idx_overnight_date_shift on public.team_eight(date, shift);
 
 -- ============================================
 -- ENABLE ROW LEVEL SECURITY
@@ -318,3 +357,71 @@ alter table public.distribution enable row level security;
 -- alter table public.non_sterile enable row level security;
 alter table public.or_pharmacy enable row level security;
 alter table public.team_eight enable row level security;
+alter table public.overnight enable row level security;
+
+
+
+-- For Supabase SQL Editor
+-- ============================================
+-- TABLE 10: overnight
+-- ============================================
+create table public.overnight (
+  id uuid primary key default gen_random_uuid(),
+  date date not null,
+  shift text not null check (shift in ('morning', 'afternoon', 'evening')),
+
+  -- Core metrics (top grid)
+  -- assignment_one text,
+  -- assignment_two text,
+  -- orft text,
+  -- training text,
+  -- support text,
+  -- monthly_clean text,
+
+  -- Full-width fields (bottom section)
+  safety text,
+  barriers text,
+  wins text,
+  announcements text,
+  opportunities text,
+  inventory text,
+
+  -- Trigger field
+  summary_text text,
+
+  -- Audit fields
+  created_at timestamp with time zone default now(),
+  created_by text references public.users(id),
+  updated_at timestamp with time zone default now(),
+  updated_by text references public.users(id),
+
+  -- Prevent duplicate entries
+  unique(date, shift)
+);
+
+create index idx_overnight_date_shift on public.team_eight(date, shift);
+
+alter table public.overnight enable row level security;
+
+-- ============================================
+-- TRIGGER:  overnight to huddle_updates
+-- ============================================
+create or replace function sync_overnight_summary()
+returns trigger as $$
+begin
+  perform upsert_huddle_summary(
+    NEW.date,
+    NEW.shift,
+    'ON',
+    NEW.summary_text,
+    NEW.updated_by
+  );
+  return NEW;
+end;
+$$ language plpgsql;
+
+create trigger trigger_sync_overnight_summary
+  after insert or update of summary_text
+  on public.overnight
+  for each row
+  execute function sync_overnight_summary();
