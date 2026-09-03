@@ -18,6 +18,8 @@ const DEPT_SEARCH_ROUTE: Record<string, string> = {
   "Non-Sterile": "non-sterile",
   "OR Pharmacy": "or-pharmacy",
   "Team Eight": "team-eight",
+  "Med History": 'med-history',
+  "Overnight": 'overnight'
 };
 
 export type SearchResult = ResultData | DepartmentSearchResult

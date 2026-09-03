@@ -61,7 +61,7 @@ export default function AuditModal({
 
                             {rows.map((row) => {
                                 const changedFields = getChangedFields(row)
-                                const userName = row.users?.full_name ?? 'Unknown'
+                                const userName = row.full_name ?? 'Unknown'
 
                                 return (
                                     <div key={row.id} className="border border-gray-700/50 rounded-lg p-4">

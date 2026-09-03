@@ -399,7 +399,7 @@ create table public.overnight (
   unique(date, shift)
 );
 
-create index idx_overnight_date_shift on public.team_eight(date, shift);
+create index idx_overnight_date_shift on public.overnight(date, shift);
 
 alter table public.overnight enable row level security;
 
@@ -425,3 +425,105 @@ create trigger trigger_sync_overnight_summary
   on public.overnight
   for each row
   execute function sync_overnight_summary();
+
+CREATE TRIGGER trigger_audit_overnight
+AFTER INSERT OR UPDATE OR DELETE ON overnight
+FOR EACH ROW EXECUTE FUNCTION log_audit_change();
+
+
+
+-- For Supabase SQL Editor
+-- ============================================
+-- TABLE 11: med_history
+-- ============================================
+create table public.med_history (
+  id uuid primary key default gen_random_uuid(),
+  date date not null,
+  shift text not null check (shift in ('morning', 'afternoon', 'evening')),
+
+  -- Full-width fields (bottom section)
+  safety text,
+  barriers text,
+  wins text,
+  announcements text,
+  opportunities text,
+
+  -- Trigger field
+  summary_text text,
+
+  -- Audit fields
+  created_at timestamp with time zone default now(),
+  created_by text references public.users(id),
+  updated_at timestamp with time zone default now(),
+  updated_by text references public.users(id),
+
+  -- Prevent duplicate entries
+  unique(date, shift)
+);
+
+create index idx_med_history_date_shift on public.med_history(date, shift);
+
+
+alter table public.med_history enable row level security;
+
+create policy "Allow public access to med_history"
+  on public.med_history for all
+  using (true) with check (true);
+
+-- ============================================
+-- TRIGGER:  med_history to huddle_updates
+-- ============================================
+create or replace function sync_med_history_summary()
+returns trigger as $$
+begin
+  perform upsert_huddle_summary(
+    NEW.date,
+    NEW.shift,
+    'MH',
+    NEW.summary_text,
+    NEW.updated_by
+  );
+  return NEW;
+end;
+$$ language plpgsql;
+
+create trigger trigger_sync_med_history_summary
+  after insert or update of summary_text
+  on public.med_history
+  for each row
+  execute function sync_med_history_summary();
+
+
+CREATE TRIGGER trigger_audit_med_history
+AFTER INSERT OR UPDATE OR DELETE ON med_history
+FOR EACH ROW EXECUTE FUNCTION log_audit_change();
+
+CREATE OR REPLACE FUNCTION team_eight_search(search_term TEXT)
+RETURNS TABLE (department TEXT, date DATE, summary TEXT, field_label TEXT)
+LANGUAGE sql
+AS $$
+
+
+-- Med History search
+UNION ALL
+SELECT 'Med History', date, safety, 'Safety'
+FROM med_history WHERE safety ILIKE '%' || search_term || '%'
+
+UNION ALL
+SELECT 'Med History', date, barriers, 'Barriers'
+FROM med_history WHERE barriers ILIKE '%' || search_term || '%'
+
+UNION ALL
+SELECT 'Med History', date, wins, 'Team Wins'
+FROM med_history WHERE wins ILIKE '%' || search_term || '%'
+
+UNION ALL
+SELECT 'Med History', date, announcements, 'Announcements'
+FROM med_history WHERE announcements ILIKE '%' || search_term || '%'
+
+UNION ALL
+SELECT 'Med History', date, opportunities, 'Opportunities'
+FROM med_history WHERE opportunities ILIKE '%' || search_term || '%'
+
+ORDER BY date DESC
+$$;

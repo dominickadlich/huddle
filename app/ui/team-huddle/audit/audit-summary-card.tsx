@@ -27,22 +27,25 @@ function describeChange(row: AuditRow): string {
 }
 
 
-export default function AuditSummaryCard({ tableName }: { tableName: string }) {
+export default function AuditSummaryCard({ 
+    tableName,
+    date,
+}: { 
+    tableName: string,
+    date: string
+}) {
     const [rows, setRows] = useState<AuditRow[] | null>(null)
     const [showModal, setShowModal] = useState<boolean>(false)
-    const today = getLocalDate()
+
 
     useEffect(() => {
-    fetchAuditByDate(today, tableName).then((result) => {
-        console.log('audit result:', result)
-        setRows(result)
-    })
-}, [today, tableName])
+        fetchAuditByDate(date, tableName).then(setRows)
+    }, [date, tableName])
 
     if (!rows || rows.length === 0) {
         return (
             <div className="rounded-2xl border border-gray-400/50 bg-gray-800/30 p-4">
-                <h3 className="text-sm font-medium text-gray-400 mb-2">📋 Recent Changes</h3>
+                <h3 className="text-sm font-medium text-gray-400 mb-2">Recent Changes</h3>
                 <p className="text-sm text-gray-500">No changes today</p>
             </div>
         )

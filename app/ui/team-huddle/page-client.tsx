@@ -188,6 +188,7 @@ export default function MiniHuddlePageClient({
                     <div className="mt-6">
                         <AuditSummaryCard 
                             tableName={tableName}
+                            date={viewDate ?? clientDate}
                         />
                     </div>
                 </div>

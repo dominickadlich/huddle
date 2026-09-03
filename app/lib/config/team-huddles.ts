@@ -194,3 +194,19 @@ export const teamEightConfig = {
     },
     upsertFn: upsertTeamEight
 }
+
+
+export const medHistoryConfig = {
+    title: "Med History",
+    department: "MH",
+    tableName: "med_history",
+
+    textFields: [
+        { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
+        { key: 'barriers', title: 'Barriers (Missing or Failing Equipment, Supplies, etc.)' },
+        { key: 'opportunities', title: 'Opportunities'},
+        { key: 'wins', title: 'Team Wins & Recognition'},
+    ] as const,
+    
+    // upsertFn: upsertMedHistory
+}

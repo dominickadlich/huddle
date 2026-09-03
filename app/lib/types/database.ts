@@ -72,7 +72,9 @@ export type DepartmentType =
   | "Nonsterile"
   | "ORP"
   | "T8"
-  | "RX Leadership";
+  | "RX Leadership"
+  // | "MH"
+  // | "ON"
 
   
 // ============================================
@@ -92,6 +94,8 @@ export interface DashboardData {
     or_pharmacy: HuddleUpdate | null;
     team_eight: HuddleUpdate | null;
     rx_leadership: HuddleUpdate | null;
+    // med_history: HuddleUpdate | null;
+    // overnight: HuddleUpdate | null;
   };
 }
 
