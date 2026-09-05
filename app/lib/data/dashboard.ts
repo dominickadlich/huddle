@@ -33,7 +33,7 @@ const DEPT_TO_SLUG: Record<DepartmentType, keyof DashboardData["updates"]> = {
   ORP: "or_pharmacy",
   T8: "team_eight",
   "RX Leadership": "rx_leadership",
-  // MH: "med_history",
+  MH: "med_history",
   // ON: "overnight"
 };
 
@@ -58,7 +58,7 @@ function groupUpdatesByDepartment(updates: HuddleUpdate[]): DashboardData["updat
         rx_leadership: null as HuddleUpdate | null,
         or_pharmacy: null as HuddleUpdate | null,
         team_eight: null as HuddleUpdate | null,
-        // med_history: null as HuddleUpdate | null,
+        med_history: null as HuddleUpdate | null,
         // overnight: null as HuddleUpdate | null,
       },
     );

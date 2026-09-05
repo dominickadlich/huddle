@@ -59,6 +59,11 @@ export type TeamEight = Tables<'team_eight'>;
 export type TeamEightInsert = TablesInsert<'team_eight'>;
 export type TeamEightUpdate = TablesUpdate<'team_eight'>;
 
+// Med History
+export type MedHistory = Tables<'med_history'>;
+export type MedHistoryInsert = TablesInsert<'med_history'>;
+export type MedHistoryUpdate = TablesUpdate<'med_history'>;
+
 
 // ============================================
 // CUSTOM ENUMS (for app logic)
@@ -73,7 +78,7 @@ export type DepartmentType =
   | "ORP"
   | "T8"
   | "RX Leadership"
-  // | "MH"
+  | "MH"
   // | "ON"
 
   
@@ -94,7 +99,7 @@ export interface DashboardData {
     or_pharmacy: HuddleUpdate | null;
     team_eight: HuddleUpdate | null;
     rx_leadership: HuddleUpdate | null;
-    // med_history: HuddleUpdate | null;
+    med_history: HuddleUpdate | null;
     // overnight: HuddleUpdate | null;
   };
 }

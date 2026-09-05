@@ -432,7 +432,7 @@ FOR EACH ROW EXECUTE FUNCTION log_audit_change();
 
 
 
--- For Supabase SQL Editor
+
 -- ============================================
 -- TABLE 11: med_history
 -- ============================================
@@ -498,14 +498,12 @@ CREATE TRIGGER trigger_audit_med_history
 AFTER INSERT OR UPDATE OR DELETE ON med_history
 FOR EACH ROW EXECUTE FUNCTION log_audit_change();
 
-CREATE OR REPLACE FUNCTION team_eight_search(search_term TEXT)
+-- Med History Search
+CREATE OR REPLACE FUNCTION med_history_search(search_term TEXT)
 RETURNS TABLE (department TEXT, date DATE, summary TEXT, field_label TEXT)
 LANGUAGE sql
 AS $$
 
-
--- Med History search
-UNION ALL
 SELECT 'Med History', date, safety, 'Safety'
 FROM med_history WHERE safety ILIKE '%' || search_term || '%'
 

@@ -10,10 +10,60 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
+      audit: {
+        Row: {
+          category: string | null
+          change_summary: string | null
+          created_at: string | null
+          department: string | null
+          id: string
+          new_data: Json | null
+          old_data: Json | null
+          operation: string
+          record_id: string
+          table_name: string
+          user_id: string | null
+        }
+        Insert: {
+          category?: string | null
+          change_summary?: string | null
+          created_at?: string | null
+          department?: string | null
+          id?: string
+          new_data?: Json | null
+          old_data?: Json | null
+          operation: string
+          record_id: string
+          table_name: string
+          user_id?: string | null
+        }
+        Update: {
+          category?: string | null
+          change_summary?: string | null
+          created_at?: string | null
+          department?: string | null
+          id?: string
+          new_data?: Json | null
+          old_data?: Json | null
+          operation?: string
+          record_id?: string
+          table_name?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       command_center: {
         Row: {
           announcements: string | null
@@ -414,6 +464,69 @@ export type Database = {
           },
         ]
       }
+      med_history: {
+        Row: {
+          announcements: string | null
+          barriers: string | null
+          created_at: string | null
+          created_by: string | null
+          date: string
+          id: string
+          opportunities: string | null
+          safety: string | null
+          shift: string
+          summary_text: string | null
+          updated_at: string | null
+          updated_by: string | null
+          wins: string | null
+        }
+        Insert: {
+          announcements?: string | null
+          barriers?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          date: string
+          id?: string
+          opportunities?: string | null
+          safety?: string | null
+          shift: string
+          summary_text?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          wins?: string | null
+        }
+        Update: {
+          announcements?: string | null
+          barriers?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          date?: string
+          id?: string
+          opportunities?: string | null
+          safety?: string | null
+          shift?: string
+          summary_text?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          wins?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "med_history_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "med_history_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       non_sterile: {
         Row: {
           announcements: string | null
@@ -709,6 +822,41 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      command_center_search: {
+        Args: { search_term: string }
+        Returns: {
+          date: string
+          department: string
+          field_label: string
+          summary: string
+        }[]
+      }
+      distribution_search: {
+        Args: { search_term: string }
+        Returns: {
+          date: string
+          department: string
+          field_label: string
+          summary: string
+        }[]
+      }
+      fetch_audit_by_date: {
+        Args: { dept: string; target_date: string }
+        Returns: {
+          category: string
+          change_summary: string
+          created_at: string
+          department: string
+          full_name: string
+          id: string
+          new_data: Json
+          old_data: Json
+          operation: string
+          record_id: string
+          table_name: string
+          user_id: string
+        }[]
+      }
       global_search: {
         Args: { search_term: string }
         Returns: {
@@ -748,6 +896,42 @@ export type Database = {
               wins: string
             }[]
           }
+      iv_room_search: {
+        Args: { search_term: string }
+        Returns: {
+          date: string
+          department: string
+          field_label: string
+          summary: string
+        }[]
+      }
+      med_history_search: {
+        Args: { search_term: string }
+        Returns: {
+          date: string
+          department: string
+          field_label: string
+          summary: string
+        }[]
+      }
+      or_pharmacy_search: {
+        Args: { search_term: string }
+        Returns: {
+          date: string
+          department: string
+          field_label: string
+          summary: string
+        }[]
+      }
+      team_eight_search: {
+        Args: { search_term: string }
+        Returns: {
+          date: string
+          department: string
+          field_label: string
+          summary: string
+        }[]
+      }
       upsert_huddle_summary:
         | {
             Args: {
@@ -786,12 +970,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -815,11 +999,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -840,11 +1024,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -865,11 +1049,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -882,11 +1066,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CommandCenter, Distribution, IvRoom, ORPharmacy, TeamEight } from './database';
+import { CommandCenter, Distribution, IvRoom, MedHistory, ORPharmacy, TeamEight } from './database';
 
 // ============================================
 // IV ROOM - ZOD VALIDATION SCHEMAS
@@ -236,4 +236,33 @@ export type TeamEightUpdateState = {
     }
     message?: string | null;
     data?: TeamEight | null
+}
+
+
+// ============================================
+// MED HISTORY - ZOD VALIDATION SCHEMAS
+// ============================================
+export const MedHistoryBaseSchema = z.object({
+    date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+    shift: z.enum(["morning", "afternoon", "evening"]),
+});
+
+export const MedHistorySchema = z.object({
+    ...MedHistoryBaseSchema.shape,
+    ...SharedSchema.omit({ inventory: true }).shape
+})
+
+// ============================================
+// MED HISTORY - STATE TYPES FOR FORM ACTIONS
+// ============================================
+export type MedHistoryUpdateState = {
+    errors?: Omit<SharedErrors, 'inventory'> & {
+        date?: string[];
+        shift?: string[];
+        _form?: string[];
+    }
+    message?: string | null;
+    data?: MedHistory | null
 }
