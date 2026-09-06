@@ -3,40 +3,40 @@
 import { revalidatePath } from 'next/cache';
 import { getAuthenticatedClient } from '../supabase/auth-helpers';
 import type {
-    DistributionUpdate,
+    MedHistoryUpdate,
 } from '../types/database'
-import { DistributionSchema } from '../types/huddle-schemas';
+import { MedHistorySchema } from '../types/huddle-schemas';
 
 
 // ============================================
-// UPSERT Distribution (Create or Update)
+// UPSERT Med History (Create or Update)
 // ============================================
-export async function upsertDistribution(
-    data: DistributionUpdate
+export async function upsertMedHistory(
+    data: MedHistoryUpdate
 ): Promise<{ success: boolean, message: string}> {
     try {
         const { supabase, userId } = await getAuthenticatedClient();
 
-        const validated = DistributionSchema.parse(data);
+        const validated = MedHistorySchema.parse(data);
 
-        // Check if Distribution exists
+        // Check if Med History exists
         const { data: existing } = await supabase
-            .from('distribution')
+            .from('med_history')
             .select('id')
             .eq('date', validated.date)
             .eq('shift', validated.shift)
-            .single();
+            .maybeSingle();
 
         if (existing) {
             // UPDATE existing record
-            const {  error } = await supabase.from('distribution').update({
+            const {  error } = await supabase.from('med_history').update({
                 ...validated,
                 updated_by: userId,
             }).eq('id', existing.id);
 
             if (error) throw error;
         } else {
-            const { error } = await supabase.from('distribution').insert({
+            const { error } = await supabase.from('med_history').insert({
                 ...validated,
                 created_by: userId,
                 updated_by: userId,
@@ -44,11 +44,11 @@ export async function upsertDistribution(
 
             if (error) throw error;
         }
-        revalidatePath('/team-huddle/distribution');
+        revalidatePath('/team-huddle/med-history');
         revalidatePath('/dashboard');
         return { success: true, message: 'Saved Successfully!' }
     } catch (error) {
-        console.error('Failed to save Distribution:', error)
+        console.error('Failed to save Med History:', error)
         return { success: false, message: 'Failed to save' }
     }
 }
@@ -57,16 +57,16 @@ export async function upsertDistribution(
 // ============================================
 // GENERIC FIELD UPDATER
 // ============================================
-export async function updateDistributionField(
+export async function updateMedHistoryField(
   id: string,
-  field: keyof DistributionUpdate,
+  field: keyof MedHistoryUpdate,
   value: string | null,
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
     const { error } = await supabase
-      .from("distribution")
+      .from("med_history")
       .update({
         [field]: value,
         updated_by: userId,
@@ -91,9 +91,9 @@ export async function updateDistributionField(
 }
 
 // ============================================
-// DELETE Distribution Data
+// DELETE MedHistory Data
 // ============================================
-export async function deleteDistribution(id: string): Promise<{
+export async function deleteMedHistory(id: string): Promise<{
   success: boolean;
   message: string;
 }> {
@@ -101,7 +101,7 @@ export async function deleteDistribution(id: string): Promise<{
     const { supabase } = await getAuthenticatedClient();
 
     const { error } = await supabase
-      .from("distribution")
+      .from("med_history")
       .delete()
       .eq("id", id);
 
@@ -111,13 +111,13 @@ export async function deleteDistribution(id: string): Promise<{
 
     return {
       success: true,
-      message: "Distribution data deleted successfully!",
+      message: "Med History data deleted successfully!",
     };
   } catch (error) {
-    console.error("Failed to delete Distribution data:", error);
+    console.error("Failed to delete Med History data:", error);
     return {
       success: false,
-      message: "Database error: Failed to delete Distribution data.",
+      message: "Database error: Failed to delete Med History data.",
     };
   }
 }

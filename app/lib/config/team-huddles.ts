@@ -32,6 +32,7 @@ import { upsertDistribution } from "../actions/distribution";
 import { upsertIVRoom } from "../actions/iv-room";
 import { upsertORPharmacy } from "../actions/or-pharmacy";
 import { upsertTeamEight } from "../actions/team-eight";
+import { upsertMedHistory } from "../actions/med-history";
 
 
 export const DEFAULT_SHIFT = "morning"; // stopgap until shift is fully removed
@@ -208,5 +209,5 @@ export const medHistoryConfig = {
         { key: 'wins', title: 'Team Wins & Recognition'},
     ] as const,
     
-    // upsertFn: upsertMedHistory
+    upsertFn: upsertMedHistory
 }
