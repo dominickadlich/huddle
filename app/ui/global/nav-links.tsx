@@ -43,6 +43,7 @@ const links = [
       { name: 'Distribution', href: '/team-huddle/distribution', icon: ArrowsPointingOutIcon},
       { name: 'OR', href: '/team-huddle/or-pharmacy', icon: ScissorsIcon},
       { name: 'Team 8', href: '/team-huddle/team-eight', icon: ClipboardDocumentCheckIcon},
+      { name: 'Med History', href: '/team-huddle/med-history', icon: ClipboardDocumentCheckIcon},
       // { name: 'Non-Sterile', href: 'nonsterile'},
     ]
   },
