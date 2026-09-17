@@ -361,7 +361,6 @@ alter table public.overnight enable row level security;
 
 
 
--- For Supabase SQL Editor
 -- ============================================
 -- TABLE 10: overnight
 -- ============================================
@@ -371,12 +370,8 @@ create table public.overnight (
   shift text not null check (shift in ('morning', 'afternoon', 'evening')),
 
   -- Core metrics (top grid)
-  -- assignment_one text,
-  -- assignment_two text,
-  -- orft text,
-  -- training text,
-  -- support text,
-  -- monthly_clean text,
+  project_shifts text,
+  ivrm_support text,
 
   -- Full-width fields (bottom section)
   safety text,
@@ -429,6 +424,45 @@ create trigger trigger_sync_overnight_summary
 CREATE TRIGGER trigger_audit_overnight
 AFTER INSERT OR UPDATE OR DELETE ON overnight
 FOR EACH ROW EXECUTE FUNCTION log_audit_change();
+
+
+-- Overnight Search
+CREATE OR REPLACE FUNCTION med_history_search(search_term TEXT)
+RETURNS TABLE (department TEXT, date DATE, summary TEXT, field_label TEXT)
+LANGUAGE sql
+AS $$
+
+SELECT 'Overnight', date, project_shifts, 'Project Shifts'
+FROM overnight WHERE project_shifts '%' || search_term || '%'
+
+SELECT 'Overnight', date, ivrm_support, 'Project Shifts'
+FROM overnight WHERE ivrm_support '%' || search_term || '%'
+
+SELECT 'Overnight', date, safety, 'Safety'
+FROM overnight WHERE safety ILIKE '%' || search_term || '%'
+
+UNION ALL
+SELECT 'Overnight', date, barriers, 'Barriers'
+FROM overnight WHERE barriers ILIKE '%' || search_term || '%'
+
+UNION ALL
+SELECT 'Overnight', date, wins, 'Team Wins'
+FROM overnight WHERE wins ILIKE '%' || search_term || '%'
+
+UNION ALL
+SELECT 'Overnight', date, announcements, 'Announcements'
+FROM overnight WHERE announcements ILIKE '%' || search_term || '%'
+
+UNION ALL
+SELECT 'Overnight', date, opportunities, 'Opportunities'
+FROM overnight WHERE opportunities ILIKE '%' || search_term || '%'
+
+UNION ALL
+SELECT 'Overnight', date, inventory, 'Inventory'
+FROM overnight WHERE inventory ILIKE '%' || search_term || '%'
+
+ORDER BY date DESC
+$$;
 
 
 

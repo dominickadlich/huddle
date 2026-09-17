@@ -196,6 +196,24 @@ export const teamEightConfig = {
     upsertFn: upsertTeamEight
 }
 
+export const overnightConfig = {
+    title: "Overnight",
+    department: "ON",
+    tableName: "overnight",
+
+    cardFields: [
+        { key: 'project_shifts', title: 'Project Shifts' }, 
+        { key: 'ivrm_support', title: 'IVRM Support' },
+    ] as const,
+
+    textFields: [
+        { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
+        { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
+        { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
+        { key: 'wins', title: 'Team Wins & Recognition'},
+    ] as const,
+}
+
 
 export const medHistoryConfig = {
     title: "Med History",
