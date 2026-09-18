@@ -18,7 +18,8 @@ function toDashboardData(data: DailySummaryWithUpdates): DashboardData {
       nonsterile: updatesByDepartment["Nonsterile"] ?? null,
       or_pharmacy:updatesByDepartment["ORP"] ?? null,
       team_eight: updatesByDepartment["T8"] ?? null,
-      med_history: updatesByDepartment["MH"] ?? null
+      med_history: updatesByDepartment["MH"] ?? null,
+      overnight: updatesByDepartment["ON"] ?? null
     }
   };
 }

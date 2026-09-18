@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CommandCenter, Distribution, IvRoom, MedHistory, ORPharmacy, TeamEight } from './database';
+import { CommandCenter, Distribution, IvRoom, MedHistory, ORPharmacy, Overnight, TeamEight } from './database';
 
 // ============================================
 // IV ROOM - ZOD VALIDATION SCHEMAS
@@ -236,6 +236,40 @@ export type TeamEightUpdateState = {
     }
     message?: string | null;
     data?: TeamEight | null
+}
+
+
+
+// ============================================
+// Overnight - ZOD VALIDATION SCHEMAS
+// ============================================
+export const OvernightBaseSchema = z.object({
+    date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+    shift: z.enum(["morning", "afternoon", "evening"]),
+    project_shifts: z.string().nullable().optional(),
+    ivrm_support: z.string().nullable().optional(),
+})
+
+export const OvernightSchema = z.object({
+    ...OvernightBaseSchema.shape,
+    ...SharedSchema.shape
+})
+
+// ============================================
+// Overnight - STATE TYPES FOR FORM ACTIONS
+// ============================================
+export type OvernightUpdateState = {
+    errors?: SharedErrors & {
+        date?: string[];
+        shift?: string[];
+        project_shifts?: string[];
+        ivrm_support?: string[];
+        _form?: string[];
+    }
+    message?: string | null;
+    data?: Overnight | null
 }
 
 

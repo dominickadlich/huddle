@@ -674,6 +674,78 @@ export type Database = {
           },
         ]
       }
+      overnight: {
+        Row: {
+          announcements: string | null
+          barriers: string | null
+          created_at: string | null
+          created_by: string | null
+          date: string
+          id: string
+          inventory: string | null
+          ivrm_support: string | null
+          opportunities: string | null
+          project_shifts: string | null
+          safety: string | null
+          shift: string
+          summary_text: string | null
+          updated_at: string | null
+          updated_by: string | null
+          wins: string | null
+        }
+        Insert: {
+          announcements?: string | null
+          barriers?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          date: string
+          id?: string
+          inventory?: string | null
+          ivrm_support?: string | null
+          opportunities?: string | null
+          project_shifts?: string | null
+          safety?: string | null
+          shift: string
+          summary_text?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          wins?: string | null
+        }
+        Update: {
+          announcements?: string | null
+          barriers?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          date?: string
+          id?: string
+          inventory?: string | null
+          ivrm_support?: string | null
+          opportunities?: string | null
+          project_shifts?: string | null
+          safety?: string | null
+          shift?: string
+          summary_text?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          wins?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "overnight_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "overnight_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       team_eight: {
         Row: {
           announcements: string | null
@@ -915,6 +987,15 @@ export type Database = {
         }[]
       }
       or_pharmacy_search: {
+        Args: { search_term: string }
+        Returns: {
+          date: string
+          department: string
+          field_label: string
+          summary: string
+        }[]
+      }
+      overnight_search: {
         Args: { search_term: string }
         Returns: {
           date: string

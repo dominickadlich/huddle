@@ -59,6 +59,12 @@ export type TeamEight = Tables<'team_eight'>;
 export type TeamEightInsert = TablesInsert<'team_eight'>;
 export type TeamEightUpdate = TablesUpdate<'team_eight'>;
 
+
+// Overnight
+export type Overnight = Tables<'overnight'>;
+export type OvernightInsert = TablesInsert<'overnight'>;
+export type OvernightUpdate = TablesUpdate<'overnight'>;
+
 // Med History
 export type MedHistory = Tables<'med_history'>;
 export type MedHistoryInsert = TablesInsert<'med_history'>;
@@ -79,7 +85,7 @@ export type DepartmentType =
   | "T8"
   | "RX Leadership"
   | "MH"
-  // | "ON"
+  | "ON"
 
   
 // ============================================
@@ -100,7 +106,7 @@ export interface DashboardData {
     team_eight: HuddleUpdate | null;
     rx_leadership: HuddleUpdate | null;
     med_history: HuddleUpdate | null;
-    // overnight: HuddleUpdate | null;
+    overnight: HuddleUpdate | null;
   };
 }
 
