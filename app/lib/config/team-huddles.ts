@@ -33,6 +33,7 @@ import { upsertIVRoom } from "../actions/iv-room";
 import { upsertORPharmacy } from "../actions/or-pharmacy";
 import { upsertTeamEight } from "../actions/team-eight";
 import { upsertMedHistory } from "../actions/med-history";
+import { upsertOvernight } from "../actions/overnight";
 
 
 export const DEFAULT_SHIFT = "morning"; // stopgap until shift is fully removed
@@ -203,7 +204,7 @@ export const overnightConfig = {
 
     cardFields: [
         { key: 'project_shifts', title: 'Project Shifts' }, 
-        { key: 'ivrm_support', title: 'IVRM Support' },
+        { key: 'ivrm_support', title: 'IV Support' },
     ] as const,
 
     textFields: [
@@ -212,6 +213,12 @@ export const overnightConfig = {
         { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
         { key: 'wins', title: 'Team Wins & Recognition'},
     ] as const,
+
+    iconMap: {
+        project_shifts: WrenchIcon,
+        ivrm_support: UserGroupIcon,
+    },
+    upsertFn: upsertOvernight
 }
 
 

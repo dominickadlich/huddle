@@ -1,14 +1,14 @@
 import { createClient } from "../supabase/server";
-import type { Distribution } from "../types/database";
+import type { Overnight } from "../types/database";
 
 // ============================================
-// Fetch Latest Distribution Data
+// Fetch Latest Overnight Data
 // ============================================
-export async function fetchLatestDistribution(): Promise<Distribution | null> {
+export async function fetchLatestOvernight(): Promise<Overnight | null> {
     const supabase = await createClient()
 
     const { data, error } = await supabase
-        .from('distribution')
+        .from('overnight')
         .select('*')
         .order('date', { ascending: false })
         .order('created_at', { ascending: false })
@@ -25,16 +25,16 @@ export async function fetchLatestDistribution(): Promise<Distribution | null> {
 
 
 // ============================================
-// Fetch Distribution By Date
+// Fetch Overnight By Date
 // ============================================
-export async function fetchDistributionByDate(
+export async function fetchOvernightByDate(
     date: string,
     shift: string
-): Promise<Distribution | null> {
+): Promise<Overnight | null> {
     const supabase = await createClient()
 
     const { data, error } = await supabase
-        .from('distribution')
+        .from('overnight')
         .select('*')
         .eq('date', date)
         .eq('shift', shift)
@@ -52,14 +52,14 @@ export async function fetchDistributionByDate(
 // ============================================
 // Fetch Most Recent Data 
 // ============================================
-export async function fetchDistributionLiveWithFallback(
+export async function fetchOvernightLiveWithFallback(
     today: string,
     shift: string
-): Promise<Distribution | null> {
+): Promise<Overnight | null> {
     const supabase = await createClient();
 
     const { data, error } = await supabase
-        .from('distribution')
+        .from('overnight')
         .select('*')
         .lte('date', today)
         .eq('shift', shift)
@@ -72,15 +72,15 @@ export async function fetchDistributionLiveWithFallback(
 }
 
 // ============================================
-// Fetch Last 7 Distribution Data
+// Fetch Last 7 Overnight Data
 // ============================================
-export async function fetchRecentDistribution(
+export async function fetchRecentOvernight(
     limit: number = 7
-): Promise<Distribution[]> {
+): Promise<Overnight[]> {
     const supabase = await createClient()
 
     const { data, error } = await supabase
-        .from('distribution')
+        .from('overnight')
         .select('*')
         .order('date', { ascending: false})
         .limit(limit)

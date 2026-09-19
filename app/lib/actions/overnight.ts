@@ -3,40 +3,42 @@
 import { revalidatePath } from 'next/cache';
 import { getAuthenticatedClient } from '../supabase/auth-helpers';
 import type {
-    DistributionUpdate,
+    OvernightUpdate,
 } from '../types/database'
-import { DistributionSchema } from '../types/huddle-schemas';
+import { OvernightSchema } from '../types/huddle-schemas';
 
 
 // ============================================
-// UPSERT Distribution (Create or Update)
+// UPSERT Overnight (Create or Update)
 // ============================================
-export async function upsertDistribution(
-    data: DistributionUpdate
+export async function upsertOvernight(
+    data: OvernightUpdate
 ): Promise<{ success: boolean, message: string}> {
     try {
         const { supabase, userId } = await getAuthenticatedClient();
 
-        const validated = DistributionSchema.parse(data);
+        const validated = OvernightSchema.parse(data);
 
-        // Check if Distribution exists
-        const { data: existing } = await supabase
-            .from('distribution')
+        // Check if Overnight exists
+        const { data: existing, error: checkError } = await supabase
+            .from('overnight')
             .select('id')
             .eq('date', validated.date)
             .eq('shift', validated.shift)
-            .single();
+            .maybeSingle()
+
+        if (checkError) throw checkError;
 
         if (existing) {
             // UPDATE existing record
-            const {  error } = await supabase.from('distribution').update({
+            const {  error } = await supabase.from('overnight').update({
                 ...validated,
                 updated_by: userId,
             }).eq('id', existing.id);
 
             if (error) throw error;
         } else {
-            const { error } = await supabase.from('distribution').insert({
+            const { error } = await supabase.from('overnight').insert({
                 ...validated,
                 created_by: userId,
                 updated_by: userId,
@@ -44,11 +46,11 @@ export async function upsertDistribution(
 
             if (error) throw error;
         }
-        revalidatePath('/team-huddle/distribution');
+        revalidatePath('/team-huddle/overnight');
         revalidatePath('/dashboard');
         return { success: true, message: 'Saved Successfully!' }
     } catch (error) {
-        console.error('Failed to save Distribution:', error)
+        console.error('Failed to save Overnight:', error)
         return { success: false, message: 'Failed to save' }
     }
 }
@@ -57,16 +59,16 @@ export async function upsertDistribution(
 // ============================================
 // GENERIC FIELD UPDATER
 // ============================================
-export async function updateDistributionField(
+export async function updateOvernightField(
   id: string,
-  field: keyof DistributionUpdate,
+  field: keyof OvernightUpdate,
   value: string | null,
 ): Promise<{ success: boolean; message: string }> {
   try {
     const { supabase, userId } = await getAuthenticatedClient();
 
     const { error } = await supabase
-      .from("distribution")
+      .from("overnight")
       .update({
         [field]: value,
         updated_by: userId,
@@ -74,7 +76,8 @@ export async function updateDistributionField(
       .eq("id", id);
 
     if (error) throw error;
-
+      
+    revalidatePath('/team-huddle/overnight');
     revalidatePath("/dashboard");
 
     return {
@@ -91,9 +94,9 @@ export async function updateDistributionField(
 }
 
 // ============================================
-// DELETE Distribution Data
+// DELETE Overnight Data
 // ============================================
-export async function deleteDistribution(id: string): Promise<{
+export async function deleteOvernight(id: string): Promise<{
   success: boolean;
   message: string;
 }> {
@@ -101,23 +104,24 @@ export async function deleteDistribution(id: string): Promise<{
     const { supabase } = await getAuthenticatedClient();
 
     const { error } = await supabase
-      .from("distribution")
+      .from("overnight")
       .delete()
       .eq("id", id);
 
     if (error) throw error;
 
+    revalidatePath('/team-huddle/overnight');
     revalidatePath("/dashboard");
 
     return {
       success: true,
-      message: "Distribution data deleted successfully!",
+      message: "Overnight data deleted successfully!",
     };
   } catch (error) {
-    console.error("Failed to delete Distribution data:", error);
+    console.error("Failed to delete Overnight data:", error);
     return {
       success: false,
-      message: "Database error: Failed to delete Distribution data.",
+      message: "Database error: Failed to delete Overnight data.",
     };
   }
 }

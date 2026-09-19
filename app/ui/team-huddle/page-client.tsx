@@ -24,6 +24,7 @@ import AuditSummaryCard from "./audit/audit-summary-card";
 
 
 const gridColsMap: Record<number, string> = {
+        2: 'lg:grid-cols-2',
         3: 'lg:grid-cols-3',
         4: 'lg:grid-cols-4',
         5: 'lg:grid-cols-5',
@@ -229,6 +230,11 @@ export default function MiniHuddlePageClient({
                 )}
 
                 <div className="mt-4 grid grid-cols-1 gap-4">
+                    {/* <AnnouncementTextArea
+                        value={fields.announcements as string | number | null | undefined}
+                        isEditMode={isEditMode}
+                        onChange={(val) => setFields({...fields, announcements: val})}
+                    /> */}
                     {textFields.map(({ key, title }) => (
                         <SharedTextArea
                             key={key}
