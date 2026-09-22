@@ -26,6 +26,8 @@ const departmentMap = {
   rx_leadership: "RX Leadership",
   team_eight: "T8",
   or_pharmacy: "ORP",
+  med_history: "MH",
+  overnight: "ON",
 } as const;
 
 export default function HuddleCard({
@@ -87,7 +89,7 @@ export default function HuddleCard({
                           </p>
                         );
                       })
-                    : <p>No Data</p>
+                    : <p>Nothing reported today!</p>
                   }
                 </div>
               )

@@ -29,7 +29,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <EditModeProvider>
           <SessionProvider>
-            <div className="flex min-h-screen md:h-screen flex-col md:flex-row md:overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900">
+            <div className="relative flex min-h-screen md:h-screen flex-col md:flex-row md:overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900">
               {/* Animated Gradient Orbs */}
               <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-pulse pointer-events-none" />
               <div

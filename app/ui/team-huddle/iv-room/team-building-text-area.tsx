@@ -27,7 +27,7 @@ export default function TeamBuildingTextArea({
 
     return (
         <>
-    <div className="mt-4 group relative h-full overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
+    <div className="group relative h-full overflow-hidden rounded-2xl border border-gray-400/50 bg-gray-800/30 backdrop-blur-sm p-6">
         {/* Content */}
         <div className="relative z-10">
           {/* Header */}
@@ -42,7 +42,7 @@ export default function TeamBuildingTextArea({
         </div>
 
         {/* Value Display */}
-        <div className="flex justify-center items-center min-h-[2rem]">
+        <div className="flex justify-items-start items-center min-h-[2rem]">
             {isEditMode
             ? (
                 <textarea
@@ -50,12 +50,12 @@ export default function TeamBuildingTextArea({
                   name="team_building"
                   value={value ?? ''}
                   onChange={(e) => onChange?.(e.target.value)}
-                  rows={8}
+                  rows={4}
                   className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-white text-gray-900 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               )
             : (
-                <p className="text-base text-white whitespace-pre-wrap">
+                <p className="text-base text-white whitespace-pre-wrap"> 
                     {value ?? 'No Data'}
                 </p>
               )

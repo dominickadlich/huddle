@@ -45,7 +45,7 @@ const links = [
       { name: 'OR', href: '/team-huddle/or-pharmacy', icon: ScissorsIcon},
       // { name: 'Team 8', href: '/team-huddle/team-eight', icon: ClipboardDocumentCheckIcon},
       { name: 'Med History', href: '/team-huddle/med-history', icon: ClipboardDocumentCheckIcon},
-      // { name: 'Overnight', href: '/team-huddle/overnight', icon: MoonIcon},
+      { name: 'Overnight', href: '/team-huddle/overnight', icon: MoonIcon},
       // { name: 'Non-Sterile', href: 'nonsterile'},
     ]
   },

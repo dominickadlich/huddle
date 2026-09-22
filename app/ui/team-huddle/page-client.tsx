@@ -122,9 +122,11 @@ export default function MiniHuddlePageClient({
     return (
         <div className="mt-20">
         <Header title={title} searchAction={searchAction} placeholder={placeholder} />
-        <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6">
+        {/* <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6"> */}
+        <div className="mt-10 flex flex-col gap-6">
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
-            <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-[1fr_3fr_1fr]">
+            {/* <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-[1fr_3fr_1fr]"> */}
+            <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-3">
                 <div className="flex items-center gap-4">
                     {isEditMode
                         ? (
@@ -163,26 +165,26 @@ export default function MiniHuddlePageClient({
 
 
             {/* Announcements — order-2 on mobile, spans full left column on desktop */}
-            <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
-                <div>
-                    <AnnouncementTextArea
+            {/* <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2"> */}
+                {/* <div> */}
+                    {/* <AnnouncementTextArea
                         value={fields.announcements as string | number | null | undefined}
                         isEditMode={isEditMode}
                         onChange={(val) => setFields({...fields, announcements: val})}
-                    />
-                    {isEditMode
+                    /> */}
+                    {/* {isEditMode
                         ? <UploadPhoto department={department} />
                         : <DisplayPhoto department={department} />
-                    }
-                    {showTeamBuilding && (
+                    } */}
+                    {/* {showTeamBuilding && (
                         <TeamBuildingTextArea
                             value={fields.team_building as string | null | undefined}
                             isEditMode={isEditMode}
                             onChange={(val) => setFields({ ...fields, team_building: val })}
                             viewDate={viewDate ?? getLocalDate()}
                         />
-                    )}
-                    <div className="mt-6">
+                    )} */}
+                    {/* <div className="mt-6">
                         <Calendar />
                     </div>
 
@@ -191,9 +193,9 @@ export default function MiniHuddlePageClient({
                             tableName={tableName}
                             date={viewDate ?? clientDate}
                         />
-                    </div>
-                </div>
-            </div>
+                    </div> */}
+                {/* </div>
+            </div> */}
             
 
             {/* Cards + text fields — order-3 on mobile, right column row 2 on desktop */}
@@ -230,11 +232,11 @@ export default function MiniHuddlePageClient({
                 )}
 
                 <div className="mt-4 grid grid-cols-1 gap-4">
-                    {/* <AnnouncementTextArea
+                    <AnnouncementTextArea
                         value={fields.announcements as string | number | null | undefined}
                         isEditMode={isEditMode}
                         onChange={(val) => setFields({...fields, announcements: val})}
-                    /> */}
+                    />
                     {textFields.map(({ key, title }) => (
                         <SharedTextArea
                             key={key}
@@ -245,18 +247,48 @@ export default function MiniHuddlePageClient({
                             onChange={(val) => setFields({...fields, [key]: val})}
                         />
                     ))}
+                    {showTeamBuilding && (
+                        <TeamBuildingTextArea
+                            value={fields.team_building as string | null | undefined}
+                            isEditMode={isEditMode}
+                            onChange={(val) => setFields({ ...fields, team_building: val })}
+                            viewDate={viewDate ?? getLocalDate()}
+                        />
+                    )}
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            {isEditMode
+                                ? <UploadPhoto department={department} />
+                                : <DisplayPhoto department={department} />
+                            }
+                        </div>
+
+                        <div className="mt-6">
+                            <Calendar />
+                        </div>
+
+                        {huddleUpdates && (
+                            <div className="mt-4 grid grid-cols-1 gap-4">
+                                <HuddleCard
+                                    name="rx_leadership"
+                                    title="RX Leadership"
+                                    value={huddleUpdates.find(u => u.department === 'RX Leadership')?.update_text}
+                                    isEditMode={false}
+                                />
+                            </div>
+                        )}
+
+                        <div className="mt-6">
+                            <AuditSummaryCard 
+                                tableName={tableName}
+                                date={viewDate ?? clientDate}
+                            />
+                        </div>
+                    </div>
                 </div>
 
-                {huddleUpdates && (
-                    <div className="mt-4 grid grid-cols-1 gap-4">
-                        <HuddleCard
-                            name="rx_leadership"
-                            title="RX Leadership"
-                            value={huddleUpdates.find(u => u.department === 'RX Leadership')?.update_text}
-                            isEditMode={false}
-                        />
-                    </div>
-                )}
+                
 
                 <MisclickPopUp summaryModal={setShowSummaryModal} />
 
