@@ -125,8 +125,8 @@ export default function MiniHuddlePageClient({
         {/* <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6"> */}
         <div className="mt-10 flex flex-col gap-6">
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
-            {/* <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-[1fr_3fr_1fr]"> */}
-            <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-3">
+            <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-[1fr_3fr_1fr]">
+            {/* <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-3"> */}
                 <div className="flex items-center gap-4">
                     {isEditMode
                         ? (
@@ -153,7 +153,7 @@ export default function MiniHuddlePageClient({
                     )} */}
 
                 {/* Center - grouped metrics with divider */}
-                <div className="flex flex-col lg:flex-row lg:gap-8">
+                <div className="flex flex-col justify-center lg:flex-row lg:gap-8">
                     <CensusCard census={census} />
                     <ShiftLeadCard shiftlead={shiftLead} />
                 </div>
