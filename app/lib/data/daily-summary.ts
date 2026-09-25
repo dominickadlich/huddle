@@ -1,5 +1,6 @@
 import { getAuthenticatedClient } from "../supabase/auth-helpers";
 import { DailySummary, DailySummaryWithUpdates, HuddleUpdate, ShiftType } from "../types/database";
+import { isOvernightStillActive } from "../utils/overnight_date_helper";
 
 
 // ============================================
@@ -174,4 +175,26 @@ export async function fetchDailySummaryWithUpdates(
     console.error("Failed to fetch daily summary with updates:", error);
     throw new Error("Failed to fetch daily summary with updates");
   }
+}
+
+
+
+// ============================================
+// Fetch Overnight Data (1900-1900)
+// ============================================
+export async function fetchOvernightHuddleUpdateForDashboard(): Promise<HuddleUpdate | null> {
+  const { supabase } = await getAuthenticatedClient();
+
+  const { data, error } = await supabase
+    .from('huddle_updates')
+    .select('*')
+    .eq('department', 'ON')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) throw error;
+  if (!data) return null;
+
+  return isOvernightStillActive(new Date(data.created_at)) ? data : null;
 }

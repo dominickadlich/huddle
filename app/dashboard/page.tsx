@@ -1,4 +1,4 @@
-import { fetchLatestDailySummaryWithUpdates } from "../lib/data";
+import { fetchLatestDailySummaryWithUpdates, fetchOvernightHuddleUpdateForDashboard } from "../lib/data";
 import { DailySummaryWithUpdates, DashboardData, HuddleUpdate } from "../lib/types/database";
 import DashboardPageClient from "./dashboard-page-client";
 
@@ -25,18 +25,30 @@ function toDashboardData(data: DailySummaryWithUpdates): DashboardData {
 }
 
 export default async function Page() {
-  const dashboardData = await fetchLatestDailySummaryWithUpdates();
+  const [dashboardData, overnightUpdate] = await Promise.all([
+    fetchLatestDailySummaryWithUpdates(),
+    fetchOvernightHuddleUpdateForDashboard(),
+  ]);
 
   if (!dashboardData) {
     return (
       <DashboardPageClient 
-        initialData={{} as DashboardData}
+        initialData={{
+          ...({} as DashboardData),
+          updates: { overnight: overnightUpdate } as DashboardData['updates'],
+        }}
       />
     )
   }
 
   const initialData = toDashboardData(dashboardData)
-  console.log(initialData)
+  
+    // console.log(initialData)
+  
+  initialData.updates = {
+    ...initialData.updates,
+    overnight: overnightUpdate,
+  };
 
   return (
     <DashboardPageClient 
