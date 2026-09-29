@@ -2,42 +2,40 @@
 
 import {
   floorCoverage,
-  type Coverage,
+  type CoverageRow,
+  type Shift,
 } from "../lib/script-docs/floor-coverage";
 import { SetStateAction, useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import StaticSearch from "../ui/static-search";
 
-function getCurrentShift(): "weekday-day" | "weekday-evening" | "weekend" {
+type FourthColumn = { label: string; render: (c: CoverageRow) => string };
+
+const FOURTH_COLUMN: Record<Shift, FourthColumn> = {
+  "weekday-day":     { label: "Service",    render: (c) => c.service ?? "" },
+  "weekend":         { label: "Service",    render: (c) => c.service ?? "" },
+  "weekday-evening": { label: "Pharmacist", render: (c) => c.pharmacist ?? "" },
+};
+
+function getCurrentShift(): Shift {
   const now = new Date();
-  const dayOfWeek = now.getDay();
-  const hour = now.getHours();
-
-  let shift: "weekday-day" | "weekday-evening" | "weekend";
-
-  if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-    if (hour >= 14) {
-      shift = "weekday-evening";
-    } else {
-      shift = "weekday-day";
-    }
-  } else {
-    shift = "weekend";
-  }
-  return shift;
+  const day = now.getDay();
+  
+  if (day === 0 || day === 6) return "weekend"
+  return now.getHours() >= 14 ? "weekday-evening" : "weekday-day"
 }
 
 export default function Page() {
   const [shift, setShift] = useState<
-    "weekday-day" | "weekday-evening" | "weekend"
+    Shift
   >("weekday-day");
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredCoverage, setFilteredCoverage] = useState<Coverage[]>([]);
+  const [filteredCoverage, setFilteredCoverage] = useState<CoverageRow[]>([]);
 
   const fuse = useMemo(
     () =>
       new Fuse(filteredCoverage, {
-        keys: ["team", "floors", "service", "phone"],
+        keys: ["team", "floors", "service", "phone", "pharmacist"],
         threshold: 0.3,
       }),
     [filteredCoverage],
@@ -98,7 +96,7 @@ export default function Page() {
             Floors
           </h2>
           <h2 className="flex-1 flex items-center justify-center text-3xl font-bold text-indigo-400">
-            Service
+            {FOURTH_COLUMN[shift].label}
           </h2>
         </div>
 
@@ -144,10 +142,10 @@ export default function Page() {
                 {/* Divider */}
                 <div className="h-12 w-px bg-gradient-to-b from-transparent via-gray-700 to-transparent" />
 
-                {/* Service */}
+                {/* Fourth column */}
                 <div className="flex-1 flex items-center justify-center">
                   <p className="text-lg font-medium text-gray-300">
-                    {coverage.service}
+                    {FOURTH_COLUMN[shift].render(coverage)}
                   </p>
                 </div>
               </div>

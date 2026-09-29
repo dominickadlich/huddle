@@ -76,19 +76,19 @@ function parseCSV(
 
 // Parse all three CSV files
 const weekdayDay = parseCSV(
-  path.join(process.cwd(), "Weekday_Shifts.csv"),
+  path.join(process.cwd(), "/csv/Weekday_Shifts.csv"),
   true, // Has header
   "weekday-day",
 );
 
 const weekdayEvening = parseCSV(
-  path.join(process.cwd(), "Weekday_Evening_Shifts.csv"),
+  path.join(process.cwd(), "/csv/Weekday_Evening_Shifts.csv"),
   false, // Has header
   "weekday-evening",
 );
 
 const weekend = parseCSV(
-  path.join(process.cwd(), "Weekend_Shifts.csv"),
+  path.join(process.cwd(), "/csv/Weekend_Shifts.csv"),
   true, // Has header
   "weekend",
 );
