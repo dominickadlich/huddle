@@ -71,6 +71,11 @@ export type MedHistoryInsert = TablesInsert<'med_history'>;
 export type MedHistoryUpdate = TablesUpdate<'med_history'>;
 
 
+// WDIP Assignments
+export type WDIPAssignment = Tables<'wdip_assignments'>
+export type WDIPAssignmentInsert = TablesInsert<'wdip_assignments'>
+export type WDIPAssignmentUpdate = TablesUpdate<'wdip_assignments'>
+
 // ============================================
 // CUSTOM ENUMS (for app logic)
 // ============================================

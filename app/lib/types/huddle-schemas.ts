@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { CommandCenter, Distribution, IvRoom, MedHistory, ORPharmacy, Overnight, TeamEight } from './database';
+import { CommandCenter, Distribution, IvRoom, MedHistory, ORPharmacy, Overnight, TeamEight, WDIPAssignment } from './database';
+import { SHIFTS } from '../script-docs/floor-coverage';
 
 // ============================================
 // IV ROOM - ZOD VALIDATION SCHEMAS
@@ -300,3 +301,24 @@ export type MedHistoryUpdateState = {
     message?: string | null;
     data?: MedHistory | null
 }
+
+
+
+// ============================================
+// WDIP Assignment - ZOD VALIDATION SCHEMAS
+// ============================================
+export const WDIPAssignmentSchema = z.object({
+  team: z.string().min(1, "Team is required"),
+  shift: z.enum(SHIFTS),
+  shift_date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+  pharmacist_name: z
+    .string()
+    .trim()
+    .max(100)
+    .transform((v) => (v === "" ? null : v)),
+});
+
+export type WDIPAssignmentInput = z.input<typeof WDIPAssignmentSchema>;
+export const WDIPAssignmentBatchSchema = z.array(WDIPAssignmentSchema).min(1);

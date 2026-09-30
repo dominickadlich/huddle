@@ -889,6 +889,47 @@ export type Database = {
         }
         Relationships: []
       }
+      wdip_assignments: {
+        Row: {
+          id: string
+          pharmacist_name: string | null
+          shift: string
+          shift_date: string
+          source: string
+          team: string
+          updated_at: string | null
+          updated_by: string | null
+        }
+        Insert: {
+          id?: string
+          pharmacist_name?: string | null
+          shift: string
+          shift_date: string
+          source?: string
+          team: string
+          updated_at?: string | null
+          updated_by?: string | null
+        }
+        Update: {
+          id?: string
+          pharmacist_name?: string | null
+          shift?: string
+          shift_date?: string
+          source?: string
+          team?: string
+          updated_at?: string | null
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wdip_assignments_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

@@ -1,7 +1,7 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { SetStateAction } from "react";
+import { ChangeEvent, SetStateAction } from "react";
 
 export default function StaticSearch({
   placeholder,
@@ -9,7 +9,7 @@ export default function StaticSearch({
   value,
 }: {
   placeholder: string;
-  onChange: (e: { target: { value: SetStateAction<string> } }) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: string;
 }) {
   return (

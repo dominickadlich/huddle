@@ -1,7 +1,8 @@
 // Auto-generated from CSV files
 // Do not edit manually - run pnpm run parse-coverage to regenerate
 
-export type Shift = "weekday-day" | "weekday-evening" | "weekend";
+export const SHIFTS = ["weekday-day", "weekday-evening", "weekend"] as const;
+export type Shift = (typeof SHIFTS)[number]
 
 export type Coverage = {
     team: string

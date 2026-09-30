@@ -76,7 +76,6 @@ export default function MiniHuddlePageClient({
     const [fields, setFields] = useState<Record<string, string | number | boolean | null | undefined>>(initialData || {})
     const [showSummaryModal, setShowSummaryModal] = useState(false);
     const clientDate = getLocalDate()
-    // const clientShift = getCurrentShift();
     const [editedSummary, setEditedSummary] = useState<string>('');
     const [lastUpdate, setLastUpdate] = useState<string>('')
     const pathname = usePathname()
@@ -89,8 +88,6 @@ export default function MiniHuddlePageClient({
         pendingHref, 
         setPendingHref,
      } = useContext(EditModeContext)
-
-    //  const effectiveCols = (isEditMode && extraContent) ? grid_cols + 1 : grid_cols;
     
     useEffect(() => {
         if (mode === 'past' && isEditMode) {
@@ -122,11 +119,9 @@ export default function MiniHuddlePageClient({
     return (
         <div className="mt-20">
         <Header title={title} searchAction={searchAction} placeholder={placeholder} />
-        {/* <div className="mt-10 flex flex-col lg:grid grid-cols-[20%_1fr] gap-6"> */}
         <div className="mt-10 flex flex-col gap-6">
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
             <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-[1fr_3fr_1fr]">
-            {/* <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-3"> */}
                 <div className="flex items-center gap-4">
                     {isEditMode
                         ? (
@@ -146,11 +141,6 @@ export default function MiniHuddlePageClient({
                     )}
                 </div>
 
-                {/* {(extraContent) && (
-                        <div className="">
-                            {extraContent}
-                        </div>
-                    )} */}
 
                 {/* Center - grouped metrics with divider */}
                 <div className="flex flex-col justify-center lg:flex-row lg:gap-8">
@@ -162,40 +152,6 @@ export default function MiniHuddlePageClient({
                     Last Update: {lastUpdate}
                 </div>
             </div>
-
-
-            {/* Announcements — order-2 on mobile, spans full left column on desktop */}
-            {/* <div className="order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2"> */}
-                {/* <div> */}
-                    {/* <AnnouncementTextArea
-                        value={fields.announcements as string | number | null | undefined}
-                        isEditMode={isEditMode}
-                        onChange={(val) => setFields({...fields, announcements: val})}
-                    /> */}
-                    {/* {isEditMode
-                        ? <UploadPhoto department={department} />
-                        : <DisplayPhoto department={department} />
-                    } */}
-                    {/* {showTeamBuilding && (
-                        <TeamBuildingTextArea
-                            value={fields.team_building as string | null | undefined}
-                            isEditMode={isEditMode}
-                            onChange={(val) => setFields({ ...fields, team_building: val })}
-                            viewDate={viewDate ?? getLocalDate()}
-                        />
-                    )} */}
-                    {/* <div className="mt-6">
-                        <Calendar />
-                    </div>
-
-                    <div className="mt-6">
-                        <AuditSummaryCard 
-                            tableName={tableName}
-                            date={viewDate ?? clientDate}
-                        />
-                    </div> */}
-                {/* </div>
-            </div> */}
             
 
             {/* Cards + text fields — order-3 on mobile, right column row 2 on desktop */}
