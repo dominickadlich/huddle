@@ -37,6 +37,7 @@ export default function IVCLient({
             showTeamBuilding={true}
             showActivities={true}
             viewDate={viewDate}
-            mode={mode}        />
+            mode={mode}
+        />
     )
 }

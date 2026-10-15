@@ -25,7 +25,9 @@ import {
     BeakerIcon,
     BellIcon,
     BuildingOffice2Icon,
-    ShoppingCartIcon
+    ShoppingCartIcon,
+    BuildingOfficeIcon,
+    HomeModernIcon,
 } from "@heroicons/react/24/outline";
 import { upsertCommandCenter } from "../actions/command-center";
 import { upsertDistribution } from "../actions/distribution";
@@ -54,6 +56,7 @@ export const commandCenterConfig = {
         // { key: "dispense_check", title: "Dispense Check" },
     ] as const,
     textFields: [
+        { key: 'announcements' , title: 'Announcements' },
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Missing or Failing Equipment, Supplies, etc.)' },
         { key: 'inventory', title: 'Inventory' },
@@ -85,6 +88,7 @@ export const distributionConfig = {
     ] as const,
 
     textFields: [
+        { key: 'announcements' , title: 'Announcements' },
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Missing or Failing Equipment, Supplies, etc.)' },
         { key: 'inventory', title: 'Inventory'}, 
@@ -120,9 +124,21 @@ export const ivRoomConfig = {
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Medkeeper, Dispense Prep, Equipment)' },
         { key: 'inventory', title: 'Inventory (Ingredients, Supplies)' },
+        { key: 'announcements' , title: 'Announcements' },
         { key: 'wins', title: 'Team Wins & Recognition'},
         // { key: 'team_building', title: "Team Building"}
     ] as const,
+
+    checklist: {
+        title: 'MK Activities',
+        items: [
+            { label: 'Bell IVRM', column: 'bell_ivrm_activities' },
+            { label: 'Bell DP', column: 'bell_dp_activities' },
+            { label: 'TPN', column: 'tpn_activities' },
+            { label: 'SC', column: 'sc_activities' },
+            { label: 'CHM', column: 'chm_activities' },
+        ],
+    } as const,
 
     iconMap: {
         monthly_clean: SparklesIcon,
@@ -151,20 +167,50 @@ export const orPharmacyConfig = {
         { key: 'monthly_clean', title: 'Monthly Clean' },
     ] as const,
 
+    secondaryCards: {
+        cols: 4,
+        fields: [
+            { key: 'kits_bell', title: 'Bell Kits' },
+            { key: 'kits_ca', title: 'CA Kits' },
+            { key: 'kits_hc', title: 'HC Kits' },
+            { key: 'kits_icc', title: 'ICC Kits' },
+        ] as const,
+    },
+
     textFields: [
+        { key: 'announcements' , title: 'Announcements' },
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
+        { key: 'operational_needs', title: 'Operational Needs (kits, equipment, automation)' },
         { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
+        { key: 'misc', title: 'Misc.' },
+        { key: 'pass_off', title: 'Pass Off' },
         { key: 'wins', title: 'Team Wins & Recognition'},
     ] as const,
 
+    checklist: {
+        title: 'MK Activities',
+        items: [
+            { label: 'Bell OR', column: 'bell_or_activities' },
+            { label: 'Cambridge OR', column: 'cambridge_or_activities' },
+            { label: 'ICC', column: 'icc_or_activities' },
+        ],
+    } as const,
+
     iconMap: {
+        // Cards
         assignment_one: BellIcon,
         assignment_two: BuildingOffice2Icon,
         orft: ShoppingCartIcon,
         training: UsersIcon,
         support: UserGroupIcon,
         monthly_clean: SparklesIcon,
+
+        // Secondary Cards
+        kits_bell: BellIcon,
+        kits_ca: BuildingOffice2Icon,
+        kits_hc: BuildingOfficeIcon,
+        kits_icc: HomeModernIcon
     },
     upsertFn: upsertORPharmacy
 }
@@ -182,6 +228,7 @@ export const teamEightConfig = {
     ] as const,
 
     textFields: [
+        { key: 'announcements' , title: 'Announcements' },
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
         { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
@@ -208,6 +255,7 @@ export const overnightConfig = {
     ] as const,
 
     textFields: [
+        { key: 'announcements' , title: 'Announcements' },
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Medkeeper, DP, Missing or Failing Equipment)' },
         { key: 'inventory', title: 'Inventory (Ingredients or supplies getting low)' },
@@ -228,6 +276,7 @@ export const medHistoryConfig = {
     tableName: "med_history",
 
     textFields: [
+        { key: 'announcements' , title: 'Announcements' },
         { key: 'safety' , title: 'Safety (Concerns, Good Catches, Work Arounds)' },
         { key: 'barriers', title: 'Barriers (Missing or Failing Equipment, Supplies, etc.)' },
         { key: 'opportunities', title: 'Opportunities'},

@@ -1,6 +1,8 @@
 import {
+  ArrowsRightLeftIcon,
   ArrowTrendingDownIcon,
   ChevronDownIcon,
+  EllipsisHorizontalCircleIcon,
   ExclamationCircleIcon,
   FaceSmileIcon,
   LightBulbIcon,
@@ -14,12 +16,16 @@ import { useEffect, useRef, useState } from "react";
 
 
 const iconMap: Record<string, HeroIcon> = {
+  announcements: MegaphoneIcon,
   barriers: WrenchScrewdriverIcon,
   safety: ExclamationCircleIcon,
   wins: TrophyIcon,
   opportunities: LightBulbIcon, // TODO: Remove opportunities from DB
   inventory: ArrowTrendingDownIcon,
-  team_building: FaceSmileIcon
+  team_building: FaceSmileIcon,
+  operational_needs: WrenchScrewdriverIcon,
+  misc: EllipsisHorizontalCircleIcon,
+  pass_off: ArrowsRightLeftIcon,
 };
 
 export function displayValue(value: string | number | null | undefined): string {

@@ -21,6 +21,7 @@ import Calendar from "../dashboard/history/calendar";
 import { DEFAULT_SHIFT } from "@/app/lib/config/team-huddles";
 import { SearchAction } from "../global/search";
 import AuditSummaryCard from "./audit/audit-summary-card";
+import HuddleChecklist, { ChecklistConfig } from "./or/activities";
 
 
 const gridColsMap: Record<number, string> = {
@@ -51,6 +52,8 @@ export default function MiniHuddlePageClient({
     searchAction,
     placeholder,
     tableName,
+    secondaryCards,
+    checklist,
 }: {
     title: string;
     initialData: CommandCenter | Distribution | IvRoom | Nonsterile;
@@ -71,6 +74,11 @@ export default function MiniHuddlePageClient({
     mode?: 'live' | 'future' | 'past';
     searchAction: SearchAction,
     placeholder?: string,
+    secondaryCards?: {
+        cols: number;
+        fields: readonly { key: string; title: string }[];
+    };
+    checklist?: ChecklistConfig
 }) {
     const router = useRouter();
     const [fields, setFields] = useState<Record<string, string | number | boolean | null | undefined>>(initialData || {})
@@ -179,20 +187,46 @@ export default function MiniHuddlePageClient({
                 </div>
                 
                 {/* Activities Checklist for IV Room */}
-                {showActivities && (
+                {/* {showActivities && (
                     <ActivitiesChecklist 
                         isEditMode={isEditMode}
                         activities={fields}
                         onChange={(column, value) => setFields({ ...fields, [column]: value })}
                     />
+                )} */}
+
+                {checklist && (
+                    <HuddleChecklist
+                        title={checklist.title}
+                        items={checklist.items}
+                        isEditMode={isEditMode}
+                        values={fields}
+                        onChange={(column, value) => setFields(prev => ({ ...prev, [column]: value }))}
+                    />
+                )}
+
+                {secondaryCards && (
+                    <div className={`mt-4 grid grid-cols-1 ${gridColsMap[secondaryCards.cols]} gap-4`}>
+                        {secondaryCards.fields.map(({ key, title }) => (
+                            <TeamHuddleCard
+                                key={key}
+                                title={title}
+                                value={fields[key] as string | number | null | undefined}
+                                type={key}
+                                isEditMode={isEditMode}
+                                onChange={(val) => setFields({ ...fields, [key]: val })}
+                                iconMap={iconMap}
+                            />
+                        ))}
+                    </div>
                 )}
 
                 <div className="mt-4 grid grid-cols-1 gap-4">
-                    <AnnouncementTextArea
+                    {/* <AnnouncementTextArea
                         value={fields.announcements as string | number | null | undefined}
                         isEditMode={isEditMode}
                         onChange={(val) => setFields({...fields, announcements: val})}
-                    />
+                    /> */}
                     {textFields.map(({ key, title }) => (
                         <SharedTextArea
                             key={key}
