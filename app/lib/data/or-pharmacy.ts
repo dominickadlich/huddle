@@ -1,5 +1,7 @@
+import { OR_BATCHING_SCHEDULE } from "../config/or-batching-schedule";
 import { createClient } from "../supabase/server";
 import type { ORPharmacy } from "../types/database";
+import { getLocalDate, weekdayOf } from "../utils/utils";
 
 // ============================================
 // Fetch Latest OR Pharmacy Data
@@ -88,4 +90,24 @@ export async function fetchRecentORPharmacy(
     if (error) throw error;
 
     return data ?? []; 
+}
+
+
+
+// ============================================
+// Apply Batching Template
+// ============================================
+export function applyBatchingTemplate(row: ORPharmacy | null, viewDate: string) {
+    const isPast = viewDate < getLocalDate();
+    const template = OR_BATCHING_SCHEDULE[weekdayOf(viewDate)];
+
+    // Live view can fall back to an earlier day's row; its batching isn't today's
+    const savedForDay = row?.date === viewDate ? row : null;
+    const orTemplate = (value: string) => (isPast ? null : value);
+
+    return {
+        ...row,
+        batching: savedForDay?.batching ?? orTemplate(template.batching),
+        short_dated: savedForDay?.short_dated ?? orTemplate(template.short_dated),
+    };
 }

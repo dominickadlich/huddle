@@ -13,6 +13,12 @@ export function getCurrentShift(): ShiftType {
   }
 }
 
+export function weekdayOf(date: string) {
+    // Noon UTC keeps the date stable. `new Date('2026-10-15')` is midnight UTC,
+    // which is still Oct 14 in Chicago.
+    return new Date(`${date}T12:00:00Z`).getUTCDay();
+}
+
 export const getLocalDate = () => {
     return new Intl.DateTimeFormat('en-CA', {
         timeZone: 'America/Chicago',

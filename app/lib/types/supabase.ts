@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
@@ -596,6 +596,7 @@ export type Database = {
           assignment_one: string | null
           assignment_two: string | null
           barriers: string | null
+          batching: string | null
           created_at: string | null
           created_by: string | null
           date: string
@@ -606,6 +607,7 @@ export type Database = {
           orft: string | null
           safety: string | null
           shift: string
+          short_dated: string | null
           summary_text: string | null
           support: string | null
           training: string | null
@@ -618,6 +620,7 @@ export type Database = {
           assignment_one?: string | null
           assignment_two?: string | null
           barriers?: string | null
+          batching?: string | null
           created_at?: string | null
           created_by?: string | null
           date: string
@@ -628,6 +631,7 @@ export type Database = {
           orft?: string | null
           safety?: string | null
           shift: string
+          short_dated?: string | null
           summary_text?: string | null
           support?: string | null
           training?: string | null
@@ -640,6 +644,7 @@ export type Database = {
           assignment_one?: string | null
           assignment_two?: string | null
           barriers?: string | null
+          batching?: string | null
           created_at?: string | null
           created_by?: string | null
           date?: string
@@ -650,6 +655,7 @@ export type Database = {
           orft?: string | null
           safety?: string | null
           shift?: string
+          short_dated?: string | null
           summary_text?: string | null
           support?: string | null
           training?: string | null

@@ -169,6 +169,7 @@ export const orPharmacyConfig = {
 
     secondaryCards: {
         cols: 4,
+        rows: 5,
         fields: [
             { key: 'kits_bell', title: 'Bell Kits' },
             { key: 'kits_ca', title: 'CA Kits' },
@@ -176,6 +177,11 @@ export const orPharmacyConfig = {
             { key: 'kits_icc', title: 'ICC Kits' },
         ] as const,
     },
+
+    pairedTextFields: [
+        { key: 'batching', title: 'OR Related Batching (Leadership)' },
+        { key: 'short_dated', title: 'OR Short-Dated Replenishment (Technicians)' },
+    ] as const,
 
     textFields: [
         { key: 'announcements' , title: 'Announcements' },
@@ -209,7 +215,7 @@ export const orPharmacyConfig = {
         // Secondary Cards
         kits_bell: BellIcon,
         kits_ca: BuildingOffice2Icon,
-        kits_hc: BuildingOfficeIcon,
+        kits_hc: HeartIcon,
         kits_icc: HomeModernIcon
     },
     upsertFn: upsertORPharmacy

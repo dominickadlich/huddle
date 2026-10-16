@@ -8,7 +8,8 @@ export default function TeamHuddleCard({
   type,
   iconMap,
   isEditMode,
-  onChange
+  onChange,
+  rows,
 }: {
   title: string;
   value: number | string | null | undefined;
@@ -16,8 +17,11 @@ export default function TeamHuddleCard({
   iconMap: Record<string, HeroIcon>;
   isEditMode: boolean
   onChange?: (value: string) => void;
+  rows?: number;
 }) {
   const Icon = iconMap[type];
+  const inputClasses = "block w-full rounded-md bg-white/5 px-3 py-1.5 text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6";
+
 
   return (
     <>
@@ -37,18 +41,30 @@ export default function TeamHuddleCard({
 
         {/* Value Display */}
         <div className="flex justify-center items-center min-h-[2rem]">
-            {isEditMode
-            ? (
+            {isEditMode ? (
+              rows ? (
+                <textarea
+                  spellCheck="true"
+                  rows={rows}
+                  value={value ?? ''}
+                  onChange={(e) => onChange?.(e.target.value)}
+                  className={inputClasses}
+                />
+              ) : (
                 <input
                     spellCheck="true"
                     type="text"
                     value={value ?? ''}
                     onChange={(e) => onChange?.(e.target.value)}
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-white text-gray-900 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                    className={inputClasses}
                 />
               )
-            : (
-                <p className="text-xl font-bold text-white transition-colors duration-300">
+            ) : (
+                <p className={rows
+                  ? "flex items-center justify-center w-full whitespace-pre-line text-base font-medium text-white"
+                  : "text-xl font-bold text-white"}
+                  style={rows ? { minHeight: `${rows}lh` } : undefined}
+                >
                     {displayValue(value)}
                 </p>
               )

@@ -3,7 +3,7 @@
 import { CommandCenter, Distribution, HuddleUpdate, IvRoom, Nonsterile, ShiftType } from "@/app/lib/types/database";
 import GenerateSummary from "@/app/ui/team-huddle/generate-summary";
 import Header, { CensusCard, ShiftLeadCard } from "@/app/ui/global/header";
-import SharedTextArea, { AnnouncementTextArea } from "@/app/ui/team-huddle/shared-text-area";
+import SharedTextArea from "@/app/ui/team-huddle/shared-text-area";
 import { useEffect, useState, useContext } from "react"
 import { usePathname, useRouter } from "next/navigation";
 import { formatDate, getCurrentShift, getLocalDate } from "@/app/lib/utils/utils";
@@ -54,6 +54,7 @@ export default function MiniHuddlePageClient({
     tableName,
     secondaryCards,
     checklist,
+    pairedTextFields,
 }: {
     title: string;
     initialData: CommandCenter | Distribution | IvRoom | Nonsterile;
@@ -76,9 +77,11 @@ export default function MiniHuddlePageClient({
     placeholder?: string,
     secondaryCards?: {
         cols: number;
+        rows: number;
         fields: readonly { key: string; title: string }[];
     };
-    checklist?: ChecklistConfig
+    checklist?: ChecklistConfig;
+    pairedTextFields?: readonly { key: string; title: string }[];
 }) {
     const router = useRouter();
     const [fields, setFields] = useState<Record<string, string | number | boolean | null | undefined>>(initialData || {})
@@ -204,7 +207,8 @@ export default function MiniHuddlePageClient({
                         onChange={(column, value) => setFields(prev => ({ ...prev, [column]: value }))}
                     />
                 )}
-
+                
+                {/* OR Kits Section */}
                 {secondaryCards && (
                     <div className={`mt-4 grid grid-cols-1 ${gridColsMap[secondaryCards.cols]} gap-4`}>
                         {secondaryCards.fields.map(({ key, title }) => (
@@ -216,6 +220,24 @@ export default function MiniHuddlePageClient({
                                 isEditMode={isEditMode}
                                 onChange={(val) => setFields({ ...fields, [key]: val })}
                                 iconMap={iconMap}
+                                rows={secondaryCards.rows}
+                            />
+                        ))}
+                    </div>
+                )}
+
+                {/* OR Batching Schedule */}
+                {pairedTextFields && (
+                    <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        {pairedTextFields.map(({ key, title }) => (
+                            <SharedTextArea
+                                key={key}
+                                name={key}
+                                title={title}
+                                align="center"
+                                value={fields[key] as string | number | null | undefined}
+                                isEditMode={isEditMode}
+                                onChange={(val) => setFields(prev => ({ ...prev, [key]: val }))}
                             />
                         ))}
                     </div>
