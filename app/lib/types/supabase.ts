@@ -597,19 +597,30 @@ export type Database = {
           assignment_two: string | null
           barriers: string | null
           batching: string | null
+          bell_or_activities: boolean | null
+          cambridge_or_activities: boolean | null
           created_at: string | null
           created_by: string | null
           date: string
+          icc_or_activities: boolean | null
           id: string
           inventory: string | null
+          kits_bell: string | null
+          kits_ca: string | null
+          kits_hc: string | null
+          kits_icc: string | null
+          misc: string | null
           monthly_clean: string | null
+          operational_needs: string | null
           opportunities: string | null
           orft: string | null
+          pass_off: string | null
           safety: string | null
           shift: string
           short_dated: string | null
           summary_text: string | null
           support: string | null
+          team_building: string | null
           training: string | null
           updated_at: string | null
           updated_by: string | null
@@ -621,19 +632,30 @@ export type Database = {
           assignment_two?: string | null
           barriers?: string | null
           batching?: string | null
+          bell_or_activities?: boolean | null
+          cambridge_or_activities?: boolean | null
           created_at?: string | null
           created_by?: string | null
           date: string
+          icc_or_activities?: boolean | null
           id?: string
           inventory?: string | null
+          kits_bell?: string | null
+          kits_ca?: string | null
+          kits_hc?: string | null
+          kits_icc?: string | null
+          misc?: string | null
           monthly_clean?: string | null
+          operational_needs?: string | null
           opportunities?: string | null
           orft?: string | null
+          pass_off?: string | null
           safety?: string | null
           shift: string
           short_dated?: string | null
           summary_text?: string | null
           support?: string | null
+          team_building?: string | null
           training?: string | null
           updated_at?: string | null
           updated_by?: string | null
@@ -645,19 +667,30 @@ export type Database = {
           assignment_two?: string | null
           barriers?: string | null
           batching?: string | null
+          bell_or_activities?: boolean | null
+          cambridge_or_activities?: boolean | null
           created_at?: string | null
           created_by?: string | null
           date?: string
+          icc_or_activities?: boolean | null
           id?: string
           inventory?: string | null
+          kits_bell?: string | null
+          kits_ca?: string | null
+          kits_hc?: string | null
+          kits_icc?: string | null
+          misc?: string | null
           monthly_clean?: string | null
+          operational_needs?: string | null
           opportunities?: string | null
           orft?: string | null
+          pass_off?: string | null
           safety?: string | null
           shift?: string
           short_dated?: string | null
           summary_text?: string | null
           support?: string | null
+          team_building?: string | null
           training?: string | null
           updated_at?: string | null
           updated_by?: string | null

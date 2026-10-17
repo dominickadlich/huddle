@@ -176,6 +176,19 @@ export const ORPharmacyBaseSchema = z.object({
     training: z.string().nullable().optional(),
     support: z.string().nullable().optional(),
     monthly_clean: z.string().nullable().optional(),
+    batching: z.string().nullable().optional(),
+    short_dated: z.string().nullable().optional(),
+    operational_needs: z.string().nullable().optional(),
+    misc: z.string().nullable().optional(),
+    pass_off: z.string().nullable().optional(),
+    team_building: z.string().nullable().optional(),
+    kits_bell: z.string().nullable().optional(),
+    kits_ca: z.string().nullable().optional(),
+    kits_hc: z.string().nullable().optional(),
+    kits_icc: z.string().nullable().optional(),
+    bell_or_activities: z.boolean().nullable().optional(),
+    cambridge_or_activities: z.boolean().nullable().optional(),
+    icc_or_activities: z.boolean().nullable().optional(),
 })
 
 export const ORPharmacySchema = z.object({
@@ -196,6 +209,19 @@ export type ORPharmacyUpdateState = {
         training?: string[];
         support?: string[];
         monthly_clean?: string[];
+        batching?: string[];
+        short_dated?: string[];
+        operational_needs?: string[];
+        misc?: string[];
+        pass_off?: string[];
+        team_building?: string[];
+        kits_bell?: string[];
+        kits_ca?: string[];
+        kits_hc?: string[];
+        kits_icc?: string[];
+        bell_or_activities?: string[];
+        cambridge_or_activities?: string[];
+        icc_or_activities?: string[];
         _form?: string[];
     }
     message?: string | null;

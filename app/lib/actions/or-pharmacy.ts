@@ -18,12 +18,14 @@ export async function upsertORPharmacy(
         const validated = ORPharmacySchema.parse(data);
 
         // Check if OR exists
-        const { data: existing } = await supabase
+        const { data: existing, error: lookupError } = await supabase
             .from('or_pharmacy')
             .select('id')
             .eq('date', validated.date)
             .eq('shift', validated.shift)
-            .single();
+            .maybeSingle();
+
+        if (lookupError) throw lookupError;
 
         if (existing) {
             // UPDATE existing record
