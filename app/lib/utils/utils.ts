@@ -1,5 +1,7 @@
 import { ShiftType } from "../types/database";
 
+const CHICAGO_TZ = 'America/Chicago';
+
 export function getCurrentShift(): ShiftType {
   const hour = new Date().getHours();
 
@@ -21,7 +23,7 @@ export function weekdayOf(date: string) {
 
 export const getLocalDate = () => {
     return new Intl.DateTimeFormat('en-CA', {
-        timeZone: 'America/Chicago',
+        timeZone: CHICAGO_TZ,
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -30,7 +32,7 @@ export const getLocalDate = () => {
 
 export const getLocalDateFormatted = () => {
     const parts = new Intl.DateTimeFormat('en-CA', {
-        timeZone: 'America/Chicago',
+        timeZone: CHICAGO_TZ,
         year: '2-digit',
         month: '2-digit',
         day: '2-digit',
@@ -43,7 +45,7 @@ export function formatDate(date: string | null): string {
   if (!date) return 'No data'
   const localDate = new Date(date)
   return localDate.toLocaleDateString('en-US', {
-    timeZone: 'America/Chicago',
+    timeZone: CHICAGO_TZ,
     month: '2-digit',
     day: '2-digit',
     year: 'numeric'
@@ -51,3 +53,28 @@ export function formatDate(date: string | null): string {
 }
 
 
+const OVERNIGHT_RESET_HOUR = 21;
+
+export function getOvernightAnchorDate(now: Date = new Date()): string {
+  const dateStr = new Intl.DateTimeFormat('en-CA', {
+    timeZone: CHICAGO_TZ,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(now); // "YYYY-MM-DD"
+
+  const hour = Number(
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: CHICAGO_TZ,
+      hour: '2-digit',
+      hourCycle: 'h23',
+    }).format(now)
+  );
+
+  if (hour >= OVERNIGHT_RESET_HOUR) return dateStr;
+
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const prev = new Date(Date.UTC(y, m - 1, d));
+  prev.setUTCDate(prev.getUTCDate() - 1);
+  return prev.toISOString().slice(0, 10);
+}
