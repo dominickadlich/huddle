@@ -1,12 +1,11 @@
 'use client'
 
-import { CommandCenter, Distribution, HuddleUpdate, IvRoom, Nonsterile, ShiftType } from "@/app/lib/types/database";
-import GenerateSummary from "@/app/ui/team-huddle/generate-summary";
+import { CommandCenter, Distribution, HuddleUpdate, IvRoom, Nonsterile } from "@/app/lib/types/database";
 import Header, { CensusCard, ShiftLeadCard } from "@/app/ui/global/header";
 import SharedTextArea from "@/app/ui/team-huddle/shared-text-area";
 import { useEffect, useState, useContext } from "react"
 import { usePathname, useRouter } from "next/navigation";
-import { formatDate, getCurrentShift, getLocalDate } from "@/app/lib/utils/utils";
+import { formatDate, getLocalDate } from "@/app/lib/utils/utils";
 import { CancelButton, EditButton, SubmitButton } from "@/app/ui/global/buttons";
 import { HeroIcon } from "./team-huddle-card";
 import TeamHuddleCard from "./team-huddle-card";
@@ -16,13 +15,14 @@ import MisclickPopUp from "./misclick-modal";
 import UploadPhoto from "./photos/photo-upload";
 import DisplayPhoto from "./photos/load-photo";
 import TeamBuildingTextArea from "./iv-room/team-building-text-area";
-import ActivitiesChecklist from "./iv-room/activities";
 import Calendar from "../dashboard/history/calendar";
 import { DEFAULT_SHIFT } from "@/app/lib/config/team-huddles";
 import { SearchAction } from "../global/search";
 import AuditSummaryCard from "./audit/audit-summary-card";
 import HuddleChecklist, { ChecklistConfig } from "./or/activities";
+import InfoPopover from "../global/info-popover";
 
+type Fields = Record<string, string | number | boolean | null | undefined>;
 
 const gridColsMap: Record<number, string> = {
         2: 'lg:grid-cols-2',
@@ -31,6 +31,21 @@ const gridColsMap: Record<number, string> = {
         5: 'lg:grid-cols-5',
         8: 'lg:grid-cols-8',
     }
+
+const SUMMARY_SECTIONS: [key: string, label: string][] = [
+    ['safety', 'Safety'],
+    ['barriers', 'Barriers'],
+    ['inventory', 'Inventory'],
+    ['opportunities', 'Opportunities'],
+    ['wins', 'Wins'],
+];
+
+function buildSummary(fields: Fields): string {
+    return SUMMARY_SECTIONS
+        .filter(([key]) => fields[key])
+        .map(([key, label]) => `${label}: ${fields[key]!.toString()}`)
+        .join('\n');
+}
 
 export default function MiniHuddlePageClient({ 
     title,
@@ -85,20 +100,38 @@ export default function MiniHuddlePageClient({
 }) {
     const router = useRouter();
     const [fields, setFields] = useState<Record<string, string | number | boolean | null | undefined>>(initialData || {})
-    const [showSummaryModal, setShowSummaryModal] = useState(false);
     const clientDate = getLocalDate()
-    const [editedSummary, setEditedSummary] = useState<string>('');
     const [lastUpdate, setLastUpdate] = useState<string>('')
     const pathname = usePathname()
+    const [isSaving, setIsSaving] = useState(false)
     
-    const { 
-        isEditMode, 
-        setIsEditMode,
-        misclickWarning, 
-        setMisclickWarning,
-        pendingHref, 
-        setPendingHref,
-     } = useContext(EditModeContext)
+    const { isEditMode, setIsEditMode } = useContext(EditModeContext)
+
+    const handleSave = async () => {
+        if (isSaving) return;
+        setIsSaving(true);
+
+        const effectiveDate = viewDate ?? clientDate;
+
+        try {
+            const result = await upsertFn({
+                ...fields,
+                summary_text: buildSummary(fields),
+                date: effectiveDate,
+                shift: DEFAULT_SHIFT,
+            });
+
+            if (result?.success) {
+                setIsEditMode(false);
+                router.push(effectiveDate > clientDate ? `${pathname}?date=${effectiveDate}` : '/dashboard');
+                router.refresh();
+            } else {
+                alert(result?.message);
+            }
+        } finally {
+            setIsSaving(false);
+        }
+    };
     
     useEffect(() => {
         if (mode === 'past' && isEditMode) {
@@ -106,30 +139,13 @@ export default function MiniHuddlePageClient({
         }
     }, [mode]);
 
-
-    useEffect(() => {
-        const parts = [];
-            if (fields.safety) parts.push(`Safety: ${fields.safety.toString()}`);
-            if (fields.barriers) parts.push(`Barriers: ${fields.barriers.toString()}`);
-            if (fields.inventory) parts.push(`Inventory: ${fields.inventory.toString()}`)
-            if (fields.opportunities) parts.push(`Opportunities: ${fields.opportunities.toString()}`);
-            if (fields.wins) parts.push(`Wins: ${fields.wins.toString()}`);
-
-        setEditedSummary(parts.join('\n'));
-    }, [fields])
-
-
     useEffect(() => {
         setLastUpdate(formatDate(initialData.updated_at))
     }, [initialData.updated_at])
 
-
-
-    console.log(`Department: ${department}`)
-
     return (
         <div className="mt-20">
-        <Header title={title} searchAction={searchAction} placeholder={placeholder} />
+        <Header title={title} searchAction={searchAction} placeholder={placeholder} calendar={<Calendar />}/>
         <div className="mt-10 flex flex-col gap-6">
             {/* Edit/Last Update bar — order-1 on mobile, sits above cards in right column on desktop */}
             <div className="order-1 lg:col-start-2 lg:row-start-1 items-center gap-4 px-4 grid grid-cols-[1fr_3fr_1fr]">
@@ -138,7 +154,7 @@ export default function MiniHuddlePageClient({
                         ? (
                             <>
                                 <CancelButton onClick={() => setIsEditMode(false)}/>
-                                <SubmitButton onClick={() => setShowSummaryModal(true)} />
+                                <SubmitButton onClick={handleSave} disabled={isSaving}/>
                             </>
                           )
                         : mode !== 'past' 
@@ -160,7 +176,12 @@ export default function MiniHuddlePageClient({
                 </div>
 
                 <div className="mt-2 justify-self-end whitespace-nowrap px-4 text-sm text-gray-400">
-                    Last Update: {lastUpdate}
+                    <InfoPopover trigger={<>Last Update: {lastUpdate}</>}>
+                        <AuditSummaryCard
+                            tableName={tableName}
+                            date={viewDate ?? clientDate}
+                        />
+                    </InfoPopover>
                 </div>
             </div>
             
@@ -244,11 +265,6 @@ export default function MiniHuddlePageClient({
                 )}
 
                 <div className="mt-4 grid grid-cols-1 gap-4">
-                    {/* <AnnouncementTextArea
-                        value={fields.announcements as string | number | null | undefined}
-                        isEditMode={isEditMode}
-                        onChange={(val) => setFields({...fields, announcements: val})}
-                    /> */}
                     {textFields.map(({ key, title }) => (
                         <SharedTextArea
                             key={key}
@@ -269,17 +285,6 @@ export default function MiniHuddlePageClient({
                     )}
 
                     <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            {isEditMode
-                                ? <UploadPhoto department={department} />
-                                : <DisplayPhoto department={department} />
-                            }
-                        </div>
-
-                        <div className="mt-6">
-                            <Calendar />
-                        </div>
-
                         {huddleUpdates && (
                             <div className="mt-4 grid grid-cols-1 gap-4">
                                 <HuddleCard
@@ -291,46 +296,17 @@ export default function MiniHuddlePageClient({
                             </div>
                         )}
 
-                        <div className="mt-6">
-                            <AuditSummaryCard 
-                                tableName={tableName}
-                                date={viewDate ?? clientDate}
-                            />
+                        <div>
+                            {isEditMode
+                                ? <UploadPhoto department={department} />
+                                : <DisplayPhoto department={department} />
+                            }
                         </div>
                     </div>
                 </div>
 
-                
+                <MisclickPopUp onSave={handleSave} />
 
-                <MisclickPopUp summaryModal={setShowSummaryModal} />
-
-                <GenerateSummary
-                    open={showSummaryModal}
-                    onClose={() => setShowSummaryModal(false)}
-                    onChange={(editedSummary) => setEditedSummary(editedSummary)}
-                    editedSummary={editedSummary}
-                    onSave={async (summary) => {
-                        const effectiveDate = viewDate ?? clientDate;
-                        
-                        const dataToSave = {
-                            ...fields,
-                            summary_text: summary,
-                            date: effectiveDate,
-                            shift: DEFAULT_SHIFT,
-                        };
-
-                        const result = await upsertFn(dataToSave);
-
-                        if (result?.success) {
-                            setShowSummaryModal(false);
-                            setIsEditMode(false);
-                            router.push(effectiveDate > clientDate ? `${pathname}?date=${effectiveDate}` : '/dashboard');
-                            router.refresh();
-                        } else {
-                            alert(result?.message);
-                        }
-                    }}
-                />
             </div>
         </div>
         </div>

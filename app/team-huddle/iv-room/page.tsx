@@ -1,4 +1,4 @@
-import { fetchIVRoomByDate, fetchIVRoomLiveWithFallback } from "@/app/lib/data/iv-room";
+import { fetchIVRoomByDate, fetchIVRoomLiveWithCarryForward } from "@/app/lib/data/iv-room";
 import { fetchDailySummaryByDateAndShift, fetchDailySummaryLiveWithFallback, fetchHuddleUpdatesByDate, fetchHuddleUpdatesLiveWithFallback } from "@/app/lib/data";
 import { getLocalDate } from "@/app/lib/utils/utils";
 import { DEFAULT_SHIFT } from "@/app/lib/config/team-huddles";
@@ -22,7 +22,7 @@ export default async function Page({
                 fetchHuddleUpdatesByDate(targetDate, shift),
             ]) 
         : await Promise.all([
-                fetchIVRoomLiveWithFallback(today, shift),
+                fetchIVRoomLiveWithCarryForward(today, shift),
                 fetchDailySummaryLiveWithFallback(today, shift),
                 fetchHuddleUpdatesLiveWithFallback(today, shift),
             ])
@@ -31,12 +31,6 @@ export default async function Page({
 
     const mode: 'live' | 'future' | 'past' =
         targetDate === today ? 'live' : targetDate > today ? 'future' : 'past';
-
-    console.log(`Target Date: ${targetDate}`)
-    console.log(`Today: ${today}`)
-    console.log(`Mode: ${mode}`)
-    console.log(`Shift: ${shift}`)
-    
     
     return (
         <IVCLient

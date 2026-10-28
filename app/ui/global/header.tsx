@@ -1,13 +1,34 @@
 import { getLocalDateFormatted } from "@/app/lib/utils/utils";
 import Search, { SearchAction } from "./search";
+import InfoPopover from "./info-popover";
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { ReactNode } from "react";
 
-export function DateCard() {
+export function DateCard({ calendar }: { calendar?: ReactNode }) {
     const formatDate = getLocalDateFormatted()
 
+    // Pages that don't pass a calendar keep the plain date
+    if (!calendar) {
+        return (
+            <h1 className="text-2xl lg:text-4xl font-bold text-white">
+                {formatDate}
+            </h1>
+        )
+    }
+
     return (
-        <h1 className="text-2xl lg:text-4xl font-bold text-white bg-transparent focus:outline-none">
-            {formatDate}
-        </h1>
+        <InfoPopover
+            panelWidth="w-[26rem]"
+            buttonClassName="inline-flex items-center gap-3 rounded-lg px-2 py-1 text-2xl lg:text-4xl font-bold text-white transition hover:bg-gray-700/40 focus:outline-none data-focus:ring-2 data-focus:ring-indigo-500 data-open:bg-gray-700/40"
+            trigger={
+                <>
+                    <span>{formatDate}</span>
+                    <CalendarDaysIcon className="size-6 lg:size-8 text-indigo-300" aria-hidden="true" />
+                </>
+            }
+        >
+            {calendar}
+        </InfoPopover>
     )
 }
 
@@ -47,12 +68,14 @@ export default function Header({
     // shiftlead,
     searchAction,
     placeholder,
+    calendar,
 }: {
     title: string;
     // census: number | null;
     // shiftlead: string | null;
     searchAction: SearchAction;
-    placeholder?: string
+    placeholder?: string;
+    calendar?: ReactNode;
 }) {
     return (
   <div className="lg:flex justify-between items-center pb-6 mb-8 border-b-2 border-indigo-500/30">
@@ -68,7 +91,7 @@ export default function Header({
     <Search searchAction={searchAction} placeholder={placeholder}/>
     
     {/* Right */}
-    <DateCard />
+    <DateCard calendar={calendar} />
   </div>
 );
 }

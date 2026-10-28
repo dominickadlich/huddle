@@ -4,15 +4,6 @@ import { revalidatePath } from 'next/cache';
 import { getAuthenticatedClient } from '../supabase/auth-helpers';
 import type { IvRoomUpdate } from '../types/database'
 import { IVRoomSchema } from '../types/huddle-schemas';
-import { fetchIVRoomLiveWithFallback } from '../data/iv-room';
-
-const CARRY_FORWARD_FIELDS = [
-  'safety',
-  'barriers',
-  'inventory',
-  'announcements',
-  'monthly_clean',
-] as const;
 
 
 // ============================================
@@ -43,22 +34,11 @@ export async function upsertIVRoom(
 
             if (error) throw error;
         } else {
-            // New row for this date — backfill only the approved carry-forward fields
-            const mostRecent = await fetchIVRoomLiveWithFallback(validated.date, validated.shift);
-
-            const insertPayload: Record<string, unknown> = {
+            const { error } = await supabase.from('iv_room').insert({
               ...validated,
               created_by: userId,
               updated_by: userId,
-            }
-
-            for (const field of CARRY_FORWARD_FIELDS) {
-              if (insertPayload[field] == null && mostRecent?.[field] != null) {
-                insertPayload[field] = mostRecent[field]
-              }
-            }
-
-            const { error } = await supabase.from('iv_room').insert(insertPayload);
+            });
 
             if (error) throw error;
         }
