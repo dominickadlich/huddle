@@ -20,7 +20,7 @@ export function SubmitButton({
     disabled = false
 }: {
     onClick: () => void;
-    disabled: boolean
+    disabled?: boolean
 }) {
     return (
         <button
